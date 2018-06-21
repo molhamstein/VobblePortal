@@ -1,0 +1,89 @@
+<div id="forms" class="page-layout simple fullwidth" fxLayout="column" fusePerfectScrollbar>
+
+  <!-- HEADER -->
+  <div class="header mat-accent-bg p-24 h-100" fxLayout="row" fxLayoutAlign="space-between center">
+
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <button class="mr-0 mr-sm-16" mat-icon-button [routerLink]="'/reports/list'">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+
+      <div fxLayout="column" fxLayoutAlign="center start">
+        <div class="black-fg" fxLayout="row" fxLayoutAlign="start center">
+          <mat-icon class="secondary-text s-16">report</mat-icon>
+          <mat-icon class="secondary-text s-16">chevron_right</mat-icon>
+          <span class="secondary-text">Reports</span>
+          <mat-icon class="secondary-text s-16">chevron_right</mat-icon>
+          <div class="h2">Edit</div>
+        </div>
+      </div>
+    </div>
+    <button mat-raised-button type="submit" (click)="onSubmit()" [disabled]="form.invalid"
+            class="add-product-button mat-white-bg  mt-sm-0">
+      <span> SAVE </span>
+    </button>
+  </div>
+  <!-- / HEADER -->
+
+  <!-- CONTENT -->
+  <div class="content p-24">
+
+    <div fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-md="row" fxLayoutGap="20px">
+
+      <div fxFlex="100%">
+        <form class="mat-white-bg mat-elevation-z4 p-24 mr-24 mb-24" fxLayout="column" fxLayoutAlign="start"
+              fxFlex="100%" name="form" [formGroup]="form">
+
+          <div class="h2 mb-24">Report Details</div>
+
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" fxLayoutGap="10px">
+
+            <mat-form-field fxFlex="50%">
+              <input matInput [matDatepicker]="picker" placeholder="Creation date" formControlName="createdAt" required>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="50%">
+              <mat-select placeholder="Bottle" formControlName="bottleId">
+                <mat-option *ngFor="let bottle of bottles" [value]="bottle.id" >
+                  <!--<img *ngIf="product.icon && product.icon!=''" [src]="product.icon" style=" border-radius: 50%;object-fit: cover; margin-top: 8px; margin-right: 5px;height: 30px;width: 30px;">-->
+                  <span> Owner:  {{bottle.owner.username}} --  Shore {{bottle.shore.name_en}} / {{bottle.shore.name_ar}}</span>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" fxLayoutGap="10px">
+
+            <mat-form-field fxFlex="50%">
+              <mat-select placeholder="Product" formControlName="reportTypeId" >
+                <mat-option *ngFor="let type of report_types" [value]="type.id" >
+                  <span> {{type.reportName_en}} /{{type.reportName_ar}}</span>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="50%">
+              <mat-select placeholder="Owner" formControlName="ownerId" >
+                <mat-option *ngFor="let owner of users" [value]="owner.id">
+                  <img *ngIf="owner.image && owner.image!=''" [src]="owner.image" style=" border-radius: 50%;object-fit: cover; margin-top: 8px; margin-right: 5px;height: 30px;width: 30px;">
+                  <span>{{owner.username}}</span>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+          </div>
+        </form>
+      </div>
+
+
+    </div>
+
+  </div>
+  <!-- / CONTENT -->
+
+</div>
+
+

@@ -1,0 +1,198 @@
+<div id="order" class="page-layout carded fullwidth" fusePerfectScrollbar>
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg mat-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- HEADER -->
+    <div class="header white-fg"
+         fxLayout="row" fxLayoutAlign="space-between center">
+
+      <!-- APP TITLE -->
+      <div fxLayout="row" fxLayoutAlign="start center">
+
+        <button class="mr-16" mat-icon-button [routerLink]="'/users/list'">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+
+        <div fxLayout="column" fxLayoutAlign="start start"
+             *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+          <div class="h2">
+            User {{item.username}}
+          </div>
+         <!-- <div class="subtitle secondary-text">
+            <span>from</span>
+            <span>{{order.customer.firstName}} {{order.customer.lastName}}</span>
+          </div>-->
+        </div>
+      </div>
+
+      <div>
+        <button mat-raised-button
+                [routerLink]="'/users/edit/'+ item.id"
+                class="add-product-button mat-white-bg  mt-sm-0">
+          <span> EDIT </span>
+        </button>
+        <button mat-raised-button
+                (click)="deleteItem()"
+                class="add-product-button mt-sm-0" color="warn">
+          <span> DELETE </span>
+        </button>
+      </div>
+
+
+      <!-- / APP TITLE -->
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card mat-white-bg">
+
+      <!-- CONTENT -->
+      <div class="content">
+
+        <mat-tab-group>
+
+          <mat-tab label="User Details">
+
+            <div class="order-details tab-content p-24" fusePerfectScrollbar>
+
+              <div class="section pb-48">
+
+                <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+                  <mat-icon class="m-0 mr-16">account_box</mat-icon>
+                  <div class="h2 secondary-text">Personal Information</div>
+                </div>
+
+                <div class="customer">
+                  <table class="simple">
+                    <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Gender</th>
+                      <th>Country</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td>
+                        <div fxLayout="row" fxLayoutAlign="start center">
+                          <img *ngIf="item.image && item.image != ''" class="avatar" [src]="item.image">
+                          <span class="name text-truncate">{{item.username}}</span>
+                        </div>
+                      </td>
+                      <td>
+                        <span class="email text-truncate">{{item.email}}</span>
+                      </td>
+                      <td>
+                        <mat-icon *ngIf="item.gender=='male'" class="active-icon light-blue-800-fg s-25">sentiment_satisfied</mat-icon>
+                        <mat-icon *ngIf="item.gender=='female'" class="active-icon pink-300-fg s-25">face</mat-icon>
+                      </td>
+                      <td>
+                        <span class="company text-truncate">{{item.country.name}}</span>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="section pb-48">
+
+                <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+                  <mat-icon class="m-0 mr-16">account_box</mat-icon>
+                  <div class="h2 secondary-text">Other Information</div>
+                </div>
+
+                <table class="simple">
+                  <thead>
+                  <tr>
+                    <th>Status</th>
+                    <th>Active</th>
+                    <th>Login Type</th>
+                    <!--<th>Next Refill</th>-->
+                    <th>Creation Date</th>
+                    <th>ISO Code</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td>
+                      <div *ngIf="item.status=='active'"><mat-icon  class="avatar active-icon mat-green-600-bg s-16">check</mat-icon>Active</div>
+                      <div *ngIf="item.status=='deactivated'"><mat-icon  class="avatar active-icon mat-red-500-bg s-16">close</mat-icon>De-activated</div>
+                      <div *ngIf="item.status=='pending'" ><mat-icon class=" active-icon mat-gray-500-bg s-16">hourglass_empty</mat-icon>Pending</div>
+                    </td>
+
+                    <td>
+                      <mat-icon *ngIf="item.isActive" class="avatar active-icon mat-green-600-bg s-16">check</mat-icon>
+                      <mat-icon *ngIf="!item.isActive" class="avatar active-icon mat-red-500-bg s-16">close</mat-icon>
+                    </td>
+
+                    <td>
+                      <span class="text-truncate">{{item.typeLogIn}}</span>
+                    </td>
+                    <!--<td>
+                      <span class="text-truncate">{{item.nextRefill | date}}</span>
+                    </td>-->
+                    <td>
+                      <span class="text-truncate">{{item.createdAt | date}}</span>
+                    </td>
+                    <td>
+                      <span class="text-truncate">{{item.ISOCode}}</span>
+                    </td>
+
+                  </tr>
+                  </tbody>
+                </table>
+
+
+              </div>
+
+              <div class="section pb-48">
+
+                <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+                  <mat-icon class="m-0 mr-16">opacity</mat-icon>
+                  <div class="h2 secondary-text">Thrown Bottles</div>
+                </div>
+
+                <table class="simple">
+                  <thead>
+                  <tr>
+                    <th>Bottles</th>
+                    <th>Extra Bottles</th>
+                    <th>Extra Bottles Today</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td>
+                      <span class="text-truncate">  {{item.bottles}}        </span>
+                    </td>
+                    <td>
+                      <span class="text-truncate">  {{item.bottlesCount}}        </span>
+                    </td>
+                    <td>
+                      <span class="text-truncate">  {{item.bottlesCountToday}}        </span>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+
+      </div>
+      <!-- / CONTENT -->
+
+    </div>
+    <!-- / CONTENT CARD -->
+
+  </div>
+  <!-- / CENTER -->
+</div>

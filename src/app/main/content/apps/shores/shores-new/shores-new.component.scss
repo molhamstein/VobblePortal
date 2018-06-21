@@ -1,0 +1,38 @@
+:host {
+
+  .content {
+
+    form {
+      width: 100%;
+      max-width: 800px !important;
+
+      .item-img-icon {
+        img {
+          border-radius: 50%;
+          object-fit: cover;
+          width: 100px;
+          height: 100px;
+        }
+      }
+        .active-icon{
+        border-radius: 50%;
+      }
+    }
+
+    .form-errors-model {
+      .item-img{
+        img{
+          border-radius: 50%;
+          object-fit: cover;
+          width: 100%;
+          height: 250px;
+        }
+      }
+      flex: 1;
+
+      code {
+        background: none !important;
+      }
+    }
+  }
+}

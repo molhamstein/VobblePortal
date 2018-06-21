@@ -1,0 +1,98 @@
+<div id="forms" class="page-layout simple fullwidth" fxLayout="column" fusePerfectScrollbar>
+
+  <!-- HEADER -->
+  <div class="header mat-accent-bg p-24 h-100" fxLayout="row" fxLayoutAlign="space-between center">
+
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <button class="mr-0 mr-sm-16" mat-icon-button [routerLink]="'/bottles/list'">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+
+      <div fxLayout="column" fxLayoutAlign="center start">
+        <div class="black-fg" fxLayout="row" fxLayoutAlign="start center">
+          <mat-icon class="secondary-text s-16">opacity</mat-icon>
+          <mat-icon class="secondary-text s-16">chevron_right</mat-icon>
+          <span class="secondary-text">Bottles</span>
+          <mat-icon class="secondary-text s-16">chevron_right</mat-icon>
+          <div class="h2">Edit</div>
+        </div>
+      </div>
+    </div>
+    <button mat-raised-button type="submit" (click)="onSubmit()" [disabled]="form.invalid  || video==''"
+            class="add-product-button mat-white-bg  mt-sm-0">
+      <span> SAVE </span>
+    </button>
+  </div>
+  <!-- / HEADER -->
+
+  <!-- CONTENT -->
+  <div class="content p-24">
+
+    <div fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-md="row" fxLayoutGap="20px">
+
+      <div fxFlex="65%">
+        <form class="mat-white-bg mat-elevation-z4 p-24 mr-24 mb-24" fxLayout="column" fxLayoutAlign="start"
+              fxFlex="1 0 auto" name="form" [formGroup]="form">
+          <div class="h2 mb-24">Bottle Details</div>
+
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" fxLayoutGap="10px">
+            <mat-button-toggle-group aria-label="Status" formControlName="status">
+              <mat-button-toggle value="active">
+                <mat-icon class="active-icon mat-green-600-bg s-16">check</mat-icon>
+                Active</mat-button-toggle>
+              <mat-button-toggle value="deactivated">
+                <mat-icon class="active-icon mat-red-500-bg s-16">close</mat-icon>
+                De-activated</mat-button-toggle>
+              <mat-button-toggle value="pending"><mat-icon class="active-icon mat-gray-500-bg s-16">hourglass_empty</mat-icon>Pending</mat-button-toggle>            </mat-button-toggle-group>
+          </div>
+          <br/>
+          <br/>
+
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" fxLayoutGap="10px">
+
+            <mat-form-field fxFlex="50">
+              <input matInput [matDatepicker]="picker" placeholder="Creation date" formControlName="createdAt" required>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="50" class="shores-field">
+              <mat-select placeholder="Shore" formControlName="shoreId">
+                <mat-option *ngFor="let shore of shores" [value]="shore.id">
+                  <img *ngIf="shore.cover && shore.cover!=''"  [src]="shore.cover" style=" border-radius: 50%;object-fit: cover; margin-top: 8px; margin-right: 5px;height: 30px;width: 30px">
+                  <span> {{shore.name_en}} {{shore.name_ar}}</span>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+          </div>
+
+        </form>
+      </div>
+
+      <div fxFlex="35%" class="form-errors-model mat-white-bg p-24 mat-elevation-z4">
+        <div class="p-4 item-img" fxLayout="column" fxLayoutGap="3px">
+          <video width="315" height="240" controls *ngIf="video== ''"></video>
+          <video width="315" height="240" controls *ngIf="video!= ''" >
+            <source *ngIf="video!= ''"  [src]="video" type="video/mp4">
+            <source *ngIf="video!= ''"  [src]="video" type="video/ogg">
+            <!--Your browser does not support the video tag.-->
+          </video>
+
+          <input type="file" accept="video/*" #file name="video" fxHide (change)="onFileChange($event)">
+          <button type="button" mat-raised-button color="primary" (click)="browseVideos()">Browse</button>
+          <button type="button" mat-raised-button color="warn" (click)="removeFileVideo()" [disabled]="video==''">Remove</button>
+        </div>
+
+
+      </div>
+
+
+    </div>
+
+  </div>
+  <!-- / CONTENT -->
+
+</div>
+
+

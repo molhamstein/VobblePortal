@@ -1,0 +1,123 @@
+<div id="forms" class="page-layout simple fullwidth" fxLayout="column" fusePerfectScrollbar>
+
+  <!-- HEADER -->
+  <div class="header mat-accent-bg p-24 h-100" fxLayout="row" fxLayoutAlign="space-between center">
+
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <button class="mr-0 mr-sm-16" mat-icon-button [routerLink]="'/products/list'">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+
+      <div fxLayout="column" fxLayoutAlign="center start">
+        <div class="black-fg" fxLayout="row" fxLayoutAlign="start center">
+          <mat-icon class="secondary-text s-16">style</mat-icon>
+          <mat-icon class="secondary-text s-16">chevron_right</mat-icon>
+          <span class="secondary-text">Products</span>
+          <mat-icon class="secondary-text s-16">chevron_right</mat-icon>
+          <div class="h2">Edit</div>
+        </div>
+      </div>
+    </div>
+    <button mat-raised-button type="submit" (click)="onSubmit()" [disabled]="form.invalid || icon == '' || icon == defaultIcon"
+            class="add-product-button mat-white-bg  mt-sm-0">
+      <span> SAVE </span>
+    </button>
+  </div>
+  <!-- / HEADER -->
+
+  <!-- CONTENT -->
+  <div class="content p-24">
+
+    <div fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-md="row" fxLayoutGap="20px">
+
+      <div fxFlex="80%">
+        <form class="mat-white-bg mat-elevation-z4 p-24 mr-24 mb-24" fxLayout="column" fxLayoutAlign="start"
+              fxFlex="1 0 auto" name="form" [formGroup]="form">
+
+          <div class="h2 mb-24">Product Details</div>
+
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" fxLayoutGap="10px">
+            <mat-form-field fxFlex="50%">
+              <input matInput placeholder="AR name" formControlName="name_ar" required>
+              <mat-error *ngIf="formErrors.name_ar.required">
+                Required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="50%">
+              <input matInput placeholder="EN name" formControlName="name_en" required>
+              <mat-error *ngIf="formErrors.name_en.required">
+                Required
+              </mat-error>
+            </mat-form-field>
+
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" fxLayoutGap="10px">
+            <mat-form-field fxFlex="50">
+              <input matInput placeholder="Price" formControlName="price" min="0" type="number" required>
+              <mat-error *ngIf="formErrors.price.required">
+                Required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="50">
+              <input matInput placeholder="Bottle Count" formControlName="bottleCount" type="number">
+            </mat-form-field>
+
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" fxLayoutGap="10px">
+            <mat-form-field fxFlex="50">
+              <mat-select placeholder="Type Goods" formControlName="typeGoodsId">
+                <mat-option *ngFor="let type of type_goods" [value]="type.id">
+                  <span>{{type.name_en}} / {{type.name_ar}}</span>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="50">
+              <input matInput placeholder="Validity" formControlName="validity" min="0" type="number">
+            </mat-form-field>
+
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" fxLayoutGap="10px">
+
+            <mat-form-field fxFlex="50">
+              <input matInput placeholder="Android Product" formControlName="androidProduct">
+            </mat-form-field>
+
+            <mat-form-field fxFlex="50">
+              <input matInput placeholder="Apple Product " formControlName="appleProduct">
+            </mat-form-field>
+
+          </div>
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" fxLayoutGap="10px">
+            <mat-form-field fxFlex="100%">
+              <textarea matInput placeholder="Description" formControlName="description" rows="5" required></textarea>
+            </mat-form-field>
+          </div>
+        </form>
+      </div>
+
+      <div fxFlex="20%" class="form-errors-model mat-white-bg p-24 mat-elevation-z4">
+
+        <div class="p-4 item-img" fxLayout="column" fxLayoutGap="3px">
+          <img *ngIf="icon != ''" [src]="icon" height="150px">
+          <img *ngIf="icon == ''" [src]="defaultIcon" height="150px">
+          <input type="file" accept="image/*" #file name="icon" fxHide (change)="onFileChange($event)">
+          <button type="button" mat-raised-button color="primary" (click)="browseFiles('icon')">Browse Icons
+          </button>
+          <button type="button" mat-raised-button color="warn" (click)="removeFile('icon')" [disabled]="icon=='' || icon == defaultIcon">Remove Icon</button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  <!-- / CONTENT -->
+
+</div>
+
+

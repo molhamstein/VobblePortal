@@ -1,0 +1,174 @@
+<div id="order" class="page-layout carded fullwidth" fusePerfectScrollbar>
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg mat-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- HEADER -->
+    <div class="header white-fg"
+         fxLayout="row" fxLayoutAlign="space-between center">
+
+      <!-- APP TITLE -->
+      <div fxLayout="row" fxLayoutAlign="start center">
+
+        <button class="mr-16" mat-icon-button [routerLink]="'/reports/list'">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+
+        <div fxLayout="column" fxLayoutAlign="start start"
+             *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+          <div class="h2">
+            Report
+          </div>
+          <!-- <div class="subtitle secondary-text">
+             <span>from</span>
+             <span>{{order.customer.firstName}} {{order.customer.lastName}}</span>
+           </div>-->
+        </div>
+      </div>
+
+      <div>
+        <button mat-raised-button
+                [routerLink]="'/reports/edit/'+ item.id"
+                class="add-product-button mat-white-bg  mt-sm-0">
+          <span> EDIT </span>
+        </button>
+        <button mat-raised-button
+                (click)="deleteItem()"
+                class="add-product-button mt-sm-0" color="warn">
+          <span> DELETE </span>
+        </button>
+      </div>
+
+
+      <!-- / APP TITLE -->
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card mat-white-bg">
+
+      <!-- CONTENT -->
+      <div class="content">
+
+        <mat-tab-group>
+
+          <mat-tab label="Report Details">
+
+            <div class="order-details tab-content p-24" fusePerfectScrollbar>
+
+              <div class="section pb-48">
+
+                <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+                  <mat-icon class="m-0 mr-16">report</mat-icon>
+                  <!--<div class="h2 secondary-text">Personal Information</div>-->
+                </div>
+
+                <div class="customer">
+                  <table class="simple">
+                    <thead>
+                    <tr>
+                      <th>Report Type</th>
+                      <th>Creation Date</th>
+                      <th>Owner</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td>
+                        <span class=" text-truncate">{{item.report_Type.reportName_en}}</span>
+                        <span class=" text-truncate">{{item.report_Type.reportName_ar}}</span>
+                      </td>
+
+                      <td>
+                        <span class=" text-truncate">{{item.createdAt | date}}</span>
+                      </td>
+
+                      <td [routerLink]="'/users/view/'+item.ownerId">
+                        <div fxLayout="row" fxLayoutAlign="start center">
+                          <img *ngIf="item.owner.image && item.owner.image != ''" class="avatar" [src]="item.owner.image">
+                          <span class="link-span  text-truncate">{{item.owner.username}}</span>
+                        </div>
+                      </td>
+
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+
+              <div class="section pb-48">
+
+                <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+                  <mat-icon class="m-0 mr-16">opacity</mat-icon>
+                  <div class="h2 secondary-text">Bottle</div>
+                </div>
+
+                <div class="customer">
+                  <table class="simple">
+                    <thead>
+                    <tr>
+                      <th>Bottle Creation Date</th>
+                      <th>Bottle Owner</th>
+                      <th>Bottle Shore</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+
+
+                      <td [routerLink]="'/bottles/view/'+item.bottle.id">
+                        <span class="link-span  text-truncate">{{item.bottle.createdAt | date}}</span>
+                      </td>
+
+                      <td [routerLink]="'/users/view/'+item.bottle.ownerId">
+                        <div fxLayout="row" fxLayoutAlign="start center">
+                          <img *ngIf="item.bottle.owner.image && item.bottle.owner.image != ''" class="avatar" [src]="item.bottle.owner.image">
+                          <span class="link-span  text-truncate">{{item.bottle.owner.username}}</span>
+                        </div>
+                      </td>
+
+                      <td [routerLink]="'/shores/view/'+item.bottle.shoreId">
+                        <div fxLayout="row" fxLayoutAlign="start center">
+                          <img *ngIf="item.bottle.shore.icon && item.bottle.shore.icon != ''" class="avatar" [src]="item.bottle.shore.icon">
+                          <div><span class="link-span text-truncate">{{item.bottle.shore.name_en}}</span>
+                            <span class="link-span  text-truncate">{{item.bottle.shore.name_ar}}</span></div>
+                        </div>
+                      </td>
+
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="section pb-48">
+
+                <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+                  <mat-icon class="m-0 mr-16">video_library</mat-icon>
+                  <div class="h2 secondary-text">Bottle Video</div>
+                </div>
+                <video width="320" height="240" controls>
+                  <source [src]="item.bottle.file" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+
+              </div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+
+      </div>
+      <!-- / CONTENT -->
+
+    </div>
+    <!-- / CONTENT CARD -->
+
+  </div>
+  <!-- / CENTER -->
+</div>

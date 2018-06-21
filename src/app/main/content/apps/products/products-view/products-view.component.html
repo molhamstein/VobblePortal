@@ -1,0 +1,158 @@
+<div id="order" class="page-layout carded fullwidth" fusePerfectScrollbar>
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg mat-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- HEADER -->
+    <div class="header white-fg"
+         fxLayout="row" fxLayoutAlign="space-between center">
+
+      <!-- APP TITLE -->
+      <div fxLayout="row" fxLayoutAlign="start center">
+
+        <button class="mr-16" mat-icon-button [routerLink]="'/products/list'">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+
+        <div fxLayout="column" fxLayoutAlign="start start"
+             *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+          <div class="h2">
+            Product {{item.name_en}}
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button mat-raised-button
+                [routerLink]="'/products/edit/'+ item.id"
+                class="add-product-button mat-white-bg  mt-sm-0">
+          <span> EDIT </span>
+        </button>
+        <button mat-raised-button
+                (click)="deleteItem()"
+                class="add-product-button mt-sm-0" color="warn">
+          <span> DELETE </span>
+        </button>
+      </div>
+
+
+      <!-- / APP TITLE -->
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card mat-white-bg">
+
+      <!-- CONTENT -->
+      <div class="content">
+
+        <mat-tab-group>
+
+          <mat-tab label="Product Details">
+
+            <div class="order-details tab-content p-24" fusePerfectScrollbar>
+
+              <div class="section pb-48">
+
+               <!-- <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+                  <mat-icon class="m-0 mr-16">style</mat-icon>
+                  <div class="h2 secondary-text">Personal Information</div>
+                </div>-->
+
+                <div class="customer">
+                  <table class="simple">
+                    <thead>
+                    <tr>
+                      <th>Icon</th>
+                      <th>Name EN</th>
+                      <th>Name AR</th>
+                      <th>Price</th>
+                      <th>Validity</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td>
+                        <div fxLayout="row" fxLayoutAlign="start center">
+                          <img *ngIf="item.icon && item.icon != ''" class="avatar" [src]="item.icon">
+                        </div>
+                      </td>
+                      <td>
+                        <span class="name text-truncate">{{item.name_en}}</span>
+                      </td>
+                      <td>
+                        <span class="name text-truncate">{{item.name_ar}}</span>
+                      </td>
+                      <td>
+                        <span class="name text-truncate">{{item.price | number}}</span>
+                      </td>
+                      <td>
+                        <span class="company text-truncate">{{item.validity}}</span>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="section pb-48">
+
+                <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+                  <mat-icon class="m-0 mr-16">style</mat-icon>
+                  <div class="h2 secondary-text">Other Information</div>
+                </div>
+
+                <table class="simple">
+                  <thead>
+                  <tr>
+                    <th>Android Product</th>
+                    <th>Apple Product</th>
+                    <th>Type Goods</th>
+                    <th>Description</th>
+
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td>
+                      <span class="text-truncate">{{item.androidProduct}}</span>
+                    </td>
+                    <td>
+                      <span class="text-truncate">{{item.appleProduct}}</span>
+                    </td>
+                    <td>
+                      <span class="text-truncate">{{item.typeGoods.name_ar}}</span>
+                      <span class="text-truncate">{{item.typeGoods.name_en}}</span>
+                    </td>
+
+                    <td>
+                      <span class="text-truncate">{{item.description}}</span>
+                    </td>
+
+                  </tr>
+                  </tbody>
+                </table>
+
+
+              </div>
+
+
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+
+      </div>
+      <!-- / CONTENT -->
+
+    </div>
+    <!-- / CONTENT CARD -->
+
+  </div>
+  <!-- / CENTER -->
+</div>
