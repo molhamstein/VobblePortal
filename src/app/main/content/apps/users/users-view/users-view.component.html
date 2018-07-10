@@ -163,21 +163,21 @@
                 <table class="simple">
                   <thead>
                   <tr>
-                    <th>Bottles</th>
-                    <th>Extra Bottles</th>
-                    <th>Extra Bottles Today</th>
+                    <th>Total Thrown Bottles</th>
+                    <th>Extra Bottles Count</th>
+                    <th>Bottles Count</th>
                   </tr>
                   </thead>
                   <tbody>
                   <tr>
                     <td>
-                      <span class="text-truncate">  {{item.bottles}}        </span>
+                      <span class="text-truncate">  {{item.totalBottlesThrown}}        </span>
+                    </td>
+                    <td>
+                      <span class="text-truncate">  {{item.extraBottlesCount}}        </span>
                     </td>
                     <td>
                       <span class="text-truncate">  {{item.bottlesCount}}        </span>
-                    </td>
-                    <td>
-                      <span class="text-truncate">  {{item.bottlesCountToday}}        </span>
                     </td>
                   </tr>
                   </tbody>

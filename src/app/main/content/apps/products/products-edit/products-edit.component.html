@@ -107,9 +107,9 @@
           <img *ngIf="icon != ''" [src]="icon" height="150px">
           <img *ngIf="icon == ''" [src]="defaultIcon" height="150px">
           <input type="file" accept="image/*" #file name="icon" fxHide (change)="onFileChange($event)">
-          <button type="button" mat-raised-button color="primary" (click)="browseFiles('icon')">Browse Icons
+          <button type="button" mat-raised-button color="primary" (click)="browseFiles()">Browse Icons
           </button>
-          <button type="button" mat-raised-button color="warn" (click)="removeFile('icon')" [disabled]="icon=='' || icon == defaultIcon">Remove Icon</button>
+          <button type="button" mat-raised-button color="warn" (click)="removeFile()" [disabled]="icon=='' || icon == defaultIcon">Remove Icon</button>
         </div>
       </div>
 

@@ -7,8 +7,8 @@ export class User
   userId: string;
   gender: string;
   image: string;
+  extraBottlesCount: number;
   bottlesCount: number;
-  bottlesCountToday: number;
   email: string;
   typeLogIn: string;
   socialId: string;
@@ -18,7 +18,7 @@ export class User
   token:string;
   createdAt:string;
   status:string;
-  bottles:number;
+  totalBottlesThrown:number;
   isActive: boolean;
 
   constructor(user)
@@ -28,8 +28,8 @@ export class User
       this.image = user.image || AppConfig.defaultAvatar;
       this.userId = user.userId || '';
       this.gender = user.gender || '';
+      this.extraBottlesCount = user.extraBottlesCount || 0;
       this.bottlesCount = user.bottlesCount || 0;
-      this.bottlesCountToday = user.bottlesCountToday || 0;
       this.typeLogIn = user.typeLogIn || '';
       this.email = user.email || '';
       this.socialId = user.socialId || '';
@@ -39,7 +39,7 @@ export class User
       this.country = user.country || {};
       this.createdAt = user.createdAt ||'';
       this.status = user.status || '';
-      this.bottles = user.bottles || 0;
+      this.totalBottlesThrown = user.totalBottlesThrown || 0;
       this.isActive = user.isActive || false;
   }
 }

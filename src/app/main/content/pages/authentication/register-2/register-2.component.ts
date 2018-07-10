@@ -38,7 +38,7 @@ export class FuseRegister2Component implements OnInit {
       gender: {},
       username: {required: true, unique: true},
       email: {required: true},
-      password: {required: true},
+      password: {required: true, minlength: true},
       passwordConfirm: {required: true}
     };
   }
@@ -64,7 +64,7 @@ export class FuseRegister2Component implements OnInit {
           return null;
         }]),
         email: new FormControl('', [Validators.required, Validators.email]),
-        password: new FormControl('', Validators.required),
+        password: new FormControl('', [Validators.required, Validators.minLength(6)]),
         passwordConfirm:  new FormControl('', Validators.required),
 
       }, {validator: this.checkIfMatchingPasswords('password', 'passwordConfirm')}

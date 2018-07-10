@@ -41,7 +41,6 @@
           <input matInput placeholder="Username" formControlName="username" required>
           <mat-error *ngIf="registerFormErrors.username.required">
             Username is required
-            <!--TODO show error msg-->
           </mat-error>
           <mat-error *ngIf="!registerFormErrors.username.unique">
             Username is already exist
@@ -59,9 +58,12 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input  matInput type="password" placeholder="Password" formControlName="password" required>
+          <input  matInput type="password" placeholder="Password" formControlName="password" required minLength="6">
           <mat-error *ngIf="registerFormErrors.password.required">
             Password is required
+          </mat-error>
+		  <mat-error *ngIf="registerFormErrors.passwordConfirm.minlength">
+            Password must be 6 digits at least
           </mat-error>
         </mat-form-field>
 

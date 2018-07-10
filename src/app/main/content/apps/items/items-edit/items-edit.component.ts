@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {fuseAnimations} from "../../../../../core/animations";
-import {FormGroup, FormBuilder, Validators} from "@angular/forms";
+import {FormGroup, FormBuilder, Validators, FormControl} from "@angular/forms";
 import {Router} from "@angular/router";
 import {HelpersService} from "../../../../shared/helpers.service";
 import {PageAction} from "../../../../shared/enums/page-action";
@@ -9,8 +9,9 @@ import {ProductsService} from "../../products/products.service";
 import {ProgressBarService} from "../../../../../core/services/progress-bar.service";
 import {User} from "../../users/user.model";
 import {UsersService} from "../../users/users.service";
-import {Subscription} from "rxjs";
+import {Subscription, Observable} from "rxjs";
 import {Item} from "../item.model";
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-items-edit',
@@ -26,6 +27,8 @@ export class ItemsEditComponent implements OnInit {
   formErrors: any;
   products: any[];
   users: User[] = [];
+
+  filteredUsers: Observable<User[]>;
 
 
   constructor(private formBuilder: FormBuilder,
@@ -55,7 +58,7 @@ export class ItemsEditComponent implements OnInit {
         });
 
     this.getProducts();
-    this.getUsers();
+    //this.getUsers();
 
     this.form = this.formBuilder.group({
       id: [this.item.id],
@@ -66,12 +69,21 @@ export class ItemsEditComponent implements OnInit {
       startAt: [new Date(this.item.startAt), Validators.required],
       endAt : [new Date(this.item.endAt)],
       productId : [this.item.productId, Validators.required],
-      ownerId  : [this.item.ownerId, Validators.required]
+      //ownerId  : [this.item.ownerId, Validators.required],
+      ownerId  :new FormControl(this.item.owner,Validators.required)
     });
 
     this.form.valueChanges.subscribe(() => {
       this.onFormValuesChanged();
     });
+
+
+    this.filteredUsers = this.form['controls'].ownerId.valueChanges
+      .pipe(
+        startWith(''),
+        map(val => this.filter(val))
+      );
+
   }
 
 
@@ -88,6 +100,27 @@ export class ItemsEditComponent implements OnInit {
     }
   }
 
+
+  filter(val): User[] {
+    if(val && typeof val == "string") {
+      return this.users.filter(option =>
+        option.username.toLowerCase().includes(val.toLowerCase()));
+    }
+
+  }
+
+  onSearch(flag, keyword){
+    if(flag == 'user')
+      this.usersService.getUsersAutocpmlete(keyword).then( items => {
+        this.users = items;
+      })
+  }
+
+  displayFn(user: User): string {
+    return user.username;
+  }
+
+
   getProducts(){
     this.productsService.getItems().then(items => {
       this.products = items;
@@ -95,14 +128,8 @@ export class ItemsEditComponent implements OnInit {
   }
 
 
-  getUsers(){
-    this.usersService.getUsers().then( items => {
-      this.users = items;
-    })
-  }
-
   onSubmit() {
-    console.log('onSubmit ', this.form.value);
+    this.form.value.ownerId = this.form.value.ownerId.id;
     this.progressBarService.toggle();
     console.log('onSubmit ', this.form.value);
     this.itemsService.editItem(this.form.value).then((val) => {

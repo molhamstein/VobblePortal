@@ -1,7 +1,7 @@
 import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
 import {fuseAnimations} from "../../../../../core/animations";
 import {FormControl} from "@angular/forms";
-import {MatPaginator, MatSort, MatDialogRef, MatDialog} from "@angular/material";
+import {MatPaginator, MatSort, MatDialogRef, MatDialog, PageEvent} from "@angular/material";
 import {FuseConfirmDialogComponent} from "../../../../../core/components/confirm-dialog/confirm-dialog.component";
 import {AppConfig} from "../../../../shared/app.config";
 import { DataSource } from '@angular/cdk/collections';
@@ -17,6 +17,7 @@ import {FuseUtils} from "../../../../../core/fuseUtils";
 
 import {BottlesService} from "../bottles.service";
 import {ProgressBarService} from "../../../../../core/services/progress-bar.service";
+import {Bottle} from "../bottle.model";
 
 @Component({
   selector: 'app-bottles-list',
@@ -37,6 +38,7 @@ export class BottlesListComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   defaultIcon: string = '';
+  itemsCount: number = 0;
 
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
 
@@ -59,7 +61,17 @@ export class BottlesListComponent implements OnInit {
         this.dataSource.filter = this.filter.nativeElement.value;
       });
 
+    this.itemsCount =  this.bottlesService.itemsCount;
   }
+
+  getItemsPaging(){
+    this.bottlesService.getItemsPaging(this.paginator.pageIndex, this.paginator.pageSize).then(
+      items =>{
+        return items
+      }
+    );
+  }
+
 
   deleteItem(contact)  {
     this.confirmDialogRef = this.dialog.open(FuseConfirmDialogComponent, {
@@ -72,11 +84,13 @@ export class BottlesListComponent implements OnInit {
       if ( result )
       {
         this.bottlesService.deleteItem(contact);
+        this.itemsCount--;
       }
       this.confirmDialogRef = null;
     });
 
   }
+
 }
 
 
@@ -116,8 +130,9 @@ export class FilesDataSource extends DataSource<any>{
 
   }
 
+
   /** Connect function called by the table to retrieve one stream containing the data to render. */
-  connect(): Observable<any[]>
+  connect() : Observable<any[]>
   {
     const displayDataChanges = [
       this.bottlesService.onItemsChanged,
@@ -126,24 +141,9 @@ export class FilesDataSource extends DataSource<any>{
       this._sort.sortChange
     ];
 
+
     return Observable.merge(...displayDataChanges).map(() => {
       let data = this.bottlesService.items.slice();
-      /*this.bottlesService.getItemsPaging(this._paginator.pageIndex, this._paginator.pageSize).then(
-        items =>{
-          console.log('items ', items);
-          let data = items;
-          data = this.filterData(data);
-
-          this.filteredData = [...data];
-
-          data = this.sortData(data);
-
-          // Grab the page's slice of data.
-          //const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
-          //return data.splice(startIndex, this._paginator.pageSize);
-         // return data;
-        }
-      );*/
 
       data = this.filterData(data);
 
@@ -153,9 +153,12 @@ export class FilesDataSource extends DataSource<any>{
 
       // Grab the page's slice of data.
       const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
-      return data.splice(startIndex, this._paginator.pageSize);
+      //return data.splice(startIndex, this._paginator.pageSize);
+
+      return data;
     });
   }
+
 
   filterData(data)
   {

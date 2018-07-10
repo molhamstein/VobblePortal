@@ -29,18 +29,14 @@ export class FuseResetPassword2Component implements OnInit
         });
 
         this.resetPasswordFormErrors = {
-            email          : {},
-            password       : {},
-            passwordConfirm: {}
+            email          : {required: true}
         };
     }
 
     ngOnInit()
     {
         this.resetPasswordForm = this.formBuilder.group({
-            email          : ['', [Validators.required, Validators.email]],
-            password       : ['', Validators.required],
-            passwordConfirm: ['', Validators.required]
+            email          : ['', [Validators.required, Validators.email]]
         });
 
         this.resetPasswordForm.valueChanges.subscribe(() => {

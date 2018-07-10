@@ -17,8 +17,10 @@ export class BottlesService implements Resolve<any> {
 
   onItemsChanged: BehaviorSubject<any> = new BehaviorSubject({});
   onItemChanged: BehaviorSubject<any> = new BehaviorSubject({});
+  onItemsCountChanged: BehaviorSubject<any> = new BehaviorSubject({});
   item: any;
   items: any[];
+  itemsCount: number;
 
   constructor(private http: HttpClient,
               private authService: AuthService,
@@ -33,7 +35,8 @@ export class BottlesService implements Resolve<any> {
       let itemsPerPage = route.data['itemsPerPage'];
       if(resolverType == 'list'){
         Promise.all([
-          this.getItemsPaging(page, itemsPerPage)
+          this.getItemsPaging(page, itemsPerPage),
+          this.getItemsCount()
         ]).then(() => {
             resolve();
           }, reject
@@ -49,16 +52,13 @@ export class BottlesService implements Resolve<any> {
     });
   }
 
-  getItemsPaging(page, itemsPerPage): Promise<any> {
-    // filter[limit]='+itemsPerPage+'&filter[skip]='+offset+'&
+  getItems(): Promise<any> {
     return new Promise((resolve, reject) => {
-      var offset = (page * itemsPerPage) +1 ;
-      console.log(' var offset = (page - 1) * itemsPerPage + 1; ', offset);
-        this.http.get<Bottle[]>(AppConfig.apiUrl + 'bottles?filter[order]=createdAt DESC&access_token=' + this.authService.getToken())
+        this.http.get<Bottle[]>(AppConfig.apiUrl + 'bottles?access_token=' + this.authService.getToken())
           .subscribe((response: any) => {
               console.log('response bottles', response);
-              this.items = response;
-              //this.onItemsChanged.next(this.items);
+              //this.items = response;
+              this.onItemsChanged.next(this.items);
               resolve(response);
             },
             error => {
@@ -73,15 +73,42 @@ export class BottlesService implements Resolve<any> {
     );
   }
 
-  getItems(): Promise<any> {
+
+
+  getItemsPaging(page, itemsPerPage): Promise<any> {
+    // filter[limit]='+itemsPerPage+'&filter[skip]='+offset+'&
     return new Promise((resolve, reject) => {
-        this.http.get<Bottle[]>(AppConfig.apiUrl + 'bottles?access_token=' + this.authService.getToken())
+      var offset = (page * itemsPerPage) +1 ;
+      console.log(' offset ', offset);
+        this.http.get<Bottle[]>(AppConfig.apiUrl + 'bottles?filter[limit]='+itemsPerPage+'&filter[skip]='+offset+'&filter[order]=createdAt DESC&access_token=' + this.authService.getToken())
           .subscribe((response: any) => {
-            console.log('response bottles', response);
-            //this.items = response;
-            this.onItemsChanged.next(this.items);
-            resolve(response);
-          },
+              console.log('response bottles', response);
+              this.items = response;
+              this.onItemsChanged.next(this.items);
+              resolve(response);
+            },
+            error => {
+              console.log('error ', error);
+              if(error.error.error.code == AppConfig.authErrorCode)
+                this.router.navigate(['/error-404']);
+              else this.helpersService.showActionSnackbar(null, false, '', {style: 'failed-snackbar'}, AppConfig.technicalException);
+              reject();
+            }
+          )
+      }
+    );
+  }
+
+  getItemsCount(): Promise<any> {
+    // filter[limit]='+itemsPerPage+'&filter[skip]='+offset+'&
+    return new Promise((resolve, reject) => {
+        this.http.get<Bottle[]>(AppConfig.apiUrl + 'bottles/count?access_token=' + this.authService.getToken())
+          .subscribe((response: any) => {
+              console.log('count bottles', response);
+              this.itemsCount = response.count;
+              this.onItemsCountChanged.next(this.itemsCount);
+              resolve(response);
+            },
             error => {
               console.log('error ', error);
               if(error.error.error.code == AppConfig.authErrorCode)
@@ -104,6 +131,8 @@ export class BottlesService implements Resolve<any> {
             console.log(data);
             this.items.splice(index, 1);
             this.onItemsChanged.next(this.items);
+            this.itemsCount--;
+            this.onItemsCountChanged.next(this.itemsCount);
             this.progressBarService.toggle();
             this.router.navigate(['/bottles/list']);
             resolve(true);

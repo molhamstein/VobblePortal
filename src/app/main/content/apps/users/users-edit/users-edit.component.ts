@@ -90,9 +90,9 @@ export class UsersEditComponent implements OnInit, OnDestroy
         return null;
       }]],
      // password: ['', [Validators.required, Validators.minLength(6)]],
-      bottles: [this.item.bottles],
+      totalBottlesThrown: [this.item.totalBottlesThrown],
+      extraBottlesCount: [this.item.extraBottlesCount],
       bottlesCount: [this.item.bottlesCount],
-      bottlesCountToday: [this.item.bottlesCountToday],
       createdAt: [this.item.createdAt, Validators.required      ],
       image: [this.item.image],
       isActive: [this.item.isActive],

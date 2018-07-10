@@ -124,7 +124,7 @@ export class AuthService {
       resolve(true);
     });
   }
-
+/*
   reset_password(email: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const headers = new HttpHeaders()
@@ -137,19 +137,21 @@ export class AuthService {
             console.log('data ', data);
           })
     })
-  }
+  }*/
 
   forgot_password(email: string): Promise<any> {
+	  console.log(email);
     return new Promise((resolve, reject) => {
       const headers = new HttpHeaders()
         .set('Content-Type', 'application/json');
-      this.http.post(AppConfig.apiUrl + '/users/reset',{email : email}, {
+      this.http.post(AppConfig.apiUrl + 'users/reset',{email : email}, {
         headers: headers
       })
         .subscribe(
           data => {
             console.log('data ', data);
-          })
+            resolve(data);
+          }, error =>{ console.log(error); reject(false)})
     })
   }
 

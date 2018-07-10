@@ -72,9 +72,9 @@ export class UsersNewComponent implements OnInit {
         return null;
       }]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      bottles: [''],
+      totalBottlesThrown: [''],
+      extraBottlesCount: [''],
       bottlesCount: [''],
-      bottlesCountToday: [''],
       createdAt: [new Date(), Validators.required      ],
       image: [''],
       isActive: [true],

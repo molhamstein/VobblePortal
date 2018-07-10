@@ -88,12 +88,21 @@
             </mat-form-field>
 
             <mat-form-field fxFlex="50">
-              <mat-select placeholder="Owner" formControlName="ownerId" required>
+              <input type="text"  placeholder="Owner" formControlName="ownerId" required matInput [matAutocomplete]="auto"
+                     (input)="onSearch('user',$event.target.value)">
+              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" >
+                <mat-option *ngFor="let option of filteredUsers | async" [value]="option">
+                  <img *ngIf="option.image && option.image!=''" [src]="option.image" style=" border-radius: 50%;object-fit: cover; margin-top: 8px; margin-right: 5px;height: 30px;width: 30px;">
+                  {{ option.username }}
+                </mat-option>
+              </mat-autocomplete>
+
+             <!-- <mat-select placeholder="Owner" formControlName="ownerId" required>
                 <mat-option *ngFor="let owner of users" [value]="owner.id">
                   <img *ngIf="owner.image && owner.image!=''" [src]="owner.image" style=" border-radius: 50%;object-fit: cover; margin-top: 8px; margin-right: 5px;height: 30px;width: 30px;">
                   <span>{{owner.username}}</span>
                 </mat-option>
-              </mat-select>
+              </mat-select>-->
             </mat-form-field>
 
           </div>

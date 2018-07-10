@@ -3,6 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FuseConfigService } from '../../../../../core/services/config.service';
 import { fuseAnimations } from '../../../../../core/animations';
+import {AuthService} from "../auth.service";
+import {HelpersService} from "../../../../shared/helpers.service";
+import {FuseSplashScreenService} from "../../../../../core/services/splash-screen.service";
+import {Router} from "@angular/router";
 
 @Component({
     selector   : 'fuse-forgot-password-2',
@@ -17,7 +21,11 @@ export class FuseForgotPassword2Component implements OnInit
 
     constructor(
         private fuseConfig: FuseConfigService,
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        private authService: AuthService,
+        private router: Router,
+        private loadingScreen: FuseSplashScreenService,
+        private helpers: HelpersService
     )
     {
         this.fuseConfig.setSettings({
@@ -29,7 +37,7 @@ export class FuseForgotPassword2Component implements OnInit
         });
 
         this.forgotPasswordFormErrors = {
-            email: {}
+            email: {required: true}
         };
     }
 
@@ -57,7 +65,7 @@ export class FuseForgotPassword2Component implements OnInit
             this.forgotPasswordFormErrors[field] = {};
 
             // Get the control
-            const control = this.forgotPasswordFormErrors.get(field);
+            const control = this.forgotPasswordForm.get(field);
 
             if ( control && control.dirty && !control.valid )
             {
@@ -65,4 +73,21 @@ export class FuseForgotPassword2Component implements OnInit
             }
         }
     }
+
+
+  onSubmit() {
+    console.log('submit ', this.forgotPasswordForm.value);
+    this.authService.forgot_password(this.forgotPasswordForm.value.email).then(
+      (data) => {
+        console.log("data ", data);
+        this.router.navigate(['auth/login']);
+        this.helpers.showActionSnackbar(null, false, '',"Reset E-mail has sent successfully");
+        this.loadingScreen.hide();
+      }, (reason) => {
+        this.helpers.showActionSnackbar(null, false, '', {style: 'failed-snackbar'}, "Reset E-mail has NOT sent");
+        this.loadingScreen.hide();
+        console.log('error ', reason);
+      }
+    )
+  }
 }
