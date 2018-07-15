@@ -34,6 +34,7 @@ export class UsersListComponent implements OnInit{
 
   dataSource: FilesDataSource | null;
   displayedColumns = ['image','name', 'gender','country','status' ,'email', 'btns'];
+  itemsCount: number = 0;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('filter') filter: ElementRef;
@@ -58,8 +59,16 @@ export class UsersListComponent implements OnInit{
         }
         this.dataSource.filter = this.filter.nativeElement.value;
       });
-
+    this.itemsCount =  this.usersService.itemsCount;
   }
+  getItemsPaging(){
+    this.usersService.getItemsPaging(this.paginator.pageIndex, this.paginator.pageSize).then(
+      items =>{
+        return items
+      }
+    );
+  }
+
 
   deleteProduct(contact) {
     this.confirmDialogRef = this.dialog.open(FuseConfirmDialogComponent, {

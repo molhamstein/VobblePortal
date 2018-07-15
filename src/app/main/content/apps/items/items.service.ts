@@ -16,6 +16,8 @@ export class ItemsService implements Resolve<any> {
 
   onItemsChanged: BehaviorSubject<any> = new BehaviorSubject({});
   onItemChanged: BehaviorSubject<any> = new BehaviorSubject({});
+  onItemsCountChanged: BehaviorSubject<any> = new BehaviorSubject({});
+  itemsCount: number;
   item: any;
   items: any[];
 
@@ -26,9 +28,12 @@ export class ItemsService implements Resolve<any> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
     return new Promise((resolve, reject) => {
       let resolverType = route.data['resolverType'];
+      let page = route.data['page'];
+      let itemsPerPage = route.data['itemsPerPage'];
       if(resolverType == 'list'){
         Promise.all([
-          this.getItems()
+          this.getItemsPaging(page, itemsPerPage),
+          this.getItemsCount()
         ]).then(() => {
             resolve();
           }, reject
@@ -66,6 +71,51 @@ export class ItemsService implements Resolve<any> {
   }
 
 
+  getItemsPaging(page, itemsPerPage): Promise<any> {
+    return new Promise((resolve, reject) => {
+        var offset = (page * itemsPerPage) +1 ;
+        console.log(' offset ', offset);
+        this.http.get<Item[]>(AppConfig.apiUrl + 'items?filter[limit]='+itemsPerPage+'&filter[skip]='+offset+'&access_token=' + this.authService.getToken())
+          .subscribe((response: any) => {
+              console.log('response items', response);
+              this.items = response;
+              this.onItemsChanged.next(this.items);
+              resolve(response);
+            },
+            error => {
+              console.log('error ', error);
+              if(error.error.error.code == AppConfig.authErrorCode)
+                this.router.navigate(['/error-404']);
+              else this.helpersService.showActionSnackbar(null, false, '', {style: 'failed-snackbar'}, AppConfig.technicalException);
+              reject();
+            }
+          )
+      }
+    );
+  }
+
+  getItemsCount(): Promise<any> {
+    return new Promise((resolve, reject) => {
+        this.http.get<Item[]>(AppConfig.apiUrl + 'items/count?access_token=' + this.authService.getToken())
+          .subscribe((response: any) => {
+              console.log('count bottles', response);
+              this.itemsCount = response.count;
+              this.onItemsCountChanged.next(this.itemsCount);
+              resolve(response);
+            },
+            error => {
+              console.log('error ', error);
+              if(error.error.error.code == AppConfig.authErrorCode)
+                this.router.navigate(['/error-404']);
+              else this.helpersService.showActionSnackbar(null, false, '', {style: 'failed-snackbar'}, AppConfig.technicalException);
+              reject();
+            }
+          );
+      }
+    );
+  }
+
+
   deleteItem(item): Promise<any> {
     return new Promise((resolve, reject) => {
       const index = this.items.indexOf(item);
@@ -75,6 +125,8 @@ export class ItemsService implements Resolve<any> {
             console.log(data);
             this.items.splice(index, 1);
             this.onItemsChanged.next(this.items);
+            this.itemsCount--;
+            this.onItemsCountChanged.next(this.itemsCount);
             this.progressBarService.toggle();
             this.router.navigate(['/shores/list']);
             resolve(true);

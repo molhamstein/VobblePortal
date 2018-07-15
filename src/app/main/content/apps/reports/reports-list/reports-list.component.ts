@@ -29,6 +29,7 @@ export class ReportsListComponent implements OnInit {
 
   dataSource: FilesDataSource | null;
   displayedColumns = ['report_Type_en','report_Type_ar', 'owner','createdAt', 'bottle_owner', 'btns'];
+  itemsCount: number = 0;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('filter') filter: ElementRef;
@@ -52,7 +53,16 @@ export class ReportsListComponent implements OnInit {
         }
         this.dataSource.filter = this.filter.nativeElement.value;
       });
+    this.itemsCount =  this.reportsService.itemsCount;
   }
+  getItemsPaging(){
+    this.reportsService.getItemsPaging(this.paginator.pageIndex, this.paginator.pageSize).then(
+      items =>{
+        return items
+      }
+    );
+  }
+
 
   deleteItem(contact) {
     this.confirmDialogRef = this.dialog.open(FuseConfirmDialogComponent, {
@@ -64,6 +74,7 @@ export class ReportsListComponent implements OnInit {
     this.confirmDialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.reportsService.deleteItem(contact);
+        this.itemsCount--;
       }
       this.confirmDialogRef = null;
     });
@@ -118,8 +129,9 @@ export class FilesDataSource extends DataSource<any> {
       data = this.sortData(data);
 
       // Grab the page's slice of data.
-      const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
-      return data.splice(startIndex, this._paginator.pageSize);
+      //const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
+      //return data.splice(startIndex, this._paginator.pageSize);
+      return data;
     });
   }
 

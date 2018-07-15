@@ -18,9 +18,10 @@ export class BottlesService implements Resolve<any> {
   onItemsChanged: BehaviorSubject<any> = new BehaviorSubject({});
   onItemChanged: BehaviorSubject<any> = new BehaviorSubject({});
   onItemsCountChanged: BehaviorSubject<any> = new BehaviorSubject({});
+  itemsCount: number;
   item: any;
   items: any[];
-  itemsCount: number;
+
 
   constructor(private http: HttpClient,
               private authService: AuthService,
@@ -76,7 +77,6 @@ export class BottlesService implements Resolve<any> {
 
 
   getItemsPaging(page, itemsPerPage): Promise<any> {
-    // filter[limit]='+itemsPerPage+'&filter[skip]='+offset+'&
     return new Promise((resolve, reject) => {
       var offset = (page * itemsPerPage) +1 ;
       console.log(' offset ', offset);
@@ -100,7 +100,6 @@ export class BottlesService implements Resolve<any> {
   }
 
   getItemsCount(): Promise<any> {
-    // filter[limit]='+itemsPerPage+'&filter[skip]='+offset+'&
     return new Promise((resolve, reject) => {
         this.http.get<Bottle[]>(AppConfig.apiUrl + 'bottles/count?access_token=' + this.authService.getToken())
           .subscribe((response: any) => {

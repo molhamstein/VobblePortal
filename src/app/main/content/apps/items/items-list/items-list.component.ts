@@ -29,6 +29,7 @@ export class ItemsListComponent implements OnInit {
 
   dataSource: FilesDataSource | null;
   displayedColumns = ['storeType', 'startAt', 'endAt', 'isConsumed', 'valid', 'btns'];
+  itemsCount: number = 0;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('filter') filter: ElementRef;
@@ -52,8 +53,16 @@ export class ItemsListComponent implements OnInit {
         }
         this.dataSource.filter = this.filter.nativeElement.value;
       });
-
+    this.itemsCount =  this.itemsService.itemsCount;
   }
+  getItemsPaging(){
+    this.itemsService.getItemsPaging(this.paginator.pageIndex, this.paginator.pageSize).then(
+      items =>{
+        return items
+      }
+    );
+  }
+
 
   deleteItem(contact) {
     this.confirmDialogRef = this.dialog.open(FuseConfirmDialogComponent, {
@@ -65,6 +74,7 @@ export class ItemsListComponent implements OnInit {
     this.confirmDialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.itemsService.deleteItem(contact);
+        this.itemsCount--;
       }
       this.confirmDialogRef = null;
     });
@@ -119,8 +129,9 @@ export class FilesDataSource extends DataSource<any> {
       data = this.sortData(data);
 
       // Grab the page's slice of data.
-      const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
-      return data.splice(startIndex, this._paginator.pageSize);
+      //const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
+      //return data.splice(startIndex, this._paginator.pageSize);
+      return data;
     });
   }
 
