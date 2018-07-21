@@ -84,7 +84,7 @@
           <mat-header-cell *cdkHeaderCellDef >Active</mat-header-cell>
           <mat-cell *cdkCellDef="let product"  fxShow.gt-xs>
             <mat-icon *ngIf="product.status=='active'" class="active-icon mat-green-600-bg s-16">check</mat-icon>
-            <mat-icon *ngIf="product.status=='deactivate'" class="active-icon mat-red-500-bg s-16">close</mat-icon>
+            <mat-icon *ngIf="product.status=='deactive'" class="active-icon mat-red-500-bg s-16">close</mat-icon>
             <mat-icon *ngIf="product.status=='pending'" class="active-icon mat-gray-500-bg s-16">hourglass_empty</mat-icon>
           </mat-cell>
         </ng-container>

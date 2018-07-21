@@ -87,7 +87,7 @@
                       </td>-->
                       <td>
                         <div *ngIf="item.status=='active'"><mat-icon  class="avatar active-icon mat-green-600-bg s-16">check</mat-icon>Active</div>
-                        <div *ngIf="item.status=='deactivated'"><mat-icon  class="avatar active-icon mat-red-500-bg s-16">close</mat-icon>De-activated</div>
+                        <div *ngIf="item.status=='deactive'"><mat-icon  class="avatar active-icon mat-red-500-bg s-16">close</mat-icon>De-active</div>
                         <div *ngIf="item.status=='pending'" ><mat-icon class=" active-icon mat-gray-500-bg s-16">hourglass_empty</mat-icon>Pending</div>
                       </td>
                       <td [routerLink]="'/users/view/'+item.ownerId">

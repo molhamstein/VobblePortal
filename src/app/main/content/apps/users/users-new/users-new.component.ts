@@ -77,7 +77,7 @@ export class UsersNewComponent implements OnInit {
       bottlesCount: [''],
       createdAt: [new Date(), Validators.required      ],
       image: [''],
-      isActive: [true],
+    //  isActive: [true],
       // nextRefill: [''],
       ISOCode: new FormControl('')
     });

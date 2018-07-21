@@ -113,7 +113,7 @@
                   <thead>
                   <tr>
                     <th>Status</th>
-                    <th>Active</th>
+                    <!--<th>Active</th>-->
                     <th>Login Type</th>
                     <!--<th>Next Refill</th>-->
                     <th>Creation Date</th>
@@ -128,10 +128,10 @@
                       <div *ngIf="item.status=='pending'" ><mat-icon class=" active-icon mat-gray-500-bg s-16">hourglass_empty</mat-icon>Pending</div>
                     </td>
 
-                    <td>
+                   <!-- <td>
                       <mat-icon *ngIf="item.isActive" class="avatar active-icon mat-green-600-bg s-16">check</mat-icon>
                       <mat-icon *ngIf="!item.isActive" class="avatar active-icon mat-red-500-bg s-16">close</mat-icon>
-                    </td>
+                    </td>-->
 
                     <td>
                       <span class="text-truncate">{{item.typeLogIn}}</span>

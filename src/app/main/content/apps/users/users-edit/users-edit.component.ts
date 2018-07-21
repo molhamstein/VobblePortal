@@ -95,7 +95,7 @@ export class UsersEditComponent implements OnInit, OnDestroy
       bottlesCount: [this.item.bottlesCount],
       createdAt: [this.item.createdAt, Validators.required      ],
       image: [this.item.image],
-      isActive: [this.item.isActive],
+      //isActive: [this.item.isActive],
       // nextRefill: [this.item.nextRefill],
       ISOCode: new FormControl(this.item.ISOCode),
     });
