@@ -4,6 +4,10 @@ Vobble Portal using Angular 5 and Angular Materials 2
 
 ## First: run `npm install`
 
+## Changing the API:
+
+From the file  `\src\app\main\shared\app.config.ts`
+
 
 ## Development server
 
