@@ -73,9 +73,9 @@ export class ItemsService implements Resolve<any> {
 
   getItemsPaging(page, itemsPerPage): Promise<any> {
     return new Promise((resolve, reject) => {
-        var offset = (page * itemsPerPage) +1 ;
-        console.log(' offset ', offset);
-        this.http.get<Item[]>(AppConfig.apiUrl + 'items?filter[limit]='+itemsPerPage+'&filter[skip]='+offset+'&access_token=' + this.authService.getToken())
+        var offset = (page * itemsPerPage);
+        //console.log(' offset ', offset);
+        this.http.get<Item[]>(AppConfig.apiUrl + 'items?filter[limit]='+itemsPerPage+'&filter[skip]='+offset+'&filter[include]=owner&access_token=' + this.authService.getToken())
           .subscribe((response: any) => {
               console.log('response items', response);
               this.items = response;

@@ -13,7 +13,11 @@ import {ShoresService} from "../../shores/shores.service";
 //import {UsersService} from "../../users/users.service";
 import {Shore} from "../../shores/shore.model";
 import {ProgressBarService} from "../../../../../core/services/progress-bar.service";
-//import {User} from "../../users/user.model";
+import {Observable} from "rxjs";
+import {User} from "../../users/user.model";
+import {map, startWith} from 'rxjs/operators';
+import {UsersService} from "../../users/users.service";
+
 
 @Component({
   selector: 'app-bottles-new',
@@ -28,7 +32,10 @@ export class BottlesNewComponent implements OnInit {
   formErrors: any;
   video: string ='';
   shores: Shore[] = [];
-//  users: User[] = [];
+  users: User[] = [];
+  currentUser: any;
+
+  filteredUsers: Observable<User[]>;
 
   @ViewChild('file') fileSelector: ElementRef;
 
@@ -38,7 +45,12 @@ export class BottlesNewComponent implements OnInit {
               private progressBarService: ProgressBarService,
               private uploadFileService: UploadFileService,
               private shoresService: ShoresService,
+              private usersService: UsersService,
+              private authService: AuthService,
               private bottlesService: BottlesService) {
+
+
+    this.currentUser = authService.getCurrentUser();
 
     this.formErrors = {
       file: {required: true},
@@ -59,13 +71,40 @@ export class BottlesNewComponent implements OnInit {
       createdAt: [new Date(), Validators.required      ],
       // weight : [''],
       shoreId : [''],
-      // ownerId : ['']
+      ownerId  :new FormControl(this.currentUser)
     });
+
+
+    this.filteredUsers = this.form['controls'].ownerId.valueChanges
+      .pipe(
+        startWith(''),
+        map(val => this.filter(val))
+      );
 
     this.form.valueChanges.subscribe(() => {
       this.onFormValuesChanged();
     });
   }
+
+  filter(val): User[] {
+    if(val && typeof val == "string") {
+      return this.users.filter(option =>
+        option.username.toLowerCase().includes(val.toLowerCase()));
+    }
+
+  }
+
+  onSearch(keyword){
+      this.usersService.getUsersAutocpmlete(keyword).then( items => {
+        this.users = items;
+      })
+  }
+
+  displayFn(user: User): string {
+    return user.username;
+  }
+
+
 
   onFormValuesChanged() {
     for (const field in this.formErrors) {
@@ -155,6 +194,7 @@ export class BottlesNewComponent implements OnInit {
 
   submit(){
     delete this.form.value.id;
+    this.form.value.ownerId = this.form.value.ownerId.id;
     console.log('form add', this.form.value);
     this.bottlesService.newItem(this.form.value).then((val) => {
       this.helpersService.showActionSnackbar(PageAction.Create, true, 'bottle');

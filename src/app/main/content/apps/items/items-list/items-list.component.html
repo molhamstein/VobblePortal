@@ -50,6 +50,12 @@
                  [@animateStagger]="{value:'50'}"
                  fusePerfectScrollbar>
 
+        <ng-container cdkColumnDef="owner">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Owner</mat-header-cell>
+          <mat-cell *cdkCellDef="let product">
+            <p *ngIf="product.owner" class="text-truncate">{{product.owner.username}}</p>
+          </mat-cell>
+        </ng-container>
 
         <ng-container cdkColumnDef="storeType">
           <mat-header-cell *cdkHeaderCellDef mat-sort-header>Store Type</mat-header-cell>

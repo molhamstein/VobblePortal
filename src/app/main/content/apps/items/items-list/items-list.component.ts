@@ -28,7 +28,7 @@ export class ItemsListComponent implements OnInit {
   dialogRef: any;
 
   dataSource: FilesDataSource | null;
-  displayedColumns = ['storeType', 'startAt', 'endAt', 'isConsumed', 'valid', 'btns'];
+  displayedColumns = ['owner', 'storeType', 'startAt', 'endAt', 'isConsumed', 'valid', 'btns'];
   itemsCount: number = 0;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;

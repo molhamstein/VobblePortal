@@ -81,7 +81,7 @@ export class FuseForgotPassword2Component implements OnInit
       (data) => {
         console.log("data ", data);
         this.router.navigate(['auth/login']);
-        this.helpers.showActionSnackbar(null, false, '',"Reset E-mail has sent successfully");
+        this.helpers.showActionSnackbar(null, false, '','',"Reset E-mail has sent successfully");
         this.loadingScreen.hide();
       }, (reason) => {
         this.helpers.showActionSnackbar(null, false, '', {style: 'failed-snackbar'}, "Reset E-mail has NOT sent");

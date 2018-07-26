@@ -72,8 +72,8 @@ export class ShoresService implements Resolve<any> {
 
   getItemsPaging(page, itemsPerPage): Promise<any> {
     return new Promise((resolve, reject) => {
-        var offset = (page * itemsPerPage) +1 ;
-        console.log(' offset ', offset);
+        var offset = (page * itemsPerPage)  ;
+        //console.log(' offset ', offset);
         this.http.get<Shore[]>(AppConfig.apiUrl + 'shores?filter[limit]='+itemsPerPage+'&filter[skip]='+offset+'&access_token=' + this.authService.getToken())
           .subscribe((response: any) => {
               console.log('response shores', response);

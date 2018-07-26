@@ -12,8 +12,11 @@ import {UploadFileService} from "../../../../shared/upload-file.service";
 import {ShoresService} from "../../shores/shores.service";
 import {Shore} from "../../shores/shore.model";
 import {Bottle} from "../bottle.model";
-import {Subscription} from "rxjs";
 import {ProgressBarService} from "../../../../../core/services/progress-bar.service";
+import {User} from "../../users/user.model";
+import {UsersService} from "../../users/users.service";
+import {Subscription, Observable} from "rxjs";
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-bottles-edit',
@@ -30,7 +33,9 @@ export class BottlesEditComponent implements OnInit, OnDestroy {
   formErrors: any;
   video: string ='';
   shores: Shore[] = [];
+  users: User[] = [];
 
+  filteredUsers: Observable<User[]>;
   @ViewChild('file') fileSelector: ElementRef;
 
   constructor(private formBuilder: FormBuilder,
@@ -39,6 +44,7 @@ export class BottlesEditComponent implements OnInit, OnDestroy {
               private progressBarService: ProgressBarService,
               private uploadFileService: UploadFileService,
               private shoresService: ShoresService,
+              private usersService: UsersService,
               private bottlesService: BottlesService) {
 
     this.formErrors = {
@@ -66,12 +72,38 @@ export class BottlesEditComponent implements OnInit, OnDestroy {
       createdAt: [this.item.createdAt, Validators.required      ],
       // weight : [''],
       shoreId : [this.item.shoreId],
-      // ownerId : ['']
+      ownerId  :new FormControl(this.item.owner)
     });
+
+
+    this.filteredUsers = this.form['controls'].ownerId.valueChanges
+      .pipe(
+        startWith(''),
+        map(val => this.filter(val))
+      );
+
 
     this.form.valueChanges.subscribe(() => {
       this.onFormValuesChanged();
     });
+  }
+
+  filter(val): User[] {
+    if(val && typeof val == "string") {
+      return this.users.filter(option =>
+        option.username.toLowerCase().includes(val.toLowerCase()));
+    }
+
+  }
+
+  onSearch(keyword){
+      this.usersService.getUsersAutocpmlete(keyword).then( items => {
+        this.users = items;
+      })
+  }
+
+  displayFn(user: User): string {
+    return user.username;
   }
 
   ngOnDestroy(){
@@ -156,6 +188,7 @@ export class BottlesEditComponent implements OnInit, OnDestroy {
 
 
   submit(){
+    this.form.value.ownerId = this.form.value.ownerId.id;
     console.log('form add', this.form.value);
     this.bottlesService.editItem(this.form.value).then((val) => {
       this.helpersService.showActionSnackbar(PageAction.Update, true, 'bottle');

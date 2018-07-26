@@ -75,8 +75,8 @@ export class ReportsService implements Resolve<any> {
 
   getItemsPaging(page, itemsPerPage): Promise<any> {
     return new Promise((resolve, reject) => {
-        var offset = (page * itemsPerPage) +1 ;
-        console.log(' offset ', offset);
+        var offset = (page * itemsPerPage)  ;
+        //console.log(' offset ', offset);
 //        console.log('api ', AppConfig.apiUrl + 'reports?filter[limit]='+itemsPerPage+'&filter[skip]='+offset+'&filter[include]=report_Type&filter[include]=bottle&filter[include]=owner&access_token=' + this.authService.getToken());
         this.http.get<Report[]>(AppConfig.apiUrl + 'reports?filter[limit]='+itemsPerPage+'&filter[skip]='+offset+'&filter[include]=report_Type&filter[include]=bottle&filter[include]=owner&access_token=' + this.authService.getToken())
           .subscribe((response: any) => {

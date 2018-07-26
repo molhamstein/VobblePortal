@@ -66,7 +66,20 @@
             </mat-form-field>
 
           </div>
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" fxLayoutGap="10px">
+          <mat-form-field fxFlex="50">
+            <input type="text"  placeholder="Owner" formControlName="ownerId"  matInput [matAutocomplete]="auto"
+                   (input)="onSearch($event.target.value)">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" >
+              <mat-option *ngFor="let option of filteredUsers | async" [value]="option">
+                <img *ngIf="option.image && option.image!=''" [src]="option.image" style=" border-radius: 50%;object-fit: cover; margin-top: 8px; margin-right: 5px;height: 30px;width: 30px;">
+                {{ option.username }}
+              </mat-option>
+            </mat-autocomplete>
 
+          </mat-form-field>
+
+          </div>
         </form>
       </div>
 
