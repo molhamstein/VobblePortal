@@ -8,8 +8,7 @@
   <div class="center">
 
     <!-- HEADER -->
-    <div class="header white-fg"
-         fxLayout="row" fxLayoutAlign="space-between center">
+    <div class="header white-fg" fxLayout="row" fxLayoutAlign="space-between center">
 
       <!-- APP TITLE -->
       <div fxLayout="row" fxLayoutAlign="start center">
@@ -18,8 +17,7 @@
           <mat-icon>arrow_back</mat-icon>
         </button>
 
-        <div fxLayout="column" fxLayoutAlign="start start"
-             *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+        <div fxLayout="column" fxLayoutAlign="start start" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
           <div class="h2">
             Report
           </div>
@@ -31,14 +29,10 @@
       </div>
 
       <div>
-        <button mat-raised-button
-                [routerLink]="'/reports/edit/'+ item.id"
-                class="add-product-button mat-white-bg  mt-sm-0">
+        <button mat-raised-button [routerLink]="'/reports/edit/'+ item.id" class="add-product-button mat-white-bg  mt-sm-0">
           <span> EDIT </span>
         </button>
-        <button mat-raised-button
-                (click)="deleteItem()"
-                class="add-product-button mt-sm-0" color="warn">
+        <button mat-raised-button (click)="deleteItem()" class="add-product-button mt-sm-0" color="warn">
           <span> DELETE </span>
         </button>
       </div>
@@ -71,31 +65,34 @@
                 <div class="customer">
                   <table class="simple">
                     <thead>
-                    <tr>
-                      <th>Report Type</th>
-                      <th>Creation Date</th>
-                      <th>Owner</th>
-                    </tr>
+                      <tr>
+                        <th>Report Type</th>
+                        <th>Creation Date</th>
+                        <th>Owner</th>
+                        <th>
+                          <button mat-button color="accent" [disabled]="item.owner.status !== 'active'" (click)="deactivateOwner()">Deactivate Owner</button>
+                        </th>
+                      </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                      <td>
-                        <span class=" text-truncate">{{item.report_Type.reportName_en}}</span>
-                        <span class=" text-truncate">{{item.report_Type.reportName_ar}}</span>
-                      </td>
+                      <tr>
+                        <td>
+                          <span class=" text-truncate">{{item.report_Type.reportName_en}}</span>
+                          <span class=" text-truncate">{{item.report_Type.reportName_ar}}</span>
+                        </td>
 
-                      <td>
-                        <span class=" text-truncate">{{item.createdAt | date}}</span>
-                      </td>
+                        <td>
+                          <span class=" text-truncate">{{item.createdAt | date}}</span>
+                        </td>
 
-                      <td [routerLink]="'/users/view/'+item.ownerId">
-                        <div fxLayout="row" fxLayoutAlign="start center">
-                          <img *ngIf="item.owner.image && item.owner.image != ''" class="avatar" [src]="item.owner.image">
-                          <span class="link-span  text-truncate">{{item.owner.username}}</span>
-                        </div>
-                      </td>
+                        <td [routerLink]="'/users/view/'+item.ownerId">
+                          <div fxLayout="row" fxLayoutAlign="start center">
+                            <img *ngIf="item.owner.image && item.owner.image != ''" class="avatar" [src]="item.owner.image">
+                            <span class="link-span  text-truncate">{{item.owner.username}}</span>
+                          </div>
+                        </td>
 
-                    </tr>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -112,36 +109,41 @@
                 <div class="customer">
                   <table class="simple">
                     <thead>
-                    <tr>
-                      <th>Bottle Creation Date</th>
-                      <th>Bottle Owner</th>
-                      <th>Bottle Shore</th>
-                    </tr>
+                      <tr>
+                        <th>Bottle Creation Date</th>
+                        <th>Bottle Owner</th>
+                        <th>Bottle Shore</th>
+                        <th>
+                          <button mat-button color="accent" [disabled]="item.bottle.status !== 'active'" (click)="deactivateBottle()">Deactivate Bottle</button>
+                        </th>
+                      </tr>
                     </thead>
                     <tbody>
-                    <tr>
+                      <tr>
 
 
-                      <td [routerLink]="'/bottles/view/'+item.bottle.id">
-                        <span class="link-span  text-truncate">{{item.bottle.createdAt | date}}</span>
-                      </td>
+                        <td [routerLink]="'/bottles/view/'+item.bottle.id">
+                          <span class="link-span  text-truncate">{{item.bottle.createdAt | date}}</span>
+                        </td>
 
-                      <td [routerLink]="'/users/view/'+item.bottle.ownerId">
-                        <div fxLayout="row" fxLayoutAlign="start center">
-                          <img *ngIf="item.bottle.owner.image && item.bottle.owner.image != ''" class="avatar" [src]="item.bottle.owner.image">
-                          <span class="link-span  text-truncate">{{item.bottle.owner.username}}</span>
-                        </div>
-                      </td>
+                        <td [routerLink]="'/users/view/'+item.bottle.ownerId">
+                          <div fxLayout="row" fxLayoutAlign="start center">
+                            <img *ngIf="item.bottle.owner.image && item.bottle.owner.image != ''" class="avatar" [src]="item.bottle.owner.image">
+                            <span class="link-span  text-truncate">{{item.bottle.owner.username}}</span>
+                          </div>
+                        </td>
 
-                      <td [routerLink]="'/shores/view/'+item.bottle.shoreId">
-                        <div fxLayout="row" fxLayoutAlign="start center">
-                          <img *ngIf="item.bottle.shore.icon && item.bottle.shore.icon != ''" class="avatar" [src]="item.bottle.shore.icon">
-                          <div><span class="link-span text-truncate">{{item.bottle.shore.name_en}}</span>
-                            <span class="link-span  text-truncate">{{item.bottle.shore.name_ar}}</span></div>
-                        </div>
-                      </td>
+                        <td [routerLink]="'/shores/view/'+item.bottle.shoreId">
+                          <div fxLayout="row" fxLayoutAlign="start center">
+                            <img *ngIf="item.bottle.shore.icon && item.bottle.shore.icon != ''" class="avatar" [src]="item.bottle.shore.icon">
+                            <div>
+                              <span class="link-span text-truncate">{{item.bottle.shore.name_en}}</span>
+                              <span class="link-span  text-truncate">{{item.bottle.shore.name_ar}}</span>
+                            </div>
+                          </div>
+                        </td>
 
-                    </tr>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -154,8 +156,7 @@
                   <div class="h2 secondary-text">Bottle Video</div>
                 </div>
                 <video width="320" height="240" controls>
-                  <source [src]="item.bottle.file" type="video/mp4">
-                  Your browser does not support the video tag.
+                  <source [src]="item.bottle.file" type="video/mp4"> Your browser does not support the video tag.
                 </video>
 
               </div>

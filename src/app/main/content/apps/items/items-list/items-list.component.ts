@@ -1,50 +1,85 @@
-import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
-import {fuseAnimations} from "../../../../../core/animations";
-import {FormControl} from "@angular/forms";
-import {MatPaginator, MatSort, MatDialogRef, MatDialog} from "@angular/material";
-import {FuseConfirmDialogComponent} from "../../../../../core/components/confirm-dialog/confirm-dialog.component";
-import {DataSource} from '@angular/cdk/collections';
-import {Observable} from 'rxjs/Observable';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import 'rxjs/add/operator/startWith';
-import 'rxjs/add/observable/merge';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/observable/fromEvent';
-import {FuseUtils} from "../../../../../core/fuseUtils";
-import {ItemsService} from "../items.service";
-import {ProgressBarService} from "../../../../../core/services/progress-bar.service";
+import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
+import { fuseAnimations } from "../../../../../core/animations";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import {
+  MatPaginator,
+  MatSort,
+  MatDialogRef,
+  MatDialog
+} from "@angular/material";
+import { FuseConfirmDialogComponent } from "../../../../../core/components/confirm-dialog/confirm-dialog.component";
+import { DataSource } from "@angular/cdk/collections";
+import { Observable } from "rxjs/Observable";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import "rxjs/add/operator/startWith";
+import "rxjs/add/observable/merge";
+import "rxjs/add/operator/map";
+import "rxjs/add/operator/debounceTime";
+import "rxjs/add/operator/distinctUntilChanged";
+import "rxjs/add/observable/fromEvent";
+import { FuseUtils } from "../../../../../core/fuseUtils";
+import { ItemsService } from "../items.service";
+import { ProgressBarService } from "../../../../../core/services/progress-bar.service";
+
+import "rxjs/add/operator/startWith";
+import "rxjs/add/observable/merge";
+import "rxjs/add/operator/map";
+import "rxjs/add/operator/debounceTime";
+import "rxjs/add/operator/distinctUntilChanged";
+import "rxjs/add/observable/fromEvent";
+
+import { countries } from "typed-countries";
+import { map, startWith } from "rxjs/operators";
 
 @Component({
-  selector: 'app-items-list',
-  templateUrl: './items-list.component.html',
-  styleUrls: ['./items-list.component.scss'],
+  selector: "app-items-list",
+  templateUrl: "./items-list.component.html",
+  styleUrls: ["./items-list.component.scss"],
   animations: fuseAnimations
 })
 export class ItemsListComponent implements OnInit {
-
   searchInput: FormControl;
   dialogRef: any;
 
   dataSource: FilesDataSource | null;
-  displayedColumns = ['owner', 'storeType', 'startAt', 'endAt', 'isConsumed', 'valid', 'btns'];
+  displayedColumns = [
+    "owner",
+    "country",
+    "storeType",
+    "startAt",
+    "endAt",
+    "isConsumed",
+    "valid",
+    "btns"
+  ];
   itemsCount: number = 0;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild('filter') filter: ElementRef;
-  @ViewChild(MatSort) sort: MatSort;
+  filtersForm: FormGroup;
+  filteredOptions: Observable<string[]>;
+
+  @ViewChild(MatPaginator)
+  paginator: MatPaginator;
+  @ViewChild("filter")
+  filter: ElementRef;
+  @ViewChild(MatSort)
+  sort: MatSort;
 
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
 
-  constructor(private itemsService: ItemsService,
-              private progressBarService: ProgressBarService,
-              public dialog: MatDialog,) {
-  }
+  constructor(
+    private itemsService: ItemsService,
+    private progressBarService: ProgressBarService,
+    private formBuilder: FormBuilder,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit() {
-    this.dataSource = new FilesDataSource(this.itemsService, this.paginator, this.sort);
-    Observable.fromEvent(this.filter.nativeElement, 'keyup')
+    this.dataSource = new FilesDataSource(
+      this.itemsService,
+      this.paginator,
+      this.sort
+    );
+    Observable.fromEvent(this.filter.nativeElement, "keyup")
       .debounceTime(150)
       .distinctUntilChanged()
       .subscribe(() => {
@@ -53,23 +88,40 @@ export class ItemsListComponent implements OnInit {
         }
         this.dataSource.filter = this.filter.nativeElement.value;
       });
-    this.itemsCount =  this.itemsService.itemsCount;
-  }
-  getItemsPaging(){
-    this.itemsService.getItemsPaging(this.paginator.pageIndex, this.paginator.pageSize).then(
-      items =>{
-        return items
-      }
+    this.itemsCount = this.itemsService.itemsCount;
+
+    this.filtersForm = this.formBuilder.group({
+      type: new FormControl(""),
+      country: new FormControl(""),
+      from: new FormControl(""),
+      to: new FormControl("")
+    });
+
+    this.filteredOptions = this.filtersForm.controls.country.valueChanges.pipe(
+      startWith(""),
+      map(val => this.filterC(val))
     );
   }
 
+  filterC(val: string): any[] {
+    return countries.filter(option => option.iso.toLowerCase().includes(val));
+  }
+
+  getItemsPaging() {
+    this.itemsService
+      .getItemsPaging(this.paginator.pageIndex, this.paginator.pageSize)
+      .then(items => {
+        return items;
+      });
+  }
 
   deleteItem(contact) {
     this.confirmDialogRef = this.dialog.open(FuseConfirmDialogComponent, {
       disableClose: false
     });
 
-    this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+    this.confirmDialogRef.componentInstance.confirmMessage =
+      "Are you sure you want to delete?";
     this.progressBarService.toggle();
     this.confirmDialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -78,13 +130,34 @@ export class ItemsListComponent implements OnInit {
       }
       this.confirmDialogRef = null;
     });
+  }
 
+  clearFilter() {
+    this.filtersForm.reset();
+    this.itemsService.getItemsPaging(0, 10);
+  }
+
+  applyFilter() {
+    this.progressBarService.toggle();
+
+    this.itemsService.filterBy(this.filtersForm.value).then(
+      val => {
+        // this.helpersService.showActionSnackbar(PageAction.Create, true, 'user');
+        this.progressBarService.toggle();
+      },
+      reason => {
+        // this.helpersService.showActionSnackbar(PageAction.Create, false, 'user', {style: 'failed-snackbar'});
+        this.progressBarService.toggle();
+
+        console.log("error ", reason);
+      }
+    );
   }
 }
 
 export class FilesDataSource extends DataSource<any> {
-  _filterChange = new BehaviorSubject('');
-  _filteredDataChange = new BehaviorSubject('');
+  _filterChange = new BehaviorSubject("");
+  _filteredDataChange = new BehaviorSubject("");
 
   get filteredData(): any {
     return this._filteredDataChange.value;
@@ -102,12 +175,13 @@ export class FilesDataSource extends DataSource<any> {
     this._filterChange.next(filter);
   }
 
-  constructor(private itemsService: ItemsService,
-              private _paginator: MatPaginator,
-              private _sort: MatSort) {
+  constructor(
+    private itemsService: ItemsService,
+    private _paginator: MatPaginator,
+    private _sort: MatSort
+  ) {
     super();
     this.filteredData = this.itemsService.items;
-
   }
 
   /** Connect function called by the table to retrieve one stream containing the data to render. */
@@ -143,44 +217,43 @@ export class FilesDataSource extends DataSource<any> {
   }
 
   sortData(data): any[] {
-    if (!this._sort.active || this._sort.direction === '') {
+    if (!this._sort.active || this._sort.direction === "") {
       return data;
     }
 
     return data.sort((a, b) => {
-      let propertyA: number | string = '';
-      let propertyB: number | string = '';
+      let propertyA: number | string = "";
+      let propertyB: number | string = "";
 
       switch (this._sort.active) {
-        case 'storeType':
+        case "storeType":
           [propertyA, propertyB] = [a.storeType, b.storeType];
           break;
-        case 'isConsumed':
+        case "isConsumed":
           [propertyA, propertyB] = [a.isConsumed, b.isConsumed];
           break;
-        case 'valid':
+        case "valid":
           [propertyA, propertyB] = [a.valid, b.valid];
           break;
-        case 'startAt':
+        case "startAt":
           [propertyA, propertyB] = [a.startAt, b.startAt];
           break;
-        case 'endAt':
+        case "endAt":
           [propertyA, propertyB] = [a.endAt, b.endAt];
           break;
-        case 'owner':
+        case "owner":
           [propertyA, propertyB] = [a.owner.username, b.owner.username];
           break;
-
-
       }
 
       const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
       const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
 
-      return (valueA < valueB ? -1 : 1) * (this._sort.direction === 'asc' ? 1 : -1);
+      return (
+        (valueA < valueB ? -1 : 1) * (this._sort.direction === "asc" ? 1 : -1)
+      );
     });
   }
 
-  disconnect() {
-  }
+  disconnect() {}
 }

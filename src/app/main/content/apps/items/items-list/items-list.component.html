@@ -8,35 +8,69 @@
   <div class="center">
 
     <!-- HEADER -->
-    <div class="header white-fg"
-         fxLayout="column" fxLayoutAlign="center center"
-         fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+    <div class="header white-fg">
+      <div fxLayout="column" fxLayoutAlign="space-between center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
 
-      <!-- APP TITLE -->
-      <div class="logo my-12 m-sm-0"
-           fxLayout="row" fxLayoutAlign="start center">
-        <mat-icon class="logo-icon mr-16" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">view_week</mat-icon>
-        <span class="logo-text h1" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">Items</span>
+        <!-- APP TITLE -->
+        <div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
+          <mat-icon class="logo-icon mr-16" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">view_week</mat-icon>
+          <span class="logo-text h1" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">Items</span>
+        </div>
+        <!-- / APP TITLE -->
+
+        <!-- SEARCH -->
+        <div class="search-input-wrapper mx-12 m-md-0" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+          <label for="search" class="mr-8">
+            <mat-icon class="secondary-text">search</mat-icon>
+          </label>
+          <mat-form-field floatPlaceholder="never" fxFlex="1 0 auto">
+            <input id="search" matInput #filter placeholder="Search">
+          </mat-form-field>
+        </div>
+        <!-- / SEARCH -->
+
+        <button mat-raised-button [routerLink]="'/items/new'" class="add-product-button mat-white-bg  mt-sm-0">
+          <span> NEW </span>
+        </button>
+
+
       </div>
-      <!-- / APP TITLE -->
+      <form [formGroup]="filtersForm" fxLayout="column" fxLayoutAlign="space-between center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
 
-      <!-- SEARCH -->
-      <div class="search-input-wrapper mx-12 m-md-0"
-           fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
-        <label for="search" class="mr-8">
-          <mat-icon class="secondary-text">search</mat-icon>
-        </label>
-        <mat-form-field floatPlaceholder="never" fxFlex="1 0 auto">
-          <input id="search" matInput #filter placeholder="Search">
+        <mat-form-field>
+          <input type="text" placeholder="Owner ISO Code" aria-label="code" matInput formControlName="country" name="country" [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let iso of filteredOptions | async" [value]="iso.iso">
+              {{iso.iso}}
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
-      </div>
-      <!-- / SEARCH -->
 
-      <button mat-raised-button
-              [routerLink]="'/items/new'"
-              class="add-product-button mat-white-bg  mt-sm-0">
-        <span> NEW </span>
-      </button>
+        <mat-form-field>
+          <input matInput placeholder="Store Type" formControlName="type">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker" placeholder="Date From" formControlName="from" name="from">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker2" placeholder="Date To" formControlName="to" name="to">
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+
+        <button mat-raised-button type="submit" (click)="applyFilter()" class="add-product-button mat-white-bg  mt-sm-0" [ngClass]="{'mat-green-bg' : filtersForm.value!==''}">
+          <span> FILTER </span>
+        </button>
+
+        <button mat-raised-button type="submit" (click)="clearFilter()" class="add-product-button mat-white-bg  mt-sm-0">
+          <span> CLEAR </span>
+        </button>
+
+      </form>
 
     </div>
     <!-- / HEADER -->
@@ -44,16 +78,19 @@
     <!-- CONTENT CARD -->
     <div class="content-card mat-white-bg">
 
-      <mat-table class="products-table"
-                 #table [dataSource]="dataSource"
-                 matSort
-                 [@animateStagger]="{value:'50'}"
-                 fusePerfectScrollbar>
+      <mat-table class="products-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
 
         <ng-container cdkColumnDef="owner">
           <mat-header-cell *cdkHeaderCellDef mat-sort-header>Owner</mat-header-cell>
           <mat-cell *cdkCellDef="let product">
             <p *ngIf="product.owner" class="text-truncate">{{product.owner.username}}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="country">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header fxHide fxShow.gt-md>Owner ISO Code</mat-header-cell>
+          <mat-cell *cdkCellDef="let product" fxHide fxShow.gt-md>
+            <p class="text-truncate" *ngIf="product.owner.country">{{product.owner.country.code}}</p>
           </mat-cell>
         </ng-container>
 
@@ -78,7 +115,7 @@
           </mat-cell>
         </ng-container>
 
-<!--
+        <!--
         <ng-container cdkColumnDef="owner">
           <mat-header-cell *cdkHeaderCellDef mat-sort-header>Owner</mat-header-cell>
           <mat-cell *cdkCellDef="let product">
@@ -87,16 +124,16 @@
         </ng-container>-->
 
         <ng-container cdkColumnDef="isConsumed">
-          <mat-header-cell *cdkHeaderCellDef >Consumed</mat-header-cell>
-          <mat-cell *cdkCellDef="let product"  fxShow.gt-xs>
+          <mat-header-cell *cdkHeaderCellDef>Consumed</mat-header-cell>
+          <mat-cell *cdkCellDef="let product" fxShow.gt-xs>
             <mat-icon *ngIf="product.isConsumed" class="active-icon mat-green-600-bg s-16">check</mat-icon>
             <mat-icon *ngIf="!product.isConsumed" class="active-icon mat-red-500-bg s-16">close</mat-icon>
           </mat-cell>
         </ng-container>
 
         <ng-container cdkColumnDef="valid">
-          <mat-header-cell *cdkHeaderCellDef >Valid</mat-header-cell>
-          <mat-cell *cdkCellDef="let product"  fxShow.gt-xs>
+          <mat-header-cell *cdkHeaderCellDef>Valid</mat-header-cell>
+          <mat-cell *cdkCellDef="let product" fxShow.gt-xs>
             <mat-icon *ngIf="product.valid" class="active-icon mat-green-600-bg s-16">check</mat-icon>
             <mat-icon *ngIf="!product.valid" class="active-icon mat-red-500-bg s-16">close</mat-icon>
           </mat-cell>
@@ -104,8 +141,8 @@
 
 
         <ng-container cdkColumnDef="btns">
-          <mat-header-cell *cdkHeaderCellDef ></mat-header-cell>
-          <mat-cell *cdkCellDef="let product" >
+          <mat-header-cell *cdkHeaderCellDef></mat-header-cell>
+          <mat-cell *cdkCellDef="let product">
             <div fxFlex="row" fxLayoutAlign="end center">
               <button mat-icon-button [routerLink]="'/items/edit/'+product.id" (click)="$event.stopPropagation();">
                 <mat-icon>edit</mat-icon>
@@ -120,19 +157,11 @@
 
         <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
 
-        <mat-row *cdkRowDef="let product; columns: displayedColumns;"
-                 class="product"
-                 matRipple
-                 [routerLink]="'/items/view/'+product.id">
+        <mat-row *cdkRowDef="let product; columns: displayedColumns;" class="product" matRipple [routerLink]="'/items/view/'+product.id">
         </mat-row>
       </mat-table>
 
-      <mat-paginator #paginator
-                     [length]="itemsCount"
-                     [pageIndex]="0"
-                     [pageSize]="10"
-                     [pageSizeOptions]="[5, 10, 25, 100]"
-                     (page)="getItemsPaging()">
+      <mat-paginator #paginator [length]="itemsCount" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" (page)="getItemsPaging()">
       </mat-paginator>
 
     </div>
