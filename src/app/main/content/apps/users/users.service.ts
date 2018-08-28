@@ -388,4 +388,56 @@ export class UsersService implements Resolve<any> {
         );
     });
   }
+
+  searchFor(keyword): Promise<any> {
+    return new Promise((resolve, reject) => {
+      let filter = "";
+      // if (keyword) fitler = "";
+
+      // if (filter.charAt(0) === ",") {
+      //   filter = filter.substr(1);
+      // }
+      // if (filter.charAt(filter.length - 1) === ",")
+      //   filter = filter.slice(0, -1);
+
+      if (keyword) {
+        filter =
+          'filter={"where":{"and":[{"username": {"like": "^' +
+          keyword +
+          '"}}]}}';
+
+        console.log("fff ", filter);
+        this.http
+          .get<any[]>(
+            AppConfig.apiUrl +
+              "users?" +
+              filter +
+              "&access_token=" +
+              this.authService.getToken()
+          )
+          .subscribe(
+            data => {
+              console.log("filtered ", data);
+              this.items = data;
+              this.onUsersChanged.next(this.items);
+              resolve(true);
+            },
+            error => {
+              console.log("error ", error);
+              if (error.error.error.code === AppConfig.authErrorCode)
+                this.router.navigate(["/error-404"]);
+              else
+                this.helpersService.showActionSnackbar(
+                  null,
+                  false,
+                  "",
+                  { style: "failed-snackbar" },
+                  AppConfig.technicalException
+                );
+              reject();
+            }
+          );
+      } else this.getItemsPaging(0, 10);
+    });
+  }
 }

@@ -23,7 +23,8 @@
             <mat-icon class="secondary-text">search</mat-icon>
           </label>
           <mat-form-field floatPlaceholder="never" fxFlex="1 0 auto">
-            <input id="search" matInput #filter placeholder="Search">
+            <input id="search" matInput #filter (keyup)="applySearch()" placeholder="Search">
+            <!-- <input id="search" matInput #filter placeholder="Search"> -->
           </mat-form-field>
         </div>
         <!-- / SEARCH -->

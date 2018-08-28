@@ -82,15 +82,15 @@ export class UsersListComponent implements OnInit {
       this.paginator,
       this.sort
     );
-    Observable.fromEvent(this.filter.nativeElement, "keyup")
-      .debounceTime(150)
-      .distinctUntilChanged()
-      .subscribe(() => {
-        if (!this.dataSource) {
-          return;
-        }
-        this.dataSource.filter = this.filter.nativeElement.value;
-      });
+    // Observable.fromEvent(this.filter.nativeElement, "keyup")
+    //   .debounceTime(150)
+    //   .distinctUntilChanged()
+    //   .subscribe(() => {
+    //     if (!this.dataSource) {
+    //       return;
+    //     }
+    //     this.dataSource.filter = this.filter.nativeElement.value;
+    //   });
     this.itemsCount = this.usersService.itemsCount;
 
     this.filtersForm = this.formBuilder.group({
@@ -119,6 +119,22 @@ export class UsersListComponent implements OnInit {
     this.progressBarService.toggle();
     console.log("filtersForm", this.filtersForm.value);
     this.usersService.filterBy(this.filtersForm.value).then(
+      val => {
+        // this.helpersService.showActionSnackbar(PageAction.Create, true, 'user');
+        this.progressBarService.toggle();
+      },
+      reason => {
+        // this.helpersService.showActionSnackbar(PageAction.Create, false, 'user', {style: 'failed-snackbar'});
+        this.progressBarService.toggle();
+        console.log("error ", reason);
+      }
+    );
+  }
+
+  applySearch() {
+    this.progressBarService.toggle();
+    console.log("key ", this.filter.nativeElement.value);
+    this.usersService.searchFor(this.filter.nativeElement.value).then(
       val => {
         // this.helpersService.showActionSnackbar(PageAction.Create, true, 'user');
         this.progressBarService.toggle();
