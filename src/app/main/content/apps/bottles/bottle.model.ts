@@ -1,3 +1,5 @@
+import { Shore } from './../shores/shore.model';
+import { User } from './../users/user.model';
 export class Bottle
 {
   id: string;
@@ -7,9 +9,9 @@ export class Bottle
   createdAt : string;
   weight : number;
   shoreId : string;
-  shore : {name_en:'', name_ar:''};
+  shore : Shore;
   ownerId : string;
-  owner : {username: ''};
+  owner : User;
   bottleId : string;
 
 
