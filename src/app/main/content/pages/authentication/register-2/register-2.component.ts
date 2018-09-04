@@ -77,7 +77,7 @@ export class FuseRegister2Component implements OnInit {
   }
 
   checkIfMatchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
-    console.log('passwordConfirmationKey');
+    //console.log('passwordConfirmationKey');
     return (group: FormGroup) => {
       let passwordInput = group.controls[passwordKey],
         passwordConfirmationInput = group.controls[passwordConfirmationKey];
@@ -109,10 +109,10 @@ export class FuseRegister2Component implements OnInit {
   }
 
   onSubmit() {
-    console.log('submit');
+   // console.log('submit');
     this.authService.register(this.registerForm.value).then(
       (data) => {
-        console.log("data ", data);
+        //console.log("data ", data);
         this.router.navigate(['auth/login']);
         this.helpers.showActionSnackbar(null, false, '',"Registration succeed");
         this.loadingScreen.hide();

@@ -31,7 +31,7 @@ export class TypeGoodsService {
     return new Promise((resolve, reject) => {
         this.http.get(AppConfig.apiUrl + 'typeGoods?access_token=' + this.authService.getToken())
           .subscribe((response: any) => {
-            console.log('response typeGoods', response);
+           // console.log('response typeGoods', response);
             this.items = response;
             this.onItemsChanged.next(this.items);
             resolve(response);

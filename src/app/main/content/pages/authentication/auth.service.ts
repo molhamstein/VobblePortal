@@ -33,7 +33,7 @@ export class AuthService {
       })
         .subscribe(
           data => {
-            console.log('data ', data);
+          //  console.log('data ', data);
             resolve(true);
           }, err => {
             console.log('err ', err);
@@ -140,7 +140,7 @@ export class AuthService {
   }*/
 
   forgot_password(email: string): Promise<any> {
-	  console.log(email);
+	 // console.log(email);
     return new Promise((resolve, reject) => {
       const headers = new HttpHeaders()
         .set('Content-Type', 'application/json');
@@ -149,7 +149,7 @@ export class AuthService {
       })
         .subscribe(
           data => {
-            console.log('data ', data);
+            //console.log('data ', data);
             resolve(data);
           }, error =>{ console.log(error); reject(false)})
     })

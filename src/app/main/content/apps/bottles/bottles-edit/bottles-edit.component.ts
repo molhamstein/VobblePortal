@@ -135,7 +135,7 @@ export class BottlesEditComponent implements OnInit, OnDestroy {
 
   readFileVideo(inputValue: any): void {
     this.form.value.file = inputValue.files[0];
-    console.log('this.form.value.file ', this.form.value.file);
+    //console.log('this.form.value.file ', this.form.value.file);
     let reader: FileReader = new FileReader();
 
     reader.onloadend = (e) => {
@@ -160,13 +160,13 @@ export class BottlesEditComponent implements OnInit, OnDestroy {
   }
 
   uploadFiles(file) {
-    console.log('file ', file);
-    console.log('this.form.value.file ', this.form.value.file);
+    //console.log('file ', file);
+    //console.log('this.form.value.file ', this.form.value.file);
     //console.log('this.form.value.image ', this.form.value.image);
     if (file && file !== '') {
       const formData: FormData = new FormData();
 
-      console.log('typeof images[i] ', typeof file);
+      //console.log('typeof images[i] ', typeof file);
       if (typeof file !== 'string') {
       formData.append('file', file);
       //console.log('formData ', formData);
@@ -189,7 +189,7 @@ export class BottlesEditComponent implements OnInit, OnDestroy {
 
   submit(){
     this.form.value.ownerId = this.form.value.ownerId.id;
-    console.log('form add', this.form.value);
+    //console.log('form add', this.form.value);
     this.bottlesService.editItem(this.form.value).then((val) => {
       this.helpersService.showActionSnackbar(PageAction.Update, true, 'bottle');
       this.router.navigate(['/bottles/list']);

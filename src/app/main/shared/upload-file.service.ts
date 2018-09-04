@@ -17,7 +17,7 @@ export class UploadFileService {
         this.http.post(AppConfig.apiUrl + 'uploadFiles/videos/upload?access_token=' + this.authService.getToken(), items)
           .subscribe(
             data => {
-              console.log('data ', data);
+            //  console.log('data ', data);
               resolve(data);
             },
             error => {
@@ -30,7 +30,7 @@ export class UploadFileService {
         this.http.post(AppConfig.apiUrl + 'uploadFiles/images/upload?access_token=' + this.authService.getToken(), items)
           .subscribe(
             data => {
-              console.log('data ', data);
+             // console.log('data ', data);
               resolve(data);
             },
             error => {

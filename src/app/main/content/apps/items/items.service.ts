@@ -66,7 +66,7 @@ export class ItemsService implements Resolve<any> {
         )
         .subscribe(
           (response: any) => {
-            console.log("response items", response);
+            //console.log("response items", response);
             this.items = response;
             this.onItemsChanged.next(this.items);
             resolve(response);
@@ -105,7 +105,7 @@ export class ItemsService implements Resolve<any> {
         )
         .subscribe(
           (response: any) => {
-            console.log("response items", response);
+            // console.log("response items", response);
             this.items = response;
             this.onItemsChanged.next(this.items);
             resolve(response);
@@ -138,7 +138,7 @@ export class ItemsService implements Resolve<any> {
         )
         .subscribe(
           (response: any) => {
-            console.log("count bottles", response);
+            //console.log("count bottles", response);
             this.itemsCount = response.count;
             this.onItemsCountChanged.next(this.itemsCount);
             resolve(response);
@@ -174,7 +174,7 @@ export class ItemsService implements Resolve<any> {
         )
         .subscribe(
           data => {
-            console.log(data);
+            //  console.log(data);
             this.items.splice(index, 1);
             this.onItemsChanged.next(this.items);
             this.itemsCount--;
@@ -215,7 +215,7 @@ export class ItemsService implements Resolve<any> {
         )
         .subscribe(
           item => {
-            console.log("item ", item);
+            // console.log("item ", item);
             this.item = item;
             this.onItemChanged.next(this.item);
             resolve(item);
@@ -272,7 +272,7 @@ export class ItemsService implements Resolve<any> {
   }
 
   newItem(item: Item): Promise<any> {
-    console.log("new item ", item);
+    // console.log("new item ", item);
     return new Promise((resolve, reject) => {
       this.http
         .post<Item>(
@@ -283,7 +283,7 @@ export class ItemsService implements Resolve<any> {
         )
         .subscribe(
           data => {
-            console.log(data);
+            // console.log(data);
             resolve(true);
           },
           error => {
@@ -325,19 +325,19 @@ export class ItemsService implements Resolve<any> {
 
       if (filter !== "") filter = 'filter={"where":{"and":[' + filter + "]}}";
 
-      console.log("fff ", filter);
+      //  console.log("fff ", filter);
 
       this.http
         .get<any[]>(
           AppConfig.apiUrl +
-            "items?" +
+            "items/filterItem?" +
             filter +
-            "&filter[include]=owner&access_token=" +
+            "&access_token=" +
             this.authService.getToken()
         )
         .subscribe(
           data => {
-            console.log("filtered ", data);
+            // console.log("filtered ", data);
             this.items = data;
             this.onItemsChanged.next(this.items);
             resolve(true);

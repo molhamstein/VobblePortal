@@ -59,7 +59,7 @@ export class ReportsService implements Resolve<any> {
     return new Promise((resolve, reject) => {
         this.http.get(AppConfig.apiUrl + 'reports?filter[include]=report_Type&filter[include]=owner&access_token=' + this.authService.getToken())
           .subscribe((response: any) => {
-            console.log('response reports', response);
+           // console.log('response reports', response);
             this.items = response;
             this.onItemsChanged.next(this.items);
             resolve(response);
@@ -80,7 +80,7 @@ export class ReportsService implements Resolve<any> {
 //        console.log('api ', AppConfig.apiUrl + 'reports?filter[limit]='+itemsPerPage+'&filter[skip]='+offset+'&filter[include]=report_Type&filter[include]=bottle&filter[include]=owner&access_token=' + this.authService.getToken());
         this.http.get<Report[]>(AppConfig.apiUrl + 'reports?filter[limit]='+itemsPerPage+'&filter[skip]='+offset+'&filter[include]=report_Type&filter[include]=bottle&filter[include]=owner&access_token=' + this.authService.getToken())
           .subscribe((response: any) => {
-              console.log('response reports', response);
+             // console.log('response reports', response);
               this.items = response;
               this.onItemsChanged.next(this.items);
               resolve(response);
@@ -101,7 +101,7 @@ export class ReportsService implements Resolve<any> {
     return new Promise((resolve, reject) => {
         this.http.get<Report[]>(AppConfig.apiUrl + 'reports/count?access_token=' + this.authService.getToken())
           .subscribe((response: any) => {
-              console.log('count reports', response);
+             // console.log('count reports', response);
               this.itemsCount = response.count;
               this.onItemsCountChanged.next(this.itemsCount);
               resolve(response);
@@ -126,7 +126,7 @@ export class ReportsService implements Resolve<any> {
       this.http.delete<Report>(AppConfig.apiUrl+'reports/' + item.id + '?access_token=' + this.authService.getToken())
         .subscribe(
           data => {
-            console.log(data);
+           // console.log(data);
             this.items.splice(index, 1);
             this.onItemsChanged.next(this.items);
             this.itemsCount--;
@@ -153,7 +153,7 @@ export class ReportsService implements Resolve<any> {
       this.http.get<Report>(AppConfig.apiUrl+'reports/' + itemId+'?filter[include]=owner&access_token=' + this.authService.getToken())
         .subscribe(
           item => {
-            console.log('item ', item);
+           // console.log('item ', item);
             this.item = item;
             this.onItemChanged.next(this.item);
             resolve(item);
@@ -174,7 +174,7 @@ export class ReportsService implements Resolve<any> {
       this.http.patch<Report>(AppConfig.apiUrl+'reports/' + item.id + '?access_token=' + this.authService.getToken(), item)
         .subscribe(
           data => {
-            console.log('data ', data);
+           // console.log('data ', data);
             resolve(true);
           },
           error => {
@@ -193,7 +193,7 @@ export class ReportsService implements Resolve<any> {
       this.http.post<Report>(AppConfig.apiUrl + 'reports', item)
         .subscribe(
           data => {
-            console.log(data);
+           // console.log(data);
             resolve(true);
           },
           error => {

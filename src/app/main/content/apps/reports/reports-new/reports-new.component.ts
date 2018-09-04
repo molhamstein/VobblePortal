@@ -100,7 +100,7 @@ export class ReportsNewComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('onSubmit ', this.form.value);
+    //console.log('onSubmit ', this.form.value);
     this.progressBarService.toggle();
     this.reportsService.newItem(this.form.value).then((val) => {
       this.helpersService.showActionSnackbar(PageAction.Create, true, 'report');

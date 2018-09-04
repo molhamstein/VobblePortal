@@ -59,7 +59,7 @@ export class ProductsService implements Resolve<any> {
     return new Promise((resolve, reject) => {
         this.http.get(AppConfig.apiUrl + 'products?access_token=' + this.authService.getToken())
           .subscribe((response: any) => {
-            console.log('response products', response);
+            //console.log('response products', response);
             this.items = response;
             this.onItemsChanged.next(this.items);
             resolve(response);
@@ -79,7 +79,7 @@ export class ProductsService implements Resolve<any> {
        // console.log(' offset ', offset);
         this.http.get<Product[]>(AppConfig.apiUrl + 'products?filter[limit]='+itemsPerPage+'&filter[skip]='+offset+'&access_token=' + this.authService.getToken())
           .subscribe((response: any) => {
-              console.log('response products', response);
+             // console.log('response products', response);
               this.items = response;
               this.onItemsChanged.next(this.items);
               resolve(response);
@@ -100,7 +100,7 @@ export class ProductsService implements Resolve<any> {
     return new Promise((resolve, reject) => {
         this.http.get<Product[]>(AppConfig.apiUrl + 'products/count?access_token=' + this.authService.getToken())
           .subscribe((response: any) => {
-              console.log('count products', response);
+              //console.log('count products', response);
               this.itemsCount = response.count;
               this.onItemsCountChanged.next(this.itemsCount);
               resolve(response);
@@ -124,7 +124,7 @@ export class ProductsService implements Resolve<any> {
       this.http.delete<Product>(AppConfig.apiUrl+'products/' + item.id + '?access_token=' + this.authService.getToken())
         .subscribe(
           data => {
-            console.log(data);
+           // console.log(data);
             this.items.splice(index, 1);
             this.onItemsChanged.next(this.items);
             this.itemsCount--;
@@ -151,7 +151,7 @@ export class ProductsService implements Resolve<any> {
       this.http.get<Product>(AppConfig.apiUrl+'products/' + itemId+ '?access_token=' + this.authService.getToken())
         .subscribe(
           item => {
-            console.log('item ', item);
+            //console.log('item ', item);
             this.item = item;
             this.onItemChanged.next(this.item);
             resolve(item);
@@ -172,7 +172,7 @@ export class ProductsService implements Resolve<any> {
       this.http.patch<Product>(AppConfig.apiUrl+'products/' + item.id + '?access_token=' + this.authService.getToken(), item)
         .subscribe(
           data => {
-            console.log('data ', data);
+            //console.log('data ', data);
             resolve(true);
           },
           error => {
@@ -191,7 +191,7 @@ export class ProductsService implements Resolve<any> {
       this.http.post<Product>(AppConfig.apiUrl + 'products', item)
         .subscribe(
           data => {
-            console.log(data);
+          //  console.log(data);
             resolve(true);
           },
           error => {

@@ -53,7 +53,7 @@ export class ShoresService implements Resolve<any> {
     return new Promise((resolve, reject) => {
         this.http.get<Shore[]>(AppConfig.apiUrl + 'shores?access_token=' + this.authService.getToken())
           .subscribe((response: any) => {
-            console.log('response shores', response);
+            //console.log('response shores', response);
             this.items = response;
             this.onItemsChanged.next(this.items);
             resolve(response);
@@ -76,7 +76,7 @@ export class ShoresService implements Resolve<any> {
         //console.log(' offset ', offset);
         this.http.get<Shore[]>(AppConfig.apiUrl + 'shores?filter[limit]='+itemsPerPage+'&filter[skip]='+offset+'&access_token=' + this.authService.getToken())
           .subscribe((response: any) => {
-              console.log('response shores', response);
+             // console.log('response shores', response);
               this.items = response;
               this.onItemsChanged.next(this.items);
               resolve(response);
@@ -97,7 +97,7 @@ export class ShoresService implements Resolve<any> {
     return new Promise((resolve, reject) => {
         this.http.get<Shore[]>(AppConfig.apiUrl + 'shores/count?access_token=' + this.authService.getToken())
           .subscribe((response: any) => {
-              console.log('count shores', response);
+              //console.log('count shores', response);
               this.itemsCount = response.count;
               this.onItemsCountChanged.next(this.itemsCount);
               resolve(response);
@@ -121,7 +121,7 @@ export class ShoresService implements Resolve<any> {
       this.http.delete<Shore>(AppConfig.apiUrl + 'shores/' + item.id + '?access_token=' + this.authService.getToken())
         .subscribe(
           data => {
-            console.log(data);
+           // console.log(data);
             this.items.splice(index, 1);
             this.onItemsChanged.next(this.items);
             this.itemsCount--;
@@ -148,7 +148,7 @@ export class ShoresService implements Resolve<any> {
       this.http.get<Shore>(AppConfig.apiUrl+'shores/' + itemId+ '?access_token=' + this.authService.getToken())
         .subscribe(
           item => {
-            console.log('item ', item);
+           // console.log('item ', item);
             this.item = item;
             this.onItemChanged.next(this.item);
             resolve(item);
@@ -187,7 +187,7 @@ export class ShoresService implements Resolve<any> {
       this.http.post<Shore>(AppConfig.apiUrl + 'shores/?access_token=' + this.authService.getToken(), item)
         .subscribe(
           data => {
-            console.log(data);
+           // console.log(data);
             resolve(true);
           },
           error => {

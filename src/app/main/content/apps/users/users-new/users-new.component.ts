@@ -56,10 +56,10 @@ export class UsersNewComponent implements OnInit {
       username: ['', [Validators.required, Validators.maxLength(40),(username: FormControl)=>
       {
         if(username.value != '') {
-          console.log('username', username.value);
+         // console.log('username', username.value);
           this.authService.checkUsername(username.value).then(
             (data) => {
-              console.log("data ", data);
+             // console.log("data ", data);
               username.setErrors(null);
               this.formErrors.username.unique = true;
             }, (reason) => {
@@ -136,7 +136,7 @@ export class UsersNewComponent implements OnInit {
   }
 
   onFileChange(event) {
-    console.log(event);
+    //console.log(event);
     this.readFile(event.target);
   }
 
@@ -147,7 +147,7 @@ export class UsersNewComponent implements OnInit {
       if (typeof image !== 'string') {
         formData.append('file', image);
         this.uploadFileService.uploadFile(formData).then((val) => {
-          console.log('val ', val);
+          //console.log('val ', val);
           this.form.value.image = val[0].file;
           this.submit();
         }, (reason) => {
@@ -164,7 +164,7 @@ export class UsersNewComponent implements OnInit {
 
   submit(){
     delete this.form.value.id;
-    console.log('form add', this.form.value);
+   // console.log('form add', this.form.value);
     this.usersService.newItem(this.form.value).then((val) => {
       this.helpersService.showActionSnackbar(PageAction.Create, true, 'user');
       this.router.navigate(['/users/list']);

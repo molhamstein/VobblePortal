@@ -66,7 +66,7 @@ export class BottlesService implements Resolve<any> {
         )
         .subscribe(
           (response: any) => {
-            console.log("response bottles", response);
+            //console.log("response bottles", response);
             //this.items = response;
             this.onItemsChanged.next(this.items);
             resolve(response);
@@ -104,7 +104,7 @@ export class BottlesService implements Resolve<any> {
         )
         .subscribe(
           (response: any) => {
-            console.log("response bottles", response);
+            //console.log("response bottles", response);
             this.items = response;
             this.onItemsChanged.next(this.items);
             resolve(response);
@@ -137,7 +137,7 @@ export class BottlesService implements Resolve<any> {
         )
         .subscribe(
           (response: any) => {
-            console.log("count bottles", response);
+            //console.log("count bottles", response);
             this.itemsCount = response.count;
             this.onItemsCountChanged.next(this.itemsCount);
             resolve(response);
@@ -173,7 +173,7 @@ export class BottlesService implements Resolve<any> {
         )
         .subscribe(
           data => {
-            console.log(data);
+            //console.log(data);
             this.items.splice(index, 1);
             this.onItemsChanged.next(this.items);
             this.itemsCount--;
@@ -214,7 +214,7 @@ export class BottlesService implements Resolve<any> {
         )
         .subscribe(
           item => {
-            console.log("item ", item);
+           // console.log("item ", item);
             this.item = item;
             this.onItemChanged.next(this.item);
             resolve(item);
@@ -281,7 +281,7 @@ export class BottlesService implements Resolve<any> {
         )
         .subscribe(
           data => {
-            console.log(data);
+           // console.log(data);
             resolve(true);
           },
           error => {
@@ -326,19 +326,19 @@ export class BottlesService implements Resolve<any> {
 
       if (filter !== "") filter = 'filter={"where":{"and":[' + filter + "]}}";
 
-      console.log("fff ", filter);
+     // console.log("fff ", filter);
 
       this.http
         .get<any[]>(
           AppConfig.apiUrl +
-            "bottles?" +
+            "bottles/filterBottle?" +
             filter +
             "&access_token=" +
             this.authService.getToken()
         )
         .subscribe(
           data => {
-            console.log("filtered ", data);
+            //console.log("filtered ", data);
             this.items = data;
             this.onItemsChanged.next(this.items);
             resolve(true);

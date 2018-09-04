@@ -113,7 +113,7 @@ export class ProductsNewComponent implements OnInit {
   }
 
   onFileChange(event) {
-    console.log(event);
+    //console.log(event);
     this.readFile(event.target);
   }
 
@@ -124,7 +124,7 @@ export class ProductsNewComponent implements OnInit {
       if (typeof image !== 'string') {
         formData.append('file', image);
         this.uploadFileService.uploadFile(formData).then((val) => {
-          console.log('val ', val);
+          //console.log('val ', val);
           this.form.value.icon = val[0].file;
           this.submit();
         }, (reason) => {
@@ -141,7 +141,7 @@ export class ProductsNewComponent implements OnInit {
 
   submit() {
     this.progressBarService.toggle();
-    console.log('onSubmit ', this.form.value);
+   // console.log('onSubmit ', this.form.value);
     this.productsService.newItem(this.form.value).then((val) => {
       this.helpersService.showActionSnackbar(PageAction.Create, true, 'product');
       this.router.navigate(['/products/list']);

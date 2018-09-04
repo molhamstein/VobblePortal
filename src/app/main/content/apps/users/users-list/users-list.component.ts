@@ -117,7 +117,7 @@ export class UsersListComponent implements OnInit {
 
   applyFilter() {
     this.progressBarService.toggle();
-    console.log("filtersForm", this.filtersForm.value);
+   // console.log("filtersForm", this.filtersForm.value);
     this.usersService.filterBy(this.filtersForm.value).then(
       val => {
         // this.helpersService.showActionSnackbar(PageAction.Create, true, 'user');
@@ -133,7 +133,7 @@ export class UsersListComponent implements OnInit {
 
   applySearch() {
     this.progressBarService.toggle();
-    console.log("key ", this.filter.nativeElement.value);
+    //console.log("key ", this.filter.nativeElement.value);
     this.usersService.searchFor(this.filter.nativeElement.value).then(
       val => {
         // this.helpersService.showActionSnackbar(PageAction.Create, true, 'user');

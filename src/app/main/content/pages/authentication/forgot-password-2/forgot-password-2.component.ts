@@ -76,10 +76,10 @@ export class FuseForgotPassword2Component implements OnInit
 
 
   onSubmit() {
-    console.log('submit ', this.forgotPasswordForm.value);
+   // console.log('submit ', this.forgotPasswordForm.value);
     this.authService.forgot_password(this.forgotPasswordForm.value.email).then(
       (data) => {
-        console.log("data ", data);
+       // console.log("data ", data);
         this.router.navigate(['auth/login']);
         this.helpers.showActionSnackbar(null, false, '','',"Reset E-mail has sent successfully");
         this.loadingScreen.hide();

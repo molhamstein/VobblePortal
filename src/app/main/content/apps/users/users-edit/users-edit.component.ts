@@ -156,7 +156,7 @@ export class UsersEditComponent implements OnInit, OnDestroy
   }
 
   onFileChange(event) {
-    console.log(event);
+    //console.log(event);
     this.readFile(event.target);
   }
 
@@ -186,7 +186,7 @@ export class UsersEditComponent implements OnInit, OnDestroy
   }
 
   submit(){
-    console.log('form add', this.form.value);
+    //console.log('form add', this.form.value);
     this.usersService.editItem(this.form.value).then((val) => {
       this.helpersService.showActionSnackbar(PageAction.Update, true, 'user');
       this.router.navigate(['/users/list']);
