@@ -308,7 +308,7 @@ export class ItemsService implements Resolve<any> {
     return new Promise((resolve, reject) => {
       let filter = "";
 
-      if (values.type) filter += ',{"storeType":"' + values.type + '"}';
+      if (values.type) filter += ',{"typeGoodsId":"' + values.type + '"}';
 
       if (values.country)
         filter += ',{"owner.ISOCode":"' + values.country + '"}';

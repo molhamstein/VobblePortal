@@ -1,3 +1,4 @@
+import { TypeGoodsService } from "./../../type-goods/type-goods.service";
 import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { fuseAnimations } from "../../../../../core/animations";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
@@ -53,6 +54,7 @@ export class ItemsListComponent implements OnInit {
     "btns"
   ];
   itemsCount: number = 0;
+  type_goods: any[];
 
   filtersForm: FormGroup;
   filteredOptions: Observable<string[]>;
@@ -70,10 +72,13 @@ export class ItemsListComponent implements OnInit {
     private itemsService: ItemsService,
     private progressBarService: ProgressBarService,
     private formBuilder: FormBuilder,
+    private typeGoodsService: TypeGoodsService,
     public dialog: MatDialog
   ) {}
 
   ngOnInit() {
+    this.getTypeGoods();
+
     this.dataSource = new FilesDataSource(
       this.itemsService,
       this.paginator,
@@ -105,6 +110,12 @@ export class ItemsListComponent implements OnInit {
 
   filterC(val: string): any[] {
     return countries.filter(option => option.iso.toLowerCase().includes(val));
+  }
+
+  getTypeGoods() {
+    this.typeGoodsService.getItems().then(items => {
+      this.type_goods = items;
+    });
   }
 
   getItemsPaging() {

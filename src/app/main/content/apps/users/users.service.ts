@@ -336,7 +336,7 @@ export class UsersService implements Resolve<any> {
   filterBy(values): Promise<any> {
     return new Promise((resolve, reject) => {
       let filter = "";
-      if (values.gender) filter += '{"gender":"' + values.gender + '"}';
+      if (values.gender) filter += ',{"gender":"' + values.gender + '"}';
 
       if (values.country) filter += ',{"ISOCode":"' + values.country + '"}';
 
@@ -345,6 +345,9 @@ export class UsersService implements Resolve<any> {
 
       if (values.createdTo)
         filter += ',{"createdAt":{"lt":"' + values.createdTo + '"}}';
+
+      if (values.status)
+        filter += ',{"status":"' + values.status + '"}';
 
       if (filter.charAt(0) === ",") {
         filter = filter.substr(1);

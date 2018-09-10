@@ -305,7 +305,7 @@ export class BottlesService implements Resolve<any> {
   filterBy(values): Promise<any> {
     return new Promise((resolve, reject) => {
       let filter = "";
-      if (values.gender) filter += '{"owner.gender":"' + values.gender + '"}';
+      if (values.gender) filter += ',{"owner.gender":"' + values.gender + '"}';
 
       if (values.shoreId) filter += ',{"shoreId":"' + values.shoreId + '"}';
 

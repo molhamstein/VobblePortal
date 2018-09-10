@@ -8,8 +8,9 @@
   <div class="center">
 
     <!-- HEADER -->
-    <div class="header white-fg">
-      <div fxLayout="column" fxLayoutAlign="space-between center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+    <form class="header white-fg" fxLayout="column" fxLayoutAlign="center space-around"
+      [formGroup]="filtersForm">
+      <div fxLayout="row" fxLayoutAlign="space-between center">
         <!-- APP TITLE -->
         <div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
           <mat-icon class="logo-icon mr-16" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">account_box</mat-icon>
@@ -34,49 +35,55 @@
         </button>
 
       </div>
+        <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px">
+          <mat-form-field>
+            <mat-select placeholder="Gender" formControlName="gender" name="gender">
+              <mat-option [value]=""> No filter</mat-option>
+              <mat-option value="male"> Male</mat-option>
+              <mat-option value="female"> Female</mat-option>
+            </mat-select>
+          </mat-form-field>
 
-      <form [formGroup]="filtersForm" fxLayout="column" fxLayoutAlign="space-between center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
-        <mat-form-field>
-          <mat-select placeholder="Gender" formControlName="gender" name="gender">
-            <mat-option [value]=""> No filter</mat-option>
-            <mat-option value="male"> Male</mat-option>
-            <mat-option value="female"> Female</mat-option>
-          </mat-select>
-        </mat-form-field>
+          <mat-form-field>
+            <mat-select placeholder="Status" formControlName="status">
+              <mat-option value="active">Active</mat-option>
+              <mat-option value="deactivated">De-Activated</mat-option>
+              <mat-option value="pending">Pending</mat-option>
+            </mat-select>
+          </mat-form-field>
 
-        <mat-form-field>
-          <input type="text" placeholder="ISO Code" aria-label="code" matInput formControlName="country" name="country" [matAutocomplete]="auto">
-          <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let iso of filteredOptions | async" [value]="iso.iso">
-              {{iso.iso}}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
+          <mat-form-field>
+            <input type="text" placeholder="ISO Code" aria-label="code" matInput formControlName="country" name="country" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let iso of filteredOptions | async" [value]="iso.iso">
+                {{iso.iso}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <button mat-raised-button type="submit" (click)="applyFilter()" class="add-product-button mat-white-bg  mt-sm-0">
+              <span> FILTER </span>
+            </button>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px">
+          <mat-form-field>
+            <input (click)="picker.open()" matInput [matDatepicker]="picker" placeholder="Creation Date From" formControlName="createdFrom"
+              name="createdFrom">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
 
-        <mat-form-field>
-          <input matInput [matDatepicker]="picker" placeholder="Creation Date From" formControlName="createdFrom" name="createdFrom">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
+          <mat-form-field>
+            <input (click)="picker.open()" matInput [matDatepicker]="picker2" placeholder="Creation Date To" formControlName="createdTo"
+              name="createdTo">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+          <button mat-raised-button type="submit" (click)="clearFilter()" class="add-product-button mat-white-bg  mt-sm-0">
+              <span> CLEAR </span>
+            </button>
+        </div>
 
-        <mat-form-field>
-          <input matInput [matDatepicker]="picker2" placeholder="Creation Date To" formControlName="createdTo" name="createdTo">
-          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-          <mat-datepicker #picker2></mat-datepicker>
-        </mat-form-field>
-
-        <button mat-raised-button type="submit" (click)="applyFilter()" class="add-product-button mat-white-bg  mt-sm-0">
-          <span> FILTER </span>
-        </button>
-
-        <button mat-raised-button type="submit" (click)="clearFilter()" class="add-product-button mat-white-bg  mt-sm-0">
-          <span> CLEAR </span>
-        </button>
-
-      </form>
-
-
-    </div>
+    </form>
     <!-- / HEADER -->
 
     <!-- CONTENT CARD -->

@@ -97,7 +97,8 @@ export class UsersListComponent implements OnInit {
       gender: new FormControl(""),
       country: new FormControl(""),
       createdFrom: new FormControl(""),
-      createdTo: new FormControl("")
+      createdTo: new FormControl(""),
+      status: new FormControl("")
     });
 
     this.filteredOptions = this.filtersForm.controls.country.valueChanges.pipe(

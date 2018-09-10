@@ -8,8 +8,8 @@
   <div class="center">
 
     <!-- HEADER -->
-    <div class="header white-fg">
-      <div fxLayout="column" fxLayoutAlign="space-between center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+    <form class="header white-fg" fxLayout="column" fxLayoutAlign="center space-around" [formGroup]="filtersForm">
+      <div fxLayout="row" fxLayoutAlign="space-between center">
 
         <!-- APP TITLE -->
         <div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
@@ -35,7 +35,7 @@
 
 
       </div>
-      <form [formGroup]="filtersForm" fxLayout="column" fxLayoutAlign="space-between center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px">
 
         <mat-form-field>
           <input type="text" placeholder="Owner ISO Code" aria-label="code" matInput formControlName="country" name="country" [matAutocomplete]="auto">
@@ -47,32 +47,39 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Store Type" formControlName="type">
-        </mat-form-field>
-
-        <mat-form-field>
-          <input matInput [matDatepicker]="picker" placeholder="Date From" formControlName="from" name="from">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-
-        <mat-form-field>
-          <input matInput [matDatepicker]="picker2" placeholder="Date To" formControlName="to" name="to">
-          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-          <mat-datepicker #picker2></mat-datepicker>
+          <mat-select placeholder="Type Goods" formControlName="type">
+            <mat-option *ngFor="let type of type_goods" [value]="type.id">
+              <span>{{type.name_en}} / {{type.name_ar}}</span>
+            </mat-option>
+          </mat-select>
         </mat-form-field>
 
         <button mat-raised-button type="submit" (click)="applyFilter()" class="add-product-button mat-white-bg  mt-sm-0" [ngClass]="{'mat-green-bg' : filtersForm.value!==''}">
           <span> FILTER </span>
         </button>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px">
+        <mat-form-field>
+          <input matInput (click)="picker.open()" [matDatepicker]="picker" placeholder="Date From" formControlName="from" name="from">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput (click)="picker.open()" [matDatepicker]="picker2" placeholder="Date To" formControlName="to" name="to">
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+
+
 
         <button mat-raised-button type="submit" (click)="clearFilter()" class="add-product-button mat-white-bg  mt-sm-0">
           <span> CLEAR </span>
         </button>
+      </div>
 
-      </form>
-
-    </div>
+    </form>
     <!-- / HEADER -->
 
     <!-- CONTENT CARD -->
