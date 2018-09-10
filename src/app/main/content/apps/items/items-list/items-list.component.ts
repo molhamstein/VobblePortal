@@ -1,4 +1,4 @@
-import { TypeGoodsService } from "./../../type-goods/type-goods.service";
+import { TypeGoodsService } from "../../type-goods/type-goods.service";
 import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { fuseAnimations } from "../../../../../core/animations";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";

@@ -1,3 +1,175 @@
-<p>
-  dashboard works!
-</p>
+<div id="dashboard-project" class="page-layout simple right-sidenav" fxLayout="row">
+
+  <mat-sidenav-container>
+
+    <!-- CENTER -->
+    <div class="center" fusePerfectScrollbar>
+
+      <!-- HEADER -->
+      <div class="header mat-accent-bg p-24 pb-0" fxLayout="column" fxLayoutAlign="space-between">
+
+        <div fxLayout="row" fxLayoutAlign="space-between start">
+
+          <span class="mat-display-1 mb-0 welcome-message" *fuseIfOnDom [@animate]="{value:'*',params:{x:'50px'}}">Dashboard</span>
+
+
+        </div>
+
+
+      </div>
+      <!-- / HEADER -->
+
+      <!-- CONTENT -->
+      <div class="content">
+
+        <mat-tab-group dynamicHeight>
+
+          <mat-tab label="Charts">
+
+            <div class="widget-group p-12" fxLayout="row" fxFlex="100" fxLayoutWrap *fuseIfOnDom [@animateStagger]="{value:'50'}">
+
+              <!-- <mat-card [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="row" fxFlex="100">
+                <ngx-charts-line-chart [view]="view" [scheme]="colorScheme" [results]="multi" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis"
+                  [legend]="showLegend" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
+                  [yAxisLabel]="yAxisLabel" [autoScale]="autoScale" (select)="onSelect($event)">
+                </ngx-charts-line-chart>
+              </mat-card> -->
+
+              <!-- WIDGET 5 -->
+              <mat-card [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="row" fxFlex="100">
+
+                <!-- Front -->
+                <div class="mat-card-front mat-white-bg mat-elevation-z2">
+
+                  <div class="px-16 border-bottom" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutWrap>
+
+                    <div fxFlex class="py-8 h3">{{widgets.widget5.title}}</div>
+
+                    <div fxFlex="0 1 auto" class="py-8" fxLayout="row">
+                      <button mat-button class="px-16" *ngFor="let range of widgets.widget5.ranges | keys" (click)="widget5.currentRange = range.key"
+                        [disabled]="widget5.currentRange == range.key">
+                        {{range.value}}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div fxLayout="row" fxLayoutAlign="start end" fxLayoutWrap>
+                    <div class="h-420 mb-16" fxLayout="row" fxFlex="100" fxFlex.gt-sm="50">
+                      <ngx-charts-bar-vertical-stacked *fuseIfOnDom [scheme]="widget5.scheme" [results]="this.widgets.widget5.mainChart[this.widget5.currentRange]"
+                        [gradient]="widget5.gradient" [xAxis]="widget5.xAxis" [yAxis]="widget5.yAxis" [legend]="widget5.legend"
+                        [showXAxisLabel]="widget5.showXAxisLabel" [showYAxisLabel]="widget5.showYAxisLabel" [xAxisLabel]="widget5.xAxisLabel"
+                        [yAxisLabel]="widget5.yAxisLabel" (select)="widget5.onSelect($event)">
+                      </ngx-charts-bar-vertical-stacked>
+                    </div>
+
+                    <div class="mb-16" fxFlex="100" fxFlex.gt-sm="50" fxLayoutAlign="row" fxLayoutWrap>
+
+                      <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="50" fxLayoutAlign="center" *ngFor="let widget of widgets.widget5.supporting | keys">
+
+                        <div class="px-24">
+                          <div class="h4 secondary-text">{{widget.value.label}}</div>
+                          <div class="mat-display-1 m-0">
+                            {{widget.value.count[widget5.currentRange]}}
+                          </div>
+                        </div>
+
+                        <div class="h-64">
+                          <ngx-charts-area-chart *fuseIfOnDom [results]="widget.value.chart[widget5.currentRange]" [scheme]="widget5.supporting.scheme"
+                            [gradient]="widget5.supporting.gradient" [xAxis]="widget5.supporting.xAxis" [yAxis]="widget5.supporting.yAxis"
+                            [legend]="widget5.supporting.legend" [showXAxisLabel]="widget5.supporting.showXAxisLabel" [showYAxisLabel]="widget5.supporting.showYAxisLabel"
+                            [xAxisLabel]="widget5.supporting.xAxisLabel" [yAxisLabel]="widget5.supporting.yAxisLabel" [curve]="widget5.supporting.curve">
+                          </ngx-charts-area-chart>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- / Front -->
+
+              </mat-card>
+              <!-- / WIDGET 5 -->
+
+
+              <!-- WIDGET 6 -->
+              <mat-card [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-sm="50">
+
+                <!-- Front -->
+                <div class="mat-card-front mat-white-bg mat-elevation-z2">
+
+                  <div class="px-16 border-bottom" fxLayout="row" fxLayoutAlign="space-between center">
+                    <div class="h3">{{widgets.widget6.title}}</div>
+                    <mat-form-field>
+                      <mat-select class="simplified" [(ngModel)]="widget6.currentRange" aria-label="Change range">
+                        <mat-option *ngFor="let range of widgets.widget6.ranges | keys" [value]="range.key">
+                          {{range.value}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="h-400">
+                    <ngx-charts-pie-chart *fuseIfOnDom [scheme]="widget6.scheme" [results]="widgets.widget6.mainChart[widget6.currentRange]"
+                      [legend]="widget6.showLegend" [explodeSlices]="widget6.explodeSlices" [labels]="widget6.labels" [doughnut]="widget6.doughnut"
+                      [gradient]="widget6.gradient" (select)="widget6.onSelect($event)">
+                    </ngx-charts-pie-chart>
+                  </div>
+
+                  <div class="py-8 mh-16 border-top" fxLayout="row" fxLayoutAlign="start center" fxLayoutWrap>
+                    <div class="py-8 border-right" fxLayout="column" fxLayoutAlign="center center" fxFlex="100" fxFlex.gt-sm="50">
+                      <span class="mat-display-1 mb-0">{{widgets.widget6.footerLeft.count[widget6.currentRange]}}</span>
+                      <span class="h4">{{widgets.widget6.footerLeft.title}}</span>
+                    </div>
+
+                    <div class="py-8" fxLayout="column" fxLayoutAlign="center center" fxFlex="100" fxFlex.gt-sm="50">
+                      <span class="mat-display-1 mb-0">{{widgets.widget6.footerRight.count[widget6.currentRange]}}</span>
+                      <span class="h4">{{widgets.widget6.footerRight.title}}</span>
+                    </div>
+                  </div>
+
+                </div>
+                <!-- / Front -->
+
+              </mat-card>
+              <!-- / WIDGET 6 -->
+
+
+              <!-- WIDGET 8 -->
+              <mat-card [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-sm="50">
+
+                <!-- Front -->
+                <div class="mat-card-front mat-white-bg mat-elevation-z2">
+                  <div class="h3 p-16">
+                    {{widgets.widget8.title}}
+                  </div>
+
+                  <mat-divider></mat-divider>
+
+                  <div class="h-400">
+                    <ngx-charts-pie-chart *fuseIfOnDom [scheme]="widget8.scheme" [results]="widgets.widget8.mainChart" [legend]="widget8.legend"
+                      [explodeSlices]="widget8.explodeSlices" [labels]="widget8.labels" [doughnut]="widget8.doughnut" [gradient]="widget8.gradient"
+                      (select)="widget8.onSelect($event)">
+                    </ngx-charts-pie-chart>
+                  </div>
+
+                </div>
+                <!-- / Front -->
+
+              </mat-card>
+              <!-- / WIDGET 8 -->
+
+            </div>
+            <!-- / WIDGET GROUP -->
+
+
+          </mat-tab>
+
+        </mat-tab-group>
+
+      </div>
+      <!-- / CONTENT -->
+
+    </div>
+    <!-- / CENTER -->
+  </mat-sidenav-container>
+
+</div>

@@ -1,5 +1,5 @@
-import { BottlesService } from "./../../bottles/bottles.service";
-import { UsersService } from "./../../users/users.service";
+import { BottlesService } from "../../bottles/bottles.service";
+import { UsersService } from "../../users/users.service";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import "rxjs/add/operator/startWith";
 import "rxjs/add/observable/merge";

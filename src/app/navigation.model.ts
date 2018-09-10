@@ -4,134 +4,140 @@ export class NavigationModel {
   constructor() {
     this.model = [
       {
-        'id': 'applications',
-        'title': 'Applications',
-        'type': 'group',
-        'icon': 'apps',
-        'children': [
+        id: "applications",
+        title: "Applications",
+        type: "group",
+        icon: "apps",
+        children: [
           {
-            'id': 'users',
-            'title': 'Users',
-            'type': 'collapse',
-            'icon': 'account_box',
-            'children': [
+            id: "dashboard",
+            title: "Dashboard",
+            type: "item",
+            icon: "dashboard",
+            url: "/dashboard"
+          },
+          {
+            id: "users",
+            title: "Users",
+            type: "collapse",
+            icon: "account_box",
+            children: [
               {
-                'id': 'list',
-                'title': 'List',
-                'type': 'item',
-                'url': '/users/list'
+                id: "list",
+                title: "List",
+                type: "item",
+                url: "/users/list"
               },
               {
-                'id': 'new',
-                'title': 'New',
-                'type': 'item',
-                'url': '/users/new'
+                id: "new",
+                title: "New",
+                type: "item",
+                url: "/users/new"
               }
             ]
           },
           {
-            'id': 'bottles',
-            'title': 'Bottles',
-            'type': 'collapse',
-            'icon': 'opacity',
-            'children': [
+            id: "bottles",
+            title: "Bottles",
+            type: "collapse",
+            icon: "opacity",
+            children: [
               {
-                'id': 'list',
-                'title': 'List',
-                'type': 'item',
-                'url': '/bottles/list'
+                id: "list",
+                title: "List",
+                type: "item",
+                url: "/bottles/list"
               },
               {
-                'id': 'new',
-                'title': 'New',
-                'type': 'item',
-                'url': '/bottles/new'
+                id: "new",
+                title: "New",
+                type: "item",
+                url: "/bottles/new"
               }
             ]
           },
           {
-            'id': 'shores',
-            'title': 'Shores',
-            'type': 'collapse',
-            'icon': 'directions_boat',
-            'children': [
+            id: "shores",
+            title: "Shores",
+            type: "collapse",
+            icon: "directions_boat",
+            children: [
               {
-                'id': 'list',
-                'title': 'List',
-                'type': 'item',
-                'url': '/shores/list'
+                id: "list",
+                title: "List",
+                type: "item",
+                url: "/shores/list"
               },
               {
-                'id': 'new',
-                'title': 'New',
-                'type': 'item',
-                'url': '/shores/new'
+                id: "new",
+                title: "New",
+                type: "item",
+                url: "/shores/new"
               }
             ]
           },
           {
-            'id': 'items',
-            'title': 'Items',
-            'type': 'collapse',
-            'icon': 'view_week',
-            'children': [
+            id: "items",
+            title: "Items",
+            type: "collapse",
+            icon: "view_week",
+            children: [
               {
-                'id': 'list',
-                'title': 'List',
-                'type': 'item',
-                'url': '/items/list'
+                id: "list",
+                title: "List",
+                type: "item",
+                url: "/items/list"
               },
               {
-                'id': 'new',
-                'title': 'New',
-                'type': 'item',
-                'url': '/items/new'
+                id: "new",
+                title: "New",
+                type: "item",
+                url: "/items/new"
               }
             ]
           },
           {
-            'id': 'products',
-            'title': 'Products',
-            'type': 'collapse',
-            'icon': 'style',
-            'children': [
+            id: "products",
+            title: "Products",
+            type: "collapse",
+            icon: "style",
+            children: [
               {
-                'id': 'list',
-                'title': 'List',
-                'type': 'item',
-                'url': '/products/list'
+                id: "list",
+                title: "List",
+                type: "item",
+                url: "/products/list"
               },
               {
-                'id': 'new',
-                'title': 'New',
-                'type': 'item',
-                'url': '/products/new'
+                id: "new",
+                title: "New",
+                type: "item",
+                url: "/products/new"
               }
             ]
           },
           {
-            'id': 'reports',
-            'title': 'Reports',
-            'type': 'collapse',
-            'icon': 'report',
-            'children': [
+            id: "reports",
+            title: "Reports",
+            type: "collapse",
+            icon: "report",
+            children: [
               {
-                'id': 'list',
-                'title': 'List',
-                'type': 'item',
-                'url': '/reports/list'
+                id: "list",
+                title: "List",
+                type: "item",
+                url: "/reports/list"
               },
               {
-                'id': 'new',
-                'title': 'New',
-                'type': 'item',
-                'url': '/reports/new'
+                id: "new",
+                title: "New",
+                type: "item",
+                url: "/reports/new"
               }
             ]
           }
         ]
       }
-    ]
+    ];
   }
 }
-

@@ -1,5 +1,5 @@
-import { Bottle } from "./../bottles/bottle.model";
-import { User } from "./../users/user.model";
+import { Bottle } from "../bottles/bottle.model";
+import { User } from "../users/user.model";
 
 export class Report {
   id: string;
