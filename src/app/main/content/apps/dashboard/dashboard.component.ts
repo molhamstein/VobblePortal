@@ -14,73 +14,163 @@ import { DataSource } from "@angular/cdk/collections";
   animations: fuseAnimations
 })
 export class DashboardComponent implements OnInit, OnDestroy {
+  lineChartResults = [
+    {
+      name: "New Users",
+      series: [
+        {
+          value: 5252,
+          name: "2016-09-15T01:05:49.355Z"
+        },
+        {
+          value: 3885,
+          name: "2016-09-13T00:51:14.145Z"
+        },
+        {
+          value: 3132,
+          name: "2016-09-16T00:30:55.484Z"
+        },
+        {
+          value: 4131,
+          name: "2016-09-21T05:59:35.344Z"
+        },
+        {
+          value: 4632,
+          name: "2016-09-15T03:29:58.714Z"
+        }
+      ]
+    },
+    {
+      name: "Active Users",
+      series: [
+        {
+          value: 5961,
+          name: "2016-09-15T01:05:49.355Z"
+        },
+        {
+          value: 5059,
+          name: "2016-09-13T00:51:14.145Z"
+        },
+        {
+          value: 3111,
+          name: "2016-09-16T00:30:55.484Z"
+        },
+        {
+          value: 2250,
+          name: "2016-09-21T05:59:35.344Z"
+        },
+        {
+          value: 5782,
+          name: "2016-09-15T03:29:58.714Z"
+        }
+      ]
+    },
+    {
+      name: "New Bottles",
+      series: [
+        {
+          value: 3919,
+          name: "2016-09-15T01:05:49.355Z"
+        },
+        {
+          value: 4639,
+          name: "2016-09-13T00:51:14.145Z"
+        },
+        {
+          value: 5007,
+          name: "2016-09-16T00:30:55.484Z"
+        },
+        {
+          value: 2576,
+          name: "2016-09-21T05:59:35.344Z"
+        },
+        {
+          value: 3831,
+          name: "2016-09-15T03:29:58.714Z"
+        }
+      ]
+    }
+  ];
 
+  pieChartResults = [
+    {
+      name: "Germany",
+      value: 40632
+    },
+    {
+      name: "United States",
+      value: 49737
+    },
+    {
+      name: "France",
+      value: 36745
+    },
+    {
+      name: "United Kingdom",
+      value: 36240
+    },
+    {
+      name: "Spain",
+      value: 33000
+    },
+    {
+      name: "Italy",
+      value: 35800
+    }
+  ];
 
-  projects: any[];
-  selectedProject: any;
+  pieChartGenderResults = [
+    {
+      name: "Male",
+      value: 40632
+    },
+    {
+      name: "Female",
+      value: 49737
+    },
+    {
+      name: "Undefined",
+      value: 36745
+    }
+  ];
 
-  widgets: any;
-  widget5: any = {};
-  widget6: any = {};
-  widget7: any = {};
-  widget8: any = {};
-  widget9: any = {};
-  widget11: any = {};
+  lineChart: any = {};
+  pieChart: any = {};
 
   dateNow = Date.now();
 
   constructor(private projectsDashboardService: DashboardService) {
-    this.projects = this.projectsDashboardService.projects;
-
-    this.selectedProject = this.projects[0];
-
-    this.widgets = this.projectsDashboardService.widgets;
-
     /**
-     * Widget 5
+     *  //users
      */
-    this.widget5 = {
-      currentRange: "TW",
+    this.lineChart = {
+      //currentRange: "",
       xAxis: true,
       yAxis: true,
       gradient: false,
-      legend: false,
-      showXAxisLabel: false,
-      xAxisLabel: "Days",
-      showYAxisLabel: false,
-      yAxisLabel: "Isues",
+      legend: true,
+      showXAxisLabel: true,
+      xAxisLabel: "Date",
+      showYAxisLabel: true,
+      yAxisLabel: "Count",
       scheme: {
         domain: ["#42BFF7", "#C6ECFD", "#C7B42C", "#AAAAAA"]
       },
+      curve: shape.curveBasis,
       onSelect: ev => {
         console.log(ev);
-      },
-      supporting: {
-        currentRange: "",
-        xAxis: false,
-        yAxis: false,
-        gradient: false,
-        legend: false,
-        showXAxisLabel: false,
-        xAxisLabel: "Days",
-        showYAxisLabel: false,
-        yAxisLabel: "Isues",
-        scheme: {
-          domain: ["#42BFF7", "#C6ECFD", "#C7B42C", "#AAAAAA"]
-        },
-        curve: shape.curveBasis
       }
     };
 
     /**
-     * Widget 6
+     * pieChart
      */
-    this.widget6 = {
-      currentRange: "TW",
+    this.pieChart = {
+      // currentRange: "TW",
       legend: false,
       explodeSlices: false,
       labels: true,
-      doughnut: true,
+      doughnut: false,
       gradient: false,
       scheme: {
         domain: ["#f44336", "#9c27b0", "#03a9f4", "#e91e63"]
@@ -90,61 +180,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
       }
     };
 
-    /**
-     * Widget 7
-     */
-    this.widget7 = {
-      currentRange: "T"
-    };
-
-    /**
-     * Widget 8
-     */
-    this.widget8 = {
-      legend: false,
-      explodeSlices: false,
-      labels: true,
-      doughnut: false,
-      gradient: false,
-      scheme: {
-        domain: ["#f44336", "#9c27b0", "#03a9f4", "#e91e63", "#ffc107"]
-      },
-      onSelect: ev => {
-        console.log(ev);
-      }
-    };
-
-    /**
-     * Widget 9
-     */
-    this.widget9 = {
-      currentRange: "TW",
-      xAxis: false,
-      yAxis: false,
-      gradient: false,
-      legend: false,
-      showXAxisLabel: false,
-      xAxisLabel: "Days",
-      showYAxisLabel: false,
-      yAxisLabel: "Isues",
-      scheme: {
-        domain: ["#42BFF7", "#C6ECFD", "#C7B42C", "#AAAAAA"]
-      },
-      curve: shape.curveBasis
-    };
-
     setInterval(() => {
       this.dateNow = Date.now();
     }, 1000);
   }
 
   ngOnInit() {
-    /**
-     * Widget 11
-     */
-    this.widget11.onContactsChanged = new BehaviorSubject({});
-    this.widget11.onContactsChanged.next(this.widgets.widget11.table.rows);
-    this.widget11.dataSource = new FilesDataSource(this.widget11);
+    // /**
+    //  * Widget 11
+    //  */
+    // this.widget11.onContactsChanged = new BehaviorSubject({});
+    // this.widget11.onContactsChanged.next(this.widgets.widget11.table.rows);
+    // this.widget11.dataSource = new FilesDataSource(this.widget11);
   }
 
   ngOnDestroy() {}
