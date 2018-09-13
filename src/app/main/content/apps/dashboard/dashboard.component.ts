@@ -20,23 +20,23 @@ export class DashboardComponent implements OnInit, OnDestroy {
       series: [
         {
           value: 5252,
-          name: "2016-09-15T01:05:49.355Z"
+          name: "2016-09-15"
         },
         {
           value: 3885,
-          name: "2016-09-13T00:51:14.145Z"
+          name: "2016-09-13"
         },
         {
           value: 3132,
-          name: "2016-09-16T00:30:55.484Z"
+          name: "2016-09-16"
         },
         {
           value: 4131,
-          name: "2016-09-21T05:59:35.344Z"
+          name: "2016-09-21"
         },
         {
           value: 4632,
-          name: "2016-09-15T03:29:58.714Z"
+          name: "2016-09-15"
         }
       ]
     },
@@ -45,23 +45,23 @@ export class DashboardComponent implements OnInit, OnDestroy {
       series: [
         {
           value: 5961,
-          name: "2016-09-15T01:05:49.355Z"
+          name: "2016-09-15"
         },
         {
           value: 5059,
-          name: "2016-09-13T00:51:14.145Z"
+          name: "2016-09-13"
         },
         {
           value: 3111,
-          name: "2016-09-16T00:30:55.484Z"
+          name: "2016-09-16"
         },
         {
           value: 2250,
-          name: "2016-09-21T05:59:35.344Z"
+          name: "2016-09-21"
         },
         {
           value: 5782,
-          name: "2016-09-15T03:29:58.714Z"
+          name: "2016-09-15"
         }
       ]
     },
@@ -70,23 +70,23 @@ export class DashboardComponent implements OnInit, OnDestroy {
       series: [
         {
           value: 3919,
-          name: "2016-09-15T01:05:49.355Z"
+          name: "2016-09-15"
         },
         {
           value: 4639,
-          name: "2016-09-13T00:51:14.145Z"
+          name: "2016-09-13"
         },
         {
           value: 5007,
-          name: "2016-09-16T00:30:55.484Z"
+          name: "2016-09-16"
         },
         {
           value: 2576,
-          name: "2016-09-21T05:59:35.344Z"
+          name: "2016-09-21"
         },
         {
           value: 3831,
-          name: "2016-09-15T03:29:58.714Z"
+          name: "2016-09-15"
         }
       ]
     }

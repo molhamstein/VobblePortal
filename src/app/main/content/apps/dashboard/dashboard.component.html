@@ -31,26 +31,29 @@
 
               <mat-card [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column" fxFlex="100">
 
-                <!-- Front -->
-                <!-- <div class="mat-card-front mat-white-bg mat-elevation-z2" fxLayout="column"> -->
-
-
                 <div class="mat-card-front mat-white-bg ">
-                  <div class="h3 p-16">
-                    Users
-                  </div>
 
-                  <!-- <div class="px-16 border-bottom" fxLayout="row" fxLayoutAlign="space-between center">
-                    <div class="h3">Line Chart (Users)</div>
-                    <!-- <mat-form-field>
-                      <mat-select class="simplified" [(ngModel)]="widget6.currentRange" aria-label="Change range">
-                        <mat-option *ngFor="let range of widgets.widget6.ranges | keys" [value]="range.key">
-                          {{range.value}}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field> -->
-                  <!-- </div> -->
-                  <mat-divider></mat-divider>
+                  <div class="px-16 border-bottom" fxLayout="row" fxLayoutAlign="space-between center">
+
+                    <div class="h3 p-16">
+                      Users
+                    </div>
+                    <div>
+                      <mat-form-field>
+                        <input matInput (click)="picker.open()" [matDatepicker]="picker" placeholder="Date From">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+
+                      <mat-form-field>
+                        <input matInput (click)="picker2.open()" [matDatepicker]="picker2" placeholder="Date To">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                      </mat-form-field>
+
+                    </div>
+                  </div>
+                  <!-- <mat-divider></mat-divider> -->
 
 
                   <div class="h-400">
@@ -75,7 +78,7 @@
 
                 <div class="mat-card-front mat-white-bg ">
                   <div class="h3 p-16">
-                    Items Sold
+                    Purchases
                   </div>
                   <mat-divider></mat-divider>
 
