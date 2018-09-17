@@ -186,27 +186,27 @@ export class BottlesNewComponent implements OnInit {
     delete this.form.value.id;
     this.form.value.ownerId = this.form.value.ownerId.id;
     console.log("form add", this.form.value);
-    // this.bottlesService.newItem(this.form.value).then(
-    //   val => {
-    //     this.helpersService.showActionSnackbar(
-    //       PageAction.Create,
-    //       true,
-    //       "bottle"
-    //     );
-    //     this.router.navigate(["/bottles/list"]);
-    //     this.progressBarService.toggle();
-    //   },
-    //   reason => {
-    //     this.helpersService.showActionSnackbar(
-    //       PageAction.Create,
-    //       false,
-    //       "bottle",
-    //       { style: "failed-snackbar" }
-    //     );
-    //     this.progressBarService.toggle();
-    //     console.log("error ", reason);
-    //   }
-    // );
+    this.bottlesService.newItem(this.form.value).then(
+      val => {
+        this.helpersService.showActionSnackbar(
+          PageAction.Create,
+          true,
+          "bottle"
+        );
+        this.router.navigate(["/bottles/list"]);
+        this.progressBarService.toggle();
+      },
+      reason => {
+        this.helpersService.showActionSnackbar(
+          PageAction.Create,
+          false,
+          "bottle",
+          { style: "failed-snackbar" }
+        );
+        this.progressBarService.toggle();
+        console.log("error ", reason);
+      }
+    );
   }
 
   onSubmit() {

@@ -182,24 +182,24 @@ export class UsersNewComponent implements OnInit {
   submit() {
     delete this.form.value.id;
     console.log("form add", this.form.value);
-    // this.usersService.newItem(this.form.value).then(
-    //   val => {
-    //     this.helpersService.showActionSnackbar(PageAction.Create, true, "user");
-    //     this.router.navigate(["/users/list"]);
-    //     this.progressBarService.toggle();
-    //   },
-    //   reason => {
-    //     this.helpersService.showActionSnackbar(
-    //       PageAction.Create,
-    //       false,
-    //       "user",
-    //       { style: "failed-snackbar" }
-    //     );
-    //     this.progressBarService.toggle();
+    this.usersService.newItem(this.form.value).then(
+      val => {
+        this.helpersService.showActionSnackbar(PageAction.Create, true, "user");
+        this.router.navigate(["/users/list"]);
+        this.progressBarService.toggle();
+      },
+      reason => {
+        this.helpersService.showActionSnackbar(
+          PageAction.Create,
+          false,
+          "user",
+          { style: "failed-snackbar" }
+        );
+        this.progressBarService.toggle();
 
-    //     console.log("error ", reason);
-    //   }
-    // );
+        console.log("error ", reason);
+      }
+    );
   }
 
   onSubmit() {
