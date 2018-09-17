@@ -15,7 +15,6 @@ import { AuthService } from "../../../pages/authentication/auth.service";
 import { BottlesService } from "../bottles.service";
 import { UploadFileService } from "../../../../shared/upload-file.service";
 import { ShoresService } from "../../shores/shores.service";
-//import {UsersService} from "../../users/users.service";
 import { Shore } from "../../shores/shore.model";
 import { ProgressBarService } from "../../../../../core/services/progress-bar.service";
 import { Observable } from "rxjs";
@@ -32,6 +31,7 @@ import { UsersService } from "../../users/users.service";
 export class BottlesNewComponent implements OnInit {
   form: FormGroup;
   formErrors: any;
+  blobFileToUpload;
   video: string = "";
   shores: Shore[] = [];
   users: User[] = [];
@@ -64,14 +64,11 @@ export class BottlesNewComponent implements OnInit {
 
   ngOnInit() {
     this.getShores();
-    //this.getUsers();
-
     this.form = this.formBuilder.group({
       file: [""],
       thumbnail: [""],
       status: ["active", Validators.required],
       createdAt: [new Date(), Validators.required],
-      // weight : [''],
       shoreId: [""],
       ownerId: new FormControl(this.currentUser)
     });
@@ -126,25 +123,18 @@ export class BottlesNewComponent implements OnInit {
       error => {}
     );
   }
-  /*
-  getUsers(){
-   // if (this.users.length == 0)
-      this.usersService.getUsers().then( items => {
-        this.users = items;
-      }, error =>{
-
-      })
-  }*/
 
   readFileVideo(inputValue: any): void {
-    this.form.value.file = inputValue.files[0];
-    //console.log('this.form.value.file ', this.form.value.file);
-    let reader: FileReader = new FileReader();
-
-    reader.onloadend = e => {
-      this.video = reader.result;
-    };
-    reader.readAsDataURL(this.form.value.file);
+    if (inputValue.files && inputValue.files[0]) {
+      // this.form.value.file = inputValue.files[0];
+      this.blobFileToUpload = inputValue.files[0];
+      console.log("this.blobFileToUpload ", this.blobFileToUpload);
+      const reader: FileReader = new FileReader();
+      reader.readAsDataURL(inputValue.files[0]);
+      reader.onload = event => {
+        this.video = event.target["result"];
+      };
+    }
   }
 
   browseVideos() {
@@ -152,30 +142,30 @@ export class BottlesNewComponent implements OnInit {
     return false;
   }
 
-  removeFileVideo() {
-    this.video = "";
-    this.form.value.file = "";
-    this.form.value.thumbnail = "";
-  }
+  // removeFileVideo() {
+  //   // this.video = "";
+  //   // this.form.value.file = "";
+  //   // this.form.value.thumbnail = "";
+  // }
 
   onFileChange(event) {
     this.readFileVideo(event.target);
   }
 
   uploadFiles(file) {
-    //console.log('file ', file);
-    // console.log('this.form.value.file ', this.form.value.file);
-    //console.log('this.form.value.image ', this.form.value.image);
+    console.log("file ", file);
+    console.log("this.form.value.file ", this.form.value.file);
+    console.log("this.blobFileToUpload ", this.blobFileToUpload);
     if (file && file !== "") {
       const formData: FormData = new FormData();
 
-      //console.log('typeof images[i] ', typeof file);
+      console.log("typeof images[i] ", typeof file);
       //if (typeof file !== 'string') {
       formData.append("file", file);
-      //console.log('formData ', formData);
+      console.log("formData ", formData);
       this.uploadFileService.uploadFile(formData, "video").then(
         val => {
-          //console.log('val ', val);
+          console.log("val ", val);
           this.form.value.thumbnail = val[0].thumbnail;
           this.form.value.file = val[0].file;
           this.submit();
@@ -196,31 +186,31 @@ export class BottlesNewComponent implements OnInit {
     delete this.form.value.id;
     this.form.value.ownerId = this.form.value.ownerId.id;
     console.log("form add", this.form.value);
-    this.bottlesService.newItem(this.form.value).then(
-      val => {
-        this.helpersService.showActionSnackbar(
-          PageAction.Create,
-          true,
-          "bottle"
-        );
-        this.router.navigate(["/bottles/list"]);
-        this.progressBarService.toggle();
-      },
-      reason => {
-        this.helpersService.showActionSnackbar(
-          PageAction.Create,
-          false,
-          "bottle",
-          { style: "failed-snackbar" }
-        );
-        this.progressBarService.toggle();
-        console.log("error ", reason);
-      }
-    );
+    // this.bottlesService.newItem(this.form.value).then(
+    //   val => {
+    //     this.helpersService.showActionSnackbar(
+    //       PageAction.Create,
+    //       true,
+    //       "bottle"
+    //     );
+    //     this.router.navigate(["/bottles/list"]);
+    //     this.progressBarService.toggle();
+    //   },
+    //   reason => {
+    //     this.helpersService.showActionSnackbar(
+    //       PageAction.Create,
+    //       false,
+    //       "bottle",
+    //       { style: "failed-snackbar" }
+    //     );
+    //     this.progressBarService.toggle();
+    //     console.log("error ", reason);
+    //   }
+    // );
   }
 
   onSubmit() {
     this.progressBarService.toggle();
-    this.uploadFiles(this.form.value.file);
+    this.uploadFiles(this.blobFileToUpload);
   }
 }

@@ -18,8 +18,7 @@
         </div>
       </div>
     </div>
-    <button mat-raised-button type="submit" (click)="onSubmit()" [disabled]="form.invalid  || video==''"
-            class="add-product-button mat-white-bg  mt-sm-0">
+    <button mat-raised-button type="submit" (click)="onSubmit()" [disabled]="form.invalid  || video==''" class="add-product-button mat-white-bg  mt-sm-0">
       <span> SAVE </span>
     </button>
   </div>
@@ -28,11 +27,10 @@
   <!-- CONTENT -->
   <div class="content p-24">
 
-    <div fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-md="row" fxLayoutGap="20px">
+    <div fxLayout="column" fxLayoutAlign.gt-sm="start start" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
 
-      <div fxFlex="65%">
-        <form class="mat-white-bg mat-elevation-z4 p-24 mr-24 mb-24" fxLayout="column" fxLayoutAlign="start"
-              fxFlex="1 0 auto" name="form" [formGroup]="form">
+      <div fxFlex.gt-sm="65%" fxFlex="100%">
+        <form [formGroup]="form" class="mat-white-bg mat-elevation-z4 p-24 mr-24 mb-24" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
           <div class="h2 mb-24">Bottle Details</div>
 
           <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" fxLayoutGap="10px">
@@ -69,8 +67,7 @@
             <mat-form-field fxFlex="50">
               <mat-select placeholder="Shore" formControlName="shoreId">
                 <mat-option *ngFor="let shore of shores" [value]="shore.id">
-                  <img *ngIf="shore.cover && shore.cover!=''" [src]="shore.cover"
-                       style=" border-radius: 50%;object-fit: cover; margin-top: 8px; margin-right: 5px;height: 30px;width: 30px;">
+                  <img *ngIf="shore.cover && shore.cover!=''" [src]="shore.cover" style=" border-radius: 50%;object-fit: cover; margin-top: 8px; margin-right: 5px;height: 30px;width: 30px;">
                   <span> {{shore.name_en}} {{shore.name_ar}}</span>
                 </mat-option>
               </mat-select>
@@ -80,52 +77,33 @@
           <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" fxLayoutGap="10px">
 
             <mat-form-field fxFlex="50">
-              <input type="text" placeholder="Owner" formControlName="ownerId" matInput
-                     [matAutocomplete]="auto"
-                     (input)="onSearch($event.target.value)">
+              <input type="text" placeholder="Owner" formControlName="ownerId" matInput [matAutocomplete]="auto" (input)="onSearch($event.target.value)">
               <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                 <mat-option *ngFor="let option of filteredUsers | async" [value]="option">
-                  <img *ngIf="option.image && option.image!=''" [src]="option.image"
-                       style=" border-radius: 50%;object-fit: cover; margin-top: 8px; margin-right: 5px;height: 30px;width: 30px;">
-                  {{ option.username }}
+                  <img *ngIf="option.image && option.image!=''" [src]="option.image" style=" border-radius: 50%;object-fit: cover; margin-top: 8px; margin-right: 5px;height: 30px;width: 30px;"> {{ option.username }}
                 </mat-option>
               </mat-autocomplete>
 
             </mat-form-field>
           </div>
-          <!--
-
-                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" fxLayoutGap="10px">
-
-          &lt;!&ndash;
-                      <mat-form-field fxFlex="50">
-                        <mat-select placeholder="Owner" formControlName="ownerId" (click)="getUsers()">
-                          <mat-option *ngFor="let owner of users" [value]="owner.id">
-                            {{owner.username}}
-                          </mat-option>
-                        </mat-select>
-                      </mat-form-field>&ndash;&gt;
-                    </div>
-          -->
-
 
         </form>
       </div>
 
-      <div fxFlex="35%" class="form-errors-model mat-white-bg p-24 mat-elevation-z4">
+      <div fxFlex.gt-sm="35%" fxFlex="100%" class="mat-white-bg p-24 mat-elevation-z4">
         <div class="p-4 item-img" fxLayout="column" fxLayoutGap="3px">
-          <video width="315" height="240" controls *ngIf="video== ''"></video>
-          <video width="315" height="240" controls *ngIf="video!= ''">
+          <video height="240" controls *ngIf="video== ''" style="min-width: 100%;"></video>
+          <video height="240" controls *ngIf="video!= ''" style="min-width: 100%;">
             <source *ngIf="video!= ''" [src]="video" type="video/mp4">
             <source *ngIf="video!= ''" [src]="video" type="video/ogg">
             <!--Your browser does not support the video tag.-->
           </video>
 
-          <input type="file" accept="video/*" #file name="video" fxHide (change)="onFileChange($event)">
+          <input type="file" accept="video/*" #file fxHide name="video" (change)="onFileChange($event)">
           <button type="button" mat-raised-button color="primary" (click)="browseVideos()">Browse</button>
-          <button type="button" mat-raised-button color="warn" (click)="removeFileVideo()" [disabled]="video==''">
+          <!-- <button type="button" mat-raised-button color="warn" (click)="removeFileVideo()" [disabled]="video==''">
             Remove
-          </button>
+          </button> -->
         </div>
 
 
@@ -138,5 +116,3 @@
   <!-- / CONTENT -->
 
 </div>
-
-
