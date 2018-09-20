@@ -45,10 +45,10 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input type="text" placeholder="Owner ISO Code" aria-label="code" matInput formControlName="country" name="country" [matAutocomplete]="auto">
+          <input type="text" placeholder="Owner Country" aria-label="Country" matInput formControlName="country" name="country" [matAutocomplete]="auto">
           <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let iso of filteredOptions | async" [value]="iso.iso">
-              {{iso.iso}}
+              {{iso.name}}
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
