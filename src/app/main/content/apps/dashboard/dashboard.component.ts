@@ -14,83 +14,9 @@ import { DataSource } from "@angular/cdk/collections";
   animations: fuseAnimations
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  lineChartResults = [
-    {
-      name: "New Users",
-      series: [
-        {
-          value: 5252,
-          name: "2016-09-15"
-        },
-        {
-          value: 3885,
-          name: "2016-09-13"
-        },
-        {
-          value: 3132,
-          name: "2016-09-16"
-        },
-        {
-          value: 4131,
-          name: "2016-09-21"
-        },
-        {
-          value: 4632,
-          name: "2016-09-15"
-        }
-      ]
-    },
-    {
-      name: "Active Users",
-      series: [
-        {
-          value: 5961,
-          name: "2016-09-15"
-        },
-        {
-          value: 5059,
-          name: "2016-09-13"
-        },
-        {
-          value: 3111,
-          name: "2016-09-16"
-        },
-        {
-          value: 2250,
-          name: "2016-09-21"
-        },
-        {
-          value: 5782,
-          name: "2016-09-15"
-        }
-      ]
-    },
-    {
-      name: "New Bottles",
-      series: [
-        {
-          value: 3919,
-          name: "2016-09-15"
-        },
-        {
-          value: 4639,
-          name: "2016-09-13"
-        },
-        {
-          value: 5007,
-          name: "2016-09-16"
-        },
-        {
-          value: 2576,
-          name: "2016-09-21"
-        },
-        {
-          value: 3831,
-          name: "2016-09-15"
-        }
-      ]
-    }
-  ];
+  BottlesChartData;
+  UsersChartData;
+  ItemsChartData;
 
   pieChartResults = [
     {
@@ -119,27 +45,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
   ];
 
-  pieChartGenderResults = [
-    {
-      name: "Male",
-      value: 40632
-    },
-    {
-      name: "Female",
-      value: 49737
-    },
-    {
-      name: "Undefined",
-      value: 36745
-    }
-  ];
-
   lineChart: any = {};
   pieChart: any = {};
 
   dateNow = Date.now();
 
-  constructor(private projectsDashboardService: DashboardService) {
+  constructor(private dashboardService: DashboardService) {
     /**
      *  //users
      */
@@ -186,26 +97,25 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // /**
-    //  * Widget 11
-    //  */
-    // this.widget11.onContactsChanged = new BehaviorSubject({});
-    // this.widget11.onContactsChanged.next(this.widgets.widget11.table.rows);
-    // this.widget11.dataSource = new FilesDataSource(this.widget11);
+    this.BottlesChartData = this.dashboardService.bottles;
+    this.UsersChartData = this.dashboardService.users;
+
+    console.log("this.BottlesChartData ", this.BottlesChartData);
+    console.log("this.UsersChartData ", this.UsersChartData);
   }
 
   ngOnDestroy() {}
 }
 
-export class FilesDataSource extends DataSource<any> {
-  constructor(private widget11) {
-    super();
-  }
+// export class FilesDataSource extends DataSource<any> {
+//   constructor(private widget11) {
+//     super();
+//   }
 
-  /** Connect function called by the table to retrieve one stream containing the data to render. */
-  connect(): Observable<any[]> {
-    return this.widget11.onContactsChanged;
-  }
+//   /** Connect function called by the table to retrieve one stream containing the data to render. */
+//   connect(): Observable<any[]> {
+//     return this.widget11.onContactsChanged;
+//   }
 
-  disconnect() {}
-}
+//   disconnect() {}
+// }

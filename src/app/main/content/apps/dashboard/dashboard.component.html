@@ -57,7 +57,7 @@
 
 
                   <div class="h-400">
-                    <ngx-charts-line-chart *fuseIfOnDom [results]="lineChartResults" [scheme]="lineChart.scheme" [gradient]="lineChart.gradient"
+                    <ngx-charts-line-chart *fuseIfOnDom [results]="BottlesChartData" [scheme]="lineChart.scheme" [gradient]="lineChart.gradient"
                       [showGridLines]="true" [xAxis]="lineChart.xAxis" [yAxis]="lineChart.yAxis" [legend]="lineChart.legend"
                       [showXAxisLabel]="lineChart.showXAxisLabel" [showYAxisLabel]="lineChart.showYAxisLabel" [xAxisLabel]="lineChart.xAxisLabel"
                       [yAxisLabel]="lineChart.yAxisLabel" [curve]="lineChart.curve">
@@ -120,9 +120,8 @@
                   <mat-divider></mat-divider>
 
                   <div class="h-400">
-                    <ngx-charts-pie-chart *fuseIfOnDom [scheme]="pieChart.scheme" [results]="pieChartGenderResults" [legend]="pieChart.showLegend"
-                      [explodeSlices]="true" [labels]="pieChart.labels" [doughnut]="pieChart.doughnut" [gradient]="pieChart.gradient"
-                      (select)="pieChart.onSelect($event)">
+                    <ngx-charts-pie-chart *fuseIfOnDom [scheme]="pieChart.scheme" [results]="UsersChartData" [legend]="pieChart.showLegend" [explodeSlices]="false"
+                      [labels]="pieChart.labels" [doughnut]="pieChart.doughnut" [gradient]="pieChart.gradient" (select)="pieChart.onSelect($event)">
                     </ngx-charts-pie-chart>
                   </div>
 
