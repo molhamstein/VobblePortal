@@ -1,56 +1,74 @@
-import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
-import {fuseAnimations} from "../../../../../core/animations";
-import {FormControl} from "@angular/forms";
-import {MatPaginator, MatSort, MatDialogRef, MatDialog} from "@angular/material";
-import {FuseConfirmDialogComponent} from "../../../../../core/components/confirm-dialog/confirm-dialog.component";
-import {AppConfig} from "../../../../shared/app.config";
-import { DataSource } from '@angular/cdk/collections';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import 'rxjs/add/operator/startWith';
-import 'rxjs/add/observable/merge';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/observable/fromEvent';
-import {FuseUtils} from "../../../../../core/fuseUtils";
-import {ShoresService} from "../shores.service";
-import {ProgressBarService} from "../../../../../core/services/progress-bar.service";
-
+import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
+import { fuseAnimations } from "../../../../../core/animations";
+import { FormControl } from "@angular/forms";
+import {
+  MatPaginator,
+  MatSort,
+  MatDialogRef,
+  MatDialog
+} from "@angular/material";
+import { FuseConfirmDialogComponent } from "../../../../../core/components/confirm-dialog/confirm-dialog.component";
+import { AppConfig } from "../../../../shared/app.config";
+import { DataSource } from "@angular/cdk/collections";
+import { Observable } from "rxjs/Observable";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import "rxjs/add/operator/startWith";
+import "rxjs/add/observable/merge";
+import "rxjs/add/operator/map";
+import "rxjs/add/operator/debounceTime";
+import "rxjs/add/operator/distinctUntilChanged";
+import "rxjs/add/observable/fromEvent";
+import { FuseUtils } from "../../../../../core/fuseUtils";
+import { ShoresService } from "../shores.service";
+import { ProgressBarService } from "../../../../../core/services/progress-bar.service";
 
 @Component({
-  selector: 'app-shores-list',
-  templateUrl: './shores-list.component.html',
-  styleUrls: ['./shores-list.component.scss'],
-  animations   : fuseAnimations
+  selector: "app-shores-list",
+  templateUrl: "./shores-list.component.html",
+  styleUrls: ["./shores-list.component.scss"],
+  animations: fuseAnimations
 })
 export class ShoresListComponent implements OnInit {
-
   defaultCover: string;
   defaultIcon: string;
   searchInput: FormControl;
   dialogRef: any;
 
   dataSource: FilesDataSource | null;
-  displayedColumns = ['cover','icon','name_en', 'name_ar', 'btns'];
+  displayedColumns = [
+    "cover",
+    "icon",
+    "name_en",
+    "name_ar",
+    "bottleCount",
+    "btns"
+  ];
   itemsCount: number = 0;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild('filter') filter: ElementRef;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator)
+  paginator: MatPaginator;
+  @ViewChild("filter")
+  filter: ElementRef;
+  @ViewChild(MatSort)
+  sort: MatSort;
 
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
 
-  constructor(private shoresService: ShoresService,
-              private progressBarService: ProgressBarService,
-              public dialog: MatDialog,
+  constructor(
+    private shoresService: ShoresService,
+    private progressBarService: ProgressBarService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
     this.defaultCover = AppConfig.defaultShoreCover;
     this.defaultIcon = AppConfig.defaultShoreIcon;
-    this.dataSource = new FilesDataSource(this.shoresService, this.paginator, this.sort);
-    Observable.fromEvent(this.filter.nativeElement, 'keyup')
+    this.dataSource = new FilesDataSource(
+      this.shoresService,
+      this.paginator,
+      this.sort
+    );
+    Observable.fromEvent(this.filter.nativeElement, "keyup")
       .debounceTime(150)
       .distinctUntilChanged()
       .subscribe(() => {
@@ -59,57 +77,51 @@ export class ShoresListComponent implements OnInit {
         }
         this.dataSource.filter = this.filter.nativeElement.value;
       });
-    this.itemsCount =  this.shoresService.itemsCount;
+    this.itemsCount = this.shoresService.itemsCount;
   }
-  getItemsPaging(){
-    this.shoresService.getItemsPaging(this.paginator.pageIndex, this.paginator.pageSize).then(
-      items =>{
-        return items
-      }
-    );
+  getItemsPaging() {
+    this.shoresService
+      .getItemsPaging(this.paginator.pageIndex, this.paginator.pageSize)
+      .then(items => {
+        return items;
+      });
   }
 
-
-  deleteItem(contact)  {
+  deleteItem(contact) {
     this.confirmDialogRef = this.dialog.open(FuseConfirmDialogComponent, {
       disableClose: false
     });
 
-    this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+    this.confirmDialogRef.componentInstance.confirmMessage =
+      "Are you sure you want to delete?";
     this.progressBarService.toggle();
     this.confirmDialogRef.afterClosed().subscribe(result => {
-      if ( result )
-      {
+      if (result) {
         this.shoresService.deleteItem(contact);
         this.itemsCount--;
       }
       this.confirmDialogRef = null;
     });
-
   }
 }
 
-export class FilesDataSource extends DataSource<any>{
-  _filterChange = new BehaviorSubject('');
-  _filteredDataChange = new BehaviorSubject('');
+export class FilesDataSource extends DataSource<any> {
+  _filterChange = new BehaviorSubject("");
+  _filteredDataChange = new BehaviorSubject("");
 
-  get filteredData(): any
-  {
+  get filteredData(): any {
     return this._filteredDataChange.value;
   }
 
-  set filteredData(value: any)
-  {
+  set filteredData(value: any) {
     this._filteredDataChange.next(value);
   }
 
-  get filter(): string
-  {
+  get filter(): string {
     return this._filterChange.value;
   }
 
-  set filter(filter: string)
-  {
+  set filter(filter: string) {
     this._filterChange.next(filter);
   }
 
@@ -117,16 +129,13 @@ export class FilesDataSource extends DataSource<any>{
     private shoresService: ShoresService,
     private _paginator: MatPaginator,
     private _sort: MatSort
-  )
-  {
+  ) {
     super();
     this.filteredData = this.shoresService.items;
-
   }
 
   /** Connect function called by the table to retrieve one stream containing the data to render. */
-  connect(): Observable<any[]>
-  {
+  connect(): Observable<any[]> {
     const displayDataChanges = [
       this.shoresService.onItemsChanged,
       this._paginator.page,
@@ -150,32 +159,27 @@ export class FilesDataSource extends DataSource<any>{
     });
   }
 
-  filterData(data)
-  {
-    if ( !this.filter )
-    {
+  filterData(data) {
+    if (!this.filter) {
       return data;
     }
     return FuseUtils.filterArrayByString(data, this.filter);
   }
 
-  sortData(data): any[]
-  {
-    if ( !this._sort.active || this._sort.direction === '' )
-    {
+  sortData(data): any[] {
+    if (!this._sort.active || this._sort.direction === "") {
       return data;
     }
 
     return data.sort((a, b) => {
-      let propertyA: number | string = '';
-      let propertyB: number | string = '';
+      let propertyA: number | string = "";
+      let propertyB: number | string = "";
 
-      switch ( this._sort.active )
-      {
-        case 'name_ar':
+      switch (this._sort.active) {
+        case "name_ar":
           [propertyA, propertyB] = [a.name_ar, b.name_ar];
           break;
-        case 'name_en':
+        case "name_en":
           [propertyA, propertyB] = [a.name_en, b.name_en];
           break;
       }
@@ -183,11 +187,11 @@ export class FilesDataSource extends DataSource<any>{
       const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
       const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
 
-      return (valueA < valueB ? -1 : 1) * (this._sort.direction === 'asc' ? 1 : -1);
+      return (
+        (valueA < valueB ? -1 : 1) * (this._sort.direction === "asc" ? 1 : -1)
+      );
     });
   }
 
-  disconnect()
-  {
-  }
+  disconnect() {}
 }

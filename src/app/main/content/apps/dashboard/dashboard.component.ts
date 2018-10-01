@@ -1,10 +1,11 @@
+import { ProgressBarService } from "./../../../../core/services/progress-bar.service";
+import { FormControl } from "@angular/forms";
+import { FormBuilder } from "@angular/forms";
+import { FormGroup } from "@angular/forms";
 import { fuseAnimations } from "./../../../../core/animations";
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
 import { DashboardService } from "./dashboard.service";
 import * as shape from "d3-shape";
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
-import { Observable } from "rxjs/Observable";
-import { DataSource } from "@angular/cdk/collections";
 
 @Component({
   selector: "app-dashboard",
@@ -17,6 +18,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   BottlesChartData;
   UsersChartData;
   ItemsChartData;
+  filtersForm: FormGroup;
 
   pieChartResults = [
     {
@@ -50,7 +52,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   dateNow = Date.now();
 
-  constructor(private dashboardService: DashboardService) {
+  constructor(
+    private dashboardService: DashboardService,
+    private formBuilder: FormBuilder,
+    private progressBarService: ProgressBarService
+  ) {
     /**
      *  //users
      */
@@ -97,6 +103,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.filtersForm = this.formBuilder.group({
+      from: new FormControl(""),
+      to: new FormControl("")
+    });
+
     this.BottlesChartData = this.dashboardService.bottles;
     this.UsersChartData = this.dashboardService.users;
 
@@ -105,6 +116,28 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {}
+
+  applyFilter() {
+    this.progressBarService.toggle();
+    // console.log("filtersForm", this.filtersForm.value);
+    this.dashboardService.getBottles(this.filtersForm.value).then(
+      val => {
+        // this.helpersService.showActionSnackbar(PageAction.Create, true, 'user');
+        //this.BottlesChartData = this.dashboardService.bottles;
+        this.progressBarService.toggle();
+      },
+      reason => {
+        // this.helpersService.showActionSnackbar(PageAction.Create, false, 'user', {style: 'failed-snackbar'});
+        this.progressBarService.toggle();
+        console.log("error ", reason);
+      }
+    );
+  }
+
+  clearFilter() {
+    this.filtersForm.reset();
+    this.dashboardService.getBottles();
+  }
 }
 
 // export class FilesDataSource extends DataSource<any> {

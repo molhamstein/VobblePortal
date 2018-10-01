@@ -37,6 +37,7 @@ export class UsersViewComponent implements OnInit, OnDestroy
       this.usersService.onItemChanged
         .subscribe(item => {
           this.item = new User(item);
+          console.log('this.item ', this.item);
         });
   }
 

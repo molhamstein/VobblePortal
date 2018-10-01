@@ -38,20 +38,28 @@
                     <div class="h3 p-16">
                       Users
                     </div>
-                    <div>
+                    <form [formGroup]="filtersForm">
                       <mat-form-field>
-                        <input matInput (click)="picker.open()" [matDatepicker]="picker" placeholder="Date From">
+                        <input matInput (click)="picker.open()" [matDatepicker]="picker" placeholder="Date From" formControlName="from">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                       </mat-form-field>
 
                       <mat-form-field>
-                        <input matInput (click)="picker2.open()" [matDatepicker]="picker2" placeholder="Date To">
+                        <input matInput (click)="picker2.open()" [matDatepicker]="picker2" placeholder="Date To" formControlName="to">
                         <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                         <mat-datepicker #picker2></mat-datepicker>
                       </mat-form-field>
 
-                    </div>
+                      <button mat-raised-button type="submit" (click)="applyFilter()" class="add-product-button mat-white-bg  mt-sm-0">
+                        <span> FILTER </span>
+                      </button>
+
+                      <button mat-raised-button type="submit" (click)="removeFilter()" class="add-product-button mat-white-bg  mt-sm-0">
+                        <span> ClEAR FILTER </span>
+                      </button>
+
+                    </form>
                   </div>
                   <!-- <mat-divider></mat-divider> -->
 
