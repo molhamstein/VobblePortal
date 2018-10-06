@@ -1,3 +1,5 @@
+import { FormBuilder } from "@angular/forms";
+import { FormControl } from "@angular/forms";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { AuthService } from "./../../pages/authentication/auth.service";
 import { Injectable } from "@angular/core";
@@ -17,7 +19,11 @@ export class DashboardService {
   onBottlesChanged: BehaviorSubject<any> = new BehaviorSubject({});
   items: any[];
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+    private formBuilder: FormBuilder
+  ) {}
 
   /**
    * Resolve
@@ -30,16 +36,31 @@ export class DashboardService {
     state: RouterStateSnapshot
   ): Observable<any> | Promise<any> | any {
     return new Promise((resolve, reject) => {
-      Promise.all([this.getBottles(), this.getItems(), , this.getUsers()]).then(
-        () => {
-          resolve();
-        },
-        reject
-      );
+      const today = new Date();
+      let month, day, year;
+      year = today.getFullYear();
+      month = today.getMonth();
+      day = today.getDate();
+      if (month - 1 <= 0) year = today.getFullYear() - 1;
+      const backdate = new Date(year, month - 1, day);
+
+      const filtersForm = this.formBuilder.group({
+        from: new FormControl(backdate),
+        to: new FormControl(today)
+      });
+
+      Promise.all([
+        this.getBottles(filtersForm.value),
+        this.getItems(),
+        ,
+        this.getUsers()
+      ]).then(() => {
+        resolve();
+      }, reject);
     });
   }
 
-  getBottles(filter?): Promise<any> {
+  getBottles(filter): Promise<any> {
     return new Promise((resolve, reject) => {
       let url =
         AppConfig.apiUrl +
@@ -80,7 +101,7 @@ export class DashboardService {
 
         console.log("this.BottlesChartData ", this.bottles);
         this.onBottlesChanged.next(this.bottles);
-        resolve(response);
+        resolve(this.bottles);
       }, reject);
     });
   }

@@ -32,6 +32,7 @@ import { ReportsModule } from "./main/content/apps/reports/reports.module";
 import { ReportTypesModule } from "./main/content/apps/report-types/report-types.module";
 import { TypeGoodsModule } from "./main/content/apps/type-goods/type-goods.module";
 import { DashboardModule } from "./main/content/apps/dashboard/dashboard.module";
+import { MAT_DATE_LOCALE } from "../../node_modules/@angular/material";
 
 const appRoutes: Routes = [
   {
@@ -122,7 +123,8 @@ const appRoutes: Routes = [
     HelpersService,
     UploadFileService,
     ProgressBarService,
-    { provide: LocationStrategy, useClass: HashLocationStrategy }
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: MAT_DATE_LOCALE, useValue: "en-GB" }
   ],
   bootstrap: [AppComponent]
 })

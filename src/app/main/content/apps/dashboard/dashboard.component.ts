@@ -20,6 +20,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ItemsChartData;
   filtersForm: FormGroup;
 
+  lineChart: any = {};
+  pieChart: any = {};
+  today = new Date();
+  dateNow = Date.now();
+
   pieChartResults = [
     {
       name: "Germany",
@@ -46,11 +51,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
       value: 35800
     }
   ];
-
-  lineChart: any = {};
-  pieChart: any = {};
-
-  dateNow = Date.now();
 
   constructor(
     private dashboardService: DashboardService,
@@ -103,9 +103,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    let month, day, year;
+    year = this.today.getFullYear();
+    month = this.today.getMonth();
+    day = this.today.getDate();
+    if (month - 1 <= 0) year = this.today.getFullYear() - 1;
+    const backdate = new Date(year, month - 1, day);
+
     this.filtersForm = this.formBuilder.group({
-      from: new FormControl(""),
-      to: new FormControl("")
+      from: new FormControl(backdate),
+      to: new FormControl(this.today)
     });
 
     this.BottlesChartData = this.dashboardService.bottles;
@@ -122,6 +129,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     // console.log("filtersForm", this.filtersForm.value);
     this.dashboardService.getBottles(this.filtersForm.value).then(
       val => {
+        this.BottlesChartData = this.dashboardService.bottles;
         // this.helpersService.showActionSnackbar(PageAction.Create, true, 'user');
         //this.BottlesChartData = this.dashboardService.bottles;
         this.progressBarService.toggle();
@@ -134,10 +142,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     );
   }
 
-  clearFilter() {
-    this.filtersForm.reset();
-    this.dashboardService.getBottles();
-  }
+  // clearFilter() {
+  //   this.filtersForm.reset();
+  //   this.dashboardService.getBottles();
+  // }
 }
 
 // export class FilesDataSource extends DataSource<any> {
