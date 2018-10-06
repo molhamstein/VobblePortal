@@ -37,6 +37,8 @@ export class BottlesNewComponent implements OnInit {
   users: User[] = [];
   currentUser: any;
 
+  disableSave = false;
+
   filteredUsers: Observable<User[]>;
 
   @ViewChild("file")
@@ -129,6 +131,9 @@ export class BottlesNewComponent implements OnInit {
       // this.form.value.file = inputValue.files[0];
       this.blobFileToUpload = inputValue.files[0];
       console.log("this.blobFileToUpload ", this.blobFileToUpload);
+
+      this.uploadFiles(this.blobFileToUpload);
+
       const reader: FileReader = new FileReader();
       reader.readAsDataURL(inputValue.files[0]);
       reader.onload = event => {
@@ -163,14 +168,17 @@ export class BottlesNewComponent implements OnInit {
       //if (typeof file !== 'string') {
       formData.append("file", file);
       console.log("formData ", formData);
+      this.disableSave = true;
       this.uploadFileService.uploadFile(formData, "video").then(
         val => {
+          this.disableSave = false;
           console.log("val ", val);
           this.form.value.thumbnail = val[0].thumbnail;
           this.form.value.file = val[0].file;
-          this.submit();
+          // this.submit();
         },
         reason => {
+          this.disableSave = false;
           console.log("error ", reason);
         }
       );
@@ -179,7 +187,8 @@ export class BottlesNewComponent implements OnInit {
           //this.form.value.file = file;
           this.submit();
         }*/
-    } else this.submit();
+    }
+    // else this.submit();
   }
 
   submit() {
@@ -211,6 +220,7 @@ export class BottlesNewComponent implements OnInit {
 
   onSubmit() {
     this.progressBarService.toggle();
-    this.uploadFiles(this.blobFileToUpload);
+    this.submit();
+    // this.uploadFiles(this.blobFileToUpload);
   }
 }
