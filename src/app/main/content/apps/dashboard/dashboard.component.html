@@ -86,29 +86,29 @@
 
 
                 <div class="mat-card-front mat-white-bg ">
-                  <div class="h3 p-16">
-                    Purchases
+
+                  <div class="px-16 border-bottom" fxLayout="row" fxLayoutAlign="space-between center">
+
+                    <div class="h3 p-16">
+                      Purchases
+                    </div>
+
+                    <mat-form-field>
+                      <mat-select [(ngModel)]="purchasesChartType" (ngModelChange)="purchasesChartTypeChanged()">
+                        <mat-option value="count">Count </mat-option>
+                        <mat-option value="totalRevenue">Total Revenue </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+
                   </div>
-                  <mat-divider></mat-divider>
+
+
 
                   <div class="h-400">
-                    <ngx-charts-pie-chart *fuseIfOnDom [scheme]="pieChart.scheme" [results]="pieChartResults" [legend]="pieChart.showLegend"
-                      [explodeSlices]="pieChart.explodeSlices" [labels]="pieChart.labels" [doughnut]="pieChart.doughnut" [gradient]="pieChart.gradient"
-                      (select)="pieChart.onSelect($event)">
+                    <ngx-charts-pie-chart *fuseIfOnDom [scheme]="pieChart.scheme" [results]="ItemsChartData" [legend]="true" [explodeSlices]="false"
+                      [animations]="true" [labels]="pieChart.labels" [doughnut]="true" [gradient]="pieChart.gradient" (select)="pieChart.onSelect($event)">
                     </ngx-charts-pie-chart>
                   </div>
-
-                  <!-- <div class="py-8 mh-16 border-top" fxLayout="row" fxLayoutAlign="start center" fxLayoutWrap>
-                    <div class="py-8 border-right" fxLayout="column" fxLayoutAlign="center center" fxFlex="100" fxFlex.gt-sm="50">
-                      <span class="mat-display-1 mb-0">{{widgets.widget6.footerLeft.count[widget6.currentRange]}}</span>
-                      <span class="h4">{{widgets.widget6.footerLeft.title}}</span>
-                    </div>
-
-                    <div class="py-8" fxLayout="column" fxLayoutAlign="center center" fxFlex="100" fxFlex.gt-sm="50">
-                      <span class="mat-display-1 mb-0">{{widgets.widget6.footerRight.count[widget6.currentRange]}}</span>
-                      <span class="h4">{{widgets.widget6.footerRight.title}}</span>
-                    </div>
-                  </div> -->
 
                 </div>
                 <!-- / Front -->
@@ -120,13 +120,16 @@
 
               <mat-card [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-sm="50">
 
-
                 <div class="mat-card-front mat-white-bg ">
-                  <div class="h3 p-16">
-                    Gender
+
+                  <div class="px-16 border-bottom" fxLayout="row" fxLayoutAlign="space-between center">
+
+                    <div class="h3 p-16">
+                      Gender
+                    </div>
                   </div>
 
-                  <mat-divider></mat-divider>
+
 
                   <div class="h-400">
                     <ngx-charts-pie-chart *fuseIfOnDom [scheme]="pieChart.scheme" [results]="UsersChartData" [legend]="pieChart.showLegend" [explodeSlices]="false"

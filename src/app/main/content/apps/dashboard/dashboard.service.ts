@@ -1,3 +1,4 @@
+import { map } from "rxjs/operators";
 import { FormBuilder } from "@angular/forms";
 import { FormControl } from "@angular/forms";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
@@ -18,6 +19,9 @@ export class DashboardService {
   bottles: any[];
   onBottlesChanged: BehaviorSubject<any> = new BehaviorSubject({});
   items: any[];
+  onItemsChanged: BehaviorSubject<any> = new BehaviorSubject({});
+
+  orginalItems: any[];
 
   constructor(
     private http: HttpClient,
@@ -41,7 +45,9 @@ export class DashboardService {
       year = today.getFullYear();
       month = today.getMonth();
       day = today.getDate();
-      if (month - 1 <= 0) year = today.getFullYear() - 1;
+      if (month - 1 <= 0) {
+        year = today.getFullYear() - 1;
+      }
       const backdate = new Date(year, month - 1, day);
 
       const filtersForm = this.formBuilder.group({
@@ -66,7 +72,9 @@ export class DashboardService {
         AppConfig.apiUrl +
         "bottles/timeStateReport/?access_token=" +
         this.authService.getToken();
-      if (filter) url += "&from=" + filter.from + "&to=" + filter.to;
+      if (filter) {
+        url += "&from=" + filter.from + "&to=" + filter.to;
+      }
       console.log("url ", url);
       this.http.get(url).subscribe((response: any) => {
         console.log("bottles ", response);
@@ -116,10 +124,30 @@ export class DashboardService {
         )
         .subscribe((response: any) => {
           console.log("items ", response);
-          this.items = response;
-          resolve(response);
+          this.orginalItems = response.map(x => Object.assign({}, x));
+
+          this.items = response.map(item => {
+            return {
+              name: item.country,
+              value: item.count
+            };
+          });
+
+          resolve(this.items);
         }, reject);
     });
+  }
+
+  purchasesChartTypeChanged(type) {
+    console.log("purchasesChartTypeChanged ", type);
+    this.items = this.orginalItems.map(item => {
+      return {
+        name: item.country,
+        value: item[type]
+      };
+    });
+    console.log("this.items ", this.items);
+    this.onItemsChanged.next(this.items);
   }
 
   getUsers(): Promise<any> {

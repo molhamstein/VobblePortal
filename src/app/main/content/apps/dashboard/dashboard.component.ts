@@ -25,32 +25,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   today = new Date();
   dateNow = Date.now();
 
-  pieChartResults = [
-    {
-      name: "Germany",
-      value: 40632
-    },
-    {
-      name: "United States",
-      value: 49737
-    },
-    {
-      name: "France",
-      value: 36745
-    },
-    {
-      name: "United Kingdom",
-      value: 36240
-    },
-    {
-      name: "Spain",
-      value: 33000
-    },
-    {
-      name: "Italy",
-      value: 35800
-    }
-  ];
+  purchasesChartType = "count";
 
   constructor(
     private dashboardService: DashboardService,
@@ -117,12 +92,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     this.BottlesChartData = this.dashboardService.bottles;
     this.UsersChartData = this.dashboardService.users;
+    this.ItemsChartData = this.dashboardService.items;
 
     console.log("this.BottlesChartData ", this.BottlesChartData);
     console.log("this.UsersChartData ", this.UsersChartData);
+    console.log("this.ItemsChartData ", this.ItemsChartData);
   }
 
   ngOnDestroy() {}
+
+  purchasesChartTypeChanged() {
+    this.dashboardService.purchasesChartTypeChanged(this.purchasesChartType);
+    this.ItemsChartData = this.dashboardService.items;
+  }
 
   applyFilter() {
     this.progressBarService.toggle();

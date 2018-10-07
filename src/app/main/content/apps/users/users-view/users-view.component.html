@@ -8,8 +8,7 @@
   <div class="center">
 
     <!-- HEADER -->
-    <div class="header white-fg"
-         fxLayout="row" fxLayoutAlign="space-between center">
+    <div class="header white-fg" fxLayout="row" fxLayoutAlign="space-between center">
 
       <!-- APP TITLE -->
       <div fxLayout="row" fxLayoutAlign="start center">
@@ -18,12 +17,11 @@
           <mat-icon>arrow_back</mat-icon>
         </button>
 
-        <div fxLayout="column" fxLayoutAlign="start start"
-             *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+        <div fxLayout="column" fxLayoutAlign="start start" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
           <div class="h2">
             User {{item.username}}
           </div>
-         <!-- <div class="subtitle secondary-text">
+          <!-- <div class="subtitle secondary-text">
             <span>from</span>
             <span>{{order.customer.firstName}} {{order.customer.lastName}}</span>
           </div>-->
@@ -31,14 +29,10 @@
       </div>
 
       <div>
-        <button mat-raised-button
-                [routerLink]="'/users/edit/'+ item.id"
-                class="add-product-button mat-white-bg  mt-sm-0">
+        <button mat-raised-button [routerLink]="'/users/edit/'+ item.id" class="add-product-button mat-white-bg  mt-sm-0">
           <span> EDIT </span>
         </button>
-        <button mat-raised-button
-                (click)="deleteItem()"
-                class="add-product-button mt-sm-0" color="warn">
+        <button mat-raised-button (click)="deleteItem()" class="add-product-button mt-sm-0" color="warn">
           <span> DELETE </span>
         </button>
       </div>
@@ -71,32 +65,32 @@
                 <div class="customer">
                   <table class="simple">
                     <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Gender</th>
-                      <th>Country</th>
-                    </tr>
+                      <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Gender</th>
+                        <th>Country</th>
+                      </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                      <td>
-                        <div fxLayout="row" fxLayoutAlign="start center">
-                          <img *ngIf="item.image && item.image != ''" class="avatar" [src]="item.image">
-                          <span class="name text-truncate">{{item.username}}</span>
-                        </div>
-                      </td>
-                      <td>
-                        <span class="email text-truncate">{{item.email}}</span>
-                      </td>
-                      <td>
-                        <mat-icon *ngIf="item.gender=='male'" class="active-icon light-blue-800-fg s-25">sentiment_satisfied</mat-icon>
-                        <mat-icon *ngIf="item.gender=='female'" class="active-icon pink-300-fg s-25">face</mat-icon>
-                      </td>
-                      <td>
-                        <span class="company text-truncate">{{item.country.name}}</span>
-                      </td>
-                    </tr>
+                      <tr>
+                        <td>
+                          <div fxLayout="row" fxLayoutAlign="start center">
+                            <img *ngIf="item.image && item.image != ''" class="avatar" [src]="item.image">
+                            <span class="name text-truncate">{{item.username}}</span>
+                          </div>
+                        </td>
+                        <td>
+                          <span class="email text-truncate">{{item.email}}</span>
+                        </td>
+                        <td>
+                          <mat-icon *ngIf="item.gender=='male'" class="active-icon light-blue-800-fg s-25">sentiment_satisfied</mat-icon>
+                          <mat-icon *ngIf="item.gender=='female'" class="active-icon pink-300-fg s-25">face</mat-icon>
+                        </td>
+                        <td>
+                          <span class="company text-truncate">{{item.country.name}}</span>
+                        </td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -111,42 +105,45 @@
 
                 <table class="simple">
                   <thead>
-                  <tr>
-                    <th>Status</th>
-                    <!--<th>Active</th>-->
-                    <th>Login Type</th>
-                    <!--<th>Next Refill</th>-->
-                    <th>Creation Date</th>
-                    <th>ISO Code</th>
-                  </tr>
+                    <tr>
+                      <th>Status</th>
+                      <!--<th>Active</th>-->
+                      <th>Login Type</th>
+                      <!--<th>Next Refill</th>-->
+                      <th>Creation Date</th>
+                      <th>ISO Code</th>
+                    </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>
-                      <div *ngIf="item.status=='active'"><mat-icon  class="avatar active-icon mat-green-600-bg s-16">check</mat-icon>Active</div>
-                      <div *ngIf="item.status=='deactivated'"><mat-icon  class="avatar active-icon mat-red-500-bg s-16">close</mat-icon>De-activated</div>
-                      <div *ngIf="item.status=='pending'" ><mat-icon class=" active-icon mat-gray-500-bg s-16">hourglass_empty</mat-icon>Pending</div>
-                    </td>
+                    <tr>
+                      <td>
+                        <div *ngIf="item.status=='active'">
+                          <mat-icon class="avatar active-icon mat-green-600-bg s-16">check</mat-icon>Active</div>
+                        <div *ngIf="item.status=='deactivated'">
+                          <mat-icon class="avatar active-icon mat-red-500-bg s-16">close</mat-icon>De-activated</div>
+                        <div *ngIf="item.status=='pending'">
+                          <mat-icon class=" active-icon mat-gray-500-bg s-16">hourglass_empty</mat-icon>Pending</div>
+                      </td>
 
-                   <!-- <td>
+                      <!-- <td>
                       <mat-icon *ngIf="item.isActive" class="avatar active-icon mat-green-600-bg s-16">check</mat-icon>
                       <mat-icon *ngIf="!item.isActive" class="avatar active-icon mat-red-500-bg s-16">close</mat-icon>
                     </td>-->
 
-                    <td>
-                      <span class="text-truncate">{{item.typeLogIn}}</span>
-                    </td>
-                    <!--<td>
+                      <td>
+                        <span class="text-truncate">{{item.typeLogIn}}</span>
+                      </td>
+                      <!--<td>
                       <span class="text-truncate">{{item.nextRefill | date}}</span>
                     </td>-->
-                    <td>
-                      <span class="text-truncate">{{item.createdAt | date}}</span>
-                    </td>
-                    <td>
-                      <span class="text-truncate">{{item.ISOCode}}</span>
-                    </td>
+                      <td>
+                        <span class="text-truncate">{{item.createdAt | date}}</span>
+                      </td>
+                      <td>
+                        <span class="text-truncate">{{item.ISOCode}}</span>
+                      </td>
 
-                  </tr>
+                    </tr>
                   </tbody>
                 </table>
 
@@ -162,27 +159,64 @@
 
                 <table class="simple">
                   <thead>
-                  <tr>
-                    <th>Total Thrown Bottles</th>
-                    <th>Extra Bottles Count</th>
-                    <th>Bottles Count</th>
-                  </tr>
+                    <tr>
+                      <th>Total Thrown Bottles</th>
+                      <th>Extra Bottles Count</th>
+                      <th>Bottles Count</th>
+                    </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>
-                      <span class="text-truncate">  {{item.totalBottlesThrown}}        </span>
-                    </td>
-                    <td>
-                      <span class="text-truncate">  {{item.extraBottlesCount}}        </span>
-                    </td>
-                    <td>
-                      <span class="text-truncate">  {{item.bottlesCount}}        </span>
-                    </td>
-                  </tr>
+                    <tr>
+                      <td>
+                        <span class="text-truncate"> {{item.totalBottlesThrown}} </span>
+                      </td>
+                      <td>
+                        <span class="text-truncate"> {{item.extraBottlesCount}} </span>
+                      </td>
+                      <td>
+                        <span class="text-truncate"> {{item.bottlesCount}} </span>
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
+
+
+              <div class="section pb-48" *ngIf="bottles.length>0">
+
+                <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+                  <mat-icon class="m-0 mr-16">opacity</mat-icon>
+                  <div class="h2 secondary-text">User Bottles</div>
+                </div>
+
+                <table class="simple">
+                  <thead>
+                    <tr>
+                      <th>Creation Date</th>
+                      <th>Active</th>
+                      <th>Shore</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let bottle of bottles">
+                      <td>
+                        <span class="text-truncate"> {{bottle.createdAt | date}} </span>
+                      </td>
+                      <td>
+                        <div *ngIf="bottle.status=='active'">
+                          <mat-icon class="avatar active-icon mat-green-600-bg s-16">check</mat-icon>Active</div>
+                        <div *ngIf="bottle.status=='deactive'">
+                          <mat-icon class="avatar active-icon mat-red-500-bg s-16">close</mat-icon>De-activated</div>
+
+                      </td>
+                      <td>
+                        <span class="text-truncate"> {{bottle.shore.name_en}}/{{bottle.shore.name_ar}} </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
             </div>
           </mat-tab>
         </mat-tab-group>

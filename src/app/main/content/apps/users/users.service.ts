@@ -1,3 +1,4 @@
+import { Bottle } from "./../bottles/bottle.model";
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
@@ -25,6 +26,7 @@ export class UsersService implements Resolve<any> {
   itemsCount: number;
   item: any;
   items: any[];
+  bottles: any[];
 
   constructor(
     private http: HttpClient,
@@ -39,9 +41,9 @@ export class UsersService implements Resolve<any> {
     state: RouterStateSnapshot
   ): Observable<any> | Promise<any> | any {
     return new Promise((resolve, reject) => {
-      let resolverType = route.data["resolverType"];
-      let page = route.data["page"];
-      let itemsPerPage = route.data["itemsPerPage"];
+      const resolverType = route.data["resolverType"];
+      const page = route.data["page"];
+      const itemsPerPage = route.data["itemsPerPage"];
       if (resolverType == "list") {
         Promise.all([
           this.getItemsPaging(page, itemsPerPage),
@@ -49,11 +51,55 @@ export class UsersService implements Resolve<any> {
         ]).then(() => {
           resolve();
         }, reject);
-      } else if (resolverType == "view") {
+      } else if (resolverType === "edit") {
         Promise.all([this.viewItem(route.params["id"])]).then(() => {
           resolve();
         }, reject);
+      } else if (resolverType === "view") {
+        Promise.all([
+          this.viewItem(route.params["id"]),
+          this.getUserBottles(route.params["id"])
+        ]).then(() => {
+          resolve();
+        }, reject);
       }
+    });
+  }
+
+  getUserBottles(itemId: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      // send get request
+      this.http
+        .get<Bottle[]>(
+          AppConfig.apiUrl +
+            "bottles?filter[where][ownerId]=" +
+            itemId +
+            "&access_token=" +
+            this.authService.getToken()
+        )
+        .subscribe(
+          bottles => {
+            console.log("bottles ", bottles);
+            //this.bottles = item;
+            //this.onItemChanged.next(this.item);
+            this.bottles = bottles;
+            resolve(bottles);
+          },
+          error => {
+            console.log("error ", error);
+            if (error.error.error.code == AppConfig.authErrorCode)
+              this.router.navigate(["/error-404"]);
+            else
+              this.helpersService.showActionSnackbar(
+                null,
+                false,
+                "",
+                { style: "failed-snackbar" },
+                AppConfig.technicalException
+              );
+            reject();
+          }
+        );
     });
   }
 

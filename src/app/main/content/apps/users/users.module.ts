@@ -26,7 +26,7 @@ const routes: Routes = [
     resolve: {
       data: UsersService
     },
-    data: { resolverType: "view" }
+    data: { resolverType: "edit" }
   },
   {
     path: "view/:id",
