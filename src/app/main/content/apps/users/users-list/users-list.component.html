@@ -8,7 +8,7 @@
   <div class="center">
 
     <!-- HEADER -->
-    <form class="header white-fg" fxLayout="column" fxLayoutAlign="center space-around" [formGroup]="filtersForm">
+    <form class="header white-fg" fxLayout="column" fxLayoutAlign="center space-around" [formGroup]="filtersForm" style="margin: 17px 0;">
       <div fxLayout="row" fxLayoutAlign="space-between center">
         <!-- APP TITLE -->
         <div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
@@ -63,23 +63,27 @@
           <span> FILTER </span>
         </button>
       </div>
-      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px">
-        <mat-form-field>
-          <input (click)="picker.open()" matInput [matDatepicker]="picker" placeholder="Creation Date From" formControlName="createdFrom"
-            name="createdFrom">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
+      <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+        <button mat-raised-button (click)="exportAsExcelFile('Users')" class="add-product-button mat-white-bg  mt-sm-0">Save as Excel</button>
+        <div>
+          <mat-form-field>
+            <input (click)="picker.open()" matInput [matDatepicker]="picker" placeholder="Creation Date From" formControlName="createdFrom"
+              name="createdFrom">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
 
-        <mat-form-field>
-          <input (click)="picker.open()" matInput [matDatepicker]="picker2" placeholder="Creation Date To" formControlName="createdTo"
-            name="createdTo">
-          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-          <mat-datepicker #picker2></mat-datepicker>
-        </mat-form-field>
-        <button type="button" mat-raised-button (click)="clearFilter()" class="add-product-button mat-white-bg  mt-sm-0">
-          <span> CLEAR </span>
-        </button>
+          <mat-form-field>
+            <input (click)="picker.open()" matInput [matDatepicker]="picker2" placeholder="Creation Date To" formControlName="createdTo"
+              name="createdTo">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+          <button type="button" mat-raised-button (click)="clearFilter()" class="add-product-button mat-white-bg  mt-sm-0">
+            <span> CLEAR </span>
+          </button>
+        </div>
+
       </div>
 
     </form>

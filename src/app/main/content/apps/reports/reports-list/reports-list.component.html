@@ -8,21 +8,17 @@
   <div class="center">
 
     <!-- HEADER -->
-    <div class="header white-fg"
-         fxLayout="column" fxLayoutAlign="center center"
-         fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+    <div class="header white-fg" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
 
       <!-- APP TITLE -->
-      <div class="logo my-12 m-sm-0"
-           fxLayout="row" fxLayoutAlign="start center">
+      <div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
         <mat-icon class="logo-icon mr-16" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">report</mat-icon>
         <span class="logo-text h1" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">Reports</span>
       </div>
       <!-- / APP TITLE -->
 
       <!-- SEARCH -->
-      <div class="search-input-wrapper mx-12 m-md-0"
-           fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+      <div class="search-input-wrapper mx-12 m-md-0" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
         <label for="search" class="mr-8">
           <mat-icon class="secondary-text">search</mat-icon>
         </label>
@@ -31,12 +27,13 @@
         </mat-form-field>
       </div>
       <!-- / SEARCH -->
+      <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+        <button mat-raised-button (click)="exportAsExcelFile('Reports')" class="add-product-button mat-white-bg  mt-sm-0">Save as Excel</button>
 
-      <button mat-raised-button
-              [routerLink]="'/reports/new'"
-              class="add-product-button mat-white-bg  mt-sm-0">
-        <span> NEW </span>
-      </button>
+        <button mat-raised-button [routerLink]="'/reports/new'" class="add-product-button mat-white-bg  mt-sm-0">
+          <span> NEW </span>
+        </button>
+      </div>
 
     </div>
     <!-- / HEADER -->
@@ -44,11 +41,7 @@
     <!-- CONTENT CARD -->
     <div class="content-card mat-white-bg">
 
-      <mat-table class="products-table"
-                 #table [dataSource]="dataSource"
-                 matSort
-                 [@animateStagger]="{value:'50'}"
-                 fusePerfectScrollbar>
+      <mat-table class="products-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
 
 
         <ng-container cdkColumnDef="report_Type_en">
@@ -90,8 +83,8 @@
 
 
         <ng-container cdkColumnDef="btns">
-          <mat-header-cell *cdkHeaderCellDef ></mat-header-cell>
-          <mat-cell *cdkCellDef="let product" >
+          <mat-header-cell *cdkHeaderCellDef></mat-header-cell>
+          <mat-cell *cdkCellDef="let product">
             <div fxFlex="row" fxLayoutAlign="end center">
               <button mat-icon-button [routerLink]="'/reports/edit/'+product.id" (click)="$event.stopPropagation();">
                 <mat-icon>edit</mat-icon>
@@ -106,19 +99,11 @@
 
         <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
 
-        <mat-row *cdkRowDef="let product; columns: displayedColumns;"
-                 class="product"
-                 matRipple
-                 [routerLink]="'/reports/view/'+product.id">
+        <mat-row *cdkRowDef="let product; columns: displayedColumns;" class="product" matRipple [routerLink]="'/reports/view/'+product.id">
         </mat-row>
       </mat-table>
 
-      <mat-paginator #paginator
-                     [length]="itemsCount"
-                     [pageIndex]="0"
-                     [pageSize]="10"
-                     [pageSizeOptions]="[5, 10, 25, 100]"
-                     (page)="getItemsPaging()">
+      <mat-paginator #paginator [length]="itemsCount" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" (page)="getItemsPaging()">
       </mat-paginator>
 
     </div>

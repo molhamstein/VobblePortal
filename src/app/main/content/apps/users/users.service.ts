@@ -152,7 +152,7 @@ export class UsersService implements Resolve<any> {
         )
         .subscribe(
           (response: any) => {
-            // console.log("response users", response);
+            // console.log("response users", response._body);
             this.items = response;
             this.onUsersChanged.next(this.items);
             resolve(response);

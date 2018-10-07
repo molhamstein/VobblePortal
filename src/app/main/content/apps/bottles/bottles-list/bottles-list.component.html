@@ -8,7 +8,7 @@
   <div class="center">
 
     <!-- HEADER -->
-    <form class="header white-fg" fxLayout="column" fxLayoutAlign="center space-around" [formGroup]="filtersForm">
+    <form class="header white-fg" fxLayout="column" fxLayoutAlign="center space-around" [formGroup]="filtersForm" style="margin: 17px 0;">
       <div fxLayout="row" fxLayoutAlign="space-between center">
 
         <!-- APP TITLE -->
@@ -56,37 +56,40 @@
           <span> FILTER </span>
         </button>
       </div>
-      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px">
-        <mat-form-field>
-          <mat-select placeholder="Shore" formControlName="shoreId">
-            <mat-option [value]=""> No filter</mat-option>
-            <mat-option *ngFor="let shore of shores" [value]="shore.id">
-              <img *ngIf="shore.cover && shore.cover!=''" [src]="shore.cover" style=" border-radius: 50%;object-fit: cover; margin-top: 8px; margin-right: 5px;height: 30px;width: 30px;">
-              <span> {{shore.name_en}} {{shore.name_ar}}</span>
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+      <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+        <button mat-raised-button (click)="exportAsExcelFile('Bottles')" class="add-product-button mat-white-bg  mt-sm-0">Save as Excel</button>
+        <div>
+          <mat-form-field>
+            <mat-select placeholder="Shore" formControlName="shoreId">
+              <mat-option [value]=""> No filter</mat-option>
+              <mat-option *ngFor="let shore of shores" [value]="shore.id">
+                <img *ngIf="shore.cover && shore.cover!=''" [src]="shore.cover" style=" border-radius: 50%;object-fit: cover; margin-top: 8px; margin-right: 5px;height: 30px;width: 30px;">
+                <span> {{shore.name_en}} {{shore.name_ar}}</span>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
 
 
-        <mat-form-field>
-          <input matInput (click)="picker.open()" [matDatepicker]="picker" placeholder="Creation Date From" formControlName="createdFrom"
-            name="createdFrom">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
+          <mat-form-field>
+            <input matInput (click)="picker.open()" [matDatepicker]="picker" placeholder="Creation Date From" formControlName="createdFrom"
+              name="createdFrom">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
 
-        <mat-form-field>
-          <input matInput (click)="picker.open()" [matDatepicker]="picker2" placeholder="Creation Date To" formControlName="createdTo"
-            name="createdTo">
-          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-          <mat-datepicker #picker2></mat-datepicker>
-        </mat-form-field>
+          <mat-form-field>
+            <input matInput (click)="picker.open()" [matDatepicker]="picker2" placeholder="Creation Date To" formControlName="createdTo"
+              name="createdTo">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
 
 
 
-        <button type="button" mat-raised-button type="submit" (click)="clearFilter()" class="add-product-button mat-white-bg  mt-sm-0">
-          <span> CLEAR </span>
-        </button>
+          <button type="button" mat-raised-button type="submit" (click)="clearFilter()" class="add-product-button mat-white-bg  mt-sm-0">
+            <span> CLEAR </span>
+          </button>
+        </div>
       </div>
 
     </form>
