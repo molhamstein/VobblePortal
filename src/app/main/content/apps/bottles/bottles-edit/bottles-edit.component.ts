@@ -48,7 +48,6 @@ export class BottlesEditComponent implements OnInit, OnDestroy {
 
   disableSave = false;
 
-
   filteredUsers: Observable<User[]>;
   @ViewChild("file")
   fileSelector: ElementRef;
@@ -145,12 +144,13 @@ export class BottlesEditComponent implements OnInit, OnDestroy {
 
   readFileVideo(inputValue: any): void {
     if (inputValue.files && inputValue.files[0]) {
+      this.video = "";
       // this.form.value.file = inputValue.files[0];
       this.blobFileToUpload = inputValue.files[0];
       console.log("this.blobFileToUpload ", this.blobFileToUpload);
 
       this.uploadFiles(this.blobFileToUpload);
-      
+
       const reader: FileReader = new FileReader();
       reader.readAsDataURL(inputValue.files[0]);
       reader.onload = event => {
@@ -203,7 +203,7 @@ export class BottlesEditComponent implements OnInit, OnDestroy {
       } else {
         this.form.value.thumbnail = this.item.thumbnail;
         this.form.value.file = file;
-       //  this.submit();
+        //  this.submit();
       }
     } // else this.submit();
   }

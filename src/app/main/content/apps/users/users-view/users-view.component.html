@@ -163,6 +163,8 @@
                       <th>Total Thrown Bottles</th>
                       <th>Extra Bottles Count</th>
                       <th>Bottles Count</th>
+                      <th>Replies Bottles Count</th>
+                      <th>Found Bottles Count</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -176,13 +178,19 @@
                       <td>
                         <span class="text-truncate"> {{item.bottlesCount}} </span>
                       </td>
+                      <td>
+                        <span class="text-truncate"> {{item.repliesBottlesCount}} </span>
+                      </td>
+                      <td>
+                        <span class="text-truncate"> {{item.foundBottlesCount}} </span>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
 
 
-              <div class="section pb-48" *ngIf="bottles.length>0">
+              <div class="section pb-48">
 
                 <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
                   <mat-icon class="m-0 mr-16">opacity</mat-icon>

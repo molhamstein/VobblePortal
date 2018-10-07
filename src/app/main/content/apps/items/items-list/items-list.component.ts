@@ -151,6 +151,7 @@ export class ItemsListComponent implements OnInit {
   applyFilter() {
     this.progressBarService.toggle();
 
+    console.log("this.filtersForm.value ", this.filtersForm.value);
     this.itemsService.filterBy(this.filtersForm.value).then(
       val => {
         // this.helpersService.showActionSnackbar(PageAction.Create, true, 'user');

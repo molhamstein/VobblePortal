@@ -128,9 +128,10 @@ export class BottlesNewComponent implements OnInit {
 
   readFileVideo(inputValue: any): void {
     if (inputValue.files && inputValue.files[0]) {
+      this.video = "";
       // this.form.value.file = inputValue.files[0];
       this.blobFileToUpload = inputValue.files[0];
-      console.log("this.blobFileToUpload ", this.blobFileToUpload);
+      //   console.log("this.blobFileToUpload ", this.blobFileToUpload);
 
       this.uploadFiles(this.blobFileToUpload);
 
@@ -158,16 +159,16 @@ export class BottlesNewComponent implements OnInit {
   }
 
   uploadFiles(file) {
-    console.log("file ", file);
-    console.log("this.form.value.file ", this.form.value.file);
-    console.log("this.blobFileToUpload ", this.blobFileToUpload);
+    //  console.log("file ", file);
+    //  console.log("this.form.value.file ", this.form.value.file);
+    //  console.log("this.blobFileToUpload ", this.blobFileToUpload);
     if (file && file !== "") {
       const formData: FormData = new FormData();
 
-      console.log("typeof images[i] ", typeof file);
+      //  console.log("typeof images[i] ", typeof file);
       //if (typeof file !== 'string') {
       formData.append("file", file);
-      console.log("formData ", formData);
+      // console.log("formData ", formData);
       this.disableSave = true;
       this.uploadFileService.uploadFile(formData, "video").then(
         val => {
@@ -175,6 +176,8 @@ export class BottlesNewComponent implements OnInit {
           console.log("val ", val);
           this.form.value.thumbnail = val[0].thumbnail;
           this.form.value.file = val[0].file;
+          console.log("form ", this.form.value);
+
           // this.submit();
         },
         reason => {
@@ -194,7 +197,7 @@ export class BottlesNewComponent implements OnInit {
   submit() {
     delete this.form.value.id;
     this.form.value.ownerId = this.form.value.ownerId.id;
-    console.log("form add", this.form.value);
+    //console.log("form add", this.form.value);
     this.bottlesService.newItem(this.form.value).then(
       val => {
         this.helpersService.showActionSnackbar(

@@ -325,7 +325,14 @@ export class ItemsService implements Resolve<any> {
 
       if (filter !== "") filter = 'filter={"where":{"and":[' + filter + "]}}";
 
-      //  console.log("fff ", filter);
+      console.log(
+        "fff ",
+        AppConfig.apiUrl +
+          "items/filterItem?" +
+          filter +
+          "&access_token=" +
+          this.authService.getToken()
+      );
 
       this.http
         .get<any[]>(

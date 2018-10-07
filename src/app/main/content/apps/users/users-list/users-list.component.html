@@ -29,7 +29,7 @@
         </div>
         <!-- / SEARCH -->
 
-        <button mat-raised-button [routerLink]="'/users/new'" class="add-product-button mat-white-bg  mt-sm-0">
+        <button type="button" mat-raised-button [routerLink]="'/users/new'" class="add-product-button mat-white-bg  mt-sm-0">
           <span> NEW </span>
         </button>
 
@@ -77,7 +77,7 @@
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
-        <button mat-raised-button type="submit" (click)="clearFilter()" class="add-product-button mat-white-bg  mt-sm-0">
+        <button type="button" mat-raised-button (click)="clearFilter()" class="add-product-button mat-white-bg  mt-sm-0">
           <span> CLEAR </span>
         </button>
       </div>
@@ -131,16 +131,30 @@
         </ng-container>
 
         <ng-container cdkColumnDef="extraBottlesCount">
-          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Extra Bottles Count</mat-header-cell>
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Extra Bottles</mat-header-cell>
           <mat-cell *cdkCellDef="let product">
             <p class="text-truncate">{{product.extraBottlesCount}}</p>
           </mat-cell>
         </ng-container>
 
         <ng-container cdkColumnDef="bottlesCount">
-          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Bottles Count</mat-header-cell>
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Bottles</mat-header-cell>
           <mat-cell *cdkCellDef="let product">
             <p class="text-truncate">{{product.bottlesCount}}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="repliesBottlesCount">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Replies Bottles</mat-header-cell>
+          <mat-cell *cdkCellDef="let product">
+            <p class="text-truncate">{{product.repliesBottlesCount}}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="foundBottlesCount">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Found Bottles</mat-header-cell>
+          <mat-cell *cdkCellDef="let product">
+            <p class="text-truncate">{{product.foundBottlesCount}}</p>
           </mat-cell>
         </ng-container>
 
@@ -198,8 +212,10 @@
         </mat-row>
       </mat-table>
 
-      <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+      <mat-paginator #paginator [length]="itemsCount" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" (page)="getItemsPaging()">
       </mat-paginator>
+
+
 
     </div>
     <!-- / CONTENT CARD -->

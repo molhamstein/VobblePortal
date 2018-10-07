@@ -75,7 +75,7 @@ export class DashboardService {
       if (filter) {
         url += "&from=" + filter.from + "&to=" + filter.to;
       }
-      console.log("url ", url);
+      // console.log("url ", url);
       this.http.get(url).subscribe((response: any) => {
         console.log("bottles ", response);
         this.bottles = response.map((i, index) => {
@@ -107,7 +107,7 @@ export class DashboardService {
           };
         });
 
-        console.log("this.BottlesChartData ", this.bottles);
+        //    console.log("this.BottlesChartData ", this.bottles);
         this.onBottlesChanged.next(this.bottles);
         resolve(this.bottles);
       }, reject);
@@ -123,7 +123,7 @@ export class DashboardService {
             this.authService.getToken()
         )
         .subscribe((response: any) => {
-          console.log("items ", response);
+          //      console.log("items ", response);
           this.orginalItems = response.map(x => Object.assign({}, x));
 
           this.items = response.map(item => {
@@ -139,14 +139,14 @@ export class DashboardService {
   }
 
   purchasesChartTypeChanged(type) {
-    console.log("purchasesChartTypeChanged ", type);
+    //  console.log("purchasesChartTypeChanged ", type);
     this.items = this.orginalItems.map(item => {
       return {
         name: item.country,
         value: item[type]
       };
     });
-    console.log("this.items ", this.items);
+    //  console.log("this.items ", this.items);
     this.onItemsChanged.next(this.items);
   }
 
@@ -159,7 +159,7 @@ export class DashboardService {
             this.authService.getToken()
         )
         .subscribe((response: any) => {
-          console.log("users ", response);
+          //       console.log("users ", response);
           this.users = [
             {
               name: "Male",

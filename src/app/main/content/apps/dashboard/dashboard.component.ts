@@ -129,16 +129,3 @@ export class DashboardComponent implements OnInit, OnDestroy {
   //   this.dashboardService.getBottles();
   // }
 }
-
-// export class FilesDataSource extends DataSource<any> {
-//   constructor(private widget11) {
-//     super();
-//   }
-
-//   /** Connect function called by the table to retrieve one stream containing the data to render. */
-//   connect(): Observable<any[]> {
-//     return this.widget11.onContactsChanged;
-//   }
-
-//   disconnect() {}
-// }

@@ -90,6 +90,8 @@ export class UsersNewComponent implements OnInit {
       totalBottlesThrown: [""],
       extraBottlesCount: [""],
       bottlesCount: [""],
+      repliesBottlesCount: [""],
+      foundBottlesCount: [""],
       createdAt: [new Date(), Validators.required],
       image: [""],
       //  isActive: [true],

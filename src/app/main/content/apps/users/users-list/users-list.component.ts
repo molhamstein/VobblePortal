@@ -53,6 +53,8 @@ export class UsersListComponent implements OnInit {
     "totalBottlesThrown",
     "extraBottlesCount",
     "bottlesCount",
+    "repliesBottlesCount",
+    "foundBottlesCount",
     "status",
     "email",
     "btns"
@@ -118,7 +120,7 @@ export class UsersListComponent implements OnInit {
 
   applyFilter() {
     this.progressBarService.toggle();
-   // console.log("filtersForm", this.filtersForm.value);
+    // console.log("filtersForm", this.filtersForm.value);
     this.usersService.filterBy(this.filtersForm.value).then(
       val => {
         // this.helpersService.showActionSnackbar(PageAction.Create, true, 'user');
