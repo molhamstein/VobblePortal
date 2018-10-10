@@ -1,4 +1,3 @@
-import { map } from "rxjs/operators";
 import { FormBuilder } from "@angular/forms";
 import { FormControl } from "@angular/forms";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
@@ -72,42 +71,47 @@ export class DashboardService {
         AppConfig.apiUrl +
         "bottles/timeStateReport/?access_token=" +
         this.authService.getToken();
-      console.log(filter);
+      // console.log(filter);
+
       if (filter) {
         url += "&from=" + filter.from + "&to=" + filter.to;
       }
-
-      const getDateArray = function(start, end) {
-        console.log("start, end ", start, end);
-        const arr = new Array(),
-          dt = new Date(start);
-
-        while (dt <= end) {
-          arr.push(new Date(dt));
-          dt.setDate(dt.getDate() + 1);
-        }
-
-        return arr;
-      };
+      // console.log("filter ", filter);
 
       // console.log("url ", url);
       this.http.get(url).subscribe((response: any) => {
         console.log("bottles ", response);
 
+        const getDateArray = (start, end) => {
+          const arr = new Array();
+          const dt = new Date(start);
+          while (dt <= end) {
+            arr.push(new Date(dt));
+            dt.setDate(dt.getDate() + 1);
+          }
+          return arr;
+        };
+
+        //   filter.from.setHours(0, 0, 0, 0);
+        //   filter.to.setHours(0, 0, 0, 0);
         this.bottles = response.map((i, index) => {
           let tempArray = [];
 
-          const fromDatesArray = getDateArray(
-            filter.from,
-            new Date(i[0].date.year, i[0].date.month - 1, i[0].date.day)
-          );
+          if (i[0]) {
+            const fromDatesArray = getDateArray(
+              filter.from,
+              new Date(i[0].date.year, i[0].date.month - 1, i[0].date.day)
+            );
+            //console.log("fromDatesArray ", fromDatesArray);
 
-          tempArray = fromDatesArray.map(val => {
-            return {
-              value: 0,
-              name: val
-            };
-          });
+            tempArray = fromDatesArray.map(val => {
+              //  console.log(val);
+              return {
+                value: 0,
+                name: val
+              };
+            });
+          }
 
           i.map(inner => {
             tempArray.push({
@@ -119,22 +123,27 @@ export class DashboardService {
               )
             });
           });
-
-          const toDatesArray = getDateArray(
-            new Date(
+          if (i[i.length - 1]) {
+            // console.log(" filter.to", filter.to);
+            const from = new Date(
               i[i.length - 1].date.year,
               i[i.length - 1].date.month - 1,
               i[i.length - 1].date.day
-            ),
-            filter.to
-          );
+            );
+            // console.log("from ", from);
+            // console.log("filter.to ", filter.to);
+            const toDatesArray = getDateArray(
+              from,
+              filter.to.setDate(filter.to.getDate() - 1)
+            );
 
-          toDatesArray.map(val => {
-            tempArray.push({
-              value: 0,
-              name: val
+            toDatesArray.map(val => {
+              tempArray.push({
+                value: 0,
+                name: val
+              });
             });
-          });
+          }
 
           let name = "";
           switch (index) {
