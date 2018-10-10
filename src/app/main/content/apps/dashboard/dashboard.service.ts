@@ -72,20 +72,70 @@ export class DashboardService {
         AppConfig.apiUrl +
         "bottles/timeStateReport/?access_token=" +
         this.authService.getToken();
+      console.log(filter);
       if (filter) {
         url += "&from=" + filter.from + "&to=" + filter.to;
       }
+
+      const getDateArray = function(start, end) {
+        console.log("start, end ", start, end);
+        const arr = new Array(),
+          dt = new Date(start);
+
+        while (dt <= end) {
+          arr.push(new Date(dt));
+          dt.setDate(dt.getDate() + 1);
+        }
+
+        return arr;
+      };
+
       // console.log("url ", url);
       this.http.get(url).subscribe((response: any) => {
         console.log("bottles ", response);
+
         this.bottles = response.map((i, index) => {
-          const innerArray = i.map(inner => {
+          let tempArray = [];
+
+          const fromDatesArray = getDateArray(
+            filter.from,
+            new Date(i[0].date.year, i[0].date.month - 1, i[0].date.day)
+          );
+
+          tempArray = fromDatesArray.map(val => {
             return {
-              value: inner.count,
-              name:
-                inner.date.day + "-" + inner.date.month + "-" + inner.date.year
+              value: 0,
+              name: val
             };
           });
+
+          i.map(inner => {
+            tempArray.push({
+              value: inner.count,
+              name: new Date(
+                inner.date.year,
+                inner.date.month - 1,
+                inner.date.day
+              )
+            });
+          });
+
+          const toDatesArray = getDateArray(
+            new Date(
+              i[i.length - 1].date.year,
+              i[i.length - 1].date.month - 1,
+              i[i.length - 1].date.day
+            ),
+            filter.to
+          );
+
+          toDatesArray.map(val => {
+            tempArray.push({
+              value: 0,
+              name: val
+            });
+          });
+
           let name = "";
           switch (index) {
             case 0: {
@@ -103,7 +153,7 @@ export class DashboardService {
           }
           return {
             name: name,
-            series: innerArray
+            series: tempArray
           };
         });
 
