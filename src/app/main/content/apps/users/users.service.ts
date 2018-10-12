@@ -284,6 +284,45 @@ export class UsersService implements Resolve<any> {
     });
   }
 
+  export(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      // send get request
+
+      console.log(
+        AppConfig.apiUrl +
+          "users/export" +
+          "?access_token=" +
+          this.authService.getToken()
+      );
+      this.http
+        .get(
+          AppConfig.apiUrl +
+            "users/export" +
+            "?access_token=" +
+            this.authService.getToken()
+        )
+        .subscribe(
+          items => {
+            resolve(items);
+          },
+          error => {
+            console.log("error ", error);
+            if (error.error.code == AppConfig.authErrorCode)
+              this.router.navigate(["/error-404"]);
+            else
+              this.helpersService.showActionSnackbar(
+                null,
+                false,
+                "",
+                { style: "failed-snackbar" },
+                AppConfig.technicalException
+              );
+            reject();
+          }
+        );
+    });
+  }
+
   viewItem(itemId: string): Promise<any> {
     return new Promise((resolve, reject) => {
       // send get request

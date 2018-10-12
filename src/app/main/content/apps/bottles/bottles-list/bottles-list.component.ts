@@ -136,12 +136,17 @@ export class BottlesListComponent implements OnInit {
   }
 
   exportAsExcelFile(excelFileName: string): void {
+
+    this.bottlesService.export().then(res => {
+      if(res){
     const workBook = XLSX.utils.book_new(); // create a new blank book
-    const workSheet = XLSX.utils.json_to_sheet(this.bottlesService.items);
+    const workSheet = XLSX.utils.json_to_sheet(res);
 
     XLSX.utils.book_append_sheet(workBook, workSheet, "data"); // add the worksheet to the book
     const name = excelFileName + ".xlsx";
     XLSX.writeFile(workBook, name); // initiate a file download in browser
+      }
+    })
   }
 
   deleteItem(contact) {

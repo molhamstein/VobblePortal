@@ -214,7 +214,7 @@ export class BottlesService implements Resolve<any> {
         )
         .subscribe(
           item => {
-           // console.log("item ", item);
+            // console.log("item ", item);
             this.item = item;
             this.onItemChanged.next(this.item);
             resolve(item);
@@ -281,7 +281,7 @@ export class BottlesService implements Resolve<any> {
         )
         .subscribe(
           data => {
-           // console.log(data);
+            // console.log(data);
             resolve(true);
           },
           error => {
@@ -326,7 +326,7 @@ export class BottlesService implements Resolve<any> {
 
       if (filter !== "") filter = 'filter={"where":{"and":[' + filter + "]}}";
 
-     // console.log("fff ", filter);
+      // console.log("fff ", filter);
 
       this.http
         .get<any[]>(
@@ -346,6 +346,45 @@ export class BottlesService implements Resolve<any> {
           error => {
             console.log("error ", error);
             if (error.error.error.code === AppConfig.authErrorCode)
+              this.router.navigate(["/error-404"]);
+            else
+              this.helpersService.showActionSnackbar(
+                null,
+                false,
+                "",
+                { style: "failed-snackbar" },
+                AppConfig.technicalException
+              );
+            reject();
+          }
+        );
+    });
+  }
+
+  export(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      // send get request
+
+      console.log(
+        AppConfig.apiUrl +
+          "items/export" +
+          "?access_token=" +
+          this.authService.getToken()
+      );
+      this.http
+        .get(
+          AppConfig.apiUrl +
+            "items/export" +
+            "?access_token=" +
+            this.authService.getToken()
+        )
+        .subscribe(
+          items => {
+            resolve(items);
+          },
+          error => {
+            console.log("error ", error);
+            if (error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
               this.helpersService.showActionSnackbar(
