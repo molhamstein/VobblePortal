@@ -133,7 +133,7 @@ export class ItemsListComponent implements OnInit {
 
   exportAsExcelFile(excelFileName: string): void {
     this.itemsService.export().then(res => {
-      if (res) {s
+      if (res) {
         const workBook = XLSX.utils.book_new(); // create a new blank book
         const workSheet = XLSX.utils.json_to_sheet(res);
 
