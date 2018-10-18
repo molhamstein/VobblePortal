@@ -373,20 +373,21 @@ export class ItemsService implements Resolve<any> {
 
       console.log(
         AppConfig.apiUrl +
-          "bottles/export" +
+          "items/export" +
           "?access_token=" +
           this.authService.getToken()
       );
       this.http
         .get(
           AppConfig.apiUrl +
-            "bottles/export" +
+            "items/export" +
             "?access_token=" +
             this.authService.getToken()
         )
         .subscribe(
           items => {
-            resolve(items);
+            console.log(items);
+            resolve(items["path"]);
           },
           error => {
             console.log("error ", error);

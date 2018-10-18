@@ -27,12 +27,6 @@ import { ProgressBarService } from "../../../../../core/services/progress-bar.se
 import { countries } from "typed-countries";
 import { map, startWith } from "rxjs/operators";
 import { PageAction } from "../../../../shared/enums/page-action";
-import * as FileSaver from "file-saver";
-import * as XLSX from "xlsx";
-
-const EXCEL_TYPE =
-  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
-const EXCEL_EXTENSION = ".xlsx";
 
 @Component({
   selector: "app-users-list",
@@ -73,6 +67,8 @@ export class UsersListComponent implements OnInit {
   filter: ElementRef;
   @ViewChild(MatSort)
   sort: MatSort;
+
+  exportLink;
 
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
 
@@ -164,16 +160,11 @@ export class UsersListComponent implements OnInit {
       });
   }
 
-  exportAsExcelFile(excelFileName: string): void {
+  exportAsExcelFile(): void {
     this.usersService.export().then(res => {
       if (res) {
         console.log(res);
-        const workBook = XLSX.utils.book_new(); // create a new blank book
-        const workSheet = XLSX.utils.json_to_sheet(res);
-
-        XLSX.utils.book_append_sheet(workBook, workSheet, "data"); // add the worksheet to the book
-        const name = excelFileName + ".xlsx";
-        XLSX.writeFile(workBook, name); // initiate a file download in browser
+        window.location.href = res;
       }
     });
   }

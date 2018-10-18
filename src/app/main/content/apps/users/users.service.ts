@@ -303,7 +303,7 @@ export class UsersService implements Resolve<any> {
         )
         .subscribe(
           items => {
-            resolve(items);
+            resolve(items["path"]);
           },
           error => {
             console.log("error ", error);

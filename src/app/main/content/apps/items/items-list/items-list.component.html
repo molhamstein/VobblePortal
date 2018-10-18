@@ -60,7 +60,9 @@
       </div>
 
       <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
-        <button mat-raised-button (click)="exportAsExcelFile('Items')" class="add-product-button mat-white-bg  mt-sm-0">Save as Excel</button>
+        <button mat-raised-button (click)="exportAsExcelFile()" class="add-product-button mat-white-bg  mt-sm-0">
+          Export
+        </button>
         <div>
           <mat-form-field>
             <input matInput (click)="picker.open()" [matDatepicker]="picker" placeholder="Date From" formControlName="from" name="from">

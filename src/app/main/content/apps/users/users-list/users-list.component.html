@@ -63,8 +63,11 @@
           <span> FILTER </span>
         </button>
       </div>
+
       <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
-        <button mat-raised-button (click)="exportAsExcelFile('Users')" class="add-product-button mat-white-bg  mt-sm-0">Save as Excel</button>
+        <button mat-raised-button (click)="exportAsExcelFile()" class="add-product-button mat-white-bg  mt-sm-0">
+          Export
+        </button>
         <div>
           <mat-form-field>
             <input (click)="picker.open()" matInput [matDatepicker]="picker" placeholder="Creation Date From" formControlName="createdFrom"
