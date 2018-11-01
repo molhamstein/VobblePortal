@@ -78,10 +78,7 @@ export class UsersService implements Resolve<any> {
             this.authService.getToken()
         )
         .subscribe(
-          bottles => {
-            console.log("bottles ", bottles);
-            //this.bottles = item;
-            //this.onItemChanged.next(this.item);
+          bottles => {           
             this.bottles = bottles;
             resolve(bottles);
           },
@@ -138,7 +135,7 @@ export class UsersService implements Resolve<any> {
 
   getItemsPaging(page, itemsPerPage): Promise<any> {
     return new Promise((resolve, reject) => {
-      var offset = page * itemsPerPage;
+      const offset = page * itemsPerPage;
 
       this.http
         .get<User[]>(
@@ -152,7 +149,7 @@ export class UsersService implements Resolve<any> {
         )
         .subscribe(
           (response: any) => {
-            // console.log("response users", response._body);
+            // console.log("response users", response);
             this.items = response;
             this.onUsersChanged.next(this.items);
             resolve(response);
@@ -478,15 +475,7 @@ export class UsersService implements Resolve<any> {
 
   searchFor(keyword): Promise<any> {
     return new Promise((resolve, reject) => {
-      let filter = "";
-      // if (keyword) fitler = "";
-
-      // if (filter.charAt(0) === ",") {
-      //   filter = filter.substr(1);
-      // }
-      // if (filter.charAt(filter.length - 1) === ",")
-      //   filter = filter.slice(0, -1);
-
+      let filter = "";    
       if (keyword) {
         filter =
           'filter={"where":{"and":[{"username": {"like": "^' +

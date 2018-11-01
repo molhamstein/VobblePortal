@@ -37,7 +37,6 @@ export class UsersViewComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.onItemChanged = this.usersService.onItemChanged.subscribe(item => {
       this.item = new User(item);
-      console.log("this.item ", this.item);
     });
   }
 

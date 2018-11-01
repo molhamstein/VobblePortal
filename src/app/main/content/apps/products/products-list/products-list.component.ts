@@ -152,10 +152,6 @@ export class FilesDataSource extends DataSource<any> {
       this.filteredData = [...data];
 
       data = this.sortData(data);
-
-      // Grab the page's slice of data.
-      //const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
-      //return data.splice(startIndex, this._paginator.pageSize);
       return data;
     });
   }

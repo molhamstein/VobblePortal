@@ -20,6 +20,7 @@ export class User {
   totalBottlesThrown: number;
   foundBottlesCount: number;
   repliesBottlesCount: number;
+  lastLogin: Date;
   isActive: boolean;
 
   constructor(user) {
@@ -39,6 +40,7 @@ export class User {
     this.country = user.country || {};
     this.createdAt = user.createdAt || "";
     this.status = user.status || "";
+    this.lastLogin = user.lastLogin || "";
     this.totalBottlesThrown = user.totalBottlesThrown || 0;
     this.repliesBottlesCount = user.repliesBottlesCount || 0;
     this.foundBottlesCount = user.foundBottlesCount || 0;

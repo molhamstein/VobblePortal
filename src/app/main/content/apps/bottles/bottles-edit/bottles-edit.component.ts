@@ -82,8 +82,8 @@ export class BottlesEditComponent implements OnInit, OnDestroy {
       thumbnail: [this.item.thumbnail],
       status: [this.item.status, Validators.required],
       createdAt: [this.item.createdAt, Validators.required],
-      // weight : [''],
       shoreId: [this.item.shoreId],
+      repliesUserCount: [this.item.repliesUserCount],
       ownerId: new FormControl(this.item.owner)
     });
 
@@ -133,7 +133,6 @@ export class BottlesEditComponent implements OnInit, OnDestroy {
   }
 
   getShores() {
-    // if (this.shores.length == 0)
     this.shoresService.getItems().then(
       items => {
         this.shores = items;
@@ -145,9 +144,7 @@ export class BottlesEditComponent implements OnInit, OnDestroy {
   readFileVideo(inputValue: any): void {
     if (inputValue.files && inputValue.files[0]) {
       this.video = "";
-      // this.form.value.file = inputValue.files[0];
       this.blobFileToUpload = inputValue.files[0];
-      console.log("this.blobFileToUpload ", this.blobFileToUpload);
 
       this.uploadFiles(this.blobFileToUpload);
 
@@ -164,30 +161,16 @@ export class BottlesEditComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  // removeFileVideo() {
-  //   this.video = "";
-  //   this.form.value.file = "";
-  //   this.form.value.thumbnail = "";
-  // }
-
   onFileChange(event) {
     this.readFileVideo(event.target);
   }
 
   uploadFiles(file) {
-    //console.log('file ', file);
-    //console.log('this.form.value.file ', this.form.value.file);
-    //console.log('this.form.value.image ', this.form.value.image);
     if (file && file !== "") {
       const formData: FormData = new FormData();
-
-      //console.log('typeof images[i] ', typeof file);
       if (typeof file !== "string") {
         formData.append("file", file);
-        //console.log('formData ', formData);
-
         this.disableSave = true;
-
         this.uploadFileService.uploadFile(formData, "video").then(
           val => {
             //console.log('val ', val);
@@ -203,14 +186,13 @@ export class BottlesEditComponent implements OnInit, OnDestroy {
       } else {
         this.form.value.thumbnail = this.item.thumbnail;
         this.form.value.file = file;
-        //  this.submit();
       }
-    } // else this.submit();
+    }
   }
 
   submit() {
-    this.form.value.ownerId = this.form.value.ownerId.id;
-    //console.log('form add', this.form.value);
+    this.form.value.ownerId = this.form.value.ownerId.id || this.item.ownerId;
+
     this.bottlesService.editItem(this.form.value).then(
       val => {
         this.helpersService.showActionSnackbar(

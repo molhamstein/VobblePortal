@@ -72,6 +72,7 @@ export class BottlesNewComponent implements OnInit {
       status: ["active", Validators.required],
       createdAt: [new Date(), Validators.required],
       shoreId: [""],
+      repliesUserCount: [""],
       ownerId: new FormControl(this.currentUser)
     });
 

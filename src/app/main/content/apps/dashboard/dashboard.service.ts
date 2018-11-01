@@ -152,11 +152,11 @@ export class DashboardService {
               break;
             }
             case 1: {
-              name = "Active Users";
+              name = "New Bottles";
               break;
             }
-            case 2: {
-              name = "New Bottles";
+            case 2: {              
+              name = "Active Users";
               break;
             }
           }

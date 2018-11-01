@@ -50,6 +50,7 @@ export class BottlesListComponent implements OnInit {
     "gender",
     "country",
     "shore",
+    "repliesUserCount",
     "btns"
   ];
 
@@ -113,6 +114,19 @@ export class BottlesListComponent implements OnInit {
     return countries.filter(option => option.iso.toLowerCase().includes(val));
   }
 
+  applySearch() {
+    this.progressBarService.toggle();
+    this.bottlesService.searchFor(this.filter.nativeElement.value).then(
+      val => {
+        this.progressBarService.toggle();
+      },
+      reason => {
+        this.progressBarService.toggle();
+        console.log("error ", reason);
+      }
+    );
+  }
+
   getShores() {
     this.shoresService.getItems().then(
       items => {
@@ -166,11 +180,9 @@ export class BottlesListComponent implements OnInit {
 
     this.bottlesService.filterBy(this.filtersForm.value).then(
       val => {
-        // this.helpersService.showActionSnackbar(PageAction.Create, true, 'user');
         this.progressBarService.toggle();
       },
       reason => {
-        // this.helpersService.showActionSnackbar(PageAction.Create, false, 'user', {style: 'failed-snackbar'});
         this.progressBarService.toggle();
 
         console.log("error ", reason);
@@ -226,9 +238,7 @@ export class FilesDataSource extends DataSource<any> {
 
       data = this.sortData(data);
 
-      // Grab the page's slice of data.
       const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
-      //return data.splice(startIndex, this._paginator.pageSize);
 
       return data;
     });

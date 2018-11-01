@@ -46,6 +46,7 @@ export class ItemsListComponent implements OnInit {
   displayedColumns = [
     "owner",
     "country",
+    "product",
     "storeType",
     "startAt",
     "endAt",
@@ -122,6 +123,7 @@ export class ItemsListComponent implements OnInit {
     this.itemsService
       .getItemsPaging(this.paginator.pageIndex, this.paginator.pageSize)
       .then(items => {
+        console.log(items);
         return items;
       });
   }
@@ -129,7 +131,7 @@ export class ItemsListComponent implements OnInit {
   exportAsExcelFile(): void {
     this.itemsService.export().then(res => {
       if (res) {
-        console.log(res);
+        //console.log(res);
         window.location.href = res;
       }
     });
@@ -222,10 +224,6 @@ export class FilesDataSource extends DataSource<any> {
       this.filteredData = [...data];
 
       data = this.sortData(data);
-
-      // Grab the page's slice of data.
-      //const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
-      //return data.splice(startIndex, this._paginator.pageSize);
       return data;
     });
   }

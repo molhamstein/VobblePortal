@@ -91,7 +91,7 @@ export class BottlesService implements Resolve<any> {
 
   getItemsPaging(page, itemsPerPage): Promise<any> {
     return new Promise((resolve, reject) => {
-      var offset = page * itemsPerPage;
+      const offset = page * itemsPerPage;
       this.http
         .get<Bottle[]>(
           AppConfig.apiUrl +
@@ -137,7 +137,6 @@ export class BottlesService implements Resolve<any> {
         )
         .subscribe(
           (response: any) => {
-            //console.log("count bottles", response);
             this.itemsCount = response.count;
             this.onItemsCountChanged.next(this.itemsCount);
             resolve(response);
@@ -326,8 +325,6 @@ export class BottlesService implements Resolve<any> {
 
       if (filter !== "") filter = 'filter={"where":{"and":[' + filter + "]}}";
 
-      // console.log("fff ", filter);
-
       this.http
         .get<any[]>(
           AppConfig.apiUrl +
@@ -338,7 +335,6 @@ export class BottlesService implements Resolve<any> {
         )
         .subscribe(
           data => {
-            //console.log("filtered ", data);
             this.items = data;
             this.onItemsChanged.next(this.items);
             resolve(true);
@@ -363,14 +359,6 @@ export class BottlesService implements Resolve<any> {
 
   export(): Promise<any> {
     return new Promise((resolve, reject) => {
-      // send get request
-
-      console.log(
-        AppConfig.apiUrl +
-          "bottles/export" +
-          "?access_token=" +
-          this.authService.getToken()
-      );
       this.http
         .get(
           AppConfig.apiUrl +
@@ -397,6 +385,49 @@ export class BottlesService implements Resolve<any> {
             reject();
           }
         );
+    });
+  }
+
+  searchFor(keyword): Promise<any> {
+    return new Promise((resolve, reject) => {
+      let filter = "";
+      if (keyword) {
+        filter =
+          'filter={"where":{"and":[{"owner.username": {"like": "^' +
+          keyword +
+          '"}}]}}';
+
+        this.http
+          .get<any[]>(
+            AppConfig.apiUrl +
+              "bottles?" +
+              filter +
+              "&access_token=" +
+              this.authService.getToken()
+          )
+          .subscribe(
+            data => {
+              console.log("filtered ", data);
+              this.items = data;
+              this.onItemsChanged.next(this.items);
+              resolve(true);
+            },
+            error => {
+              console.log("error ", error);
+              if (error.error.error.code === AppConfig.authErrorCode)
+                this.router.navigate(["/error-404"]);
+              else
+                this.helpersService.showActionSnackbar(
+                  null,
+                  false,
+                  "",
+                  { style: "failed-snackbar" },
+                  AppConfig.technicalException
+                );
+              reject();
+            }
+          );
+      } else this.getItemsPaging(0, 10);
     });
   }
 }

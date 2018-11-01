@@ -7,36 +7,63 @@
   <!-- CENTER -->
   <div class="center">
 
+
     <!-- HEADER -->
-    <div class="header white-fg" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+    <form class="header white-fg" fxLayout="column" fxLayoutAlign="center space-around" [formGroup]="filtersForm" style="margin: 17px 0;">
+      <div fxLayout="row" fxLayoutAlign="space-between center">
 
-      <!-- APP TITLE -->
-      <div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
-        <mat-icon class="logo-icon mr-16" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">report</mat-icon>
-        <span class="logo-text h1" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">Reports</span>
-      </div>
-      <!-- / APP TITLE -->
+        <!-- APP TITLE -->
+        <div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
+          <mat-icon class="logo-icon mr-16" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">report</mat-icon>
+          <span class="logo-text h1" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">Reports</span>
+        </div>
+        <!-- / APP TITLE -->
 
-      <!-- SEARCH -->
-      <div class="search-input-wrapper mx-12 m-md-0" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
-        <label for="search" class="mr-8">
-          <mat-icon class="secondary-text">search</mat-icon>
-        </label>
-        <mat-form-field floatPlaceholder="never" fxFlex="1 0 auto">
-          <input id="search" matInput #filter placeholder="Search">
-        </mat-form-field>
-      </div>
-      <!-- / SEARCH -->
-      <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
-        <button mat-raised-button (click)="exportAsExcelFile('Reports')" class="add-product-button mat-white-bg  mt-sm-0">Save as Excel</button>
+        <!-- SEARCH -->
+        <div class="search-input-wrapper mx-12 m-md-0" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+          <label for="search" class="mr-8">
+            <mat-icon class="secondary-text">search</mat-icon>
+          </label>
+          <mat-form-field floatPlaceholder="never" fxFlex="1 0 auto">
+            <input id="search" matInput #filter placeholder="Search">
+          </mat-form-field>
+        </div>
+        <!-- / SEARCH -->
 
         <button mat-raised-button [routerLink]="'/reports/new'" class="add-product-button mat-white-bg  mt-sm-0">
           <span> NEW </span>
         </button>
+
       </div>
 
-    </div>
+      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px">
+        <mat-form-field>
+          <input matInput (click)="picker.open()" [matDatepicker]="picker" placeholder="Creation Date" formControlName="createdAt"
+            name="createdAt">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <button mat-raised-button type="submit" (click)="applyFilter()" class="add-product-button mat-white-bg  mt-sm-0">
+          <span> FILTER </span>
+        </button>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+        <button mat-raised-button (click)="exportAsExcelFile()" class="add-product-button mat-white-bg  mt-sm-0">
+          Export
+        </button>
+
+        <div>
+
+          <button type="button" mat-raised-button type="submit" (click)="clearFilter()" class="add-product-button mat-white-bg  mt-sm-0">
+            <span> CLEAR </span>
+          </button>
+        </div>
+      </div>
+
+    </form>
     <!-- / HEADER -->
+
+
 
     <!-- CONTENT CARD -->
     <div class="content-card mat-white-bg">

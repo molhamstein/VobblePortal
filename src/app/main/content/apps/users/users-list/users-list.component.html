@@ -24,7 +24,6 @@
           </label>
           <mat-form-field floatPlaceholder="never" fxFlex="1 0 auto">
             <input id="search" matInput #filter (keyup)="applySearch()" placeholder="Search">
-            <!-- <input id="search" matInput #filter placeholder="Search"> -->
           </mat-form-field>
         </div>
         <!-- / SEARCH -->
@@ -130,6 +129,15 @@
           </mat-cell>
         </ng-container>
 
+
+        <ng-container cdkColumnDef="lastLogin">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Last Login</mat-header-cell>
+          <mat-cell *cdkCellDef="let product">
+            <p class="text-truncate">{{product.lastLogin | date}}</p>
+          </mat-cell>
+        </ng-container>
+
+
         <ng-container cdkColumnDef="totalBottlesThrown">
           <mat-header-cell *cdkHeaderCellDef mat-sort-header>Totat Bottles Thrown</mat-header-cell>
           <mat-cell *cdkCellDef="let product">
@@ -152,7 +160,7 @@
         </ng-container>
 
         <ng-container cdkColumnDef="repliesBottlesCount">
-          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Replies Bottles</mat-header-cell>
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Replies Sent</mat-header-cell>
           <mat-cell *cdkCellDef="let product">
             <p class="text-truncate">{{product.repliesBottlesCount}}</p>
           </mat-cell>
@@ -162,6 +170,13 @@
           <mat-header-cell *cdkHeaderCellDef mat-sort-header>Found Bottles</mat-header-cell>
           <mat-cell *cdkCellDef="let product">
             <p class="text-truncate">{{product.foundBottlesCount}}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="repliesReceivedCount">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Replies Received</mat-header-cell>
+          <mat-cell *cdkCellDef="let product">
+            <p class="text-truncate">{{product.repliesReceivedCount }}</p>
           </mat-cell>
         </ng-container>
 
@@ -191,13 +206,6 @@
           </mat-cell>
         </ng-container>
 
-        <ng-container cdkColumnDef="email">
-          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Email</mat-header-cell>
-          <mat-cell *cdkCellDef="let product">
-            <p class="text-truncate">{{product.email}}</p>
-          </mat-cell>
-        </ng-container>
-
         <ng-container cdkColumnDef="btns">
           <mat-header-cell *cdkHeaderCellDef></mat-header-cell>
           <mat-cell *cdkCellDef="let product">
@@ -218,6 +226,7 @@
         <mat-row *cdkRowDef="let product; columns: displayedColumns;" class="product" matRipple [routerLink]="'/users/view/'+product.id">
         </mat-row>
       </mat-table>
+
 
       <mat-paginator #paginator [length]="itemsCount" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" (page)="getItemsPaging()">
       </mat-paginator>

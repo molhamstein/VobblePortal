@@ -101,9 +101,16 @@
         </ng-container>
 
         <ng-container cdkColumnDef="country">
-          <mat-header-cell *cdkHeaderCellDef mat-sort-header fxHide fxShow.gt-md>Owner ISO Code</mat-header-cell>
-          <mat-cell *cdkCellDef="let product" fxHide fxShow.gt-md>
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Owner ISO Code</mat-header-cell>
+          <mat-cell *cdkCellDef="let product">
             <p class="text-truncate" *ngIf="product.owner.country">{{product.owner.country.code}}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="product">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Product</mat-header-cell>
+          <mat-cell *cdkCellDef="let product">
+            <p class="text-truncate" *ngIf="product.product">{{product.product.name_en}}</p>
           </mat-cell>
         </ng-container>
 
@@ -127,14 +134,6 @@
             <p class="text-truncate">{{product.endAt |date}}</p>
           </mat-cell>
         </ng-container>
-
-        <!--
-        <ng-container cdkColumnDef="owner">
-          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Owner</mat-header-cell>
-          <mat-cell *cdkCellDef="let product">
-            <p class="text-truncate">{{product.owner.username}}</p>
-          </mat-cell>
-        </ng-container>-->
 
         <ng-container cdkColumnDef="isConsumed">
           <mat-header-cell *cdkHeaderCellDef>Consumed</mat-header-cell>

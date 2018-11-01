@@ -200,13 +200,21 @@
                 <table class="simple">
                   <thead>
                     <tr>
+                      <th>Thumbnail</th>
                       <th>Creation Date</th>
                       <th>Active</th>
                       <th>Shore</th>
+                      <th>Replies User</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let bottle of bottles">
+                    <tr *ngFor="let bottle of bottles" [routerLink]="'/bottles/view/'+bottle.id" style="cursor: pointer;">
+                      <td>
+                        <div fxLayout="row" fxLayoutAlign="start center">
+                          <img *ngIf="bottle.thumbnail && bottle.thumbnail != ''" class="avatar" [src]="bottle.thumbnail">
+                        </div>
+                      </td>
+
                       <td>
                         <span class="text-truncate"> {{bottle.createdAt | date}} </span>
                       </td>
@@ -215,10 +223,12 @@
                           <mat-icon class="avatar active-icon mat-green-600-bg s-16">check</mat-icon>Active</div>
                         <div *ngIf="bottle.status=='deactive'">
                           <mat-icon class="avatar active-icon mat-red-500-bg s-16">close</mat-icon>De-activated</div>
-
                       </td>
                       <td>
                         <span class="text-truncate"> {{bottle.shore.name_en}}/{{bottle.shore.name_ar}} </span>
+                      </td>
+                      <td>
+                        <span class="text-truncate"> {{bottle.repliesUserCount}} </span>
                       </td>
                     </tr>
                   </tbody>

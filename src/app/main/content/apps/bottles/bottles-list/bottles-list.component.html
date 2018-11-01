@@ -24,7 +24,7 @@
             <mat-icon class="secondary-text">search</mat-icon>
           </label>
           <mat-form-field floatPlaceholder="never" fxFlex="1 0 auto">
-            <input id="search" matInput #filter placeholder="Search">
+            <input id="search" matInput #filter (keyup)="applySearch()" placeholder="Search">
           </mat-form-field>
         </div>
         <!-- / SEARCH -->
@@ -158,6 +158,13 @@
           <mat-header-cell *cdkHeaderCellDef mat-sort-header>Shore</mat-header-cell>
           <mat-cell *cdkCellDef="let product">
             <p class="text-truncate">{{product.shore.name_en}}/{{product.shore.name_ar}}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="repliesUserCount">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Replies to this bottle</mat-header-cell>
+          <mat-cell *cdkCellDef="let product">
+            <p class="text-truncate">{{product.repliesUserCount}}</p>
           </mat-cell>
         </ng-container>
 

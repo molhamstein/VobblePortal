@@ -75,7 +75,10 @@
                   <img *ngIf="option.image && option.image!=''" [src]="option.image" style=" border-radius: 50%;object-fit: cover; margin-top: 8px; margin-right: 5px;height: 30px;width: 30px;"> {{ option.username }}
                 </mat-option>
               </mat-autocomplete>
+            </mat-form-field>
 
+            <mat-form-field fxFlex="50">
+              <input type="number" placeholder="Replies to this bottle" formControlName="repliesUserCount" matInput>
             </mat-form-field>
 
           </div>

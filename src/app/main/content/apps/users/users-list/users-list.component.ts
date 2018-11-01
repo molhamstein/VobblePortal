@@ -26,7 +26,6 @@ import { ProgressBarService } from "../../../../../core/services/progress-bar.se
 
 import { countries } from "typed-countries";
 import { map, startWith } from "rxjs/operators";
-import { PageAction } from "../../../../shared/enums/page-action";
 
 @Component({
   selector: "app-users-list",
@@ -48,6 +47,7 @@ export class UsersListComponent implements OnInit {
     "name",
     "createdAt",
     "typeLogIn",
+    "lastLogin",
     "gender",
     "country",
     "totalBottlesThrown",
@@ -55,8 +55,8 @@ export class UsersListComponent implements OnInit {
     "bottlesCount",
     "repliesBottlesCount",
     "foundBottlesCount",
+    "repliesReceivedCount",
     "status",
-    "email",
     "btns"
   ];
   itemsCount = 0;
@@ -86,15 +86,7 @@ export class UsersListComponent implements OnInit {
       this.paginator,
       this.sort
     );
-    // Observable.fromEvent(this.filter.nativeElement, "keyup")
-    //   .debounceTime(150)
-    //   .distinctUntilChanged()
-    //   .subscribe(() => {
-    //     if (!this.dataSource) {
-    //       return;
-    //     }
-    //     this.dataSource.filter = this.filter.nativeElement.value;
-    //   });
+
     this.itemsCount = this.usersService.itemsCount;
 
     this.filtersForm = this.formBuilder.group({
@@ -138,14 +130,11 @@ export class UsersListComponent implements OnInit {
 
   applySearch() {
     this.progressBarService.toggle();
-    //console.log("key ", this.filter.nativeElement.value);
     this.usersService.searchFor(this.filter.nativeElement.value).then(
       val => {
-        // this.helpersService.showActionSnackbar(PageAction.Create, true, 'user');
         this.progressBarService.toggle();
       },
       reason => {
-        // this.helpersService.showActionSnackbar(PageAction.Create, false, 'user', {style: 'failed-snackbar'});
         this.progressBarService.toggle();
         console.log("error ", reason);
       }
@@ -233,9 +222,7 @@ export class FilesDataSource extends DataSource<any> {
 
       data = this.sortData(data);
 
-      // Grab the page's slice of data.
-      const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
-      return data.splice(startIndex, this._paginator.pageSize);
+      return data;
     });
   }
 

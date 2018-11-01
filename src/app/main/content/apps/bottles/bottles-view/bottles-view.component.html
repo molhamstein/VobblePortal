@@ -8,8 +8,7 @@
   <div class="center">
 
     <!-- HEADER -->
-    <div class="header white-fg"
-         fxLayout="row" fxLayoutAlign="space-between center">
+    <div class="header white-fg" fxLayout="row" fxLayoutAlign="space-between center">
 
       <!-- APP TITLE -->
       <div fxLayout="row" fxLayoutAlign="start center">
@@ -18,8 +17,7 @@
           <mat-icon>arrow_back</mat-icon>
         </button>
 
-        <div fxLayout="column" fxLayoutAlign="start start"
-             *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+        <div fxLayout="column" fxLayoutAlign="start start" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
           <div class="h2">
             Bottle
           </div>
@@ -31,14 +29,10 @@
       </div>
 
       <div>
-        <button mat-raised-button
-                [routerLink]="'/bottles/edit/'+ item.id"
-                class="add-product-button mat-white-bg  mt-sm-0">
+        <button mat-raised-button [routerLink]="'/bottles/edit/'+ item.id" class="add-product-button mat-white-bg  mt-sm-0">
           <span> EDIT </span>
         </button>
-        <button mat-raised-button
-                (click)="deleteItem()"
-                class="add-product-button mt-sm-0" color="warn">
+        <button mat-raised-button (click)="deleteItem()" class="add-product-button mt-sm-0" color="warn">
           <span> DELETE </span>
         </button>
       </div>
@@ -61,7 +55,7 @@
 
               <div class="section pb-48">
 
-              <!--  <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+                <!--  <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
                   <mat-icon class="m-0 mr-16">opacity</mat-icon>
                   <div class="h2 secondary-text">Personal Information</div>
                 </div>-->
@@ -69,40 +63,47 @@
                 <div class="customer">
                   <table class="simple">
                     <thead>
-                    <tr>
-                      <th>Active</th>
-                      <th>Owner</th>
-                      <th>Shore</th>
-                      <th>Weight</th>
-                      <th>Creation Date</th>
-                    </tr>
+                      <tr>
+                        <th>Active</th>
+                        <th>Owner</th>
+                        <th>Shore</th>
+                        <th>Weight</th>
+                        <th>Creation Date</th>
+                        <th>Replies to this bottle</th>
+                      </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                      <!--<td>
+                      <tr>
+                        <!--<td>
                         <div fxLayout="row" fxLayoutAlign="start center">
                           <img *ngIf="item.image && item.image != ''" class="avatar" [src]="item.image">
                           <span class="name text-truncate">{{item.username}}</span>
                         </div>
                       </td>-->
-                      <td>
-                        <div *ngIf="item.status=='active'"><mat-icon  class="avatar active-icon mat-green-600-bg s-16">check</mat-icon>Active</div>
-                        <div *ngIf="item.status=='deactive'"><mat-icon  class="avatar active-icon mat-red-500-bg s-16">close</mat-icon>De-active</div>
-                        <div *ngIf="item.status=='pending'" ><mat-icon class=" active-icon mat-gray-500-bg s-16">hourglass_empty</mat-icon>Pending</div>
-                      </td>
-                      <td [routerLink]="'/users/view/'+item.ownerId">
-                        <span class="link-span text-truncate">{{item.owner.username}}</span>
-                      </td>
-                      <td [routerLink]="'/shores/view/'+item.shoreId">
-                        <span class="link-span text-truncate">{{item.shore.name_en}}/{{item.shore.name_ar}}</span>
-                      </td>
-                      <td>
-                        <span class=" text-truncate">{{item.weight}}</span>
-                      </td>
-                      <td>
-                        <span class=" text-truncate">{{item.createdAt | date}}</span>
-                      </td>
-                    </tr>
+                        <td>
+                          <div *ngIf="item.status=='active'">
+                            <mat-icon class="avatar active-icon mat-green-600-bg s-16">check</mat-icon>Active</div>
+                          <div *ngIf="item.status=='deactive'">
+                            <mat-icon class="avatar active-icon mat-red-500-bg s-16">close</mat-icon>De-active</div>
+                          <div *ngIf="item.status=='pending'">
+                            <mat-icon class=" active-icon mat-gray-500-bg s-16">hourglass_empty</mat-icon>Pending</div>
+                        </td>
+                        <td [routerLink]="'/users/view/'+item.ownerId">
+                          <span class="link-span text-truncate">{{item.owner.username}}</span>
+                        </td>
+                        <td [routerLink]="'/shores/view/'+item.shoreId">
+                          <span class="link-span text-truncate">{{item.shore.name_en}}/{{item.shore.name_ar}}</span>
+                        </td>
+                        <td>
+                          <span class=" text-truncate">{{item.weight}}</span>
+                        </td>
+                        <td>
+                          <span class=" text-truncate">{{item.createdAt | date}}</span>
+                        </td>
+                        <td>
+                          <span class=" text-truncate">{{item.repliesUserCount}}</span>
+                        </td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -115,8 +116,7 @@
                   <div class="h2 secondary-text">Bottle Video</div>
                 </div>
                 <video width="320" height="240" controls>
-                  <source [src]="item.file" type="video/mp4">
-                  Your browser does not support the video tag.
+                  <source [src]="item.file" type="video/mp4"> Your browser does not support the video tag.
                 </video>
 
               </div>

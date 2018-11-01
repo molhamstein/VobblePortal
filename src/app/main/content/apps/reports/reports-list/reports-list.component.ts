@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { fuseAnimations } from "../../../../../core/animations";
-import { FormControl } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+
 import {
   MatPaginator,
   MatSort,
@@ -20,12 +21,7 @@ import "rxjs/add/observable/fromEvent";
 import { FuseUtils } from "../../../../../core/fuseUtils";
 import { ProgressBarService } from "../../../../../core/services/progress-bar.service";
 import { ReportsService } from "../reports.service";
-import * as FileSaver from "file-saver";
-import * as XLSX from "xlsx";
 
-const EXCEL_TYPE =
-  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
-const EXCEL_EXTENSION = ".xlsx";
 @Component({
   selector: "app-reports-list",
   templateUrl: "./reports-list.component.html",
@@ -35,6 +31,8 @@ const EXCEL_EXTENSION = ".xlsx";
 export class ReportsListComponent implements OnInit {
   searchInput: FormControl;
   dialogRef: any;
+
+  filtersForm: FormGroup;
 
   dataSource: FilesDataSource | null;
   displayedColumns = [
@@ -59,7 +57,8 @@ export class ReportsListComponent implements OnInit {
   constructor(
     private reportsService: ReportsService,
     private progressBarService: ProgressBarService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit() {
@@ -78,6 +77,10 @@ export class ReportsListComponent implements OnInit {
         this.dataSource.filter = this.filter.nativeElement.value;
       });
     this.itemsCount = this.reportsService.itemsCount;
+
+    this.filtersForm = this.formBuilder.group({
+      createdAt: new FormControl("")
+    });
   }
   getItemsPaging() {
     this.reportsService
@@ -86,13 +89,13 @@ export class ReportsListComponent implements OnInit {
         return items;
       });
   }
-  exportAsExcelFile(excelFileName: string): void {
-    const workBook = XLSX.utils.book_new(); // create a new blank book
-    const workSheet = XLSX.utils.json_to_sheet(this.reportsService.items);
-
-    XLSX.utils.book_append_sheet(workBook, workSheet, "data"); // add the worksheet to the book
-    const name = excelFileName + ".xlsx";
-    XLSX.writeFile(workBook, name); // initiate a file download in browser
+  exportAsExcelFile(): void {
+    this.reportsService.export().then(res => {
+      if (res) {
+        console.log(res);
+        window.location.href = res;
+      }
+    });
   }
 
   deleteItem(contact) {
@@ -110,6 +113,26 @@ export class ReportsListComponent implements OnInit {
       }
       this.confirmDialogRef = null;
     });
+  }
+
+  clearFilter() {
+    this.filtersForm.reset();
+    this.reportsService.getItemsPaging(0, 10);
+  }
+
+  applyFilter() {
+    this.progressBarService.toggle();
+
+    this.reportsService.filterBy(this.filtersForm.value).then(
+      val => {
+        this.progressBarService.toggle();
+      },
+      reason => {
+        this.progressBarService.toggle();
+
+        console.log("error ", reason);
+      }
+    );
   }
 }
 
@@ -160,9 +183,6 @@ export class FilesDataSource extends DataSource<any> {
 
       data = this.sortData(data);
 
-      // Grab the page's slice of data.
-      //const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
-      //return data.splice(startIndex, this._paginator.pageSize);
       return data;
     });
   }
