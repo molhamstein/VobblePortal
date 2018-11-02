@@ -299,7 +299,7 @@ export class ReportsService implements Resolve<any> {
       let filter = "";
 
       if (values.createdAt)
-        filter += ',{"createdAt":"' + values.createdAt + '"}';
+        filter += ',{"createdAt":{"gt":"' + values.createdAt + '"}}';
 
       if (filter.charAt(0) === ",") {
         filter = filter.substr(1);
@@ -308,14 +308,7 @@ export class ReportsService implements Resolve<any> {
         filter = filter.slice(0, -1);
 
       if (filter !== "") filter = 'filter={"where":{"and":[' + filter + "]}}";
-
-      console.log(
-        AppConfig.apiUrl +
-          "reports/?" +
-          filter +
-          "&access_token=" +
-          this.authService.getToken()
-      );
+     
       this.http
         .get<any[]>(
           AppConfig.apiUrl +
@@ -326,6 +319,7 @@ export class ReportsService implements Resolve<any> {
         )
         .subscribe(
           data => {
+            console.log(data);
             this.items = data;
             this.onItemsChanged.next(this.items);
             resolve(true);
