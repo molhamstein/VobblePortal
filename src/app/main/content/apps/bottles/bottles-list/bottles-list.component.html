@@ -1,43 +1,79 @@
 <div id="products" class="page-layout carded fullwidth" fusePerfectScrollbar>
-
   <!-- TOP BACKGROUND -->
   <div class="top-bg mat-accent-bg"></div>
   <!-- / TOP BACKGROUND -->
 
   <!-- CENTER -->
   <div class="center">
-
     <!-- HEADER -->
-    <form class="header white-fg" fxLayout="column" fxLayoutAlign="center space-around" [formGroup]="filtersForm" style="margin: 17px 0;">
+    <form
+      class="header white-fg"
+      fxLayout="column"
+      fxLayoutAlign="center space-around"
+      [formGroup]="filtersForm"
+      style="margin: 17px 0;"
+    >
       <div fxLayout="row" fxLayoutAlign="space-between center">
-
         <!-- APP TITLE -->
-        <div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
-          <mat-icon class="logo-icon mr-16" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">opacity</mat-icon>
-          <span class="logo-text h1" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">Bottles</span>
+        <div
+          class="logo my-12 m-sm-0"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+        >
+          <mat-icon
+            class="logo-icon mr-16"
+            *fuseIfOnDom
+            [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }"
+            >opacity</mat-icon
+          >
+          <span
+            class="logo-text h1"
+            *fuseIfOnDom
+            [@animate]="{ value: '*', params: { delay: '100ms', x: '-25px' } }"
+            >Bottles</span
+          >
         </div>
         <!-- / APP TITLE -->
 
         <!-- SEARCH -->
-        <div class="search-input-wrapper mx-12 m-md-0" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+        <div
+          class="search-input-wrapper mx-12 m-md-0"
+          fxFlex="1 0 auto"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+        >
           <label for="search" class="mr-8">
             <mat-icon class="secondary-text">search</mat-icon>
           </label>
           <mat-form-field floatPlaceholder="never" fxFlex="1 0 auto">
-            <input id="search" matInput #filter (keyup)="applySearch()" placeholder="Search">
+            <input
+              id="search"
+              matInput
+              #filter
+              (keyup)="applySearch()"
+              placeholder="Search"
+            />
           </mat-form-field>
         </div>
         <!-- / SEARCH -->
 
-        <button type="button" mat-raised-button [routerLink]="'/bottles/new'" class="add-product-button mat-white-bg  mt-sm-0">
+        <button
+          type="button"
+          mat-raised-button
+          [routerLink]="'/bottles/new'"
+          class="add-product-button mat-white-bg  mt-sm-0"
+        >
           <span> NEW </span>
         </button>
-
       </div>
 
       <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px">
         <mat-form-field>
-          <mat-select placeholder="Owner Gender" formControlName="gender" name="gender">
+          <mat-select
+            placeholder="Owner Gender"
+            formControlName="gender"
+            name="gender"
+          >
             <mat-option [value]=""> No filter</mat-option>
             <mat-option value="male"> Male</mat-option>
             <mat-option value="female"> Female</mat-option>
@@ -45,19 +81,43 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input type="text" placeholder="Owner Country" aria-label="Country" matInput formControlName="country" name="country" [matAutocomplete]="auto">
+          <input
+            type="text"
+            placeholder="Owner Country"
+            aria-label="Country"
+            matInput
+            formControlName="country"
+            name="country"
+            [matAutocomplete]="auto"
+          />
           <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let iso of filteredOptions | async" [value]="iso.iso">
-              {{iso.name}}
+            <mat-option
+              *ngFor="let iso of (filteredOptions | async)"
+              [value]="iso.iso"
+            >
+              {{ iso.name }}
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
-        <button mat-raised-button type="submit" (click)="applyFilter()" class="add-product-button mat-white-bg  mt-sm-0">
+        <button
+          mat-raised-button
+          type="submit"
+          (click)="applyFilter()"
+          class="add-product-button mat-white-bg  mt-sm-0"
+        >
           <span> FILTER </span>
         </button>
       </div>
-      <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
-        <button mat-raised-button (click)="exportAsExcelFile()" class="add-product-button mat-white-bg  mt-sm-0">
+      <div
+        fxLayout="row"
+        fxLayoutAlign="space-between center"
+        fxLayoutGap="20px"
+      >
+        <button
+          mat-raised-button
+          (click)="exportAsExcelFile()"
+          class="add-product-button mat-white-bg  mt-sm-0"
+        >
           Export
         </button>
         <div>
@@ -65,106 +125,174 @@
             <mat-select placeholder="Shore" formControlName="shoreId">
               <mat-option [value]=""> No filter</mat-option>
               <mat-option *ngFor="let shore of shores" [value]="shore.id">
-                <img *ngIf="shore.cover && shore.cover!=''" [src]="shore.cover" style=" border-radius: 50%;object-fit: cover; margin-top: 8px; margin-right: 5px;height: 30px;width: 30px;">
-                <span> {{shore.name_en}} {{shore.name_ar}}</span>
+                <img
+                  *ngIf="shore.cover && shore.cover != ''"
+                  [src]="shore.cover"
+                  style=" border-radius: 50%;object-fit: cover; margin-top: 8px; margin-right: 5px;height: 30px;width: 30px;"
+                />
+                <span> {{ shore.name_en }} {{ shore.name_ar }}</span>
               </mat-option>
             </mat-select>
           </mat-form-field>
 
-
           <mat-form-field>
-            <input matInput (click)="picker.open()" [matDatepicker]="picker" placeholder="Creation Date From" formControlName="createdFrom"
-              name="createdFrom">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <input
+              matInput
+              (click)="picker.open()"
+              [matDatepicker]="picker"
+              placeholder="Creation Date From"
+              formControlName="createdFrom"
+              name="createdFrom"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field>
-            <input matInput (click)="picker.open()" [matDatepicker]="picker2" placeholder="Creation Date To" formControlName="createdTo"
-              name="createdTo">
-            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <input
+              matInput
+              (click)="picker.open()"
+              [matDatepicker]="picker2"
+              placeholder="Creation Date To"
+              formControlName="createdTo"
+              name="createdTo"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker2"
+            ></mat-datepicker-toggle>
             <mat-datepicker #picker2></mat-datepicker>
           </mat-form-field>
 
-
-
-          <button type="button" mat-raised-button type="submit" (click)="clearFilter()" class="add-product-button mat-white-bg  mt-sm-0">
+          <button
+            type="button"
+            mat-raised-button
+            type="submit"
+            (click)="clearFilter()"
+            class="add-product-button mat-white-bg  mt-sm-0"
+          >
             <span> CLEAR </span>
           </button>
         </div>
       </div>
-
     </form>
     <!-- / HEADER -->
 
     <!-- CONTENT CARD -->
     <div class="content-card mat-white-bg">
-
-      <mat-table class="products-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
-
+      <mat-table
+        class="products-table"
+        #table
+        [dataSource]="dataSource"
+        matSort
+        [@animateStagger]="{ value: '50' }"
+        fusePerfectScrollbar
+      >
         <ng-container cdkColumnDef="thumbnail">
           <mat-header-cell *cdkHeaderCellDef>Thumbnail</mat-header-cell>
           <mat-cell *cdkCellDef="let product">
-            <img class="product-image" *ngIf="product.thumbnail && product.thumbnail!=' '" [alt]="product.createdAt" [src]="product.thumbnail"
+            <img
+              class="product-image"
+              *ngIf="product.thumbnail && product.thumbnail != ' '"
+              [alt]="product.createdAt"
+              [src]="product.thumbnail"
             />
-            <img *ngIf="!product.thumbnail || product.thumbnail == ' '" [src]=defaultIcon>
+            <img
+              *ngIf="!product.thumbnail || product.thumbnail == ' '"
+              [src]="defaultIcon"
+            />
           </mat-cell>
         </ng-container>
 
-
-
         <ng-container cdkColumnDef="createdAt">
-          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Creation Date</mat-header-cell>
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header
+            >Creation Date</mat-header-cell
+          >
           <mat-cell *cdkCellDef="let product">
-            <p class="text-truncate">{{product.createdAt | date}}</p>
+            <p class="text-truncate">{{ product.createdAt | date }}</p>
           </mat-cell>
         </ng-container>
 
         <ng-container cdkColumnDef="status">
           <mat-header-cell *cdkHeaderCellDef>Active</mat-header-cell>
           <mat-cell *cdkCellDef="let product" fxShow.gt-xs>
-            <mat-icon *ngIf="product.status=='active'" class="active-icon mat-green-600-bg s-16">check</mat-icon>
-            <mat-icon *ngIf="product.status=='deactive'" class="active-icon mat-red-500-bg s-16">close</mat-icon>
-            <mat-icon *ngIf="product.status=='pending'" class="active-icon mat-gray-500-bg s-16">hourglass_empty</mat-icon>
+            <mat-icon
+              *ngIf="product.status == 'active'"
+              class="active-icon mat-green-600-bg s-16"
+              >check</mat-icon
+            >
+            <mat-icon
+              *ngIf="product.status == 'deactive'"
+              class="active-icon mat-red-500-bg s-16"
+              >close</mat-icon
+            >
+            <mat-icon
+              *ngIf="product.status == 'pending'"
+              class="active-icon mat-gray-500-bg s-16"
+              >hourglass_empty</mat-icon
+            >
           </mat-cell>
         </ng-container>
 
-
         <ng-container cdkColumnDef="owner">
-          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Owner</mat-header-cell>
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header
+            >Owner</mat-header-cell
+          >
           <mat-cell *cdkCellDef="let product">
-            <p class="text-truncate">{{product.owner.username}}</p>
+            <p class="text-truncate">{{ product.owner.username }}</p>
           </mat-cell>
         </ng-container>
 
         <ng-container cdkColumnDef="gender">
-          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Owner Gender</mat-header-cell>
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header
+            >Owner Gender</mat-header-cell
+          >
           <mat-cell *cdkCellDef="let product">
-            <mat-icon *ngIf="product.owner.gender=='male'" class="active-icon light-blue-800-fg s-25">sentiment_satisfied</mat-icon>
-            <mat-icon *ngIf="product.owner.gender=='female'" class="active-icon pink-300-fg s-25">face</mat-icon>
-            <!--<p class="text-truncate">{{product.gender}}</p>-->
+            <mat-icon
+              *ngIf="product.owner.gender == 'male'"
+              class="active-icon light-blue-800-fg s-25"
+              >sentiment_satisfied</mat-icon
+            >
+            <mat-icon
+              *ngIf="product.owner.gender == 'female'"
+              class="active-icon pink-300-fg s-25"
+              >face</mat-icon
+            >
+            <!-- <p class="text-truncate">{{product.gender}}</p> -->
           </mat-cell>
         </ng-container>
 
         <ng-container cdkColumnDef="country">
-          <mat-header-cell *cdkHeaderCellDef mat-sort-header fxHide fxShow.gt-md>Owner ISO Code</mat-header-cell>
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header fxHide fxShow.gt-md
+            >Owner ISO Code</mat-header-cell
+          >
           <mat-cell *cdkCellDef="let product" fxHide fxShow.gt-md>
-            <p class="text-truncate" *ngIf="product.owner.country">{{product.owner.country.code}}</p>
+            <p class="text-truncate" *ngIf="product.owner.country">
+              {{ product.owner.country.code }}
+            </p>
           </mat-cell>
         </ng-container>
 
-
         <ng-container cdkColumnDef="shore">
-          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Shore</mat-header-cell>
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header
+            >Shore</mat-header-cell
+          >
           <mat-cell *cdkCellDef="let product">
-            <p class="text-truncate">{{product.shore.name_en}}/{{product.shore.name_ar}}</p>
+            <p class="text-truncate">
+              {{ product.shore.name_en }}/{{ product.shore.name_ar }}
+            </p>
           </mat-cell>
         </ng-container>
 
         <ng-container cdkColumnDef="repliesUserCount">
-          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Replies to this bottle</mat-header-cell>
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header
+            >Replies to this bottle</mat-header-cell
+          >
           <mat-cell *cdkCellDef="let product">
-            <p class="text-truncate">{{product.repliesUserCount}}</p>
+            <p class="text-truncate">{{ product.repliesUserCount }}</p>
           </mat-cell>
         </ng-container>
 
@@ -172,25 +300,42 @@
           <mat-header-cell *cdkHeaderCellDef></mat-header-cell>
           <mat-cell *cdkCellDef="let product">
             <div fxFlex="row" fxLayoutAlign="end center">
-              <button mat-icon-button [routerLink]="'/bottles/edit/'+product.id" (click)="$event.stopPropagation();">
+              <button
+                mat-icon-button
+                [routerLink]="'/bottles/edit/' + product.id"
+                (click)="$event.stopPropagation()"
+              >
                 <mat-icon>edit</mat-icon>
               </button>
-              <button mat-icon-button (click)="$event.stopPropagation();deleteItem(product)">
+              <button
+                mat-icon-button
+                (click)="$event.stopPropagation(); deleteItem(product)"
+              >
                 <mat-icon>delete</mat-icon>
               </button>
             </div>
           </mat-cell>
         </ng-container>
 
-
         <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
 
-        <mat-row *cdkRowDef="let product; columns: displayedColumns;" class="product" matRipple [routerLink]="'/bottles/view/'+product.id">
+        <mat-row
+          *cdkRowDef="let product; columns: displayedColumns"
+          class="product"
+          matRipple
+          [routerLink]="'/bottles/view/' + product.id"
+        >
         </mat-row>
       </mat-table>
-      <mat-paginator #paginator [length]="itemsCount" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" (page)="getItemsPaging()">
+      <mat-paginator
+        #paginator
+        [length]="itemsCount"
+        [pageIndex]="0"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        (page)="getItemsPaging()"
+      >
       </mat-paginator>
-
     </div>
     <!-- / CONTENT CARD -->
   </div>

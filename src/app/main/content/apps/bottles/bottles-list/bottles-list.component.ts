@@ -138,14 +138,18 @@ export class BottlesListComponent implements OnInit {
 
   getItemsPaging() {
     this.bottlesService
-      .getItemsPaging(this.paginator.pageIndex, this.paginator.pageSize)
+      .getItemsPaging(
+        this.paginator.pageIndex,
+        this.paginator.pageSize,
+        this.filtersForm.value
+      )
       .then(items => {
         return items;
       });
   }
 
   exportAsExcelFile(): void {
-    this.bottlesService.export().then(res => {
+    this.bottlesService.export(this.filtersForm.value).then(res => {
       if (res) {
         console.log(res);
         window.location.href = res;
@@ -172,22 +176,29 @@ export class BottlesListComponent implements OnInit {
 
   clearFilter() {
     this.filtersForm.reset();
-    this.bottlesService.getItemsPaging(0, 10);
+    this.getItemsPaging();
+    this.bottlesService
+      .getItemsCount()
+      .then(count => (this.itemsCount = count));
   }
 
   applyFilter() {
-    this.progressBarService.toggle();
+    this.getItemsPaging();
+    this.bottlesService
+      .getItemsCount(this.filtersForm.value)
+      .then(count => (this.itemsCount = count));
+    // this.progressBarService.toggle();
 
-    this.bottlesService.filterBy(this.filtersForm.value).then(
-      val => {
-        this.progressBarService.toggle();
-      },
-      reason => {
-        this.progressBarService.toggle();
+    // this.bottlesService.filterBy(this.filtersForm.value).then(
+    //   val => {
+    //     this.progressBarService.toggle();
+    //   },
+    //   reason => {
+    //     this.progressBarService.toggle();
 
-        console.log("error ", reason);
-      }
-    );
+    //     console.log("error ", reason);
+    //   }
+    // );
   }
 }
 

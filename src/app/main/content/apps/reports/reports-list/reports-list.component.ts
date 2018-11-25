@@ -84,13 +84,17 @@ export class ReportsListComponent implements OnInit {
   }
   getItemsPaging() {
     this.reportsService
-      .getItemsPaging(this.paginator.pageIndex, this.paginator.pageSize)
+      .getItemsPaging(
+        this.paginator.pageIndex,
+        this.paginator.pageSize,
+        this.filtersForm.value
+      )
       .then(items => {
         return items;
       });
   }
   exportAsExcelFile(): void {
-    this.reportsService.export().then(res => {
+    this.reportsService.export(this.filtersForm.value).then(res => {
       if (res) {
         console.log(res);
         window.location.href = res;
@@ -117,22 +121,29 @@ export class ReportsListComponent implements OnInit {
 
   clearFilter() {
     this.filtersForm.reset();
-    this.reportsService.getItemsPaging(0, 10);
+    this.getItemsPaging();
+    this.reportsService
+      .getItemsCount()
+      .then(count => (this.itemsCount = count));
   }
 
   applyFilter() {
-    this.progressBarService.toggle();
+    this.getItemsPaging();
+    this.reportsService
+      .getItemsCount(this.filtersForm.value)
+      .then(count => (this.itemsCount = count));
+    // this.progressBarService.toggle();
 
-    this.reportsService.filterBy(this.filtersForm.value).then(
-      val => {
-        this.progressBarService.toggle();
-      },
-      reason => {
-        this.progressBarService.toggle();
+    // this.reportsService.filterBy(this.filtersForm.value).then(
+    //   val => {
+    //     this.progressBarService.toggle();
+    //   },
+    //   reason => {
+    //     this.progressBarService.toggle();
 
-        console.log("error ", reason);
-      }
-    );
+    //     console.log("error ", reason);
+    //   }
+    // );
   }
 }
 

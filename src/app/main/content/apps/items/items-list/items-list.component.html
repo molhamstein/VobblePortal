@@ -108,9 +108,9 @@
         </ng-container>
 
         <ng-container cdkColumnDef="product">
-          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Product</mat-header-cell>
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Product Name</mat-header-cell>
           <mat-cell *cdkCellDef="let product">
-            <p class="text-truncate" *ngIf="product.product">{{product.product.name_en}}</p>
+            <p class="text-truncate" *ngIf="product.product">{{product.product.name_en}} / {{product.product.name_ar}}</p>
           </mat-cell>
         </ng-container>
 

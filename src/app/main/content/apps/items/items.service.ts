@@ -43,7 +43,7 @@ export class ItemsService implements Resolve<any> {
       let itemsPerPage = route.data["itemsPerPage"];
       if (resolverType == "list") {
         Promise.all([
-          this.getItemsPaging(page, itemsPerPage),
+          this.getItemsPaging(page, itemsPerPage, null),
           this.getItemsCount()
         ]).then(() => {
           resolve();
@@ -89,23 +89,63 @@ export class ItemsService implements Resolve<any> {
     });
   }
 
-  getItemsPaging(page, itemsPerPage): Promise<any> {
+  getItemsPaging(page, itemsPerPage, filterBy): Promise<any> {
     return new Promise((resolve, reject) => {
       var offset = page * itemsPerPage;
-      //console.log(' offset ', offset);
+
+      const _filter =
+        'filter={"limit":' +
+        itemsPerPage +
+        ', "skip":' +
+        offset +
+        ',"include":"owner"';
+
+      let api = AppConfig.apiUrl + "items?" + _filter;
+
+      if (filterBy && filterBy !== null) {
+        let values = filterBy;
+        let filter = "";
+
+        if (values.type) filter += ',{"typeGoodsId":"' + values.type + '"}';
+
+        if (values.country)
+          filter += ',{"owner.ISOCode":"' + values.country + '"}';
+
+        if (values.from) filter += ',{"startAt":{"gt":"' + values.from + '"}}';
+
+        if (values.to) filter += ',{"endAt":{"lt":"' + values.to + '"}}';
+
+        if (filter.charAt(0) === ",") {
+          filter = filter.substr(1);
+        }
+        if (filter.charAt(filter.length - 1) === ",")
+          filter = filter.slice(0, -1);
+
+        // if (filter !== "") filter = 'filter={"where":{"and":[' + filter + "]}}";
+        if (filter !== "")
+          filter = _filter + ',"where":{"and":[' + filter + "]}";
+
+        api = AppConfig.apiUrl + "items/filterItem?" + filter;
+      }
+
+      api += "}&access_token=" + this.authService.getToken();
+
+      console.log(api);
+
       this.http
         .get<Item[]>(
-          AppConfig.apiUrl +
-            "items?filter[limit]=" +
-            itemsPerPage +
-            "&filter[skip]=" +
-            offset +
-            "&filter[include]=owner&access_token=" +
-            this.authService.getToken()
+          api
+          // AppConfig.apiUrl +
+          //   "items?filter[limit]=" +
+          //   itemsPerPage +
+          //   "&filter[skip]=" +
+          //   offset +
+          //   "&filter[include]=owner&access_token=" +
+          //   this.authService.getToken()
         )
         .subscribe(
           (response: any) => {
-            // console.log("response items", response);
+            console.log("response items", response);
             this.items = response;
             this.onItemsChanged.next(this.items);
             resolve(response);
@@ -128,36 +168,65 @@ export class ItemsService implements Resolve<any> {
     });
   }
 
-  getItemsCount(): Promise<any> {
+  getItemsCount(values?): Promise<any> {
+    let api = "";
+    if (values && values !== null) {
+      let filter = "";
+
+      if (values.type) filter += ',{"typeGoodsId":"' + values.type + '"}';
+
+      if (values.country)
+        filter += ',{"owner.ISOCode":"' + values.country + '"}';
+
+      if (values.from) filter += ',{"startAt":{"gt":"' + values.from + '"}}';
+
+      if (values.to) filter += ',{"endAt":{"lt":"' + values.to + '"}}';
+
+      if (filter.charAt(0) === ",") {
+        filter = filter.substr(1);
+      }
+      if (filter.charAt(filter.length - 1) === ",")
+        filter = filter.slice(0, -1);
+
+      if (filter !== "") filter = 'filter={"where":{"and":[' + filter + "]}}";
+      api =
+        AppConfig.apiUrl +
+        "items/countItem?" +
+        filter +
+        "&access_token=" +
+        this.authService.getToken();
+    } else {
+      api =
+        AppConfig.apiUrl +
+        "items/count?access_token=" +
+        this.authService.getToken();
+    }
+
+    console.log(api);
+
     return new Promise((resolve, reject) => {
-      this.http
-        .get<Item[]>(
-          AppConfig.apiUrl +
-            "items/count?access_token=" +
-            this.authService.getToken()
-        )
-        .subscribe(
-          (response: any) => {
-            //console.log("count bottles", response);
-            this.itemsCount = response.count;
-            this.onItemsCountChanged.next(this.itemsCount);
-            resolve(response);
-          },
-          error => {
-            console.log("error ", error);
-            if (error.error.error.code == AppConfig.authErrorCode)
-              this.router.navigate(["/error-404"]);
-            else
-              this.helpersService.showActionSnackbar(
-                null,
-                false,
-                "",
-                { style: "failed-snackbar" },
-                AppConfig.technicalException
-              );
-            reject();
-          }
-        );
+      this.http.get<Item[]>(api).subscribe(
+        (response: any) => {
+          //console.log("count bottles", response);
+          this.itemsCount = response.count;
+          this.onItemsCountChanged.next(this.itemsCount);
+          resolve(this.itemsCount);
+        },
+        error => {
+          console.log("error ", error);
+          if (error.error.error.code == AppConfig.authErrorCode)
+            this.router.navigate(["/error-404"]);
+          else
+            this.helpersService.showActionSnackbar(
+              null,
+              false,
+              "",
+              { style: "failed-snackbar" },
+              AppConfig.technicalException
+            );
+          reject();
+        }
+      );
     });
   }
 
@@ -367,21 +436,43 @@ export class ItemsService implements Resolve<any> {
     });
   }
 
-  export(): Promise<any> {
+  export(values): Promise<any> {
+    let filter = "";
+    if (values && values !== null) {
+      if (values.type) filter += ',{"typeGoodsId":"' + values.type + '"}';
+
+      if (values.country)
+        filter += ',{"owner.ISOCode":"' + values.country + '"}';
+
+      if (values.from) filter += ',{"startAt":{"gt":"' + values.from + '"}}';
+
+      if (values.to) filter += ',{"endAt":{"lt":"' + values.to + '"}}';
+
+      if (filter.charAt(0) === ",") {
+        filter = filter.substr(1);
+      }
+      if (filter.charAt(filter.length - 1) === ",")
+        filter = filter.slice(0, -1);
+
+      if (filter !== "") filter = 'filter={"where":{"and":[' + filter + "]}}&";
+    }
+
     return new Promise((resolve, reject) => {
       // send get request
 
       console.log(
         AppConfig.apiUrl +
-          "items/export" +
-          "?access_token=" +
+          "items/export?" +
+          filter +
+          "access_token=" +
           this.authService.getToken()
       );
       this.http
         .get(
           AppConfig.apiUrl +
-            "items/export" +
-            "?access_token=" +
+            "items/export?" +
+            filter +
+            "access_token=" +
             this.authService.getToken()
         )
         .subscribe(

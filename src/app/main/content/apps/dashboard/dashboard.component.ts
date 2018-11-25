@@ -94,9 +94,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.UsersChartData = this.dashboardService.users;
     this.ItemsChartData = this.dashboardService.items;
 
-    console.log("this.BottlesChartData ", this.BottlesChartData);
-    console.log("this.UsersChartData ", this.UsersChartData);
-    console.log("this.ItemsChartData ", this.ItemsChartData);
+    //  console.log("this.BottlesChartData ", this.BottlesChartData);
+    //  console.log("this.UsersChartData ", this.UsersChartData);
+    //  console.log("this.ItemsChartData ", this.ItemsChartData);
   }
 
   ngOnDestroy() {}
@@ -108,12 +108,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   applyFilter() {
     this.progressBarService.toggle();
-    // console.log("filtersForm", this.filtersForm.value);
+
     this.dashboardService.getBottles(this.filtersForm.value).then(
       val => {
         this.BottlesChartData = this.dashboardService.bottles;
-        // this.helpersService.showActionSnackbar(PageAction.Create, true, 'user');
-        //this.BottlesChartData = this.dashboardService.bottles;
+
         this.progressBarService.toggle();
       },
       reason => {

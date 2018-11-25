@@ -1,26 +1,24 @@
-
-import {Product} from "../product.model";
-import {Subscription} from "rxjs";
-import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
-import {fuseAnimations} from "../../../../../core/animations";
-import {FormGroup, FormBuilder, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
-import {HelpersService} from "../../../../shared/helpers.service";
-import {PageAction} from "../../../../shared/enums/page-action";
-import {ProgressBarService} from "../../../../../core/services/progress-bar.service";
-import {ProductsService} from "../products.service";
-import {AppConfig} from "../../../../shared/app.config";
-import {UploadFileService} from "../../../../shared/upload-file.service";
-import {TypeGoodsService} from "../../type-goods/type-goods.service";
+import { Product } from "../product.model";
+import { Subscription } from "rxjs";
+import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
+import { fuseAnimations } from "../../../../../core/animations";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import { HelpersService } from "../../../../shared/helpers.service";
+import { PageAction } from "../../../../shared/enums/page-action";
+import { ProgressBarService } from "../../../../../core/services/progress-bar.service";
+import { ProductsService } from "../products.service";
+import { AppConfig } from "../../../../shared/app.config";
+import { UploadFileService } from "../../../../shared/upload-file.service";
+import { TypeGoodsService } from "../../type-goods/type-goods.service";
 
 @Component({
-  selector: 'app-products-edit',
-  templateUrl: './products-edit.component.html',
-  styleUrls: ['./products-edit.component.scss'],
+  selector: "app-products-edit",
+  templateUrl: "./products-edit.component.html",
+  styleUrls: ["./products-edit.component.scss"],
   animations: fuseAnimations
 })
 export class ProductsEditComponent implements OnInit {
-
   item: Product;
   onItemChanged: Subscription;
 
@@ -28,39 +26,35 @@ export class ProductsEditComponent implements OnInit {
   formErrors: any;
   type_goods: any[];
   defaultIcon: string;
-  icon: string = '';
+  icon: string = "";
 
-  @ViewChild('file') fileSelector: ElementRef;
+  @ViewChild("file") fileSelector: ElementRef;
 
-
-  constructor(private formBuilder: FormBuilder,
-              private router: Router,
-              private helpersService: HelpersService,
-              private progressBarService: ProgressBarService,
-              private typeGoodsService: TypeGoodsService,
-              private productsService: ProductsService,
-              private uploadFileService: UploadFileService
-
-  ){
-
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private helpersService: HelpersService,
+    private progressBarService: ProgressBarService,
+    private typeGoodsService: TypeGoodsService,
+    private productsService: ProductsService,
+    private uploadFileService: UploadFileService
+  ) {
     this.defaultIcon = AppConfig.defaultShoreIcon;
 
     this.formErrors = {
-      name_ar : {required: true},
-      name_en  : {required: true},
-      price   : {required: true},
-      description   : {required: true},
+      name_ar: { required: true },
+      name_en: { required: true },
+      price: { required: true },
 
+      description_ar: { required: true },
+      description_en: { required: true }
     };
   }
 
-
-  ngOnInit(){
-    this.onItemChanged =
-      this.productsService.onItemChanged
-        .subscribe(item => {
-          this.item = new Product(item);
-        });
+  ngOnInit() {
+    this.onItemChanged = this.productsService.onItemChanged.subscribe(item => {
+      this.item = new Product(item);
+    });
 
     this.icon = this.item.icon;
     this.getTypeGoods();
@@ -70,12 +64,13 @@ export class ProductsEditComponent implements OnInit {
       name_ar: [this.item.name_ar, Validators.required],
       name_en: [this.item.name_en, Validators.required],
       price: [this.item.price, Validators.required],
-      description: [this.item.description, Validators.required],
-      bottleCount : [this.item.bottleCount],
-      validity  : [this.item.validity],
-      androidProduct   : [this.item.androidProduct],
-      appleProduct   : [this.item.appleProduct],
-      typeGoodsId    : [this.item.typeGoodsId]
+      description_ar: [this.item.description_ar, Validators.required],
+      description_en: [this.item.description_en, Validators.required],
+      bottleCount: [this.item.bottleCount],
+      validity: [this.item.validity],
+      androidProduct: [this.item.androidProduct],
+      appleProduct: [this.item.appleProduct],
+      typeGoodsId: [this.item.typeGoodsId]
     });
 
     this.form.valueChanges.subscribe(() => {
@@ -83,7 +78,7 @@ export class ProductsEditComponent implements OnInit {
     });
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.onItemChanged.unsubscribe();
   }
 
@@ -100,19 +95,17 @@ export class ProductsEditComponent implements OnInit {
     }
   }
 
-  getTypeGoods(){
+  getTypeGoods() {
     this.typeGoodsService.getItems().then(items => {
       this.type_goods = items;
-    })
+    });
   }
-
-
 
   readFile(inputValue: any): void {
     this.form.value.icon = inputValue.files[0];
     let reader: FileReader = new FileReader();
 
-    reader.onloadend = (e) => {
+    reader.onloadend = e => {
       this.icon = reader.result;
     };
     reader.readAsDataURL(this.form.value.icon);
@@ -124,8 +117,8 @@ export class ProductsEditComponent implements OnInit {
   }
 
   removeFile() {
-    this.icon = '';
-    this.form.value.icon = '';
+    this.icon = "";
+    this.form.value.icon = "";
   }
 
   onFileChange(event) {
@@ -134,18 +127,21 @@ export class ProductsEditComponent implements OnInit {
   }
 
   uploadImage(image) {
-    if (image && image !== '') {
+    if (image && image !== "") {
       const formData: FormData = new FormData();
       //console.log('typeof images[i] ', typeof image);
-      if (typeof image !== 'string') {
-        formData.append('file', image);
-        this.uploadFileService.uploadFile(formData).then((val) => {
-         // console.log('val ', val);
-          this.form.value.icon = val[0].file;
-          this.submit();
-        }, (reason) => {
-          console.log('error ', reason);
-        });
+      if (typeof image !== "string") {
+        formData.append("file", image);
+        this.uploadFileService.uploadFile(formData).then(
+          val => {
+            // console.log('val ', val);
+            this.form.value.icon = val[0].file;
+            this.submit();
+          },
+          reason => {
+            console.log("error ", reason);
+          }
+        );
       } else {
         this.form.value.icon = image;
         this.submit();
@@ -158,25 +154,37 @@ export class ProductsEditComponent implements OnInit {
   submit() {
     this.progressBarService.toggle();
     //console.log('onSubmit ', this.form.value);
-    this.productsService.editItem(this.form.value).then((val) => {
-      this.helpersService.showActionSnackbar(PageAction.Update, true, 'product');
-      this.router.navigate(['/products/list']);
-      this.progressBarService.toggle();
-    }, (reason) => {
-      this.helpersService.showActionSnackbar(PageAction.Update, false, 'product', {style: 'failed-snackbar'});
-      this.progressBarService.toggle();
-      console.log('error ', reason);
-    });
+    this.productsService.editItem(this.form.value).then(
+      val => {
+        this.helpersService.showActionSnackbar(
+          PageAction.Update,
+          true,
+          "product"
+        );
+        this.router.navigate(["/products/list"]);
+        this.progressBarService.toggle();
+      },
+      reason => {
+        this.helpersService.showActionSnackbar(
+          PageAction.Update,
+          false,
+          "product",
+          { style: "failed-snackbar" }
+        );
+        this.progressBarService.toggle();
+        console.log("error ", reason);
+      }
+    );
   }
-
 
   onSubmit() {
     this.progressBarService.toggle();
-    var icon = '';
-    if(this.icon !== '') icon = this.form.value.icon; else {this.form.value.icon = ''; this.icon = ''}
+    var icon = "";
+    if (this.icon !== "") icon = this.form.value.icon;
+    else {
+      this.form.value.icon = "";
+      this.icon = "";
+    }
     this.uploadImage(icon);
   }
-
-
-
 }

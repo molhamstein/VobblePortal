@@ -44,7 +44,7 @@ export class ReportsService implements Resolve<any> {
       let itemsPerPage = route.data["itemsPerPage"];
       if (resolverType == "list") {
         Promise.all([
-          this.getItemsPaging(page, itemsPerPage),
+          this.getItemsPaging(page, itemsPerPage, null),
           this.getItemsCount()
         ]).then(() => {
           resolve();
@@ -87,18 +87,50 @@ export class ReportsService implements Resolve<any> {
     });
   }
 
-  getItemsPaging(page, itemsPerPage): Promise<any> {
+  getItemsPaging(page, itemsPerPage, filterBy): Promise<any> {
     return new Promise((resolve, reject) => {
       var offset = page * itemsPerPage;
+
+      const _filter =
+        'filter={"limit":' +
+        itemsPerPage +
+        ', "skip":' +
+        offset +
+        ',"include":"report_Type","include":"bottle","include":"owner"';
+
+      let api = AppConfig.apiUrl + "reports?" + _filter;
+
+      if (filterBy && filterBy !== null) {
+        let values = filterBy;
+        let filter = "";
+        if (values.createdAt)
+          filter += ',{"createdAt":{"gt":"' + values.createdAt + '"}}';
+
+        if (filter.charAt(0) === ",") {
+          filter = filter.substr(1);
+        }
+        if (filter.charAt(filter.length - 1) === ",")
+          filter = filter.slice(0, -1);
+
+        if (filter !== "") filter = ',"where":{"and":[' + filter + "]}";
+
+        api += filter;
+      }
+
+      api += "}&access_token=" + this.authService.getToken();
+
+      console.log(api);
+
       this.http
         .get<Report[]>(
-          AppConfig.apiUrl +
-            "reports?filter[limit]=" +
-            itemsPerPage +
-            "&filter[skip]=" +
-            offset +
-            "&filter[include]=report_Type&filter[include]=bottle&filter[include]=owner&access_token=" +
-            this.authService.getToken()
+          api
+          // AppConfig.apiUrl +
+          //   "reports?filter[limit]=" +
+          //   itemsPerPage +
+          //   "&filter[skip]=" +
+          //   offset +
+          //   "&filter[include]=report_Type&filter[include]=bottle&filter[include]=owner&access_token=" +
+          //   this.authService.getToken()
         )
         .subscribe(
           (response: any) => {
@@ -125,36 +157,59 @@ export class ReportsService implements Resolve<any> {
     });
   }
 
-  getItemsCount(): Promise<any> {
+  getItemsCount(values?): Promise<any> {
+    let api = "";
+    if (values && values !== null) {
+      let filter = "";
+
+      if (values.createdAt)
+        filter += ',{"createdAt":{"gt":"' + values.createdAt + '"}}';
+
+      if (filter.charAt(0) === ",") {
+        filter = filter.substr(1);
+      }
+      if (filter.charAt(filter.length - 1) === ",")
+        filter = filter.slice(0, -1);
+
+      if (filter !== "") filter = 'filter={"where":{"and":[' + filter + "]}}";
+
+      api =
+        AppConfig.apiUrl +
+        "reports/count?" +
+        filter +
+        "&access_token=" +
+        this.authService.getToken();
+    } else {
+      api =
+        AppConfig.apiUrl +
+        "reports/count?access_token=" +
+        this.authService.getToken();
+    }
+
+    console.log(api);
     return new Promise((resolve, reject) => {
-      this.http
-        .get<Report[]>(
-          AppConfig.apiUrl +
-            "reports/count?access_token=" +
-            this.authService.getToken()
-        )
-        .subscribe(
-          (response: any) => {
-            // console.log('count reports', response);
-            this.itemsCount = response.count;
-            this.onItemsCountChanged.next(this.itemsCount);
-            resolve(response);
-          },
-          error => {
-            console.log("error ", error);
-            if (error.error.error.code == AppConfig.authErrorCode)
-              this.router.navigate(["/error-404"]);
-            else
-              this.helpersService.showActionSnackbar(
-                null,
-                false,
-                "",
-                { style: "failed-snackbar" },
-                AppConfig.technicalException
-              );
-            reject();
-          }
-        );
+      this.http.get<Report[]>(api).subscribe(
+        (response: any) => {
+          // console.log('count reports', response);
+          this.itemsCount = response.count;
+          this.onItemsCountChanged.next(this.itemsCount);
+          resolve(this.itemsCount);
+        },
+        error => {
+          console.log("error ", error);
+          if (error.error.error.code == AppConfig.authErrorCode)
+            this.router.navigate(["/error-404"]);
+          else
+            this.helpersService.showActionSnackbar(
+              null,
+              false,
+              "",
+              { style: "failed-snackbar" },
+              AppConfig.technicalException
+            );
+          reject();
+        }
+      );
     });
   }
 
@@ -308,7 +363,7 @@ export class ReportsService implements Resolve<any> {
         filter = filter.slice(0, -1);
 
       if (filter !== "") filter = 'filter={"where":{"and":[' + filter + "]}}";
-     
+
       this.http
         .get<any[]>(
           AppConfig.apiUrl +
@@ -342,13 +397,27 @@ export class ReportsService implements Resolve<any> {
     });
   }
 
-  export(): Promise<any> {
+  export(values): Promise<any> {
+    let filter = "";
+    if (values && values !== null) {
+      if (values.createdAt)
+        filter += ',{"createdAt":{"gt":"' + values.createdAt + '"}}';
+
+      if (filter.charAt(0) === ",") {
+        filter = filter.substr(1);
+      }
+      if (filter.charAt(filter.length - 1) === ",")
+        filter = filter.slice(0, -1);
+
+      if (filter !== "") filter = 'filter={"where":{"and":[' + filter + "]}}&";
+    }
     return new Promise((resolve, reject) => {
       this.http
         .get(
           AppConfig.apiUrl +
-            "reports/export" +
-            "?access_token=" +
+            "reports/export?" +
+            filter +
+            "access_token=" +
             this.authService.getToken()
         )
         .subscribe(

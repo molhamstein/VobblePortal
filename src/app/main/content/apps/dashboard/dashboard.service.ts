@@ -66,34 +66,31 @@ export class DashboardService {
   }
 
   getBottles(filter): Promise<any> {
+    this.bottles = [];
+
     return new Promise((resolve, reject) => {
       let url =
         AppConfig.apiUrl +
         "bottles/timeStateReport/?access_token=" +
         this.authService.getToken();
-      // console.log(filter);
 
       if (filter) {
         url += "&from=" + filter.from + "&to=" + filter.to;
       }
-      // console.log("filter ", filter);
 
-      // console.log("url ", url);
       this.http.get(url).subscribe((response: any) => {
-        console.log("bottles ", response);
-
         const getDateArray = (start, end) => {
           const arr = new Array();
+
           const dt = new Date(start);
           while (dt <= end) {
             arr.push(new Date(dt));
             dt.setDate(dt.getDate() + 1);
           }
+
           return arr;
         };
 
-        //   filter.from.setHours(0, 0, 0, 0);
-        //   filter.to.setHours(0, 0, 0, 0);
         this.bottles = response.map((i, index) => {
           let tempArray = [];
 
@@ -102,7 +99,6 @@ export class DashboardService {
               filter.from,
               new Date(i[0].date.year, i[0].date.month - 1, i[0].date.day)
             );
-            //console.log("fromDatesArray ", fromDatesArray);
 
             tempArray = fromDatesArray.map(val => {
               //  console.log(val);
@@ -124,18 +120,15 @@ export class DashboardService {
             });
           });
           if (i[i.length - 1]) {
-            // console.log(" filter.to", filter.to);
             const from = new Date(
               i[i.length - 1].date.year,
               i[i.length - 1].date.month - 1,
               i[i.length - 1].date.day
             );
-            // console.log("from ", from);
-            // console.log("filter.to ", filter.to);
-            const toDatesArray = getDateArray(
-              from,
-              filter.to.setDate(filter.to.getDate() - 1)
-            );
+
+            const filter2 = new Date(filter.to);
+            const filter3 = filter2.setDate(filter2.getDate() - 1);
+            const toDatesArray = getDateArray(from, filter3);
 
             toDatesArray.map(val => {
               tempArray.push({
@@ -155,7 +148,7 @@ export class DashboardService {
               name = "New Bottles";
               break;
             }
-            case 2: {              
+            case 2: {
               name = "Active Users";
               break;
             }
@@ -166,7 +159,6 @@ export class DashboardService {
           };
         });
 
-        //    console.log("this.BottlesChartData ", this.bottles);
         this.onBottlesChanged.next(this.bottles);
         resolve(this.bottles);
       }, reject);

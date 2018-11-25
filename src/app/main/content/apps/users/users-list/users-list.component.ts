@@ -109,26 +109,45 @@ export class UsersListComponent implements OnInit {
 
   clearFilter() {
     this.filtersForm.reset();
-    this.usersService.getItemsPaging(0, 10);
+    this.getItemsPaging();
+    this.usersService.getItemsCount().then(count => (this.itemsCount = count));
   }
 
   applyFilter() {
-    this.progressBarService.toggle();
-    // console.log("filtersForm", this.filtersForm.value);
-    this.usersService.filterBy(this.filtersForm.value).then(
-      val => {
-        // this.helpersService.showActionSnackbar(PageAction.Create, true, 'user');
-        this.progressBarService.toggle();
-      },
-      reason => {
-        // this.helpersService.showActionSnackbar(PageAction.Create, false, 'user', {style: 'failed-snackbar'});
-        this.progressBarService.toggle();
-        console.log("error ", reason);
-      }
+    const count_api =
+      AppConfig.apiUrl +
+      "users/count?" +
+      this.usersService.getFilterString(this.filtersForm.value, true);
+    console.log("count_api ", count_api);
+
+    this.usersService
+      .getItemsCount(count_api)
+      .then(count => (this.itemsCount = count));
+
+    const api = this.usersService.getFilterString(this.filtersForm.value);
+    console.log(api);
+    this.usersService.getItemsPaging(
+      this.paginator.pageIndex,
+      this.paginator.pageSize,
+      api
     );
+    // this.progressBarService.toggle();
+    // // console.log("filtersForm", this.filtersForm.value);
+    // this.usersService.filterBy(this.filtersForm.value).then(
+    //   val => {
+    //     // this.helpersService.showActionSnackbar(PageAction.Create, true, 'user');
+    //     this.progressBarService.toggle();
+    //   },
+    //   reason => {
+    //     // this.helpersService.showActionSnackbar(PageAction.Create, false, 'user', {style: 'failed-snackbar'});
+    //     this.progressBarService.toggle();
+    //     console.log("error ", reason);
+    //   }
+    // );
   }
 
   applySearch() {
+    // this.getItemsPaging();
     this.progressBarService.toggle();
     this.usersService.searchFor(this.filter.nativeElement.value).then(
       val => {
@@ -143,14 +162,18 @@ export class UsersListComponent implements OnInit {
 
   getItemsPaging() {
     this.usersService
-      .getItemsPaging(this.paginator.pageIndex, this.paginator.pageSize)
+      .getItemsPaging(
+        this.paginator.pageIndex,
+        this.paginator.pageSize,
+        this.usersService.getFilterString(this.filtersForm.value)
+      )
       .then(items => {
         return items;
       });
   }
 
   exportAsExcelFile(): void {
-    this.usersService.export().then(res => {
+    this.usersService.export(this.filtersForm.value).then(res => {
       if (res) {
         console.log(res);
         window.location.href = res;
