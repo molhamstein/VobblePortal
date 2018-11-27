@@ -72,7 +72,11 @@ export class BottlesListComponent implements OnInit {
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private shoresService: ShoresService
-  ) {}
+  ) {
+    this.bottlesService.onItemsCountChanged.subscribe(
+      count => (this.itemsCount = count)
+    );
+  }
 
   ngOnInit() {
     this.getShores();
@@ -94,8 +98,6 @@ export class BottlesListComponent implements OnInit {
         this.dataSource.filter = this.filter.nativeElement.value;
       });
 
-    this.itemsCount = this.bottlesService.itemsCount;
-
     this.filtersForm = this.formBuilder.group({
       gender: new FormControl(""),
       country: new FormControl(""),
@@ -114,17 +116,24 @@ export class BottlesListComponent implements OnInit {
     return countries.filter(option => option.iso.toLowerCase().includes(val));
   }
 
-  applySearch() {
-    this.progressBarService.toggle();
-    this.bottlesService.searchFor(this.filter.nativeElement.value).then(
-      val => {
-        this.progressBarService.toggle();
-      },
-      reason => {
-        this.progressBarService.toggle();
-        console.log("error ", reason);
-      }
-    );
+  clearFilter() {
+    this.filtersForm.reset();
+    this.filter.nativeElement.value = "";
+    this.bottlesService.getItemsCount("");
+    this.getItemsPaging();
+  }
+
+  getItemsPaging() {
+    this.bottlesService
+      .getItemsPaging(
+        this.paginator.pageIndex,
+        this.paginator.pageSize,
+        this.filtersForm.value,
+        this.filter.nativeElement.value
+      )
+      .then(items => {
+        this.dataSource.connect();
+      });
   }
 
   getShores() {
@@ -134,18 +143,6 @@ export class BottlesListComponent implements OnInit {
       },
       error => {}
     );
-  }
-
-  getItemsPaging() {
-    this.bottlesService
-      .getItemsPaging(
-        this.paginator.pageIndex,
-        this.paginator.pageSize,
-        this.filtersForm.value
-      )
-      .then(items => {
-        return items;
-      });
   }
 
   exportAsExcelFile(): void {
@@ -172,33 +169,6 @@ export class BottlesListComponent implements OnInit {
       }
       this.confirmDialogRef = null;
     });
-  }
-
-  clearFilter() {
-    this.filtersForm.reset();
-    this.getItemsPaging();
-    this.bottlesService
-      .getItemsCount()
-      .then(count => (this.itemsCount = count));
-  }
-
-  applyFilter() {
-    this.getItemsPaging();
-    this.bottlesService
-      .getItemsCount(this.filtersForm.value)
-      .then(count => (this.itemsCount = count));
-    // this.progressBarService.toggle();
-
-    // this.bottlesService.filterBy(this.filtersForm.value).then(
-    //   val => {
-    //     this.progressBarService.toggle();
-    //   },
-    //   reason => {
-    //     this.progressBarService.toggle();
-
-    //     console.log("error ", reason);
-    //   }
-    // );
   }
 }
 
@@ -241,7 +211,7 @@ export class FilesDataSource extends DataSource<any> {
     ];
 
     return Observable.merge(...displayDataChanges).map(() => {
-      let data = this.bottlesService.items.slice();
+      let data = this.bottlesService.items;
 
       data = this.filterData(data);
 

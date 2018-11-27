@@ -46,8 +46,8 @@ export class UsersService implements Resolve<any> {
       const itemsPerPage = route.data["itemsPerPage"];
       if (resolverType == "list") {
         Promise.all([
-          this.getItemsPaging(page, itemsPerPage, ""),
-          this.getItemsCount()
+          this.getItemsPaging(page, itemsPerPage, "", ""),
+          this.getItemsCount("")
         ]).then(() => {
           resolve();
         }, reject);
@@ -133,139 +133,96 @@ export class UsersService implements Resolve<any> {
     });
   }
 
-  getFilterString(values, count?) {
-    let filter = "";
-    if (values && values !== null) {
-      if (count) {
-        if (values.gender) {
-          filter += ',"gender":"' + values.gender + '"';
-        }
-
-        if (values.country) {
-          filter += ',"ISOCode":"' + values.country + '"';
-        }
-
-        if (values.createdFrom) {
-          filter += ',"createdAt":{"gt":"' + values.createdFrom + '"}';
-        }
-
-        if (values.createdTo) {
-          filter += ',"createdAt":{"lt":"' + values.createdTo + '"}';
-        }
-
-        if (values.status) {
-          filter += ',"status":"' + values.status + '"';
-        }
-
-        if (filter.charAt(0) === ",") {
-          filter = filter.substr(1);
-        }
-        if (filter.charAt(filter.length - 1) === ",") {
-          filter = filter.slice(0, -1);
-        }
-      } else {
-        if (values.gender) {
-          filter += ',{"gender":"' + values.gender + '"}';
-        }
-
-        if (values.country) {
-          filter += ',{"ISOCode":"' + values.country + '"}';
-        }
-
-        if (values.createdFrom) {
-          filter += ',{"createdAt":{"gt":"' + values.createdFrom + '"}}';
-        }
-
-        if (values.createdTo) {
-          filter += ',{"createdAt":{"lt":"' + values.createdTo + '"}}';
-        }
-
-        if (values.status) {
-          filter += ',{"status":"' + values.status + '"}';
-        }
-
-        if (filter.charAt(0) === ",") {
-          filter = filter.substr(1);
-        }
-        if (filter.charAt(filter.length - 1) === ",") {
-          filter = filter.slice(0, -1);
-        }
-      }
-
-      if (filter !== "") {
-        if (count) {
-          filter =
-            "where={" +
-            filter +
-            "}&access_token=" +
-            this.authService.getToken();
-        } else {
-          filter = ',"where":{"and":[' + filter + "]}";
-        }
-      }
-    }
-    console.log("filter ", filter);
-    return filter;
-  }
-
-  getItemsPaging(page, itemsPerPage, filterBy): Promise<any> {
-    console.log("filterBy ", filterBy);
+  getItemsPaging(page, itemsPerPage, filterBy, searchBy): Promise<any> {
+    // PAGING //
     const offset = page * itemsPerPage;
-    const _filter =
+    const _paging =
       'filter={"limit":' +
       itemsPerPage +
       ', "skip":' +
       offset +
       ',"order":"createdAt DESC"';
 
-    let api = AppConfig.apiUrl + "users?" + _filter + filterBy;
+    // SEARCHING //
+    let _searching = "",
+      _searching_count = "";
+    if (searchBy && searchBy !== "") {
+      if (searchBy) {
+        _searching = '{"username": {"like": "^' + searchBy + '"}}';
+        _searching_count = '"username": {"like": "^' + searchBy + '"}';
+      }
+    }
 
-    // if (filterBy && filterBy !== null) {
-    //   let values = filterBy;
-    //   let filter = "";
-    //   if (values.gender) filter += ',{"gender":"' + values.gender + '"}';
+    // FILERIGN //
+    let _filtering = "";
+    if (filterBy && filterBy !== "") {
+      if (filterBy.gender) {
+        _filtering += ',{"gender":"' + filterBy.gender + '"}';
+        _searching_count += ',"gender":"' + filterBy.gender + '"';
+      }
 
-    //   if (values.country) filter += ',{"ISOCode":"' + values.country + '"}';
+      if (filterBy.country) {
+        _filtering += ',{"ISOCode":"' + filterBy.country + '"}';
+        _searching_count += ',"ISOCode":"' + filterBy.country + '"';
+      }
 
-    //   if (values.createdFrom)
-    //     filter += ',{"createdAt":{"gt":"' + values.createdFrom + '"}}';
+      if (filterBy.createdFrom) {
+        _filtering += ',{"createdAt":{"gt":"' + filterBy.createdFrom + '"}}';
+        _searching_count +=
+          ',"createdAt":{"gt":"' + filterBy.createdFrom + '"}';
+      }
 
-    //   if (values.createdTo)
-    //     filter += ',{"createdAt":{"lt":"' + values.createdTo + '"}}';
+      if (filterBy.createdTo) {
+        _filtering += ',{"createdAt":{"lt":"' + filterBy.createdTo + '"}}';
+        _searching_count += ',"createdAt":{"lt":"' + filterBy.createdTo + '"}';
+      }
 
-    //   if (values.status) filter += ',{"status":"' + values.status + '"}';
+      if (filterBy.status) {
+        _filtering += ',{"status":"' + filterBy.status + '"}';
+        _searching_count += ',"status":"' + filterBy.status + '"';
+      }
 
-    //   if (filter.charAt(0) === ",") {
-    //     filter = filter.substr(1);
-    //   }
-    //   if (filter.charAt(filter.length - 1) === ",")
-    //     filter = filter.slice(0, -1);
+      if (!_searching && _filtering.charAt(0) === ",") {
+        _filtering = _filtering.substr(1);
+        _searching_count = _searching_count.substr(1);
+      }
 
-    //   if (filter !== "") filter = ',"where":{"and":[' + filter + "]}";
+      if (_filtering.charAt(_filtering.length - 1) === ",") {
+        _filtering = _filtering.slice(0, -1);
+        _searching_count = _searching_count.slice(0, -1);
+      }
 
-    //   api += filter;
-    //   count_api += filter+"}&access_token=" + this.authService.getToken();
-    //   console.log(count_api);
-    //   this.getItemsCount();
-    // }
+      if (_filtering !== "") {
+        _searching += _filtering;
+      }
+    }
 
-    api += "}&access_token=" + this.authService.getToken();
+    if (_searching !== "" || _filtering !== "") {
+      _searching = ',"where":{"and":[' + _searching + "]}";
+      this.getItemsCount("where={" + _searching_count + "}&");
+    }
 
-    console.log("api count", api);
+    const api =
+      AppConfig.apiUrl +
+      "users?" +
+      _paging +
+      _searching +
+      "}&access_token=" +
+      this.authService.getToken();
 
     return new Promise((resolve, reject) => {
       this.http.get<User[]>(api).subscribe(
         (response: any) => {
-          console.log("response users", response);
+          // console.log("response users", response);
           this.items = response;
           this.onUsersChanged.next(this.items);
           resolve(true);
         },
         error => {
           console.log("error ", error);
-          if (error.error.error.code == AppConfig.authErrorCode)
+          if (error.error.error.code === AppConfig.authErrorCode) {
             this.router.navigate(["/error-404"]);
-          else
+          } else {
             this.helpersService.showActionSnackbar(
               null,
               false,
@@ -273,24 +230,24 @@ export class UsersService implements Resolve<any> {
               { style: "failed-snackbar" },
               AppConfig.technicalException
             );
+          }
           reject();
         }
       );
     });
   }
 
-  getItemsCount(filterApi?): Promise<any> {
-    let api =
+  getItemsCount(filter): Promise<any> {
+    const api =
       AppConfig.apiUrl +
-      "users/count?access_token=" +
+      "users/count?" +
+      filter +
+      "access_token=" +
       this.authService.getToken();
-    if (filterApi) {
-      api = filterApi;
-    }
+
     return new Promise((resolve, reject) => {
-      this.http.get<User[]>(api).subscribe(
+      this.http.get(api).subscribe(
         (response: any) => {
-          console.log("count users", response);
           this.itemsCount = response.count;
           this.onItemsCountChanged.next(this.itemsCount);
           resolve(this.itemsCount);
@@ -358,7 +315,6 @@ export class UsersService implements Resolve<any> {
         )
         .subscribe(
           data => {
-            // console.log(data);
             this.items.splice(index, 1);
             this.onUsersChanged.next(this.items);
             this.itemsCount--;
@@ -412,14 +368,6 @@ export class UsersService implements Resolve<any> {
 
     return new Promise((resolve, reject) => {
       // send get request
-
-      console.log(
-        AppConfig.apiUrl +
-          "users/export?" +
-          filter +
-          "access_token=" +
-          this.authService.getToken()
-      );
       this.http
         .get(
           AppConfig.apiUrl +
@@ -463,7 +411,6 @@ export class UsersService implements Resolve<any> {
         )
         .subscribe(
           item => {
-            // console.log("item ", item);
             this.item = item;
             this.onItemChanged.next(this.item);
             resolve(item);
@@ -499,7 +446,6 @@ export class UsersService implements Resolve<any> {
         )
         .subscribe(
           data => {
-            //console.log("data ", data);
             resolve(true);
           },
           error => {
@@ -542,108 +488,6 @@ export class UsersService implements Resolve<any> {
           reject();
         }
       );
-    });
-  }
-
-  filterBy(values): Promise<any> {
-    return new Promise((resolve, reject) => {
-      let filter = "";
-      if (values.gender) filter += ',{"gender":"' + values.gender + '"}';
-
-      if (values.country) filter += ',{"ISOCode":"' + values.country + '"}';
-
-      if (values.createdFrom)
-        filter += ',{"createdAt":{"gt":"' + values.createdFrom + '"}}';
-
-      if (values.createdTo)
-        filter += ',{"createdAt":{"lt":"' + values.createdTo + '"}}';
-
-      if (values.status) filter += ',{"status":"' + values.status + '"}';
-
-      if (filter.charAt(0) === ",") {
-        filter = filter.substr(1);
-      }
-      if (filter.charAt(filter.length - 1) === ",")
-        filter = filter.slice(0, -1);
-
-      if (filter !== "") filter = 'filter={"where":{"and":[' + filter + "]}}";
-
-      // console.log("fff ", filter);
-
-      this.http
-        .get<any[]>(
-          AppConfig.apiUrl +
-            "users?" +
-            filter +
-            "&access_token=" +
-            this.authService.getToken()
-        )
-        .subscribe(
-          data => {
-            //  console.log("filtered ", data);
-            this.items = data;
-            this.onUsersChanged.next(this.items);
-            resolve(true);
-          },
-          error => {
-            console.log("error ", error);
-            if (error.error.error.code === AppConfig.authErrorCode)
-              this.router.navigate(["/error-404"]);
-            else
-              this.helpersService.showActionSnackbar(
-                null,
-                false,
-                "",
-                { style: "failed-snackbar" },
-                AppConfig.technicalException
-              );
-            reject();
-          }
-        );
-    });
-  }
-
-  searchFor(keyword): Promise<any> {
-    return new Promise((resolve, reject) => {
-      let filter = "";
-      if (keyword) {
-        filter =
-          'filter={"where":{"and":[{"username": {"like": "^' +
-          keyword +
-          '"}}]}}';
-
-        // console.log("fff ", filter);
-        this.http
-          .get<any[]>(
-            AppConfig.apiUrl +
-              "users?" +
-              filter +
-              "&access_token=" +
-              this.authService.getToken()
-          )
-          .subscribe(
-            data => {
-              // console.log("filtered ", data);
-              this.items = data;
-              this.onUsersChanged.next(this.items);
-              resolve(true);
-            },
-            error => {
-              console.log("error ", error);
-              if (error.error.error.code === AppConfig.authErrorCode)
-                this.router.navigate(["/error-404"]);
-              else
-                this.helpersService.showActionSnackbar(
-                  null,
-                  false,
-                  "",
-                  { style: "failed-snackbar" },
-                  AppConfig.technicalException
-                );
-              reject();
-            }
-          );
-      } else this.getItemsPaging(0, 10, null);
     });
   }
 }

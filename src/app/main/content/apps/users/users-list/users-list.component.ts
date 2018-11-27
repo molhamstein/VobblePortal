@@ -77,7 +77,11 @@ export class UsersListComponent implements OnInit {
     public dialog: MatDialog,
     private progressBarService: ProgressBarService,
     private formBuilder: FormBuilder
-  ) {}
+  ) {
+    this.usersService.onItemsCountChanged.subscribe(
+      count => (this.itemsCount = count)
+    );
+  }
 
   ngOnInit() {
     this.defaultAvatar = AppConfig.defaultAvatar;
@@ -86,8 +90,6 @@ export class UsersListComponent implements OnInit {
       this.paginator,
       this.sort
     );
-
-    this.itemsCount = this.usersService.itemsCount;
 
     this.filtersForm = this.formBuilder.group({
       gender: new FormControl(""),
@@ -109,55 +111,9 @@ export class UsersListComponent implements OnInit {
 
   clearFilter() {
     this.filtersForm.reset();
+    this.filter.nativeElement.value = "";
+    this.usersService.getItemsCount("");
     this.getItemsPaging();
-    this.usersService.getItemsCount().then(count => (this.itemsCount = count));
-  }
-
-  applyFilter() {
-    const count_api =
-      AppConfig.apiUrl +
-      "users/count?" +
-      this.usersService.getFilterString(this.filtersForm.value, true);
-    console.log("count_api ", count_api);
-
-    this.usersService
-      .getItemsCount(count_api)
-      .then(count => (this.itemsCount = count));
-
-    const api = this.usersService.getFilterString(this.filtersForm.value);
-    console.log(api);
-    this.usersService.getItemsPaging(
-      this.paginator.pageIndex,
-      this.paginator.pageSize,
-      api
-    );
-    // this.progressBarService.toggle();
-    // // console.log("filtersForm", this.filtersForm.value);
-    // this.usersService.filterBy(this.filtersForm.value).then(
-    //   val => {
-    //     // this.helpersService.showActionSnackbar(PageAction.Create, true, 'user');
-    //     this.progressBarService.toggle();
-    //   },
-    //   reason => {
-    //     // this.helpersService.showActionSnackbar(PageAction.Create, false, 'user', {style: 'failed-snackbar'});
-    //     this.progressBarService.toggle();
-    //     console.log("error ", reason);
-    //   }
-    // );
-  }
-
-  applySearch() {
-    // this.getItemsPaging();
-    this.progressBarService.toggle();
-    this.usersService.searchFor(this.filter.nativeElement.value).then(
-      val => {
-        this.progressBarService.toggle();
-      },
-      reason => {
-        this.progressBarService.toggle();
-        console.log("error ", reason);
-      }
-    );
   }
 
   getItemsPaging() {
@@ -165,17 +121,17 @@ export class UsersListComponent implements OnInit {
       .getItemsPaging(
         this.paginator.pageIndex,
         this.paginator.pageSize,
-        this.usersService.getFilterString(this.filtersForm.value)
+        this.filtersForm.value,
+        this.filter.nativeElement.value
       )
       .then(items => {
-        return items;
+        this.dataSource.connect();
       });
   }
 
   exportAsExcelFile(): void {
     this.usersService.export(this.filtersForm.value).then(res => {
       if (res) {
-        console.log(res);
         window.location.href = res;
       }
     });
@@ -237,7 +193,7 @@ export class FilesDataSource extends DataSource<any> {
     ];
 
     return Observable.merge(...displayDataChanges).map(() => {
-      let data = this.usersService.items.slice();
+      let data = this.usersService.items;
 
       data = this.filterData(data);
 

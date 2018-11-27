@@ -1,3 +1,4 @@
+import { Item } from "./../item.model";
 import { TypeGoodsService } from "../../type-goods/type-goods.service";
 import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { fuseAnimations } from "../../../../../core/animations";
@@ -39,6 +40,7 @@ import { map, startWith } from "rxjs/operators";
   animations: fuseAnimations
 })
 export class ItemsListComponent implements OnInit {
+  items: Item[];
   searchInput: FormControl;
   dialogRef: any;
 
@@ -75,7 +77,11 @@ export class ItemsListComponent implements OnInit {
     private formBuilder: FormBuilder,
     private typeGoodsService: TypeGoodsService,
     public dialog: MatDialog
-  ) {}
+  ) {
+    this.itemsService.onItemsCountChanged.subscribe(count => {
+      this.itemsCount = count;
+    });
+  }
 
   ngOnInit() {
     this.getTypeGoods();
@@ -85,6 +91,7 @@ export class ItemsListComponent implements OnInit {
       this.paginator,
       this.sort
     );
+
     Observable.fromEvent(this.filter.nativeElement, "keyup")
       .debounceTime(150)
       .distinctUntilChanged()
@@ -94,7 +101,6 @@ export class ItemsListComponent implements OnInit {
         }
         this.dataSource.filter = this.filter.nativeElement.value;
       });
-    this.itemsCount = this.itemsService.itemsCount;
 
     this.filtersForm = this.formBuilder.group({
       type: new FormControl(""),
@@ -119,23 +125,29 @@ export class ItemsListComponent implements OnInit {
     });
   }
 
+  clearFilter() {
+    this.filtersForm.reset();
+    this.filter.nativeElement.value = "";
+    this.itemsService.getItemsCount("");
+    this.getItemsPaging();
+  }
+
   getItemsPaging() {
     this.itemsService
       .getItemsPaging(
         this.paginator.pageIndex,
         this.paginator.pageSize,
-        this.filtersForm.value
+        this.filtersForm.value,
+        this.filter.nativeElement.value
       )
       .then(items => {
-        console.log(items);
-        return items;
+        this.dataSource.connect();
       });
   }
 
   exportAsExcelFile(): void {
     this.itemsService.export(this.filtersForm.value).then(res => {
       if (res) {
-        //console.log(res);
         window.location.href = res;
       }
     });
@@ -156,35 +168,6 @@ export class ItemsListComponent implements OnInit {
       }
       this.confirmDialogRef = null;
     });
-  }
-
-  clearFilter() {
-    this.filtersForm.reset();
-    this.getItemsPaging();
-    this.itemsService.getItemsCount().then(count => (this.itemsCount = count));
-  }
-
-  applyFilter() {
-    this.getItemsPaging();
-
-    this.itemsService
-      .getItemsCount(this.filtersForm.value)
-      .then(count => (this.itemsCount = count));
-    // this.progressBarService.toggle();
-
-    // console.log("this.filtersForm.value ", this.filtersForm.value);
-    // this.itemsService.filterBy(this.filtersForm.value).then(
-    //   val => {
-    //     // this.helpersService.showActionSnackbar(PageAction.Create, true, 'user');
-    //     this.progressBarService.toggle();
-    //   },
-    //   reason => {
-    //     // this.helpersService.showActionSnackbar(PageAction.Create, false, 'user', {style: 'failed-snackbar'});
-    //     this.progressBarService.toggle();
-
-    //     console.log("error ", reason);
-    //   }
-    // );
   }
 }
 
@@ -227,7 +210,8 @@ export class FilesDataSource extends DataSource<any> {
     ];
 
     return Observable.merge(...displayDataChanges).map(() => {
-      let data = this.itemsService.items.slice();
+      console.log("this.itemsService.items ", this.itemsService.items);
+      let data = this.itemsService.items;
 
       data = this.filterData(data);
 
