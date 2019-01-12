@@ -1,119 +1,138 @@
-import {HttpClient, HttpHeaders, HttpRequest} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
-import {AppConfig} from "../../../shared/app.config";
-import {AppException} from "../../../shared/app.exception";
-import {User} from "../../apps/users/user.model";
-import {FuseSplashScreenService} from "../../../../core/services/splash-screen.service";
+import { HttpClient, HttpHeaders, HttpRequest } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
+import { AppConfig } from "../../../shared/app.config";
+import { AppException } from "../../../shared/app.exception";
+import { User } from "../../apps/users/user.model";
+import { FuseSplashScreenService } from "../../../../core/services/splash-screen.service";
 
 @Injectable()
 export class AuthService {
-  me : User ;
+  me: User;
 
-  constructor(private http: HttpClient,
-              private router: Router,
-              private loadingScreen: FuseSplashScreenService) {
-
-    const meStr = localStorage.getItem('me');
-    if (meStr != null)
-      this.me = JSON.parse(meStr);
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private loadingScreen: FuseSplashScreenService
+  ) {
+    const meStr = localStorage.getItem("me");
+    if (meStr != null) this.me = JSON.parse(meStr);
   }
 
   register(registrationForm): Promise<boolean> {
     return new Promise((resolve, reject) => {
-      const headers = new HttpHeaders()
-        .set('Content-Type', 'application/json');
-      this.http.post(AppConfig.apiUrl + 'users',{
-        username: registrationForm.username,
-        email: registrationForm.email,
-        password: registrationForm.password,
-        gender: registrationForm.gender
-      }, {
-        headers: headers
-      })
+      const headers = new HttpHeaders().set("Content-Type", "application/json");
+      this.http
+        .post(
+          AppConfig.apiUrl + "users",
+          {
+            username: registrationForm.username,
+            email: registrationForm.email,
+            password: registrationForm.password,
+            gender: registrationForm.gender
+          },
+          {
+            headers: headers
+          }
+        )
         .subscribe(
           data => {
-          //  console.log('data ', data);
+            //  console.log('data ', data);
             resolve(true);
-          }, err => {
-            console.log('err ', err);
-            reject(new AppException('Failed registration'));
-          })
+          },
+          err => {
+            console.log("err ", err);
+            reject(new AppException("Failed registration"));
+          }
+        );
     });
   }
 
   checkUsername(username): Promise<boolean> {
     return new Promise((resolve, reject) => {
-      const headers = new HttpHeaders()
-        .set('Content-Type', 'application/json');
-      this.http.post(AppConfig.apiUrl + 'users/checkUsername',{
-        newUsername: username
-      }, {
-        headers: headers
-      })
+      const headers = new HttpHeaders().set("Content-Type", "application/json");
+      this.http
+        .post(
+          AppConfig.apiUrl + "users/checkUsername",
+          {
+            newUsername: username
+          },
+          {
+            headers: headers
+          }
+        )
         .subscribe(
           data => {
-           // console.log('data ', data);
+            // console.log('data ', data);
             resolve(true);
-          }, err => {
-           // console.log('err ', err);
-            reject(new AppException('Failed'));
-          })
+          },
+          err => {
+            // console.log('err ', err);
+            reject(new AppException("Failed"));
+          }
+        );
     });
   }
 
-
-  getUser(data) : Promise<any>{
-     return new Promise((resolve, reject) =>{
-       this.http.get<User>(AppConfig.apiUrl + 'users/'+data.userId+'?access_token=' + data.id)
-         .subscribe(
-           me => {
-             this.me = me;
-             this.me.token = data.id;
-             localStorage.setItem('me', JSON.stringify(this.me));
-             resolve(me);
-             this.loadingScreen.hide();
-           },
-           error => {
-             console.log('error ',error);
-             reject(new AppException('unknown error'));
-             this.loadingScreen.hide();
-           }
-         );
-       }
-     )
+  getUser(data): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.http
+        .get<User>(
+          AppConfig.apiUrl + "users/" + data.userId + "?access_token=" + data.id
+        )
+        .subscribe(
+          me => {
+            this.me = me;
+            this.me.token = data.id;
+            localStorage.setItem("me", JSON.stringify(this.me));
+            resolve(me);
+            this.loadingScreen.hide();
+          },
+          error => {
+            console.log("error ", error);
+            reject(new AppException("unknown error"));
+            this.loadingScreen.hide();
+          }
+        );
+    });
   }
 
-  loginUser(loginForm): Promise<User>{
+  loginUser(loginForm): Promise<User> {
     return new Promise((resolve, reject) => {
-      const headers = new HttpHeaders()
-        .set('Content-Type', 'application/json');
-      this.http.post<User>(AppConfig.apiUrl + 'users/login', {
-        email: loginForm.email,
-        password: loginForm.password
-      }, {
-        headers: headers
-      })
+      const headers = new HttpHeaders().set("Content-Type", "application/json");
+      this.http
+        .post<User>(
+          AppConfig.apiUrl + "users/login",
+          {
+            email: loginForm.email,
+            password: loginForm.password
+          },
+          {
+            headers: headers
+          }
+        )
         .subscribe(
           data => {
             resolve(data);
           },
           error => {
-            reject(new AppException('email or password is wrong'));
+            reject(new AppException("email or password is wrong"));
           }
         );
     });
-  };
+  }
 
   login(loginForm): Promise<User> {
     return new Promise((resolve, reject) => {
-          this.loginUser(loginForm).then(data => {
-            if(data)
-              this.getUser(data).then(data => resolve(data));
-            else reject(false)
-          }, error =>{
-            reject(false);
-          });
+      this.loginUser(loginForm).then(
+        data => {
+          if (data) this.getUser(data).then(data => resolve(data));
+          else reject(false);
+        },
+        error => {
+          reject(false);
+        }
+      );
     });
   }
 
@@ -124,7 +143,7 @@ export class AuthService {
       resolve(true);
     });
   }
-/*
+  /*
   reset_password(email: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const headers = new HttpHeaders()
@@ -140,41 +159,45 @@ export class AuthService {
   }*/
 
   forgot_password(email: string): Promise<any> {
-	 // console.log(email);
+    // console.log(email);
     return new Promise((resolve, reject) => {
-      const headers = new HttpHeaders()
-        .set('Content-Type', 'application/json');
-      this.http.post(AppConfig.apiUrl + 'users/reset',{email : email}, {
-        headers: headers
-      })
+      const headers = new HttpHeaders().set("Content-Type", "application/json");
+      this.http
+        .post(
+          AppConfig.apiUrl + "users/reset",
+          { email: email },
+          {
+            headers: headers
+          }
+        )
         .subscribe(
           data => {
             //console.log('data ', data);
             resolve(data);
-          }, error =>{ console.log(error); reject(false)})
-    })
+          },
+          error => {
+            console.log(error);
+            reject(false);
+          }
+        );
+    });
   }
-
 
   getToken() {
-    if (this.me != null)
-      return this.me.token;
-    return '';
+    if (this.me != null) return this.me.token;
+    return "";
   }
 
-  getCurrentUser(){
+  getCurrentUser() {
     //console.log('getCurrentUser ', this.me);
-    if (this.me != null)
-      return this.me;
-    return '';
+    if (this.me != null) return this.me;
+    return "";
   }
 
   isAuthenticated() {
     return this.me != null;
   }
-
 }
-
 
 interface LoginResponse {
   id: string;

@@ -6,11 +6,9 @@ import {
   FormControl
 } from "@angular/forms";
 import { fuseAnimations } from "../../../../../core/animations";
-import { AppConfig } from "../../../../shared/app.config";
 import { PageAction } from "../../../../shared/enums/page-action";
 import { Router } from "@angular/router";
 import { HelpersService } from "../../../../shared/helpers.service";
-import { FuseSplashScreenService } from "../../../../../core/services/splash-screen.service";
 import { AuthService } from "../../../pages/authentication/auth.service";
 import { BottlesService } from "../bottles.service";
 import { UploadFileService } from "../../../../shared/upload-file.service";
@@ -198,7 +196,7 @@ export class BottlesNewComponent implements OnInit {
   submit() {
     delete this.form.value.id;
     this.form.value.ownerId = this.form.value.ownerId.id;
-    //console.log("form add", this.form.value);
+    console.log("form add", this.form.value);
     this.bottlesService.newItem(this.form.value).then(
       val => {
         this.helpersService.showActionSnackbar(

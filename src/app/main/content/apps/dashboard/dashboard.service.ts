@@ -225,4 +225,30 @@ export class DashboardService {
         }, reject);
     });
   }
+
+  exportTimeStates(filter): Promise<any> {
+    let url =
+      AppConfig.apiUrl +
+      "bottles/timeStateExport/?access_token=" +
+      this.authService.getToken();
+
+    if (filter) {
+      url += "&from=" + filter.from + "&to=" + filter.to;
+    }
+
+    return new Promise((resolve, reject) => {
+      // send get request
+      this.http.get(url).subscribe(
+        items => {
+          console.log(items);
+          resolve(items["path"]);
+        },
+        error => {
+          console.log("error ", error);
+
+          reject();
+        }
+      );
+    });
+  }
 }

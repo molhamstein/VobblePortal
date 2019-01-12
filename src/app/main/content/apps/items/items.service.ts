@@ -113,7 +113,7 @@ export class ItemsService implements Resolve<any> {
     let _filtering = "";
     if (filterBy && filterBy !== "") {
       if (filterBy.type) {
-        _filtering += ',{"typeGoodsId":"' + filterBy.type + '"}';
+        _filtering += ',{"product.typeGoodsId":"' + filterBy.type + '"}';
       }
 
       if (filterBy.country) {
@@ -371,7 +371,8 @@ export class ItemsService implements Resolve<any> {
   export(values): Promise<any> {
     let filter = "";
     if (values && values !== null) {
-      if (values.type) filter += ',{"typeGoodsId":"' + values.type + '"}';
+      if (values.type)
+        filter += ',{"product.typeGoodsId":"' + values.type + '"}';
 
       if (values.country)
         filter += ',{"owner.ISOCode":"' + values.country + '"}';

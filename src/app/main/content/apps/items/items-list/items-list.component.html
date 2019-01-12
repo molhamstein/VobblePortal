@@ -122,23 +122,23 @@
           <mat-form-field>
             <input
               matInput
-              (click)="picker.open()"
-              [matDatepicker]="picker"
+              (click)="picker1.open()"
+              [matDatepicker]="picker1"
               placeholder="Date From"
               formControlName="from"
               name="from"
             />
             <mat-datepicker-toggle
               matSuffix
-              [for]="picker"
+              [for]="picker1"
             ></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
+            <mat-datepicker #picker1></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field>
             <input
               matInput
-              (click)="picker.open()"
+              (click)="picker2.open()"
               [matDatepicker]="picker2"
               placeholder="Date To"
               formControlName="to"

@@ -1,10 +1,7 @@
-
 @import "../../../../../core/scss/fuse";
 
 :host {
-
   .header {
-
     .search-input-wrapper {
       max-width: 480px;
     }
@@ -24,7 +21,7 @@
 
   .products-table {
     flex: 1 1 auto;
-    border-bottom: 1px solid rgba(0, 0, 0, .12);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 
     .mat-header-row {
       min-height: 64px;
@@ -38,10 +35,15 @@
 
     .mat-cell {
       min-width: 0;
-      display: flex;
+      // display: flex;
+      display: inline-block;
       align-items: center;
 
-      img{
+      p {
+        text-align: center;
+      }
+
+      img {
         width: 60px;
         height: 60px;
         border-radius: 50%;
@@ -59,7 +61,7 @@
       .product-image {
         width: 52px;
         height: 52px;
-        border: 1px solid rgba(0, 0, 0, .12);
+        border: 1px solid rgba(0, 0, 0, 0.12);
       }
     }
 

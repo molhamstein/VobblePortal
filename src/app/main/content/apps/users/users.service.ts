@@ -230,6 +230,7 @@ export class UsersService implements Resolve<any> {
               { style: "failed-snackbar" },
               AppConfig.technicalException
             );
+            this.router.navigate(["/auth/login"]);
           }
           reject();
         }
@@ -245,9 +246,11 @@ export class UsersService implements Resolve<any> {
       "access_token=" +
       this.authService.getToken();
 
+    console.log(api);
     return new Promise((resolve, reject) => {
       this.http.get(api).subscribe(
         (response: any) => {
+          console.log("response.count ", response.count);
           this.itemsCount = response.count;
           this.onItemsCountChanged.next(this.itemsCount);
           resolve(this.itemsCount);

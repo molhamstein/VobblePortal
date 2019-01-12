@@ -36,7 +36,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
      *  //users
      */
     this.lineChart = {
-      //currentRange: "",
       xAxis: true,
       yAxis: true,
       gradient: false,
@@ -82,7 +81,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
     year = this.today.getFullYear();
     month = this.today.getMonth();
     day = this.today.getDate();
-    if (month - 1 <= 0) year = this.today.getFullYear() - 1;
+
+    if (month <= 0) {
+      year -= 1;
+      month = 12;
+    }
+
     const backdate = new Date(year, month - 1, day);
 
     this.filtersForm = this.formBuilder.group({
@@ -121,6 +125,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
         console.log("error ", reason);
       }
     );
+  }
+
+  exportTimeStates(): void {
+    this.dashboardService.exportTimeStates(this.filtersForm.value).then(res => {
+      if (res) {
+        window.location.href = res;
+      }
+    });
   }
 
   // clearFilter() {
