@@ -12,6 +12,9 @@ import { Observable } from "rxjs/Observable";
 import { HttpClient } from "@angular/common/http";
 import { AppConfig } from "../../../shared/app.config";
 
+import * as XLSX from "xlsx";
+import * as FileSaver from "file-saver";
+
 @Injectable()
 export class DashboardService {
   users: any[];
@@ -54,11 +57,23 @@ export class DashboardService {
         to: new FormControl(today)
       });
 
+      const purchasesFiltersForm = this.formBuilder.group({
+        from: new FormControl(backdate),
+        to: new FormControl(today)
+      });
+
+      const genderFiltersForm = this.formBuilder.group({
+        from: new FormControl(backdate),
+        to: new FormControl(today)
+      });
+
       Promise.all([
         this.getBottles(filtersForm.value),
-        this.getItems(),
-        ,
-        this.getUsers()
+
+        // this.getItems(null),
+        this.getItems(purchasesFiltersForm.value),
+        // this.getUsers(null)
+        this.getUsers(genderFiltersForm.value)
       ]).then(() => {
         resolve();
       }, reject);
@@ -74,10 +89,12 @@ export class DashboardService {
         "bottles/timeStateReport/?access_token=" +
         this.authService.getToken();
 
+      console.log("filter ", filter);
       if (filter) {
         url += "&from=" + filter.from + "&to=" + filter.to;
       }
 
+      console.log("url ", url);
       this.http.get(url).subscribe((response: any) => {
         const getDateArray = (start, end) => {
           const arr = new Array();
@@ -165,27 +182,31 @@ export class DashboardService {
     });
   }
 
-  getItems(): Promise<any> {
+  getItems(filter): Promise<any> {
+    let url =
+      AppConfig.apiUrl +
+      "items/itemStateReport/?access_token=" +
+      this.authService.getToken();
+
+    if (filter) {
+      url += "&from=" + filter.from + "&to=" + filter.to;
+    }
+
     return new Promise((resolve, reject) => {
-      this.http
-        .get(
-          AppConfig.apiUrl +
-            "items/itemStateReport/?access_token=" +
-            this.authService.getToken()
-        )
-        .subscribe((response: any) => {
-          //      console.log("items ", response);
-          this.orginalItems = response.map(x => Object.assign({}, x));
+      this.http.get(url).subscribe((response: any) => {
+        console.log("items ", response);
+        this.orginalItems = response.map(x => Object.assign({}, x));
 
-          this.items = response.map(item => {
-            return {
-              name: item.country,
-              value: item.count
-            };
-          });
+        this.items = response.map(item => {
+          return {
+            name: item.country,
+            value: item.count
+          };
+        });
 
-          resolve(this.items);
-        }, reject);
+        this.onItemsChanged.next(this.items);
+        resolve(this.items);
+      }, reject);
     });
   }
 
@@ -201,28 +222,31 @@ export class DashboardService {
     this.onItemsChanged.next(this.items);
   }
 
-  getUsers(): Promise<any> {
+  getUsers(filter): Promise<any> {
+    let url =
+      AppConfig.apiUrl +
+      "users/genderStateReport/?access_token=" +
+      this.authService.getToken();
+
+    if (filter) {
+      url += "&from=" + filter.from + "&to=" + filter.to;
+    }
+
     return new Promise((resolve, reject) => {
-      this.http
-        .get(
-          AppConfig.apiUrl +
-            "users/genderStateReport/?access_token=" +
-            this.authService.getToken()
-        )
-        .subscribe((response: any) => {
-          //       console.log("users ", response);
-          this.users = [
-            {
-              name: "Male",
-              value: response.male
-            },
-            {
-              name: "Female",
-              value: response.female
-            }
-          ];
-          resolve(response);
-        }, reject);
+      this.http.get(url).subscribe((response: any) => {
+        console.log("users ", response);
+        this.users = [
+          {
+            name: "Male",
+            value: response.male
+          },
+          {
+            name: "Female",
+            value: response.female
+          }
+        ];
+        resolve(this.users);
+      }, reject);
     });
   }
 
@@ -250,5 +274,42 @@ export class DashboardService {
         }
       );
     });
+  }
+
+  purchasesExport(filter): Promise<any> {
+    let url =
+      AppConfig.apiUrl +
+      "bottles/timeStateExport/?access_token=" +
+      this.authService.getToken();
+
+    if (filter) {
+      url += "&from=" + filter.from + "&to=" + filter.to;
+    }
+
+    return new Promise((resolve, reject) => {
+      // this.http.get(url).subscribe(
+      //   items => {
+      //     console.log(items);
+      //     resolve(items["path"]);
+      //   },
+      //   error => {
+      //     console.log("error ", error);
+      //     reject();
+      //   }
+      // );
+    });
+  }
+
+  exportAsExcelFile(): void {
+    const json = this.orginalItems;
+    console.log("json ", json);
+    const excelFileName = "Item_State_Report_";
+
+    const workbook = XLSX.utils.book_new(); // create a new blank book
+    const workSheet = XLSX.utils.json_to_sheet(json);
+
+    XLSX.utils.book_append_sheet(workbook, workSheet, "data");
+
+    XLSX.writeFile(workbook, excelFileName + new Date() + ".xlsx");
   }
 }

@@ -19,6 +19,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   UsersChartData;
   ItemsChartData;
   filtersForm: FormGroup;
+  purchasesFiltersForm: FormGroup;
+  genderFiltersForm: FormGroup;
 
   lineChart: any = {};
   pieChart: any = {};
@@ -94,6 +96,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
       to: new FormControl(this.today)
     });
 
+    this.purchasesFiltersForm = this.formBuilder.group({
+      from: new FormControl(backdate),
+      to: new FormControl(this.today)
+    });
+
+    this.genderFiltersForm = this.formBuilder.group({
+      from: new FormControl(backdate),
+      to: new FormControl(this.today)
+    });
+
     this.BottlesChartData = this.dashboardService.bottles;
     this.UsersChartData = this.dashboardService.users;
     this.ItemsChartData = this.dashboardService.items;
@@ -108,6 +120,40 @@ export class DashboardComponent implements OnInit, OnDestroy {
   purchasesChartTypeChanged() {
     this.dashboardService.purchasesChartTypeChanged(this.purchasesChartType);
     this.ItemsChartData = this.dashboardService.items;
+  }
+
+  purchasesApplyFilter() {
+    this.progressBarService.toggle();
+
+    this.dashboardService.getItems(this.purchasesFiltersForm.value).then(
+      val => {
+        this.ItemsChartData = this.dashboardService.items;
+
+        this.progressBarService.toggle();
+      },
+      reason => {
+        // this.helpersService.showActionSnackbar(PageAction.Create, false, 'user', {style: 'failed-snackbar'});
+        this.progressBarService.toggle();
+        console.log("error ", reason);
+      }
+    );
+  }
+
+  genderApplyFilter() {
+    this.progressBarService.toggle();
+
+    this.dashboardService.getUsers(this.genderFiltersForm.value).then(
+      val => {
+        this.UsersChartData = this.dashboardService.users;
+
+        this.progressBarService.toggle();
+      },
+      reason => {
+        // this.helpersService.showActionSnackbar(PageAction.Create, false, 'user', {style: 'failed-snackbar'});
+        this.progressBarService.toggle();
+        console.log("error ", reason);
+      }
+    );
   }
 
   applyFilter() {
@@ -133,6 +179,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
         window.location.href = res;
       }
     });
+  }
+
+  // purchasesExport(): void {
+  //   this.dashboardService.purchasesExport(this.filtersForm.value).then(res => {
+  //     if (res) {
+  //       window.location.href = res;
+  //     }
+  //   });
+  // }
+  purchasesExport(): void {
+    this.dashboardService.exportAsExcelFile();
   }
 
   // clearFilter() {

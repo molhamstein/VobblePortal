@@ -1,165 +1,349 @@
-<div id="dashboard-project" class="page-layout simple right-sidenav" fxLayout="row">
-
+<div
+  id="dashboard-project"
+  class="page-layout simple right-sidenav"
+  fxLayout="row"
+>
   <mat-sidenav-container>
-
     <!-- CENTER -->
     <div class="center" fusePerfectScrollbar>
-
       <!-- HEADER -->
-      <div class="header mat-accent-bg p-24 pb-0" fxLayout="column" fxLayoutAlign="space-between">
-
+      <div
+        class="header mat-accent-bg p-24 pb-0"
+        fxLayout="column"
+        fxLayoutAlign="space-between"
+      >
         <div fxLayout="row" fxLayoutAlign="space-between start">
-
-          <span class="mat-display-1 mb-0 welcome-message" *fuseIfOnDom [@animate]="{value:'*',params:{x:'50px'}}">Dashboard</span>
-
-
+          <span
+            class="mat-display-1 mb-0 welcome-message"
+            *fuseIfOnDom
+            [@animate]="{ value: '*', params: { x: '50px' } }"
+            >Dashboard</span
+          >
         </div>
-
-
       </div>
       <!-- / HEADER -->
 
       <!-- CONTENT -->
       <div class="content">
-
         <mat-tab-group dynamicHeight>
-
           <mat-tab label="Charts">
-
-            <div class="widget-group p-12" fxLayout="row" fxFlex="100" fxLayoutWrap *fuseIfOnDom [@animateStagger]="{value:'50'}">
-
-
-              <mat-card [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column" fxFlex="100" style="margin-bottom: 10px">
-
+            <div
+              class="widget-group p-12"
+              fxLayout="row"
+              fxFlex="100"
+              fxLayoutWrap
+              *fuseIfOnDom
+              [@animateStagger]="{ value: '50' }"
+            >
+              <mat-card
+                [@animate]="{ value: '*', params: { y: '100%' } }"
+                class="widget"
+                fxLayout="column"
+                fxFlex="100"
+                style="margin-bottom: 10px"
+              >
                 <div class="mat-card-front mat-white-bg ">
-
-                  <div class="px-16 border-bottom" fxLayout="row" fxLayoutAlign="space-between center">
-
-                    <div class="h3 p-16">
-                      Users
-                    </div>
+                  <div
+                    class="px-16 border-bottom"
+                    fxLayout="row"
+                    fxLayoutAlign="space-between center"
+                  >
+                    <div class="h3 p-16">Users</div>
                     <form [formGroup]="filtersForm">
                       <mat-form-field>
-                        <input matInput (click)="picker.open()" [matDatepicker]="picker" placeholder="Date From" formControlName="from">
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <input
+                          matInput
+                          (click)="picker.open()"
+                          [matDatepicker]="picker"
+                          placeholder="Date From"
+                          formControlName="from"
+                        />
+                        <mat-datepicker-toggle
+                          matSuffix
+                          [for]="picker"
+                        ></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                       </mat-form-field>
 
                       <mat-form-field>
-                        <input matInput (click)="picker2.open()" [matDatepicker]="picker2" placeholder="Date To" formControlName="to" [max]="today"
-                          [min]="filtersForm.value.from">
-                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <input
+                          matInput
+                          (click)="picker2.open()"
+                          [matDatepicker]="picker2"
+                          placeholder="Date To"
+                          formControlName="to"
+                          [max]="today"
+                          [min]="filtersForm.value.from"
+                        />
+                        <mat-datepicker-toggle
+                          matSuffix
+                          [for]="picker2"
+                        ></mat-datepicker-toggle>
                         <mat-datepicker #picker2></mat-datepicker>
                       </mat-form-field>
 
-            
-                      <button mat-raised-button type="submit" (click)="applyFilter()" class="add-product-button mat-white-bg  mt-sm-0">
+                      <button
+                        mat-raised-button
+                        type="submit"
+                        (click)="applyFilter()"
+                        class="add-product-button mat-white-bg  mt-sm-0"
+                      >
                         <span> FILTER </span>
                       </button>
 
-                      <button mat-raised-button  (click)="exportTimeStates()" class="add-product-button mat-white-bg  mt-sm-0">
+                      <button
+                        mat-raised-button
+                        (click)="exportTimeStates()"
+                        class="add-product-button mat-white-bg  mt-sm-0"
+                      >
                         <span> EXPORT </span>
                       </button>
 
                       <!-- <button mat-raised-button type="submit" (click)="removeFilter()" class="add-product-button mat-white-bg  mt-sm-0">
                         <span> ClEAR FILTER </span>
                       </button> -->
-
                     </form>
                   </div>
                   <!-- <mat-divider></mat-divider> -->
 
-
+                  <h3 *ngIf="BottlesChartData.length ===0" >
+                    No data available
+                  </h3>
                   <div class="h-400">
-                    <ngx-charts-line-chart *fuseIfOnDom [results]="BottlesChartData" [scheme]="lineChart.scheme" [gradient]="lineChart.gradient"
-                      [showGridLines]="true" [xAxis]="lineChart.xAxis" [yAxis]="lineChart.yAxis" [legend]="lineChart.legend"
-                      [showXAxisLabel]="lineChart.showXAxisLabel" [showYAxisLabel]="lineChart.showYAxisLabel" [xAxisLabel]="lineChart.xAxisLabel"
-                      [yAxisLabel]="lineChart.yAxisLabel" [curve]="lineChart.curve">
+                    <ngx-charts-line-chart
+                      *fuseIfOnDom
+                      [results]="BottlesChartData"
+                      [scheme]="lineChart.scheme"
+                      [gradient]="lineChart.gradient"
+                      [showGridLines]="true"
+                      [xAxis]="lineChart.xAxis"
+                      [yAxis]="lineChart.yAxis"
+                      [legend]="lineChart.legend"
+                      [showXAxisLabel]="lineChart.showXAxisLabel"
+                      [showYAxisLabel]="lineChart.showYAxisLabel"
+                      [xAxisLabel]="lineChart.xAxisLabel"
+                      [yAxisLabel]="lineChart.yAxisLabel"
+                      [curve]="lineChart.curve"
+                    >
                     </ngx-charts-line-chart>
                   </div>
-
-
                 </div>
                 <!-- / Front -->
-
               </mat-card>
 
-
-
               <!-- WIDGET 6 -->
-              <mat-card [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-sm="50" style="margin-right: 20px">
-
-
+              <mat-card
+                [@animate]="{ value: '*', params: { y: '100%' } }"
+                class="widget"
+                fxLayout="column"
+                fxFlex="100"
+                fxFlex.gt-sm="50"
+                style="margin-right: 20px"
+              >
                 <div class="mat-card-front mat-white-bg ">
+                  <!-- border-bottom -->
+                  <div
+                    class="px-16 "
+                    fxLayout="row"
+                    fxLayoutAlign="space-between start"
+                  >
+                    <div fxLayout="column" fxLayoutAlign="start start">
+                      <div class="h3 p-16">Purchases</div>
 
-                  <div class="px-16 border-bottom" fxLayout="row" fxLayoutAlign="space-between center">
-
-                    <div class="h3 p-16">
-                      Purchases
+                      <mat-form-field>
+                        <mat-select
+                          [(ngModel)]="purchasesChartType"
+                          (ngModelChange)="purchasesChartTypeChanged()"
+                        >
+                          <mat-option value="count">Count </mat-option>
+                          <mat-option value="totalRevenue"
+                            >Total Revenue
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
                     </div>
 
-                    <mat-form-field>
-                      <mat-select [(ngModel)]="purchasesChartType" (ngModelChange)="purchasesChartTypeChanged()">
-                        <mat-option value="count">Count </mat-option>
-                        <mat-option value="totalRevenue">Total Revenue </mat-option>
-                      </mat-select>
-                    </mat-form-field>
+                    <div>
+                      <form
+                        [formGroup]="purchasesFiltersForm"
+                        fxLayout="column"
+                      >
+                        <mat-form-field>
+                          <input
+                            matInput
+                            (click)="picker3.open()"
+                            [matDatepicker]="picker3"
+                            placeholder="Date From"
+                            formControlName="from"
+                          />
+                          <mat-datepicker-toggle
+                            matSuffix
+                            [for]="picker3"
+                          ></mat-datepicker-toggle>
+                          <mat-datepicker #picker3></mat-datepicker>
+                        </mat-form-field>
 
+                        <mat-form-field>
+                          <input
+                            matInput
+                            (click)="picker4.open()"
+                            [matDatepicker]="picker4"
+                            placeholder="Date To"
+                            formControlName="to"
+                            [max]="today"
+                            [min]="purchasesFiltersForm.value.from"
+                          />
+                          <mat-datepicker-toggle
+                            matSuffix
+                            [for]="picker4"
+                          ></mat-datepicker-toggle>
+                          <mat-datepicker #picker4></mat-datepicker>
+                        </mat-form-field>
+
+                        <button
+                          mat-raised-button
+                          type="submit"
+                          (click)="purchasesApplyFilter()"
+                          class="add-product-button mat-white-bg  mt-sm-0"
+                        >
+                          <span> FILTER </span>
+                        </button>
+
+                        <button
+                          mat-raised-button
+                          (click)="purchasesExport()"
+                          class="add-product-button mat-white-bg  mt-sm-0"
+                        >
+                          <span> EXPORT </span>
+                        </button>
+
+                        <!-- <button mat-raised-button type="submit" (click)="removeFilter()" class="add-product-button mat-white-bg  mt-sm-0">
+                            <span> ClEAR FILTER </span>
+                          </button> -->
+                      </form>
+                    </div>
                   </div>
 
-
-
+                  <h3 *ngIf="ItemsChartData.length ===0" >
+                    No data available
+                  </h3>
                   <div class="h-400">
-                    <ngx-charts-pie-chart *fuseIfOnDom [scheme]="pieChart.scheme" [results]="ItemsChartData" [legend]="true" [explodeSlices]="false"
-                      [animations]="true" [labels]="pieChart.labels" [doughnut]="true" [gradient]="pieChart.gradient" (select)="pieChart.onSelect($event)">
+                    <ngx-charts-pie-chart
+                      *fuseIfOnDom
+                      [scheme]="pieChart.scheme"
+                      [results]="ItemsChartData"
+                      [legend]="false"
+                      [explodeSlices]="false"
+                      [animations]="true"
+                      [labels]="pieChart.labels"
+                      [doughnut]="true"
+                      [gradient]="pieChart.gradient"
+                      (select)="pieChart.onSelect($event)"
+                    >
                     </ngx-charts-pie-chart>
                   </div>
-
                 </div>
                 <!-- / Front -->
-
               </mat-card>
               <!-- / WIDGET 6 -->
 
-
-
-              <mat-card [@animate]="{value:'*',params:{y:'100%'}}" class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-sm="48">
-
+              <mat-card
+                [@animate]="{ value: '*', params: { y: '100%' } }"
+                class="widget"
+                fxLayout="column"
+                fxFlex="100"
+                fxFlex.gt-sm="48"
+              >
                 <div class="mat-card-front mat-white-bg ">
+                  <!-- border-bottom -->
+                  <div
+                    class="px-16 "
+                    fxLayout="row"
+                    fxLayoutAlign="space-between space-between"
+                  >
+                    <div class="h3 p-16">Gender</div>
 
-                  <div class="px-16 border-bottom" fxLayout="row" fxLayoutAlign="space-between center">
+                    <form [formGroup]="genderFiltersForm" fxLayout="column">
+                      <mat-form-field>
+                        <input
+                          matInput
+                          (click)="picker5.open()"
+                          [matDatepicker]="picker5"
+                          placeholder="Date From"
+                          formControlName="from"
+                        />
+                        <mat-datepicker-toggle
+                          matSuffix
+                          [for]="picker5"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #picker5></mat-datepicker>
+                      </mat-form-field>
 
-                    <div class="h3 p-16">
-                      Gender
-                    </div>
+                      <mat-form-field>
+                        <input
+                          matInput
+                          (click)="picker6.open()"
+                          [matDatepicker]="picker6"
+                          placeholder="Date To"
+                          formControlName="to"
+                          [max]="today"
+                          [min]="genderFiltersForm.value.from"
+                        />
+                        <mat-datepicker-toggle
+                          matSuffix
+                          [for]="picker6"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #picker6></mat-datepicker>
+                      </mat-form-field>
+
+                      <button
+                        mat-raised-button
+                        type="submit"
+                        (click)="genderApplyFilter()"
+                        class="add-product-button mat-white-bg  mt-sm-0"
+                      >
+                        <span> FILTER </span>
+                      </button>
+
+                      <!-- <button
+                            mat-raised-button
+                            (click)="genderExport()"
+                            class="add-product-button mat-white-bg  mt-sm-0"
+                          >
+                            <span> EXPORT </span>
+                          </button> -->
+
+                      <!-- <button mat-raised-button type="submit" (click)="removeFilter()" class="add-product-button mat-white-bg  mt-sm-0">
+                              <span> ClEAR FILTER </span>
+                            </button> -->
+                    </form>
                   </div>
 
-
-
+                  <h3 *ngIf="UsersChartData.length ===0" >
+                    No data available
+                  </h3>
                   <div class="h-400">
-                    <ngx-charts-pie-chart *fuseIfOnDom [scheme]="pieChart.scheme" [results]="UsersChartData" [legend]="pieChart.showLegend" [explodeSlices]="false"
-                      [labels]="pieChart.labels" [doughnut]="pieChart.doughnut" [gradient]="pieChart.gradient" (select)="pieChart.onSelect($event)">
+                    <ngx-charts-pie-chart
+                      *fuseIfOnDom
+                      [scheme]="pieChart.scheme"
+                      [results]="UsersChartData"
+                      [legend]="pieChart.showLegend"
+                      [explodeSlices]="false"
+                      [labels]="pieChart.labels"
+                      [doughnut]="pieChart.doughnut"
+                      [gradient]="pieChart.gradient"
+                      (select)="pieChart.onSelect($event)"
+                    >
                     </ngx-charts-pie-chart>
                   </div>
-
                 </div>
-
-
               </mat-card>
-
-
             </div>
-
-
           </mat-tab>
-
         </mat-tab-group>
-
       </div>
       <!-- / CONTENT -->
-
     </div>
     <!-- / CENTER -->
   </mat-sidenav-container>
-
 </div>
