@@ -117,6 +117,26 @@ export class NavigationModel {
             ]
           },
           {
+            id: "topics",
+            title: "Topics",
+            type: "collapse",
+            icon: "contact_support",
+            children: [
+              {
+                id: "list",
+                title: "List",
+                type: "item",
+                url: "/topics/list"
+              },
+              {
+                id: "new",
+                title: "New",
+                type: "item",
+                url: "/topics/new"
+              }
+            ]
+          },
+          {
             id: "reports",
             title: "Reports",
             type: "collapse",

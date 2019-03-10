@@ -26,6 +26,7 @@ import { ItemsModule } from "./main/content/apps/items/items.module";
 import { ShoresModule } from "./main/content/apps/shores/shores.module";
 import { UploadFileService } from "./main/shared/upload-file.service";
 import { ProductsModule } from "./main/content/apps/products/products.module";
+import { TopicsModule } from "./main/content/apps/topics/topics.module";
 import { HashLocationStrategy, LocationStrategy } from "@angular/common";
 import { ProgressBarService } from "./core/services/progress-bar.service";
 import { ReportsModule } from "./main/content/apps/reports/reports.module";
@@ -58,6 +59,11 @@ const appRoutes: Routes = [
   {
     path: "products",
     loadChildren: "./main/content/apps/products/products.module#ProductsModule",
+    canLoad: [AuthGuardService]
+  },
+  {
+    path: "topics",
+    loadChildren: "./main/content/apps/topics/topics.module#TopicsModule",
     canLoad: [AuthGuardService]
   },
   {
@@ -106,6 +112,7 @@ const appRoutes: Routes = [
     ShoresModule,
     ItemsModule,
     ProductsModule,
+    TopicsModule,
     ReportsModule,
     ReportTypesModule,
     TypeGoodsModule,
@@ -128,4 +135,4 @@ const appRoutes: Routes = [
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
