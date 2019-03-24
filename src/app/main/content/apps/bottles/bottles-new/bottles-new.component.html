@@ -90,6 +90,19 @@
               <input type="number" placeholder="Replies to this bottle" formControlName="repliesUserCount" matInput>
             </mat-form-field>
           </div>
+{{form.value | json}}
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" fxLayoutGap="10px">
+
+            <mat-form-field fxFlex="100">
+              <mat-select placeholder="Topic" formControlName="topicId">
+                <mat-option *ngFor="let topic of topics" [value]="topic.id">
+                  <span> {{topic.text_en}}</span>
+                </mat-option>
+              </mat-select>
+
+            </mat-form-field>
+
+          </div>
 
         </form>
       </div>

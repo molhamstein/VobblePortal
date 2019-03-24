@@ -34,6 +34,7 @@ import { ReportTypesModule } from "./main/content/apps/report-types/report-types
 import { TypeGoodsModule } from "./main/content/apps/type-goods/type-goods.module";
 import { DashboardModule } from "./main/content/apps/dashboard/dashboard.module";
 import { MAT_DATE_LOCALE } from "../../node_modules/@angular/material";
+import { TestBottlesModule } from "./main/content/apps/test bottles/test-bottles.module";
 
 const appRoutes: Routes = [
   {
@@ -44,6 +45,11 @@ const appRoutes: Routes = [
   {
     path: "bottles",
     loadChildren: "./main/content/apps/bottles/bottles.module#BottlesModule",
+    canLoad: [AuthGuardService]
+  },
+  {
+    path: "testBottles",
+    loadChildren: "./main/content/apps/test bottles/test-bottles.module#TestBottlesModule",
     canLoad: [AuthGuardService]
   },
   {
@@ -109,6 +115,7 @@ const appRoutes: Routes = [
 
     UsersModule,
     BottlesModule,
+    TestBottlesModule,
     ShoresModule,
     ItemsModule,
     ProductsModule,

@@ -39,6 +39,7 @@ export class TopicsListComponent implements OnInit {
     "text_en",
     "text_ar",
     "status",
+    "bottleCount",
     "btns"
   ];
   itemsCount: number = 0;

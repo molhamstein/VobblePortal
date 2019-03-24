@@ -3,7 +3,7 @@
  */
 
 export const AppConfig = {
-  // apiUrl : "http://104.217.253.15:7000/api/",
+  // apiUrl : "http://localhost:3000/api/",
   apiUrl: "http://159.65.202.38:3000/api/",
   defaultAvatar: "assets/images/defaults/profile.jpg",
   defaultShoreCover: "assets/images/defaults/shore-cover.jpg",

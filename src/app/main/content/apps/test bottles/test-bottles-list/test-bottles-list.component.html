@@ -1,0 +1,149 @@
+<div id="products" class="page-layout carded fullwidth" fusePerfectScrollbar>
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg mat-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- HEADER -->
+    <div class="header white-fg" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
+      fxLayoutAlign.gt-xs="space-between center">
+
+      <!-- APP TITLE -->
+      <div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon class="logo-icon mr-16" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+          warning</mat-icon>
+        <span class="logo-text h1" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">Test Bottle</span>
+      </div>
+      <!-- / APP TITLE -->
+
+      <!-- SEARCH -->
+      <div class="search-input-wrapper mx-12 m-md-0" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+        <!-- <label for="search" class="mr-8">
+          <mat-icon class="secondary-text">search</mat-icon>
+        </label>
+        <mat-form-field floatPlaceholder="never" fxFlex="1 0 auto">
+          <input id="search" matInput #filter placeholder="Search">
+        </mat-form-field> -->
+      </div>
+      <!-- / SEARCH -->
+
+      <!-- <button type="button" mat-raised-button [routerLink]="'/topics/new'"
+        class="add-product-button mat-white-bg  mt-sm-0">
+        <span> NEW </span>
+      </button> -->
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card mat-white-bg">
+
+      <ngx-datatable style="height: 400px;width: 100%;" class="material vertical-scroll" [rows]="data"
+        [columnMode]="'force'" [headerHeight]="50" [rowHeight]="50" [footerHeight]="50" [scrollbarV]="true"
+        [scrollbarH]="true" [limit]="10">
+
+        <ngx-datatable-column [canAutoResize]="true" [sortable]="true" prop="createdAt">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
+            <span>createdAt</span>
+          </ng-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <span>
+              {{value | date: 'dd-MM-yyyy HH:mm'}}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column [canAutoResize]="true" [sortable]="true" prop="numDay">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
+            <span>numDay</span>
+          </ng-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <span>
+              {{value | number : '1.2-2'}}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column [canAutoResize]="true" [sortable]="true" prop="numHours">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
+            <span>numHours</span>
+          </ng-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <span>
+              {{value | number : '1.2-2'}}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column [canAutoResize]="true" [sortable]="true" prop="repliesUserCount">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
+            <span>repliesUserCount</span>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column [canAutoResize]="true" [sortable]="true" prop="totalPaid">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
+            <span>totalPaid</span>
+          </ng-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <span>
+              {{value | number : '1.2-2'}}
+            </span>
+          </ng-template>
+
+        </ngx-datatable-column>
+        <ngx-datatable-column [canAutoResize]="true" [sortable]="true" prop="gender">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
+            <span>gender</span>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column [canAutoResize]="true" [sortable]="true" prop="score">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
+            <span>score</span>
+          </ng-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <span>
+              {{value | number : '1.2-2'}}
+            </span>
+          </ng-template>
+
+        </ngx-datatable-column>
+        <ngx-datatable-column [canAutoResize]="true" [sortable]="true" prop="time score">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
+            <span>time score</span>
+          </ng-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <span>
+              {{value | number : '1.2-2'}}
+            </span>
+          </ng-template>
+
+        </ngx-datatable-column>
+        <ngx-datatable-column [canAutoResize]="true" [sortable]="true" prop="reply score">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
+            <span>reply score</span>
+          </ng-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <span>
+              {{value | number : '1.2-2'}}
+            </span>
+          </ng-template>
+
+        </ngx-datatable-column>
+        <ngx-datatable-column [canAutoResize]="true" [sortable]="true" prop="totalPaid score">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
+            <span>totalPaid score</span>
+          </ng-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <span>
+              {{value | number : '1.2-2'}}
+            </span>
+          </ng-template>
+
+        </ngx-datatable-column>
+      </ngx-datatable>
+
+    </div>
+    <!-- / CONTENT CARD -->
+  </div>
+  <!-- / CENTER -->
+</div>

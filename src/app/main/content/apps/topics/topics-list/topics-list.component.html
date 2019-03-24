@@ -62,6 +62,14 @@
           </mat-cell>
         </ng-container>
 
+        <ng-container cdkColumnDef="bottleCount">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Count</mat-header-cell>
+          <mat-cell *cdkCellDef="let product">
+            <p class="text-truncate">{{product.bottleCount}}</p>
+          </mat-cell>
+        </ng-container>
+
+        
         <ng-container cdkColumnDef="status">
           <mat-header-cell *cdkHeaderCellDef>Status</mat-header-cell>
           <mat-cell *cdkCellDef="let product" fxShow.gt-xs>

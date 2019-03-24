@@ -19,6 +19,8 @@ import { Observable } from "rxjs";
 import { User } from "../../users/user.model";
 import { map, startWith } from "rxjs/operators";
 import { UsersService } from "../../users/users.service";
+import { TopicsService } from "../../topics/topics.service";
+import { Topic } from "../../topics/topic.model";
 
 @Component({
   selector: "app-bottles-new",
@@ -32,6 +34,7 @@ export class BottlesNewComponent implements OnInit {
   blobFileToUpload;
   video: string = "";
   shores: Shore[] = [];
+  topics: Topic[] = [];
   users: User[] = [];
   currentUser: any;
 
@@ -49,6 +52,7 @@ export class BottlesNewComponent implements OnInit {
     private progressBarService: ProgressBarService,
     private uploadFileService: UploadFileService,
     private shoresService: ShoresService,
+    private topicsService: TopicsService,
     private usersService: UsersService,
     private authService: AuthService,
     private bottlesService: BottlesService
@@ -64,12 +68,14 @@ export class BottlesNewComponent implements OnInit {
 
   ngOnInit() {
     this.getShores();
+    this.getTopics()
     this.form = this.formBuilder.group({
       file: [""],
       thumbnail: [""],
       status: ["active", Validators.required],
       createdAt: [new Date(), Validators.required],
       shoreId: [""],
+      topicId: [""],
       repliesUserCount: [""],
       ownerId: new FormControl(this.currentUser)
     });
@@ -121,7 +127,17 @@ export class BottlesNewComponent implements OnInit {
       items => {
         this.shores = items;
       },
-      error => {}
+      error => { }
+    );
+  }
+
+  getTopics() {
+    // if (this.shores.length == 0)
+    this.topicsService.getItems().then(
+      items => {
+        this.topics = items;
+      },
+      error => { }
     );
   }
 
@@ -194,7 +210,7 @@ export class BottlesNewComponent implements OnInit {
   }
 
   submit() {
-    delete this.form.value.id;
+    // delete this.form.value.id;
     this.form.value.ownerId = this.form.value.ownerId.id;
     console.log("form add", this.form.value);
     this.bottlesService.newItem(this.form.value).then(
@@ -222,6 +238,7 @@ export class BottlesNewComponent implements OnInit {
 
   onSubmit() {
     this.progressBarService.toggle();
+    console.log("form", this.form.value)
     this.submit();
     // this.uploadFiles(this.blobFileToUpload);
   }

@@ -137,6 +137,26 @@ export class NavigationModel {
             ]
           },
           {
+            id: "testBottle",
+            title: "Test Bottle",
+            type: "collapse",
+            icon: "warning",
+            children: [
+              {
+                id: "list",
+                title: "List",
+                type: "item",
+                url: "/testBottles/list"
+              },
+              // {
+              //   id: "new",
+              //   title: "New",
+              //   type: "item",
+              //   url: "/testBottles/new"
+              // }
+            ]
+          },
+          {
             id: "reports",
             title: "Reports",
             type: "collapse",
