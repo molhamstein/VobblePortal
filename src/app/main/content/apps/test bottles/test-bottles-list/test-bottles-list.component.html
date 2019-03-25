@@ -91,6 +91,11 @@
           </ng-template>
 
         </ngx-datatable-column>
+        <ngx-datatable-column [canAutoResize]="true" [sortable]="true" prop="username">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
+            <span>username</span>
+          </ng-template>
+        </ngx-datatable-column>
         <ngx-datatable-column [canAutoResize]="true" [sortable]="true" prop="gender">
           <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
             <span>gender</span>
