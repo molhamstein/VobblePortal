@@ -58,6 +58,36 @@ export class TestBottlesService implements Resolve<any> {
     });
   }
 
+  getBottle(params) {
+    return new Promise((resolve, reject) => {
+      this.http
+        .get(
+          AppConfig.apiUrl +
+          "bottles/getOneBottleTest?userId="+params.userId+"&gender="+params.gender+"&shoreId="+params.shoreId+"&access_token=" +
+          this.authService.getToken()
+        )
+        .subscribe(
+          (response: any) => {
+            //console.log('response products', response);
+            this.items = response;
+            this.onItemsChanged.next(this.items);
+            resolve(response);
+          },
+          error => {
+            console.log("error ", error);
+            this.helpersService.showActionSnackbar(
+              null,
+              false,
+              "",
+              { style: "failed-snackbar" },
+              AppConfig.technicalException
+            );
+            reject();
+          }
+        );
+    });
+
+  }
   getItems(): Promise<any> {
     return new Promise((resolve, reject) => {
       this.http

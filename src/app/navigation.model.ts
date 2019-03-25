@@ -148,12 +148,12 @@ export class NavigationModel {
                 type: "item",
                 url: "/testBottles/list"
               },
-              // {
-              //   id: "new",
-              //   title: "New",
-              //   type: "item",
-              //   url: "/testBottles/new"
-              // }
+              {
+                id: "new",
+                title: "New",
+                type: "item",
+                url: "/testBottles/new"
+              }
             ]
           },
           {

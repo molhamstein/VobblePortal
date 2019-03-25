@@ -1,0 +1,41 @@
+:host {
+
+  .content {
+
+    form {
+      width: 100%;
+      max-width: 800px !important;
+
+      .active-icon{
+        border-radius: 50%;
+      }
+      .shores-field{
+        img{
+          border-radius: 50%;
+          object-fit: cover;
+          margin-top: 8px;
+          height: 30px;
+          margin-right: 5px;
+        }
+      }
+    }
+
+    .form-errors-model {
+
+      .item-img{
+        img{
+          border-radius: 50%;
+          object-fit: cover;
+          width: 100%;
+          height: 250px;
+        }
+      }
+
+      flex: 1;
+
+      code {
+        background: none !important;
+      }
+    }
+  }
+}

@@ -3,6 +3,7 @@ import {Routes, RouterModule} from "@angular/router";
 import {SharedModule} from "../../../../core/modules/shared.module";
 import { TestBottlesService } from './test-bottles.service';
 import { TestBottlesListComponent } from './test-bottles-list/test-bottles-list.component';
+import { TestBottlesNewComponent } from './test-bottles-new/test-bottles-new.component';
 
 const routes: Routes = [
   {
@@ -12,11 +13,15 @@ const routes: Routes = [
       data: TestBottlesService
     },
     // data: {resolverType: 'list', page:0, itemsPerPage:10}
+  },
+  {
+    path     : 'new',
+    component: TestBottlesNewComponent,
+    resolve  : {
+      data: TestBottlesService
+    },
+    // data: {resolverType: 'list', page:0, itemsPerPage:10}
   }
-  // {
-  //   path     : 'new',
-  //   component: BottlesNewComponent
-  // },
   // {
   //   path     : 'edit/:id',
   //   component: BottlesEditComponent,
@@ -49,6 +54,6 @@ const routes: Routes = [
   providers   : [
     TestBottlesService
   ],
-  declarations: [TestBottlesListComponent]
+  declarations: [TestBottlesListComponent,TestBottlesNewComponent]
 })
 export class TestBottlesModule { }
