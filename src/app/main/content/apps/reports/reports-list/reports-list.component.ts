@@ -59,7 +59,7 @@ export class ReportsListComponent implements OnInit {
     private progressBarService: ProgressBarService,
     public dialog: MatDialog,
     private formBuilder: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.dataSource = new FilesDataSource(
@@ -79,10 +79,14 @@ export class ReportsListComponent implements OnInit {
     this.itemsCount = this.reportsService.itemsCount;
 
     this.filtersForm = this.formBuilder.group({
-      createdAt: new FormControl("")
+      from: new FormControl(""),
+      to: new FormControl("")
     });
   }
-  getItemsPaging() {
+  getItemsPaging(isFilter = false) {
+    if (isFilter) {
+      this.paginator.pageIndex = 0
+    }
     this.reportsService
       .getItemsPaging(
         this.paginator.pageIndex,
@@ -120,6 +124,7 @@ export class ReportsListComponent implements OnInit {
   }
 
   clearFilter() {
+    this.paginator.pageIndex = 0
     this.filtersForm.reset();
     this.getItemsPaging();
     this.reportsService
@@ -128,7 +133,7 @@ export class ReportsListComponent implements OnInit {
   }
 
   applyFilter() {
-    this.getItemsPaging();
+    this.getItemsPaging(true);
     this.reportsService
       .getItemsCount(this.filtersForm.value)
       .then(count => (this.itemsCount = count));
@@ -235,5 +240,5 @@ export class FilesDataSource extends DataSource<any> {
     });
   }
 
-  disconnect() {}
+  disconnect() { }
 }

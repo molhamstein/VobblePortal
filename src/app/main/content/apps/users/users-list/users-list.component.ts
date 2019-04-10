@@ -1,3 +1,4 @@
+import { Subject } from 'rxjs/Subject';
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
@@ -25,7 +26,7 @@ import { FuseConfirmDialogComponent } from "../../../../../core/components/confi
 import { ProgressBarService } from "../../../../../core/services/progress-bar.service";
 
 import { countries } from "typed-countries";
-import { map, startWith } from "rxjs/operators";
+import { map, startWith, debounceTime, distinctUntilChanged } from "rxjs/operators";
 
 @Component({
   selector: "app-users-list",
@@ -72,6 +73,11 @@ export class UsersListComponent implements OnInit {
 
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
 
+
+  model: string;
+  modelChanged: Subject<string> = new Subject<string>();
+
+
   constructor(
     private usersService: UsersService,
     public dialog: MatDialog,
@@ -81,6 +87,11 @@ export class UsersListComponent implements OnInit {
     this.usersService.onItemsCountChanged.subscribe(
       count => (this.itemsCount = count)
     );
+
+    this.modelChanged.pipe(
+      debounceTime(300),
+      distinctUntilChanged())
+      .subscribe(model => this.model = model);
   }
 
   ngOnInit() {
@@ -109,14 +120,35 @@ export class UsersListComponent implements OnInit {
     return countries.filter(option => option.iso.toLowerCase().includes(val));
   }
 
+  keyUp() {
+    var lastSearch = ""
+    var mainThis = this
+    lastSearch = mainThis.filter.nativeElement.value
+    setTimeout(function () {
+      if (lastSearch == mainThis.filter.nativeElement.value) {
+        mainThis.getItemsPaging()
+      }
+      // this.lastSearch = this.filter.nativeElement.value
+      // console.log("lastSearch")
+      // console.log(lastSearch)
+      // console.log("this.filter.nativeElement.value")
+      // console.log(mainThis.filter.nativeElement.value)
+    }, 1500);
+
+  }
   clearFilter() {
+    this.paginator.pageIndex = 0
+
     this.filtersForm.reset();
     this.filter.nativeElement.value = "";
     this.usersService.getItemsCount("");
     this.getItemsPaging();
   }
 
-  getItemsPaging() {
+  getItemsPaging(isFilter = false) {
+    if (isFilter) {
+      this.paginator.pageIndex = 0
+    }
     this.usersService
       .getItemsPaging(
         this.paginator.pageIndex,
@@ -245,5 +277,5 @@ export class FilesDataSource extends DataSource<any> {
     });
   }
 
-  disconnect() {}
+  disconnect() { }
 }

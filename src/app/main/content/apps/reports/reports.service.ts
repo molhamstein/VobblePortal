@@ -32,7 +32,7 @@ export class ReportsService implements Resolve<any> {
     private router: Router,
     private progressBarService: ProgressBarService,
     private helpersService: HelpersService
-  ) {}
+  ) { }
 
   resolve(
     route: ActivatedRouteSnapshot,
@@ -62,8 +62,8 @@ export class ReportsService implements Resolve<any> {
       this.http
         .get(
           AppConfig.apiUrl +
-            "reports?filter[include]=report_Type&filter[include]=owner&access_token=" +
-            this.authService.getToken()
+          "reports?filter[include]=report_Type&filter[include]=owner&access_token=" +
+          this.authService.getToken()
         )
         .subscribe(
           (response: any) => {
@@ -103,8 +103,10 @@ export class ReportsService implements Resolve<any> {
       if (filterBy && filterBy !== null) {
         let values = filterBy;
         let filter = "";
-        if (values.createdAt)
-          filter += ',{"createdAt":{"gt":"' + values.createdAt + '"}}';
+        if (values.from)
+          filter += ',{"createdAt":{"gt":"' + values.from + '"}}';
+        if (values.to)
+          filter += ',{"createdAt":{"lt":"' + values.to + '"}}';
 
         if (filter.charAt(0) === ",") {
           filter = filter.substr(1);
@@ -162,8 +164,10 @@ export class ReportsService implements Resolve<any> {
     if (values && values !== null) {
       let filter = "";
 
-      if (values.createdAt)
-        filter += ',{"createdAt":{"gt":"' + values.createdAt + '"}}';
+      if (values.from)
+        filter += ',{"createdAt":{"gt":"' + values.from + '"}}';
+      if (values.to)
+        filter += ',{"createdAt":{"lt":"' + values.to + '"}}';
 
       if (filter.charAt(0) === ",") {
         filter = filter.substr(1);
@@ -171,7 +175,7 @@ export class ReportsService implements Resolve<any> {
       if (filter.charAt(filter.length - 1) === ",")
         filter = filter.slice(0, -1);
 
-      if (filter !== "") filter = 'filter={"where":{"and":[' + filter + "]}}";
+      if (filter !== "") filter = 'where={"and":[' + filter + "]}";
 
       api =
         AppConfig.apiUrl +
@@ -219,10 +223,10 @@ export class ReportsService implements Resolve<any> {
       this.http
         .delete<Report>(
           AppConfig.apiUrl +
-            "reports/" +
-            item.id +
-            "?access_token=" +
-            this.authService.getToken()
+          "reports/" +
+          item.id +
+          "?access_token=" +
+          this.authService.getToken()
         )
         .subscribe(
           data => {
@@ -260,10 +264,10 @@ export class ReportsService implements Resolve<any> {
       this.http
         .get<Report>(
           AppConfig.apiUrl +
-            "reports/" +
-            itemId +
-            "?filter[include]=owner&access_token=" +
-            this.authService.getToken()
+          "reports/" +
+          itemId +
+          "?filter[include]=owner&access_token=" +
+          this.authService.getToken()
         )
         .subscribe(
           item => {
@@ -295,10 +299,10 @@ export class ReportsService implements Resolve<any> {
       this.http
         .patch<Report>(
           AppConfig.apiUrl +
-            "reports/" +
-            item.id +
-            "?access_token=" +
-            this.authService.getToken(),
+          "reports/" +
+          item.id +
+          "?access_token=" +
+          this.authService.getToken(),
           item
         )
         .subscribe(
@@ -367,10 +371,10 @@ export class ReportsService implements Resolve<any> {
       this.http
         .get<any[]>(
           AppConfig.apiUrl +
-            "reports?" +
-            filter +
-            "&access_token=" +
-            this.authService.getToken()
+          "reports?" +
+          filter +
+          "&access_token=" +
+          this.authService.getToken()
         )
         .subscribe(
           data => {
@@ -415,10 +419,10 @@ export class ReportsService implements Resolve<any> {
       this.http
         .get(
           AppConfig.apiUrl +
-            "reports/export?" +
-            filter +
-            "access_token=" +
-            this.authService.getToken()
+          "reports/export?" +
+          filter +
+          "access_token=" +
+          this.authService.getToken()
         )
         .subscribe(
           items => {

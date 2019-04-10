@@ -51,6 +51,7 @@ export class BottlesListComponent implements OnInit {
     "country",
     "shore",
     "repliesUserCount",
+    "bottleCompleteCount",
     "btns"
   ];
 
@@ -117,13 +118,17 @@ export class BottlesListComponent implements OnInit {
   }
 
   clearFilter() {
+    this.paginator.pageIndex = 0
     this.filtersForm.reset();
     this.filter.nativeElement.value = "";
     this.bottlesService.getItemsCount("");
     this.getItemsPaging();
   }
 
-  getItemsPaging() {
+  getItemsPaging(isFilter = false) {
+    if (isFilter) {
+      this.paginator.pageIndex = 0
+    }
     this.bottlesService
       .getItemsPaging(
         this.paginator.pageIndex,
@@ -141,7 +146,7 @@ export class BottlesListComponent implements OnInit {
       items => {
         this.shores = items;
       },
-      error => {}
+      error => { }
     );
   }
 
@@ -165,7 +170,8 @@ export class BottlesListComponent implements OnInit {
     this.confirmDialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.bottlesService.deleteItem(contact);
-        this.itemsCount--;
+        // this.itemsCount--;
+        this.getItemsPaging();
       }
       this.confirmDialogRef = null;
     });
@@ -268,5 +274,5 @@ export class FilesDataSource extends DataSource<any> {
     });
   }
 
-  disconnect() {}
+  disconnect() { }
 }

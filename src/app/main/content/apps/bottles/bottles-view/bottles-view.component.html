@@ -17,7 +17,8 @@
           <mat-icon>arrow_back</mat-icon>
         </button>
 
-        <div fxLayout="column" fxLayoutAlign="start start" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+        <div fxLayout="column" fxLayoutAlign="start start" *fuseIfOnDom
+          [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
           <div class="h2">
             Bottle
           </div>
@@ -27,12 +28,13 @@
            </div>-->
         </div>
       </div>
-
       <div>
-        <button mat-raised-button [routerLink]="'/bottles/edit/'+ item.id" class="add-product-button mat-white-bg  mt-sm-0">
+        <button mat-raised-button [routerLink]="'/bottles/edit/'+ item.id"
+          class="add-product-button mat-white-bg  mt-sm-0">
           <span> EDIT </span>
         </button>
-        <button mat-raised-button (click)="deleteItem()" class="add-product-button mt-sm-0" color="warn">
+        <button mat-raised-button *ngIf="item.status!='deactive'" (click)="deleteItem()"
+          class="add-product-button mt-sm-0" color="warn">
           <span> DELETE </span>
         </button>
       </div>
@@ -82,11 +84,14 @@
                       </td>-->
                         <td>
                           <div *ngIf="item.status=='active'">
-                            <mat-icon class="avatar active-icon mat-green-600-bg s-16">check</mat-icon>Active</div>
+                            <mat-icon class="avatar active-icon mat-green-600-bg s-16">check</mat-icon>Active
+                          </div>
                           <div *ngIf="item.status=='deactive'">
-                            <mat-icon class="avatar active-icon mat-red-500-bg s-16">close</mat-icon>De-active</div>
+                            <mat-icon class="avatar active-icon mat-red-500-bg s-16">close</mat-icon>De-active
+                          </div>
                           <div *ngIf="item.status=='pending'">
-                            <mat-icon class=" active-icon mat-gray-500-bg s-16">hourglass_empty</mat-icon>Pending</div>
+                            <mat-icon class=" active-icon mat-gray-500-bg s-16">hourglass_empty</mat-icon>Pending
+                          </div>
                         </td>
                         <td [routerLink]="'/users/view/'+item.ownerId">
                           <span class="link-span text-truncate">{{item.owner.username}}</span>
@@ -118,6 +123,15 @@
                 <video width="320" height="240" controls>
                   <source [src]="item.file" type="video/mp4"> Your browser does not support the video tag.
                 </video>
+                <div class="compleatedUserDiv">
+                  <h3 class="title">User Compleated</h3>
+                  <div class="usersDiv">
+                    <div class="item" *ngFor="let oneUser of item.userComplete" [routerLink]="'/users/view/' + oneUser.userId">
+                      <div class="col">{{oneUser.user.username}}</div>
+                      <div class="col">{{ oneUser.createdAt | date }}</div>
+                    </div>
+                  </div>
+                </div>
 
               </div>
 

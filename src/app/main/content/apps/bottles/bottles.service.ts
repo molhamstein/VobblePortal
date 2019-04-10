@@ -31,7 +31,7 @@ export class BottlesService implements Resolve<any> {
     private helpersService: HelpersService,
     private progressBarService: ProgressBarService,
     private router: Router
-  ) {}
+  ) { }
 
   resolve(
     route: ActivatedRouteSnapshot,
@@ -61,8 +61,8 @@ export class BottlesService implements Resolve<any> {
       this.http
         .get<Bottle[]>(
           AppConfig.apiUrl +
-            "bottles?access_token=" +
-            this.authService.getToken()
+          "bottles?access_token=" +
+          this.authService.getToken()
         )
         .subscribe(
           (response: any) => {
@@ -250,17 +250,16 @@ export class BottlesService implements Resolve<any> {
       this.http
         .delete<Bottle>(
           AppConfig.apiUrl +
-            "bottles/" +
-            item.id +
-            "?access_token=" +
-            this.authService.getToken()
+          "bottles/" +
+          item.id +
+          "/deactiveBottle?access_token=" +
+          this.authService.getToken()
         )
         .subscribe(
           data => {
             //console.log(data);
             this.items.splice(index, 1);
             this.onItemsChanged.next(this.items);
-            this.itemsCount--;
             this.onItemsCountChanged.next(this.itemsCount);
             this.progressBarService.toggle();
             this.router.navigate(["/bottles/list"]);
@@ -291,10 +290,11 @@ export class BottlesService implements Resolve<any> {
       this.http
         .get<Bottle>(
           AppConfig.apiUrl +
-            "bottles/" +
-            itemId +
-            "?access_token=" +
-            this.authService.getToken()
+          "bottles/" +
+          itemId +
+          "?access_token=" +
+          this.authService.getToken() +
+          "&filter=" + JSON.stringify({ "include": "userComplete" })
         )
         .subscribe(
           item => {
@@ -326,10 +326,10 @@ export class BottlesService implements Resolve<any> {
       this.http
         .patch<Bottle>(
           AppConfig.apiUrl +
-            "bottles/" +
-            item.id +
-            "?access_token=" +
-            this.authService.getToken(),
+          "bottles/" +
+          item.id +
+          "?access_token=" +
+          this.authService.getToken(),
           item
         )
         .subscribe(
@@ -359,8 +359,8 @@ export class BottlesService implements Resolve<any> {
       this.http
         .post<Bottle>(
           AppConfig.apiUrl +
-            "bottles/?access_token=" +
-            this.authService.getToken(),
+          "bottles/?access_token=" +
+          this.authService.getToken(),
           item
         )
         .subscribe(
@@ -413,19 +413,19 @@ export class BottlesService implements Resolve<any> {
 
     console.log(
       AppConfig.apiUrl +
-        "bottles/export?" +
-        filter +
-        "access_token=" +
-        this.authService.getToken()
+      "bottles/export?" +
+      filter +
+      "access_token=" +
+      this.authService.getToken()
     );
     return new Promise((resolve, reject) => {
       this.http
         .get(
           AppConfig.apiUrl +
-            "bottles/export?" +
-            filter +
-            "access_token=" +
-            this.authService.getToken()
+          "bottles/export?" +
+          filter +
+          "access_token=" +
+          this.authService.getToken()
         )
         .subscribe(
           items => {

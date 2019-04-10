@@ -50,7 +50,7 @@
               id="search"
               matInput
               #filter
-              (keyup)="getItemsPaging()"
+              (keyup)="keyUp()"
               placeholder="Search"
             />
           </mat-form-field>
@@ -109,7 +109,7 @@
         <button
           mat-raised-button
           type="submit"
-          (click)="getItemsPaging()"
+          (click)="getItemsPaging(true)"
           class="add-product-button mat-white-bg  mt-sm-0"
         >
           <span> FILTER </span>

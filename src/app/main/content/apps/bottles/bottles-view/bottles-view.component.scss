@@ -20,13 +20,15 @@
 
     .tab-content {
       flex: 1 1 auto;
-      .section{
 
-        .link-span{
+      .section {
+
+        .link-span {
           cursor: pointer;
           font-weight: bolder;
         }
       }
+
       &.products {
 
         .product-row {
@@ -212,7 +214,8 @@
                   }
 
                   // IE10 fix
-                  .logo, .small-note {
+                  .logo,
+                  .small-note {
                     -ms-flex: 0 1 auto;
                   }
 
@@ -395,6 +398,50 @@
 
     table {
       table-layout: fixed;
+    }
+  }
+
+}
+
+.compleatedUserDiv {
+  width: calc(100% - 320px);
+  height: 240;
+  float: right;
+
+  .title {
+    color: black;
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    margin: 0px;
+  }
+
+  .usersDiv {
+    width: 100%;
+    padding: 0px 10px;
+    max-height: 210px;
+    overflow-y: auto;
+
+    .item {
+      width: 100%;
+      height: 30px;
+      padding-left: 20px;
+      background-color: #ffffff;
+
+      .col {
+        float: left;
+        padding-top: 5px;
+        width: 50%
+      }
+
+      &:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      &:hover {
+        background-color: rgba(45, 50, 62, 0.41);
+        cursor: pointer;
+      }
     }
   }
 

@@ -34,7 +34,7 @@ export class UsersService implements Resolve<any> {
     private router: Router,
     private progressBarService: ProgressBarService,
     private helpersService: HelpersService
-  ) {}
+  ) { }
 
   resolve(
     route: ActivatedRouteSnapshot,
@@ -72,10 +72,10 @@ export class UsersService implements Resolve<any> {
       this.http
         .get<Bottle[]>(
           AppConfig.apiUrl +
-            "bottles?filter[where][ownerId]=" +
-            itemId +
-            "&access_token=" +
-            this.authService.getToken()
+          "bottles?filter[where][ownerId]=" +
+          itemId +
+          "&access_token=" +
+          this.authService.getToken()
         )
         .subscribe(
           bottles => {
@@ -105,8 +105,8 @@ export class UsersService implements Resolve<any> {
       this.http
         .get<User[]>(
           AppConfig.apiUrl +
-            "users?filter[order]=createdAt DESC&access_token=" +
-            this.authService.getToken()
+          "users?filter[order]=createdAt DESC&access_token=" +
+          this.authService.getToken()
         )
         .subscribe(
           (response: any) => {
@@ -149,7 +149,7 @@ export class UsersService implements Resolve<any> {
     if (searchBy && searchBy !== "") {
       if (searchBy) {
         _searching = '{"username": {"like": "^' + searchBy + '"}}';
-        _searching_count = '"username": {"like": "^' + searchBy + '"}';
+        _searching_count = '{"username": {"like": "^' + searchBy + '"}}';
       }
     }
 
@@ -158,28 +158,28 @@ export class UsersService implements Resolve<any> {
     if (filterBy && filterBy !== "") {
       if (filterBy.gender) {
         _filtering += ',{"gender":"' + filterBy.gender + '"}';
-        _searching_count += ',"gender":"' + filterBy.gender + '"';
+        _searching_count += ',{"gender":"' + filterBy.gender + '"}';
       }
 
       if (filterBy.country) {
         _filtering += ',{"ISOCode":"' + filterBy.country + '"}';
-        _searching_count += ',"ISOCode":"' + filterBy.country + '"';
+        _searching_count += ',{"ISOCode":"' + filterBy.country + '"}';
       }
 
       if (filterBy.createdFrom) {
         _filtering += ',{"createdAt":{"gt":"' + filterBy.createdFrom + '"}}';
         _searching_count +=
-          ',"createdAt":{"gt":"' + filterBy.createdFrom + '"}';
+          ',{"createdAt":{"gt":"' + filterBy.createdFrom + '"}}';
       }
 
       if (filterBy.createdTo) {
         _filtering += ',{"createdAt":{"lt":"' + filterBy.createdTo + '"}}';
-        _searching_count += ',"createdAt":{"lt":"' + filterBy.createdTo + '"}';
+        _searching_count += ',{"createdAt":{"lt":"' + filterBy.createdTo + '"}}';
       }
 
       if (filterBy.status) {
         _filtering += ',{"status":"' + filterBy.status + '"}';
-        _searching_count += ',"status":"' + filterBy.status + '"';
+        _searching_count += ',{"status":"' + filterBy.status + '"}';
       }
 
       if (!_searching && _filtering.charAt(0) === ",") {
@@ -199,7 +199,7 @@ export class UsersService implements Resolve<any> {
 
     if (_searching !== "" || _filtering !== "") {
       _searching = ',"where":{"and":[' + _searching + "]}";
-      this.getItemsCount("where={" + _searching_count + "}&");
+      this.getItemsCount("where={\"and\":[" + _searching_count + "]}&");
     }
 
     const api =
@@ -278,10 +278,10 @@ export class UsersService implements Resolve<any> {
       this.http
         .get<User[]>(
           AppConfig.apiUrl +
-            "users?filter[limit]=10&filter[where][username][regexp]=^" +
-            keyword +
-            "&access_token=" +
-            this.authService.getToken()
+          "users?filter[limit]=10&filter[where][username][regexp]=^" +
+          keyword +
+          "&access_token=" +
+          this.authService.getToken()
         )
         .subscribe(
           (response: any) => {
@@ -311,10 +311,10 @@ export class UsersService implements Resolve<any> {
       this.http
         .delete<User>(
           AppConfig.apiUrl +
-            "users/" +
-            item.id +
-            "?access_token=" +
-            this.authService.getToken()
+          "users/" +
+          item.id +
+          "?access_token=" +
+          this.authService.getToken()
         )
         .subscribe(
           data => {
@@ -374,10 +374,10 @@ export class UsersService implements Resolve<any> {
       this.http
         .get(
           AppConfig.apiUrl +
-            "users/export?" +
-            filter +
-            "access_token=" +
-            this.authService.getToken()
+          "users/export?" +
+          filter +
+          "access_token=" +
+          this.authService.getToken()
         )
         .subscribe(
           items => {
@@ -407,10 +407,10 @@ export class UsersService implements Resolve<any> {
       this.http
         .get<User>(
           AppConfig.apiUrl +
-            "users/" +
-            itemId +
-            "?access_token=" +
-            this.authService.getToken()
+          "users/" +
+          itemId +
+          "?access_token=" +
+          this.authService.getToken()
         )
         .subscribe(
           item => {
@@ -441,10 +441,10 @@ export class UsersService implements Resolve<any> {
       this.http
         .patch<User>(
           AppConfig.apiUrl +
-            "users/" +
-            item.id +
-            "?access_token=" +
-            this.authService.getToken(),
+          "users/" +
+          item.id +
+          "?access_token=" +
+          this.authService.getToken(),
           item
         )
         .subscribe(

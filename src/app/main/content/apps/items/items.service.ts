@@ -31,7 +31,7 @@ export class ItemsService implements Resolve<any> {
     private helpersService: HelpersService,
     private progressBarService: ProgressBarService,
     private router: Router
-  ) {}
+  ) { }
 
   resolve(
     route: ActivatedRouteSnapshot,
@@ -61,8 +61,8 @@ export class ItemsService implements Resolve<any> {
       this.http
         .get<Item[]>(
           AppConfig.apiUrl +
-            "items&filter[include]=owner?access_token=" +
-            this.authService.getToken()
+          "items&filter[include]=owner?access_token=" +
+          this.authService.getToken()
         )
         .subscribe(
           (response: any) => {
@@ -99,7 +99,10 @@ export class ItemsService implements Resolve<any> {
       itemsPerPage +
       ',"skip":' +
       offset +
-      ',"include":"owner"';
+      ',"order":"startAt DESC"' +
+
+      ',"include":"owner"'
+
 
     // SEARCHING //
     let _searching = "";
@@ -231,10 +234,10 @@ export class ItemsService implements Resolve<any> {
       this.http
         .delete<Item>(
           AppConfig.apiUrl +
-            "items/" +
-            item.id +
-            "?access_token=" +
-            this.authService.getToken()
+          "items/" +
+          item.id +
+          "?access_token=" +
+          this.authService.getToken()
         )
         .subscribe(
           data => {
@@ -272,10 +275,10 @@ export class ItemsService implements Resolve<any> {
       this.http
         .get<Item>(
           AppConfig.apiUrl +
-            "items/" +
-            itemId +
-            "?filter[include]=owner&filter[include]=product&access_token=" +
-            this.authService.getToken()
+          "items/" +
+          itemId +
+          "?filter[include]=owner&filter[include]=product&access_token=" +
+          this.authService.getToken()
         )
         .subscribe(
           item => {
@@ -307,10 +310,10 @@ export class ItemsService implements Resolve<any> {
       this.http
         .patch<Item>(
           AppConfig.apiUrl +
-            "items/" +
-            item.id +
-            "?access_token=" +
-            this.authService.getToken(),
+          "items/" +
+          item.id +
+          "?access_token=" +
+          this.authService.getToken(),
           item
         )
         .subscribe(
@@ -341,8 +344,8 @@ export class ItemsService implements Resolve<any> {
       this.http
         .post<Item>(
           AppConfig.apiUrl +
-            "items/?access_token=" +
-            this.authService.getToken(),
+          "items/?access_token=" +
+          this.authService.getToken(),
           item
         )
         .subscribe(
@@ -395,18 +398,18 @@ export class ItemsService implements Resolve<any> {
 
       console.log(
         AppConfig.apiUrl +
-          "items/export?" +
-          filter +
-          "access_token=" +
-          this.authService.getToken()
+        "items/export?" +
+        filter +
+        "access_token=" +
+        this.authService.getToken()
       );
       this.http
         .get(
           AppConfig.apiUrl +
-            "items/export?" +
-            filter +
-            "access_token=" +
-            this.authService.getToken()
+          "items/export?" +
+          filter +
+          "access_token=" +
+          this.authService.getToken()
         )
         .subscribe(
           items => {
