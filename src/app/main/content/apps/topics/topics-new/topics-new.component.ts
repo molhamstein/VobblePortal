@@ -45,6 +45,7 @@ export class TopicsNewComponent implements OnInit {
   ngOnInit() {
 
     this.form = this.formBuilder.group({
+      status: ["active"],
       text_en: ["", Validators.required],
       text_ar: ["", Validators.required],
     });

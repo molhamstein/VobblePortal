@@ -175,6 +175,13 @@ export class NavigationModel {
                 url: "/reports/new"
               }
             ]
+          },
+          {
+            id: "extend-message",
+            title: "Extend Message",
+            type: "item",
+            icon: "dashboard",
+            url: "/extend-message"
           }
         ]
       }

@@ -35,6 +35,7 @@ import { TypeGoodsModule } from "./main/content/apps/type-goods/type-goods.modul
 import { DashboardModule } from "./main/content/apps/dashboard/dashboard.module";
 import { MAT_DATE_LOCALE } from "../../node_modules/@angular/material";
 import { TestBottlesModule } from "./main/content/apps/test bottles/test-bottles.module";
+import { ExtendMessageModule } from "./main/content/apps/extend-message/extend-message.module";
 
 const appRoutes: Routes = [
   {
@@ -84,6 +85,12 @@ const appRoutes: Routes = [
     canLoad: [AuthGuardService]
   },
   {
+    path: "extend-message",
+    loadChildren:
+      "./main/content/apps/extend-message/extend-message.module#ExtendMessageModule",
+    canLoad: [AuthGuardService]
+  },
+  {
     path: "auth",
     loadChildren: "./main/content/pages/pages.module#PagesModule",
     canLoad: [AnonymousGuardService]
@@ -124,6 +131,7 @@ const appRoutes: Routes = [
     ReportTypesModule,
     TypeGoodsModule,
     DashboardModule,
+    ExtendMessageModule,
 
     PagesModule
   ],

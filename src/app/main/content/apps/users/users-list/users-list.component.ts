@@ -128,11 +128,6 @@ export class UsersListComponent implements OnInit {
       if (lastSearch == mainThis.filter.nativeElement.value) {
         mainThis.getItemsPaging()
       }
-      // this.lastSearch = this.filter.nativeElement.value
-      // console.log("lastSearch")
-      // console.log(lastSearch)
-      // console.log("this.filter.nativeElement.value")
-      // console.log(mainThis.filter.nativeElement.value)
     }, 1500);
 
   }

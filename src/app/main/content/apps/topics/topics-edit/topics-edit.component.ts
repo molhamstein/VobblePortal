@@ -54,6 +54,7 @@ export class TopicsEditComponent implements OnInit {
 
 
     this.form = this.formBuilder.group({
+      status: [this.item.status, Validators.required],
       id: [this.item.id],
       text_ar: [this.item.text_ar, Validators.required],
       text_en: [this.item.text_en, Validators.required],
