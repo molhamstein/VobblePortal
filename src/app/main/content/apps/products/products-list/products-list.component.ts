@@ -40,6 +40,7 @@ export class ProductsListComponent implements OnInit {
     "name_en",
     "name_ar",
     "price",
+    "price_coins",
     "bottleCount",
     "productSold",
     "btns"

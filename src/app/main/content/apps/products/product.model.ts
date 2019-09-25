@@ -5,7 +5,9 @@ export class Product {
   name_ar: string;
   name_en: string;
   price: number;
+  price_coins: number;
   bottleCount: number;
+  coinsCount:number;
   validity: number;
   description: string;
   description_ar: string;
@@ -21,6 +23,7 @@ export class Product {
     this.name_ar = product.name_ar || "";
     this.name_en = product.name_en || "";
     this.price = product.price || 0;
+    this.price_coins = product.price_coins || 0;
     this.validity = product.validity || 0;
     this.description = product.description || "";
     this.description_ar = product.description_ar || "";
@@ -30,6 +33,7 @@ export class Product {
     this.appleProduct = product.appleProduct || "";
     this.typeGoodsId = product.typeGoodsId || "";
     this.bottleCount = product.bottleCount || 0;
+    this.coinsCount = product.coinsCount || 0;
     this.typeGoods = product.typeGoods || {};
   }
 }

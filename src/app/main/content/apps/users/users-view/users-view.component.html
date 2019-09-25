@@ -17,7 +17,8 @@
           <mat-icon>arrow_back</mat-icon>
         </button>
 
-        <div fxLayout="column" fxLayoutAlign="start start" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+        <div fxLayout="column" fxLayoutAlign="start start" *fuseIfOnDom
+          [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
           <div class="h2">
             User {{item.username}}
           </div>
@@ -29,12 +30,13 @@
       </div>
 
       <div>
-        <button mat-raised-button [routerLink]="'/users/edit/'+ item.id" class="add-product-button mat-white-bg  mt-sm-0">
+        <button mat-raised-button [routerLink]="'/users/edit/'+ item.id"
+          class="add-product-button mat-white-bg  mt-sm-0">
           <span> EDIT </span>
         </button>
-        <button mat-raised-button (click)="deleteItem()" class="add-product-button mt-sm-0" color="warn">
+        <!-- <button mat-raised-button (click)="deleteItem()" class="add-product-button mt-sm-0" color="warn">
           <span> DELETE </span>
-        </button>
+        </button> -->
       </div>
 
 
@@ -84,7 +86,8 @@
                           <span class="email text-truncate">{{item.email}}</span>
                         </td>
                         <td>
-                          <mat-icon *ngIf="item.gender=='male'" class="active-icon light-blue-800-fg s-25">sentiment_satisfied</mat-icon>
+                          <mat-icon *ngIf="item.gender=='male'" class="active-icon light-blue-800-fg s-25">
+                            sentiment_satisfied</mat-icon>
                           <mat-icon *ngIf="item.gender=='female'" class="active-icon pink-300-fg s-25">face</mat-icon>
                         </td>
                         <td>
@@ -111,6 +114,7 @@
                       <th>Login Type</th>
                       <!--<th>Next Refill</th>-->
                       <th>Creation Date</th>
+                      <th>Last login</th>
                       <th>ISO Code</th>
                     </tr>
                   </thead>
@@ -118,11 +122,14 @@
                     <tr>
                       <td>
                         <div *ngIf="item.status=='active'">
-                          <mat-icon class="avatar active-icon mat-green-600-bg s-16">check</mat-icon>Active</div>
+                          <mat-icon class="avatar active-icon mat-green-600-bg s-16">check</mat-icon>Active
+                        </div>
                         <div *ngIf="item.status=='deactivated'">
-                          <mat-icon class="avatar active-icon mat-red-500-bg s-16">close</mat-icon>De-activated</div>
+                          <mat-icon class="avatar active-icon mat-red-500-bg s-16">close</mat-icon>De-activated
+                        </div>
                         <div *ngIf="item.status=='pending'">
-                          <mat-icon class=" active-icon mat-gray-500-bg s-16">hourglass_empty</mat-icon>Pending</div>
+                          <mat-icon class=" active-icon mat-gray-500-bg s-16">hourglass_empty</mat-icon>Pending
+                        </div>
                       </td>
 
                       <!-- <td>
@@ -134,11 +141,15 @@
                         <span class="text-truncate">{{item.typeLogIn}}</span>
                       </td>
                       <!--<td>
-                      <span class="text-truncate">{{item.nextRefill | date}}</span>
+                      <span class="text-truncate">{{item.nextRefill | date:'dd-MM-yyyy HH:mm'}}</span>
                     </td>-->
                       <td>
-                        <span class="text-truncate">{{item.createdAt | date}}</span>
+                        <span class="text-truncate">{{item.createdAt | date:'dd-MM-yyyy HH:mm'}}</span>
                       </td>
+                      <td>
+                        <span class="text-truncate">{{item.lastLogin | date:'dd-MM-yyyy HH:mm'}}</span>
+                      </td>
+
                       <td>
                         <span class="text-truncate">{{item.ISOCode}}</span>
                       </td>
@@ -208,21 +219,25 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let bottle of bottles" [routerLink]="'/bottles/view/'+bottle.id" style="cursor: pointer;">
+                    <tr *ngFor="let bottle of bottles" [routerLink]="'/bottles/view/'+bottle.id"
+                      style="cursor: pointer;">
                       <td>
                         <div fxLayout="row" fxLayoutAlign="start center">
-                          <img *ngIf="bottle.thumbnail && bottle.thumbnail != ''" class="avatar" [src]="bottle.thumbnail">
+                          <img *ngIf="bottle.thumbnail && bottle.thumbnail != ''" class="avatar"
+                            [src]="bottle.thumbnail">
                         </div>
                       </td>
 
                       <td>
-                        <span class="text-truncate"> {{bottle.createdAt | date}} </span>
+                        <span class="text-truncate"> {{bottle.createdAt | date:'dd-MM-yyyy HH:mm'}} </span>
                       </td>
                       <td>
                         <div *ngIf="bottle.status=='active'">
-                          <mat-icon class="avatar active-icon mat-green-600-bg s-16">check</mat-icon>Active</div>
+                          <mat-icon class="avatar active-icon mat-green-600-bg s-16">check</mat-icon>Active
+                        </div>
                         <div *ngIf="bottle.status=='deactive'">
-                          <mat-icon class="avatar active-icon mat-red-500-bg s-16">close</mat-icon>De-activated</div>
+                          <mat-icon class="avatar active-icon mat-red-500-bg s-16">close</mat-icon>De-activated
+                        </div>
                       </td>
                       <td>
                         <span class="text-truncate"> {{bottle.shore.name_en}}/{{bottle.shore.name_ar}} </span>

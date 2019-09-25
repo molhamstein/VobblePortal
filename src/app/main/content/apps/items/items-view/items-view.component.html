@@ -68,10 +68,10 @@
                     <tr>
                       <th>Start Date</th>
                       <th>End Date</th>
-                      <th>Store Type</th>
-                      <!--<th>Store Token</th>-->
-                      <th>Consumed</th>
-                      <th>Valid</th>
+                      <th>Type</th>
+                      <th>Price</th>
+                      <!-- <th>Consumed</th>
+                      <th>Valid</th> -->
                     <!--  <th>Owner</th>
                       <th>Product</th>-->
                     </tr>
@@ -79,15 +79,19 @@
                     <tbody>
                     <tr>
                       <td>
-                        <span class=" text-truncate">{{item.startAt | date}}</span>
+                        <span class=" text-truncate">{{item.startAt | date:'dd-MM-yyyy HH:mm'}}</span>
                       </td>
                       <td>
-                        <span class=" text-truncate">{{item.endAt | date}}</span>
+                        <span class=" text-truncate">{{item.endAt | date:'dd-MM-yyyy HH:mm'}}</span>
                       </td>
                       <td>
-                        <span class=" text-truncate">{{item.storeType}}</span>
+                        <span class=" text-truncate">{{item.typePurchasing== 'coins'? 'coins' : item.storeType}}</span>
                       </td>
                       <td>
+                        <span class=" text-truncate">{{item.price}}</span>
+                      </td>
+
+                      <!-- <td>
                         <mat-icon *ngIf="item.isConsumed" class="active-icon mat-green-600-bg s-16">check</mat-icon>
                         <mat-icon *ngIf="!item.isConsumed" class="active-icon mat-red-500-bg s-16">close</mat-icon>
                       </td>
@@ -95,7 +99,7 @@
                       <td>
                         <mat-icon *ngIf="item.valid" class="active-icon mat-green-600-bg s-16">check</mat-icon>
                         <mat-icon *ngIf="!item.valid" class="active-icon mat-red-500-bg s-16">close</mat-icon>
-                      </td>
+                      </td> -->
 
                     </tr>
                     </tbody>

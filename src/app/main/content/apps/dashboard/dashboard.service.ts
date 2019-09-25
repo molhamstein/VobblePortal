@@ -21,7 +21,9 @@ export class DashboardService {
   bottles: any[];
   onBottlesChanged: BehaviorSubject<any> = new BehaviorSubject({});
   items: any[];
+  allItems: {};
   onItemsChanged: BehaviorSubject<any> = new BehaviorSubject({});
+  onAllItemsChanged: BehaviorSubject<any> = new BehaviorSubject({});
 
   orginalItems: any[];
 
@@ -29,7 +31,7 @@ export class DashboardService {
     private http: HttpClient,
     private authService: AuthService,
     private formBuilder: FormBuilder
-  ) {}
+  ) { }
 
   /**
    * Resolve
@@ -72,6 +74,7 @@ export class DashboardService {
 
         // this.getItems(null),
         this.getItems(purchasesFiltersForm.value),
+        this.getAllItems(purchasesFiltersForm.value),
         // this.getUsers(null)
         this.getUsers(genderFiltersForm.value)
       ]).then(() => {
@@ -117,13 +120,13 @@ export class DashboardService {
               new Date(i[0].date.year, i[0].date.month - 1, i[0].date.day)
             );
 
-            tempArray = fromDatesArray.map(val => {
-              //  console.log(val);
-              return {
-                value: 0,
-                name: val
-              };
-            });
+            //   tempArray = fromDatesArray.map(val => {
+            //     //  console.log(val);
+            //     return {
+            //       value: 0,
+            //       name: val
+            //     };
+            //   });
           }
 
           i.map(inner => {
@@ -136,24 +139,24 @@ export class DashboardService {
               )
             });
           });
-          if (i[i.length - 1]) {
-            const from = new Date(
-              i[i.length - 1].date.year,
-              i[i.length - 1].date.month - 1,
-              i[i.length - 1].date.day
-            );
+          // if (i[i.length - 1]) {
+          //   const from = new Date(
+          //     i[i.length - 1].date.year,
+          //     i[i.length - 1].date.month - 1,
+          //     i[i.length - 1].date.day
+          //   );
 
-            const filter2 = new Date(filter.to);
-            const filter3 = filter2.setDate(filter2.getDate() - 1);
-            const toDatesArray = getDateArray(from, filter3);
+          //   const filter2 = new Date(filter.to);
+          //   const filter3 = filter2.setDate(filter2.getDate() - 1);
+          //   const toDatesArray = getDateArray(from, filter3);
 
-            toDatesArray.map(val => {
-              tempArray.push({
-                value: 0,
-                name: val
-              });
-            });
-          }
+          //   toDatesArray.map(val => {
+          //     tempArray.push({
+          //       value: 0,
+          //       name: val
+          //     });
+          //   });
+          // }
 
           let name = "";
           switch (index) {
@@ -206,6 +209,38 @@ export class DashboardService {
 
         this.onItemsChanged.next(this.items);
         resolve(this.items);
+      }, reject);
+    });
+  }
+
+  getAllItems(filter): Promise<any> {
+    let url =
+      AppConfig.apiUrl +
+      "items/getReportOfAllItems/?access_token=" +
+      this.authService.getToken();
+
+    if (filter) {
+      if (filter.to) {
+        filter.to.setHours(23)
+        filter.to.setMinutes(59)
+      }
+      if (filter.from) {
+        filter.to.setMinutes(0)
+        filter.from.setHours(0)
+      }
+
+
+      url += "&filter=" + JSON.stringify({ "from": filter.from, "to": filter.to, "ownerId": filter.ownerId, "productsId": filter.productsId });
+    }
+
+    return new Promise((resolve, reject) => {
+      this.http.get(url).subscribe((response: any) => {
+        console.log("items ", response);
+        // this.orginalItems = response.map(x => Object.assign({}, x));
+        this.allItems = response;
+
+        this.onAllItemsChanged.next(this.allItems);
+        resolve(this.allItems);
       }, reject);
     });
   }

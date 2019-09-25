@@ -118,7 +118,9 @@ export class ItemsService implements Resolve<any> {
       if (filterBy.type) {
         _filtering += ',{"product.typeGoodsId":"' + filterBy.type + '"}';
       }
-
+      if (filterBy.typeItem) {
+        _filtering += ',{"type":"' + filterBy.typeItem + '"}';
+      }
       if (filterBy.country) {
         _filtering += ',{"owner.ISOCode":"' + filterBy.country + '"}';
       }
@@ -126,7 +128,10 @@ export class ItemsService implements Resolve<any> {
       if (filterBy.from) {
         _filtering += ',{"startAt":{"gt":"' + filterBy.from + '"}}';
       }
-
+      if (filterBy.relatedUserId) {
+        _filtering += ',{"relatedUserId":"' + filterBy.relatedUserId + '"}';
+      }
+      
       if (filterBy.to) {
         _filtering += ',{"endAt":{"lt":"' + filterBy.to + '"}}';
       }

@@ -166,6 +166,13 @@ export class UsersService implements Resolve<any> {
         _searching_count += ',{"ISOCode":"' + filterBy.country + '"}';
       }
 
+      if (filterBy.lastLoginFrom) {
+        _filtering += ',{"lastLogin":{"gt":"' + filterBy.lastLoginFrom + '"}}';
+        _searching_count +=
+          ',{"lastLogin":{"gt":"' + filterBy.lastLoginFrom + '"}}';
+      }
+
+
       if (filterBy.createdFrom) {
         _filtering += ',{"createdAt":{"gt":"' + filterBy.createdFrom + '"}}';
         _searching_count +=
@@ -303,6 +310,39 @@ export class UsersService implements Resolve<any> {
           }
         );
     });
+  }
+  deactivateDevice(deviceId, value) {
+    return new Promise((resolve, reject) => {
+      this.http
+        .patch(
+          AppConfig.apiUrl +
+          "devices/" +
+          deviceId +
+          "?access_token=" +
+          this.authService.getToken(),
+          { status: value }
+        )
+        .subscribe(
+          data => {
+            resolve(true);
+          },
+          error => {
+            console.log("error ", error);
+            if (error.error.error.code == AppConfig.authErrorCode)
+              this.router.navigate(["/error-404"]);
+            else
+              this.helpersService.showActionSnackbar(
+                null,
+                false,
+                "",
+                { style: "failed-snackbar" },
+                AppConfig.technicalException
+              );
+            reject();
+          }
+        );
+    });
+
   }
 
   deleteUser(item): Promise<any> {

@@ -6,7 +6,7 @@
   <!-- CENTER -->
   <div class="center">
     <!-- HEADER -->
-    <form class="header white-fg" fxLayout="column" fxLayoutAlign="center space-around" [formGroup]="filtersForm"
+    <form class="header white-fg" fxLayout="column" fxLayoutAlign="center space-around"
       style="margin: 17px 0;">
       <div fxLayout="row" fxLayoutAlign="space-between center">
         <!-- APP TITLE -->
@@ -29,71 +29,31 @@
         </div>
         <!-- / SEARCH -->
 
-        <button type="button" mat-raised-button [routerLink]="'/bottles/new'"
+        <!-- <button type="button" mat-raised-button [routerLink]="'/bottles/new'"
           class="add-product-button mat-white-bg  mt-sm-0">
           <span> NEW </span>
-        </button>
-      </div>
+        </button> -->
+        <button type="button" mat-raised-button type="submit" (click)="clearFilter()"
+        class="add-product-button mat-white-bg  mt-sm-0">
+        <span> CLEAR </span>
+      </button>
 
-      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px">
-        <mat-form-field>
-          <mat-select placeholder="Owner Gender" formControlName="gender" name="gender">
-            <mat-option [value]=""> No filter</mat-option>
-            <mat-option value="male"> Male</mat-option>
-            <mat-option value="female"> Female</mat-option>
-          </mat-select>
-        </mat-form-field>
 
-        <mat-form-field>
-          <input type="text" placeholder="Owner Country" aria-label="Country" matInput formControlName="country"
-            name="country" [matAutocomplete]="auto" />
-          <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let iso of (filteredOptions | async)" [value]="iso.iso">
-              {{ iso.name }}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-        <button mat-raised-button type="submit" (click)="getItemsPaging(true)"
-          class="add-product-button mat-white-bg  mt-sm-0">
-          <span> FILTER </span>
-        </button>
+      <button mat-raised-button type="submit" (click)="openFilter()"
+        class="add-product-button mat-white-bg  mt-sm-0">
+        <span> FILTER </span>
+      </button>
       </div>
-      <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+      <div fxLayout="row" fxLayoutAlign="" fxLayoutGap="20px">
         <button mat-raised-button (click)="exportAsExcelFile()" class="add-product-button mat-white-bg  mt-sm-0">
           Export
         </button>
-        <div>
-          <mat-form-field>
-            <mat-select placeholder="Shore" formControlName="shoreId">
-              <mat-option [value]=""> No filter</mat-option>
-              <mat-option *ngFor="let shore of shores" [value]="shore.id">
-                <img *ngIf="shore.cover && shore.cover != ''" [src]="shore.cover"
-                  style=" border-radius: 50%;object-fit: cover; margin-top: 8px; margin-right: 5px;height: 30px;width: 30px;" />
-                <span> {{ shore.name_en }} {{ shore.name_ar }}</span>
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field>
-            <input matInput (click)="picker1.open()" [matDatepicker]="picker1" placeholder="Creation Date From"
-              formControlName="createdFrom" name="createdFrom" />
-            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-            <mat-datepicker #picker1></mat-datepicker>
-          </mat-form-field>
-
-          <mat-form-field>
-            <input matInput (click)="picker2.open()" [matDatepicker]="picker2" placeholder="Creation Date To"
-              formControlName="createdTo" name="createdTo" />
-            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-            <mat-datepicker #picker2></mat-datepicker>
-          </mat-form-field>
-
-          <button type="button" mat-raised-button type="submit" (click)="clearFilter()"
-            class="add-product-button mat-white-bg  mt-sm-0">
-            <span> CLEAR </span>
-          </button>
+        <div style="display: inherit;">
+            <mat-chip-list aria-label="Fish selection" *ngFor="let object of chipsFilter">
+              <mat-chip style="margin: 0px 10px;">{{object.key}}</mat-chip>
+            </mat-chip-list>
+          </div>
         </div>
-      </div>
     </form>
     <!-- / HEADER -->
 
@@ -104,7 +64,8 @@
         <ng-container cdkColumnDef="thumbnail">
           <mat-header-cell *cdkHeaderCellDef>Thumbnail</mat-header-cell>
           <mat-cell *cdkCellDef="let product">
-            <img class="product-image" *ngIf="product.thumbnail && product.thumbnail != ' '" [alt]="product.createdAt"
+            <img class="product-image" [className]="isNewBottle(product.createdAt)"
+              *ngIf="product.thumbnail && product.thumbnail != ' '" [alt]="product.createdAt"
               [src]="product.thumbnail" />
             <img *ngIf="!product.thumbnail || product.thumbnail == ' '" [src]="defaultIcon" />
           </mat-cell>
@@ -113,7 +74,7 @@
         <ng-container cdkColumnDef="createdAt">
           <mat-header-cell *cdkHeaderCellDef mat-sort-header>Creation Date</mat-header-cell>
           <mat-cell *cdkCellDef="let product">
-            <p class="text-truncate">{{ product.createdAt | date }}</p>
+            <p class="text-truncate">{{ product.createdAt | date:'dd-MM-yyyy HH:mm' }}</p>
           </mat-cell>
         </ng-container>
 
@@ -176,17 +137,22 @@
           </mat-cell>
         </ng-container>
 
-        
+
 
         <ng-container cdkColumnDef="btns">
           <mat-header-cell *cdkHeaderCellDef></mat-header-cell>
           <mat-cell *cdkCellDef="let product">
             <div fxFlex="row" fxLayoutAlign="end center">
-              <button mat-icon-button *ngIf="product.status!='deactive'"
+              <button mat-icon-button class="smallIconButton" *ngIf="product.status!='deactive'"
                 (click)="$event.stopPropagation(); deleteItem(product)">
                 <mat-icon>delete</mat-icon>
               </button>
-              <button mat-icon-button [routerLink]="'/bottles/edit/' + product.id" (click)="$event.stopPropagation()">
+              <button mat-icon-button class="smallIconButton" (click)="$event.stopPropagation();openNewTab(product)">
+                <mat-icon>reply</mat-icon>
+              </button>
+
+              <button mat-icon-button class="smallIconButton" [routerLink]="'/bottles/edit/' + product.id"
+                (click)="$event.stopPropagation()">
                 <mat-icon>edit</mat-icon>
               </button>
 
@@ -200,7 +166,7 @@
           [routerLink]="'/bottles/view/' + product.id">
         </mat-row>
       </mat-table>
-      <mat-paginator #paginator [length]="itemsCount" [pageIndex]="0" [pageSize]="10"
+      <mat-paginator #paginator [length]="itemsCount" [pageIndex]="0" [pageSize]="100"
         [pageSizeOptions]="[5, 10, 25, 100]" (page)="getItemsPaging()">
       </mat-paginator>
     </div>

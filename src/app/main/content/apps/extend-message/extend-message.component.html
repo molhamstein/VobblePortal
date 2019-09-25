@@ -6,15 +6,15 @@
   <!-- CENTER -->
   <div class="center">
     <!-- HEADER -->
-    <form class="header white-fg" fxLayout="column" fxLayoutAlign="center space-around" [formGroup]="filtersForm"
-      style="margin: 17px 0;">
+    <form class="header headerCustom white-fg" fxLayout="column" fxLayoutAlign="center space-around"
+      [formGroup]="filtersForm" style="margin: 17px 0;">
       <div fxLayout="row" fxLayoutAlign="space-between center">
         <!-- APP TITLE -->
         <div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
           <mat-icon class="logo-icon mr-16" *fuseIfOnDom
-            [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }">report</mat-icon>
+            [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }">add_alarm</mat-icon>
           <span class="logo-text h1" *fuseIfOnDom
-            [@animate]="{ value: '*', params: { delay: '100ms', x: '-25px' } }">Reports</span>
+            [@animate]="{ value: '*', params: { delay: '100ms', x: '-25px' } }">Chat Extend</span>
         </div>
         <!-- / APP TITLE -->
 
@@ -35,8 +35,27 @@
           <!-- <mat-form-field floatPlaceholder="never" fxFlex="1 0 auto">
             <input id="search" matInput #filter placeholder="Search" />
           </mat-form-field> -->
+          <label for="search" class="mr-8" *ngIf="curentTab==2">
+            <mat-icon class="secondary-text">search</mat-icon>
+          </label>
+          <mat-form-field floatPlaceholder="never" fxFlex="1 0 auto" *ngIf="curentTab==2">
+            <input type="text" placeholder="Related User" (keyup)="relatedUserkeyUp()" aria-label="user" matInput
+              formControlName="relatedUser" name="country" [matAutocomplete]="auto" />
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let iso of relatedUser" [value]="iso.username">
+                {{ iso.username }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
         </div>
+
+
         <!-- / SEARCH -->
+
+        <button type="button" mat-raised-button type="submit" (click)="clearFilter()"
+          class="add-product-button mat-white-bg  mt-sm-0">
+          <span> CLEAR </span>
+        </button>
 
         <!-- <button mat-raised-button [routerLink]="'/reports/new'" class="add-product-button mat-white-bg  mt-sm-0">
           <span> NEW </span>
@@ -56,6 +75,7 @@
           <mat-datepicker-toggle matSuffix [for]="topicker"></mat-datepicker-toggle>
           <mat-datepicker #topicker></mat-datepicker>
         </mat-form-field>
+        <div></div>
 
         <button mat-raised-button type="submit" (click)="applyFilter()"
           class="add-product-button mat-white-bg  mt-sm-0">
@@ -67,40 +87,33 @@
 
         </div>
 
+
         <div>
-          <button type="button" mat-raised-button type="submit" (click)="clearFilter()"
-            class="add-product-button mat-white-bg  mt-sm-0">
-            <span> CLEAR </span>
-          </button>
         </div>
       </div>
     </form>
     <!-- / HEADER -->
 
     <!-- CONTENT CARD -->
-    <div class="content-card mat-white-bg">
+    <div class="content-card mat-white-bg" class="custom-table" style="box-shadow:0px 4px 5px -2px rgba(0, 0, 0, 0.2), 0px 7px 10px 1px rgba(0, 0, 0, 0.14), 0px 2px 16px 1px rgba(0, 0, 0, 0.12)">
       <mat-tab-group dynamicHeight (selectedTabChange)="changeTab($event)">
         <mat-tab label="Owner">
 
           <mat-table class="products-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{ value: '50' }"
             fusePerfectScrollbar>
-            <ng-container cdkColumnDef="count">
-              <mat-header-cell *cdkHeaderCellDef mat-sort-header>Count</mat-header-cell>
-              <mat-cell *cdkCellDef="let product">
-                <p class="text-truncate">{{ product.count }}</p>
-              </mat-cell>
-            </ng-container>
+
 
             <ng-container cdkColumnDef="owner">
               <mat-header-cell *cdkHeaderCellDef mat-sort-header>Owner</mat-header-cell>
-              <mat-cell *cdkCellDef="let product">
+              <mat-cell *cdkCellDef="let product" style="width:30px">
                 <p class="text-truncate">{{ product.owner.username }}</p>
               </mat-cell>
             </ng-container>
 
+
             <ng-container cdkColumnDef="gender">
               <mat-header-cell *cdkHeaderCellDef mat-sort-header>gender</mat-header-cell>
-              <mat-cell *cdkCellDef="let product">
+              <mat-cell *cdkCellDef="let product" style="width:30px">
                 <p class="text-truncate">{{ product.owner.gender }}</p>
               </mat-cell>
             </ng-container>
@@ -109,23 +122,210 @@
             <ng-container cdkColumnDef="country">
               <mat-header-cell *cdkHeaderCellDef mat-sort-header>country</mat-header-cell>
               <mat-cell *cdkCellDef="let product">
-                <p class="text-truncate">{{ product.owner.country.name }}</p>
+                <p class="text-truncate">{{ product.owner.country?.name }}</p>
               </mat-cell>
             </ng-container>
 
-            <!-- <ng-container cdkColumnDef="bottle_owner">
-              <mat-header-cell *cdkHeaderCellDef mat-sort-header>Bottle Owner</mat-header-cell>
+            <ng-container cdkColumnDef="count">
+              <mat-header-cell *cdkHeaderCellDef mat-sort-header>Count</mat-header-cell>
               <mat-cell *cdkCellDef="let product">
-                <p class="text-truncate">{{ product.bottle?.owner.username }}</p>
-              </mat-cell>
-            </ng-container> -->
+                <div fxLayout="column">
 
-            <!-- <ng-container cdkColumnDef="btns">
+                  <p class="text-truncate" style="width: 80px;"><b>Total Cost :</b></p>
+                  <p class="text-truncate" style="width: 80px;"><b>Total Count :</b></p>
+                </div>
+
+                <div fxLayout="column">
+                  <p class="text-truncate">{{ product.totalCost }}</p>
+                  <p class="text-truncate">{{ product.totalCount }}</p>
+                </div>
+              </mat-cell>
+            </ng-container>
+
+
+            <ng-container cdkColumnDef="product">
+              <mat-header-cell *cdkHeaderCellDef mat-sort-header>product</mat-header-cell>
+              <mat-cell *cdkCellDef="let product">
+
+                <div fxFlex="column">
+                  <div *ngFor="let oneProduct of product.products">
+                    <div style="width: 100%">
+                      <p class="text-truncate">{{ oneProduct.name_en }} <span> {{ oneProduct.count }}</span>
+                        <!-- <b>Count :</b> -->
+                        ,{{ oneProduct.cost }}$
+                      </p>
+
+                    </div>
+                  </div>
+                </div>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+
+            <mat-row *cdkRowDef="let product; columns: displayedColumns" class="product" matRipple
+              (click)="viewUsers(product.owner.id,true)">
+            </mat-row>
+          </mat-table>
+
+          <mat-paginator [pageIndex]="0" [pageSize]="100" [pageSizeOptions]="[5, 10, 25, 100]" (page)="getItemsPaging()"
+            [length]="itemsCount"></mat-paginator>
+
+        </mat-tab>
+        <mat-tab label="Related">
+
+          <mat-table class="products-table" #table [dataSource]="dataSourceRelatedUser" matSort
+            [@animateStagger]="{ value: '50' }" fusePerfectScrollbar>
+
+
+            <ng-container cdkColumnDef="owner">
+              <mat-header-cell *cdkHeaderCellDef mat-sort-header>Related</mat-header-cell>
+              <mat-cell *cdkCellDef="let product" style="width:30px">
+                <p class="text-truncate">{{ product.relatedUser.username }}</p>
+              </mat-cell>
+            </ng-container>
+
+
+            <ng-container cdkColumnDef="gender">
+              <mat-header-cell *cdkHeaderCellDef mat-sort-header>gender</mat-header-cell>
+              <mat-cell *cdkCellDef="let product" style="width:30px">
+                <p class="text-truncate">{{ product.relatedUser.gender }}</p>
+              </mat-cell>
+            </ng-container>
+
+
+            <ng-container cdkColumnDef="country">
+              <mat-header-cell *cdkHeaderCellDef mat-sort-header>country</mat-header-cell>
+              <mat-cell *cdkCellDef="let product">
+                <p class="text-truncate">{{ product.relatedUser.country?.name }}</p>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="count">
+              <mat-header-cell *cdkHeaderCellDef mat-sort-header>Count</mat-header-cell>
+              <mat-cell *cdkCellDef="let product">
+                <div fxLayout="column">
+
+                  <p class="text-truncate" style="width: 80px;"><b>Total Cost :</b></p>
+                  <p class="text-truncate" style="width: 80px;"><b>Total Count :</b></p>
+                </div>
+
+                <div fxLayout="column">
+                  <p class="text-truncate">{{ product.totalCost }}</p>
+                  <p class="text-truncate">{{ product.totalCount }}</p>
+                </div>
+              </mat-cell>
+            </ng-container>
+
+
+            <ng-container cdkColumnDef="product">
+              <mat-header-cell *cdkHeaderCellDef mat-sort-header>product</mat-header-cell>
+              <mat-cell *cdkCellDef="let product">
+
+                <div fxFlex="column">
+                  <div *ngFor="let oneProduct of product.products">
+                    <div style="width: 100%">
+                      <p class="text-truncate">{{ oneProduct.name_en }} <span> {{ oneProduct.count }}</span>
+                        , {{ oneProduct.cost }}$
+                      </p>
+
+                    </div>
+                  </div>
+                </div>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+
+            <mat-row *cdkRowDef="let product; columns: displayedColumns" class="product" matRipple
+              (click)="viewUsers(product.relatedUser.id,false)">
+            </mat-row>
+          </mat-table>
+
+
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [length]="itemsCountRelated"></mat-paginator>
+
+        </mat-tab>
+        <mat-tab label="Items">
+          <mat-table class="products-table" #table [dataSource]="dataSourceItem" matSort
+            [@animateStagger]="{ value: '50' }" fusePerfectScrollbar>
+            <ng-container cdkColumnDef="owner">
+              <mat-header-cell *cdkHeaderCellDef mat-sort-header>Owner</mat-header-cell>
+              <mat-cell *cdkCellDef="let product">
+                <p *ngIf="product.owner" class="text-truncate">
+                  {{ product.owner.username }}
+                </p>
+              </mat-cell>
+            </ng-container>
+            <ng-container cdkColumnDef="related">
+              <mat-header-cell *cdkHeaderCellDef mat-sort-header>Related</mat-header-cell>
+              <mat-cell *cdkCellDef="let product">
+                <p *ngIf="product.owner" class="text-truncate">
+                  {{ product.relatedUser?.username }}
+                </p>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="country">
+              <mat-header-cell *cdkHeaderCellDef mat-sort-header>Owner ISO Code</mat-header-cell>
+              <mat-cell *cdkCellDef="let product">
+                <p class="text-truncate" *ngIf="product.owner.country">
+                  {{ product.owner.country.code }}
+                </p>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="product">
+              <mat-header-cell *cdkHeaderCellDef mat-sort-header>Product Name</mat-header-cell>
+              <mat-cell *cdkCellDef="let product">
+                <p class="text-truncate" *ngIf="product.product">
+                  {{ product.product.name_en }} / {{ product.product.name_ar }}
+                </p>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="storeType">
+              <mat-header-cell *cdkHeaderCellDef mat-sort-header>Store Type</mat-header-cell>
+              <mat-cell *cdkCellDef="let product">
+                <p class="text-truncate">{{ product.storeType }}</p>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="startAt">
+              <mat-header-cell *cdkHeaderCellDef mat-sort-header>Start Date</mat-header-cell>
+              <mat-cell *cdkCellDef="let product">
+                <p class="text-truncate">{{ product.startAt | date:'dd-MM-yyyy HH:mm' }}</p>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="endAt">
+              <mat-header-cell *cdkHeaderCellDef mat-sort-header>End Date</mat-header-cell>
+              <mat-cell *cdkCellDef="let product">
+                <p class="text-truncate">{{ product.endAt | date:'dd-MM-yyyy HH:mm' }}</p>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="isConsumed">
+              <mat-header-cell *cdkHeaderCellDef>Consumed</mat-header-cell>
+              <mat-cell *cdkCellDef="let product" fxShow.gt-xs>
+                <mat-icon *ngIf="product.isConsumed" class="active-icon mat-green-600-bg s-16">check</mat-icon>
+                <mat-icon *ngIf="!product.isConsumed" class="active-icon mat-red-500-bg s-16">close</mat-icon>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="valid">
+              <mat-header-cell *cdkHeaderCellDef>Valid</mat-header-cell>
+              <mat-cell *cdkCellDef="let product" fxShow.gt-xs>
+                <mat-icon *ngIf="product.valid" class="active-icon mat-green-600-bg s-16">check</mat-icon>
+                <mat-icon *ngIf="!product.valid" class="active-icon mat-red-500-bg s-16">close</mat-icon>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="btns">
               <mat-header-cell *cdkHeaderCellDef></mat-header-cell>
               <mat-cell *cdkCellDef="let product">
                 <div fxFlex="row" fxLayoutAlign="end center">
-                  <button mat-icon-button [routerLink]="'/reports/edit/' + product.id"
-                    (click)="$event.stopPropagation()">
+                  <button mat-icon-button [routerLink]="'/items/edit/' + product.id" (click)="$event.stopPropagation()">
                     <mat-icon>edit</mat-icon>
                   </button>
                   <button mat-icon-button (click)="$event.stopPropagation(); deleteItem(product)">
@@ -133,61 +333,21 @@
                   </button>
                 </div>
               </mat-cell>
-            </ng-container> -->
+            </ng-container>
 
-            <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-header-row *cdkHeaderRowDef="displayedColumnsItem"></mat-header-row>
 
-            <mat-row *cdkRowDef="let product; columns: displayedColumns" class="product" matRipple
-              [routerLink]="'/reports/view/' + product.id">
+            <mat-row *cdkRowDef="let product; columns: displayedColumnsItem" class="product" matRipple
+              [routerLink]="'/items/view/' + product.id">
             </mat-row>
           </mat-table>
 
-          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [length]="itemsCount"></mat-paginator>
-
+          <mat-paginator #paginator [length]="mainItemsCount" [pageIndex]="0" [pageSize]="100"
+            [pageSizeOptions]="[5, 10, 25, 100]" (page)="getItemsPaging()">
+          </mat-paginator>
         </mat-tab>
-        <mat-tab label="Related">
-
-          <mat-table class="products-table" #table [dataSource]="dataSourceRelatedUser" matSort
-            [@animateStagger]="{ value: '50' }" fusePerfectScrollbar>
-            <ng-container cdkColumnDef="count">
-              <mat-header-cell *cdkHeaderCellDef mat-sort-header>Count</mat-header-cell>
-              <mat-cell *cdkCellDef="let product">
-                <p class="text-truncate">{{ product.count }}</p>
-              </mat-cell>
-            </ng-container>
-
-            <ng-container cdkColumnDef="owner">
-              <mat-header-cell *cdkHeaderCellDef mat-sort-header>Owner</mat-header-cell>
-              <mat-cell *cdkCellDef="let product">
-                <p class="text-truncate">{{ product.owner.username }}</p>
-              </mat-cell>
-            </ng-container>
-
-            <ng-container cdkColumnDef="gender">
-              <mat-header-cell *cdkHeaderCellDef mat-sort-header>gender</mat-header-cell>
-              <mat-cell *cdkCellDef="let product">
-                <p class="text-truncate">{{ product.owner.gender }}</p>
-              </mat-cell>
-            </ng-container>
 
 
-            <ng-container cdkColumnDef="country">
-              <mat-header-cell *cdkHeaderCellDef mat-sort-header>country</mat-header-cell>
-              <mat-cell *cdkCellDef="let product">
-                <p class="text-truncate">{{ product.owner.country.name }}</p>
-              </mat-cell>
-            </ng-container>
-
-            <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
-
-            <mat-row *cdkRowDef="let product; columns: displayedColumns" class="product" matRipple
-              [routerLink]="'/reports/view/' + product.id">
-            </mat-row>
-          </mat-table>
-
-          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-
-        </mat-tab>
       </mat-tab-group>
     </div>
 

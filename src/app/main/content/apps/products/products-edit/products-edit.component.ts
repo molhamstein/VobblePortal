@@ -45,7 +45,7 @@ export class ProductsEditComponent implements OnInit {
       name_ar: { required: true },
       name_en: { required: true },
       price: { required: true },
-
+      price_coins: { required: true },
       description_ar: { required: true },
       description_en: { required: true }
     };
@@ -64,9 +64,11 @@ export class ProductsEditComponent implements OnInit {
       name_ar: [this.item.name_ar, Validators.required],
       name_en: [this.item.name_en, Validators.required],
       price: [this.item.price, Validators.required],
+      price_coins: [this.item.price_coins, Validators.required],
       description_ar: [this.item.description_ar, Validators.required],
       description_en: [this.item.description_en, Validators.required],
       bottleCount: [this.item.bottleCount],
+      coinsCount: [this.item.coinsCount],
       validity: [this.item.validity],
       androidProduct: [this.item.androidProduct],
       appleProduct: [this.item.appleProduct],

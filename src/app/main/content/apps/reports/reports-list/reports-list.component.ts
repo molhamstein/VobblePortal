@@ -1,3 +1,4 @@
+import { FilterComponent } from './../../../../dialog/filter/filter.component';
 import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { fuseAnimations } from "../../../../../core/animations";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
@@ -32,7 +33,11 @@ export class ReportsListComponent implements OnInit {
   searchInput: FormControl;
   dialogRef: any;
 
-  filtersForm: FormGroup;
+  chipsFilter = [];
+  filtersObject = { "createdFrom": "", "createdTo": "" }
+  filterKey = { "createdFrom": true, "createdTo": true }
+
+
 
   dataSource: FilesDataSource | null;
   displayedColumns = [
@@ -78,10 +83,6 @@ export class ReportsListComponent implements OnInit {
       });
     this.itemsCount = this.reportsService.itemsCount;
 
-    this.filtersForm = this.formBuilder.group({
-      from: new FormControl(""),
-      to: new FormControl("")
-    });
   }
   getItemsPaging(isFilter = false) {
     if (isFilter) {
@@ -91,14 +92,14 @@ export class ReportsListComponent implements OnInit {
       .getItemsPaging(
         this.paginator.pageIndex,
         this.paginator.pageSize,
-        this.filtersForm.value
+        this.filtersObject
       )
       .then(items => {
         return items;
       });
   }
   exportAsExcelFile(): void {
-    this.reportsService.export(this.filtersForm.value).then(res => {
+    this.reportsService.export(this.filtersObject).then(res => {
       if (res) {
         console.log(res);
         window.location.href = res;
@@ -124,18 +125,40 @@ export class ReportsListComponent implements OnInit {
   }
 
   clearFilter() {
+    this.chipsFilter = [];
+    this.filtersObject = { "createdFrom": "", "createdTo": "" }
     this.paginator.pageIndex = 0
-    this.filtersForm.reset();
     this.getItemsPaging();
     this.reportsService
       .getItemsCount()
       .then(count => (this.itemsCount = count));
   }
 
+
+  openFilter() {
+    let dialogRef = this.dialog.open(FilterComponent, {
+      width: '600px',
+      data: { "filter": this.filtersObject, "filterKey": this.filterKey }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.filtersObject = result;
+        this.getItemsPaging(true);
+        this.chipsFilter = [];
+        for (let key in this.filtersObject) {
+          if (this.filtersObject[key] != "")
+            this.chipsFilter.push({ key: key, value: this.filtersObject[key] });
+        }
+      }
+    });
+
+  }
+
   applyFilter() {
     this.getItemsPaging(true);
     this.reportsService
-      .getItemsCount(this.filtersForm.value)
+      .getItemsCount(this.filtersObject)
       .then(count => (this.itemsCount = count));
     // this.progressBarService.toggle();
 

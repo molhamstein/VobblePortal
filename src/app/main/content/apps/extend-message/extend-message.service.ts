@@ -23,6 +23,8 @@ export class ExtendMessageService {
   onBottlesChanged: BehaviorSubject<any> = new BehaviorSubject({});
   items: any[];
   itemsRelated: any[];
+  itemsCount: number;
+  itemsRelatedCount: number;
   onItemsChanged: BehaviorSubject<any> = new BehaviorSubject({});
 
   orginalItems: any[];
@@ -73,7 +75,9 @@ export class ExtendMessageService {
         // this.getBottles(filtersForm.value),
 
         this.getItems(null),
+        this.getItemsCount(null),
         this.getItemsRelated(null),
+        this.getItemsRelatedCount(null),
 
         // this.getItems(purchasesFiltersForm.value),
         // this.getUsers(null)
@@ -81,6 +85,77 @@ export class ExtendMessageService {
       ]).then(() => {
         resolve();
       }, reject);
+    });
+  }
+
+  getItemsRelatedCount(filter): Promise<any> {
+    const api =
+      AppConfig.apiUrl +
+      "items/chatExtendReportRelatedCount?" +
+      filter +
+      "access_token=" +
+      this.authService.getToken();
+
+    console.log(api);
+    return new Promise((resolve, reject) => {
+      this.http.get(api).subscribe(
+        (response: any) => {
+          console.log("response.count ", response.count);
+          this.itemsRelatedCount = response.count;
+          // this.onItemsCountChanged.next(this.itemsCount);
+          resolve(this.itemsRelatedCount);
+        },
+        error => {
+          console.log("error ", error);
+          // if (error.error.error.code == AppConfig.authErrorCode)
+          //   this.router.navigate(["/error-404"]);
+          // else
+          //   this.helpersService.showActionSnackbar(
+          //     null,
+          //     false,
+          //     "",
+          //     { style: "failed-snackbar" },
+          //     AppConfig.technicalException
+          //   );
+          reject();
+        }
+      );
+    });
+  }
+
+
+  getItemsCount(filter): Promise<any> {
+    const api =
+      AppConfig.apiUrl +
+      "items/chatExtendReportOwnerCount?" +
+      filter +
+      "access_token=" +
+      this.authService.getToken();
+
+    console.log(api);
+    return new Promise((resolve, reject) => {
+      this.http.get(api).subscribe(
+        (response: any) => {
+          console.log("response.count ", response.count);
+          this.itemsCount = response.count;
+          // this.onItemsCountChanged.next(this.itemsCount);
+          resolve(this.itemsCount);
+        },
+        error => {
+          console.log("error ", error);
+          // if (error.error.error.code == AppConfig.authErrorCode)
+          //   this.router.navigate(["/error-404"]);
+          // else
+          //   this.helpersService.showActionSnackbar(
+          //     null,
+          //     false,
+          //     "",
+          //     { style: "failed-snackbar" },
+          //     AppConfig.technicalException
+          //   );
+          reject();
+        }
+      );
     });
   }
 
@@ -97,6 +172,21 @@ export class ExtendMessageService {
 
       }, reject);
     });
+  }
+
+  getUserRelated(userId, isOwner) {
+    let url =
+      AppConfig.apiUrl +
+      "items/" + userId + "/getUserRelated/?access_token=" +
+      this.authService.getToken();
+    url += "&isOwner=" + isOwner;
+    return new Promise((resolve, reject) => {
+      this.http.get(url).subscribe((response: any) => {
+        resolve(response);
+
+      }, reject);
+    });
+
   }
   getChatExtendReportRelatedUser(filter) {
     let url =
@@ -121,21 +211,32 @@ export class ExtendMessageService {
         console.log("items ", response);
         this.orginalItems = response.map(x => Object.assign({}, x));
 
-        this.items = response.map(item => {
+        this.itemsRelated = response.map(item => {
           return {
-            owner: item.owner,
-            count: item.count
+            relatedUser: item.relatedUser,
+            products: item.products,
+            totalCost: item.totalCost,
+            totalCount: item.totalCount,
           };
         });
-        console.log(this.items);
-        this.onItemsChanged.next(this.items);
-        resolve(this.items);
+        console.log(this.itemsRelated);
+        this.onItemsChanged.next(this.itemsRelated);
+        resolve(this.itemsRelated);
       }, reject);
     });
   }
 
-  getLengthItem(){
-    return this.items.length
+  getLengthItem() {
+    if (this.items)
+      return this.itemsCount
+    else
+      return 0
+  }
+  getLengthItemRelated() {
+    if (this.itemsRelated)
+      return this.itemsRelatedCount
+    else
+      return 0
   }
   getChatExtendReportOwner(filter) {
     console.log(filter)
@@ -167,7 +268,9 @@ export class ExtendMessageService {
         this.items = response.map(item => {
           return {
             owner: item.owner,
-            count: item.count
+            products: item.products,
+            totalCost: item.totalCost,
+            totalCount: item.totalCount,
           };
         });
 
@@ -305,7 +408,9 @@ export class ExtendMessageService {
         this.items = response.map(item => {
           return {
             owner: item.owner,
-            count: item.count
+            products: item.products,
+            totalCost: item.totalCost,
+            totalCount: item.totalCount,
           };
         });
         console.log(this.items);
@@ -340,8 +445,10 @@ export class ExtendMessageService {
 
         this.itemsRelated = response.map(item => {
           return {
-            owner: item.owner,
-            count: item.count
+            relatedUser: item.relatedUser,
+            products: item.products,
+            totalCost: item.totalCost,
+            totalCount: item.totalCount,
           };
         });
         console.log(this.itemsRelated);

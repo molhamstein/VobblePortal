@@ -1,3 +1,4 @@
+import { FuseViewUserComponent } from './../components/view-user/view-user.component';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -29,6 +30,7 @@ import { TranslateModule } from '@ngx-translate/core';
         FuseMatSidenavHelperDirective,
         FuseMatSidenavTogglerDirective,
         FuseConfirmDialogComponent,
+        FuseViewUserComponent,
         FuseCountdownComponent,
         FuseHljsComponent,
         FuseIfOnDomDirective,
@@ -68,7 +70,7 @@ import { TranslateModule } from '@ngx-translate/core';
         TranslateModule
     ],
     entryComponents: [
-        FuseConfirmDialogComponent
+        FuseConfirmDialogComponent,FuseViewUserComponent
     ],
     providers      : [
         CookieService,

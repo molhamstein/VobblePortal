@@ -70,6 +70,14 @@
           </mat-cell>
         </ng-container>
 
+        <ng-container cdkColumnDef="price_coins">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>price coins</mat-header-cell>
+          <mat-cell *cdkCellDef="let product">
+            <p class="text-truncate">{{product.price_coins | number }}</p>
+          </mat-cell>
+        </ng-container>
+
+        
         <ng-container cdkColumnDef="bottleCount">
           <mat-header-cell *cdkHeaderCellDef mat-sort-header>Bottle Count</mat-header-cell>
           <mat-cell *cdkCellDef="let product">
@@ -107,7 +115,7 @@
         </mat-row>
       </mat-table>
 
-      <mat-paginator #paginator [length]="itemsCount" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" (page)="getItemsPaging()">
+      <mat-paginator #paginator [length]="itemsCount" [pageIndex]="0" [pageSize]="100" [pageSizeOptions]="[5, 10, 25, 100]" (page)="getItemsPaging()">
       </mat-paginator>
 
       <!--[pageIndex]="page"

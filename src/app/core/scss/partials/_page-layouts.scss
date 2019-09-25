@@ -1,20 +1,17 @@
 // Page Layouts
-$carded-header-height: 214px !default;
-$carded-header-height-sm: 250px !default;
-$carded-header-height-md: 200px !default;
+$carded-header-height: 164px !default;
+$carded-header-height-sm: 200px !default;
+$carded-header-height-md: 1500px !default;
 $carded-toolbar-height: 64px !default;
 
 $header-height: 120px !default;
 $header-height-sm: 100px !default;
 
 // Calculate toolbarless header height
-$carded-header-height-without-toolbar: $carded-header-height -
-  $carded-toolbar-height;
-$carded-header-height-without-toolbar-sm: $carded-header-height-sm -
-  $carded-toolbar-height;
+$carded-header-height-without-toolbar: $carded-header-height - $carded-toolbar-height;
+$carded-header-height-without-toolbar-sm: $carded-header-height-sm - $carded-toolbar-height;
 
-$carded-header-height-without-toolbar-md: $carded-header-height-md -
-  $carded-toolbar-height;
+$carded-header-height-without-toolbar-md: $carded-header-height-md - $carded-toolbar-height;
 
 // Top bg image
 $top-bg-image: url("assets/images/backgrounds/header-bg.png");
@@ -54,16 +51,17 @@ $top-bg-image: url("assets/images/backgrounds/header-bg.png");
 
     // Fullwidth
     &.fullwidth {
+
       // Single scroll
       &.single-scroll {
-        > .center {
+        >.center {
           flex: 1 0 auto;
           max-height: none;
         }
       }
 
       // Center
-      > .center {
+      >.center {
         display: flex;
         flex-direction: column;
         flex: 1;
@@ -93,6 +91,12 @@ $top-bg-image: url("assets/images/backgrounds/header-bg.png");
           }
         }
 
+        .headerCustom {
+          height: $carded-header-height-without-toolbar + 50px;
+          min-height: $carded-header-height-without-toolbar + 50px;
+          max-height: $carded-header-height-without-toolbar + 50px;
+        }
+
         .content-card {
           display: flex;
           flex-direction: column;
@@ -110,7 +114,7 @@ $top-bg-image: url("assets/images/backgrounds/header-bg.png");
             max-height: $carded-toolbar-height;
           }
 
-          > .content {
+          >.content {
             display: flex;
             flex: 1;
             overflow: auto;
@@ -122,14 +126,15 @@ $top-bg-image: url("assets/images/backgrounds/header-bg.png");
     // Left sidenav - Right sidenav
     &.left-sidenav,
     &.right-sidenav {
+
       // Single scroll
       &.single-scroll {
-        > mat-sidenav-container {
+        >mat-sidenav-container {
           flex: 1 0 auto;
         }
       }
 
-      > mat-sidenav-container {
+      >mat-sidenav-container {
         display: flex;
         flex: 1;
         background: none;
@@ -171,8 +176,8 @@ $top-bg-image: url("assets/images/backgrounds/header-bg.png");
           }
         }
 
-        > .mat-sidenav-content,
-        > .mat-drawer-content {
+        >.mat-sidenav-content,
+        >.mat-drawer-content {
           display: flex;
           flex: 1;
           height: auto;
@@ -237,9 +242,10 @@ $top-bg-image: url("assets/images/backgrounds/header-bg.png");
 
       // Tabbed
       &.tabbed {
-        > mat-sidenav-container {
-          > .mat-sidenav-content,
-          > .mat-drawer-content {
+        >mat-sidenav-container {
+
+          >.mat-sidenav-content,
+          >.mat-drawer-content {
             width: calc(100% - 240px);
 
             .center {
@@ -289,12 +295,14 @@ $top-bg-image: url("assets/images/backgrounds/header-bg.png");
 
     // Left sidenav
     &.left-sidenav {
+
       // Sidenav
-      > mat-sidenav-container {
+      >mat-sidenav-container {
         .sidenav {
           &.mat-is-locked-open {
-            ~ .mat-sidenav-content,
-            ~ .mat-drawer-content {
+
+            ~.mat-sidenav-content,
+            ~.mat-drawer-content {
               .center {
                 margin-left: 0;
               }
@@ -306,14 +314,16 @@ $top-bg-image: url("assets/images/backgrounds/header-bg.png");
 
     // Right sidenav
     &.right-sidenav {
+
       // Sidenav
-      > mat-sidenav-container {
+      >mat-sidenav-container {
         .sidenav {
           order: 999;
 
           &.mat-is-locked-open {
-            ~ .mat-sidenav-content,
-            ~ .mat-drawer-content {
+
+            ~.mat-sidenav-content,
+            ~.mat-drawer-content {
               .center {
                 margin-right: 0;
               }
@@ -333,7 +343,7 @@ $top-bg-image: url("assets/images/backgrounds/header-bg.png");
     min-width: 100%;
 
     // Top bg
-    > .header {
+    >.header {
       background-image: $top-bg-image;
       background-size: cover;
     }
@@ -347,7 +357,7 @@ $top-bg-image: url("assets/images/backgrounds/header-bg.png");
     &.inner-sidenav {
       min-height: 100%;
 
-      > .header {
+      >.header {
         height: $header-height;
         min-height: $header-height;
         max-height: $header-height;
@@ -357,13 +367,14 @@ $top-bg-image: url("assets/images/backgrounds/header-bg.png");
     // Left sidenav - Right sidenav
     &.left-sidenav,
     &.right-sidenav {
+
       // Single scroll
       &.single-scroll {
-        > mat-sidenav-container {
+        >mat-sidenav-container {
           flex: 1 0 auto;
 
-          > .mat-sidenav-content,
-          > .mat-drawer-content {
+          >.mat-sidenav-content,
+          >.mat-drawer-content {
             flex: 1 0 auto;
             max-height: none;
           }
@@ -372,7 +383,7 @@ $top-bg-image: url("assets/images/backgrounds/header-bg.png");
 
       // Inner Sidenav
       &.inner-sidenav {
-        > mat-sidenav-container {
+        >mat-sidenav-container {
           flex: 1;
 
           .sidenav {
@@ -381,8 +392,8 @@ $top-bg-image: url("assets/images/backgrounds/header-bg.png");
             }
           }
 
-          > .mat-sidenav-content,
-          > .mat-drawer-content {
+          >.mat-sidenav-content,
+          >.mat-drawer-content {
             display: flex;
             height: auto;
 
@@ -400,7 +411,7 @@ $top-bg-image: url("assets/images/backgrounds/header-bg.png");
         }
       }
 
-      > mat-sidenav-container {
+      >mat-sidenav-container {
         display: flex;
         flex-direction: column;
         flex: 1;
@@ -428,8 +439,8 @@ $top-bg-image: url("assets/images/backgrounds/header-bg.png");
           }
         }
 
-        > .mat-sidenav-content,
-        > .mat-drawer-content {
+        >.mat-sidenav-content,
+        >.mat-drawer-content {
           display: flex;
           flex: 1;
           height: auto;
@@ -450,8 +461,7 @@ $top-bg-image: url("assets/images/backgrounds/header-bg.png");
             overflow: auto;
             @include mat-elevation(7);
 
-            .content {
-            }
+            .content {}
           }
         }
       }
@@ -467,7 +477,7 @@ $top-bg-image: url("assets/images/backgrounds/header-bg.png");
         max-height: $header-height;
       }
 
-      > .content {
+      >.content {
         .mat-tab-group {
           .mat-tab-labels {
             padding: 0 24px;
@@ -484,10 +494,11 @@ $top-bg-image: url("assets/images/backgrounds/header-bg.png");
   }
 
   @include media-breakpoint-down("xs") {
+
     // Activate single-scroll
     &.carded {
       &.fullwidth {
-        > .center {
+        >.center {
           flex: 1 0 auto;
           max-height: none;
         }
@@ -495,7 +506,7 @@ $top-bg-image: url("assets/images/backgrounds/header-bg.png");
 
       &.left-sidenav,
       &.right-sidenav {
-        > mat-sidenav-container {
+        >mat-sidenav-container {
           flex: 1 0 auto;
         }
       }
@@ -503,38 +514,40 @@ $top-bg-image: url("assets/images/backgrounds/header-bg.png");
 
     &.simple {
       &.fullwidth {
-        > .content {
+        >.content {
           flex: 1 0 auto;
         }
       }
 
       &.left-sidenav,
       &.right-sidenav {
-        > mat-sidenav-container {
+        >mat-sidenav-container {
           flex: 1 0 auto !important;
 
-          > .mat-sidenav-content,
-          > .mat-drawer-content {
+          >.mat-sidenav-content,
+          >.mat-drawer-content {
             flex: 1 0 auto;
           }
         }
       }
     }
+
     // End - Activate single-scroll
 
     // Smaller margins
     &.carded {
       &.fullwidth {
-        > .center {
+        >.center {
           padding: 0 16px;
         }
       }
 
       &.left-sidenav,
       &.right-sidenav {
-        > mat-sidenav-container {
-          > .mat-sidenav-content,
-          > .mat-drawer-content {
+        >mat-sidenav-container {
+
+          >.mat-sidenav-content,
+          >.mat-drawer-content {
             .center {
               margin: 0 16px;
             }
@@ -542,6 +555,7 @@ $top-bg-image: url("assets/images/backgrounds/header-bg.png");
         }
       }
     }
+
     // End - Smaller margins
   }
 }

@@ -1,0 +1,107 @@
+<div id="products" class="page-layout carded fullwidth" fusePerfectScrollbar>
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg mat-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- HEADER -->
+    <div class="header white-fg" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+
+      <!-- APP TITLE -->
+      <div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon class="logo-icon mr-16" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">chat_bubble</mat-icon>
+        <span class="logo-text h1" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">Chat Base Products</span>
+      </div>
+      <!-- / APP TITLE -->
+
+      <!-- SEARCH -->
+      <div class="search-input-wrapper mx-12 m-md-0" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+        <label for="search" class="mr-8">
+          <mat-icon class="secondary-text">search</mat-icon>
+        </label>
+        <mat-form-field floatPlaceholder="never" fxFlex="1 0 auto">
+          <input id="search" matInput #filter placeholder="Search">
+        </mat-form-field>
+      </div>
+      <!-- / SEARCH -->
+
+      <button type="button" mat-raised-button [routerLink]="'/chat-base-products/new'" class="add-product-button mat-white-bg  mt-sm-0">
+        <span> NEW </span>
+      </button>
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card mat-white-bg">
+
+      <mat-table class="products-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
+
+        <ng-container cdkColumnDef="icon">
+          <mat-header-cell *cdkHeaderCellDef>Icon</mat-header-cell>
+          <mat-cell *cdkCellDef="let product">
+            <img class="product-image" *ngIf="product.icon && product.icon!=' '" [alt]="product.name_en" [src]="product.icon" />
+            <img *ngIf="!product.icon || product.icon == ' '" [src]=defaultProductIcon>
+          </mat-cell>
+        </ng-container>
+
+
+        <ng-container cdkColumnDef="name_en">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Name EN</mat-header-cell>
+          <mat-cell *cdkCellDef="let product">
+            <p class="text-truncate">{{product.name_en}}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="name_ar">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Name AR</mat-header-cell>
+          <mat-cell *cdkCellDef="let product">
+            <p class="text-truncate">{{product.name_ar}}</p>
+          </mat-cell>
+        </ng-container>
+
+
+        <ng-container cdkColumnDef="status">
+          <mat-header-cell *cdkHeaderCellDef>Active</mat-header-cell>
+          <mat-cell *cdkCellDef="let product" fxShow.gt-xs>
+            <mat-icon *ngIf="product.status == 'active'" class="active-icon mat-green-600-bg s-16">check</mat-icon>
+            <mat-icon *ngIf="product.status == 'deactive'" class="active-icon mat-red-500-bg s-16">close</mat-icon>
+          </mat-cell>
+        </ng-container>
+
+
+        <ng-container cdkColumnDef="btns">
+          <mat-header-cell *cdkHeaderCellDef></mat-header-cell>
+          <mat-cell *cdkCellDef="let product">
+            <div fxFlex="row" fxLayoutAlign="end center">
+              <button mat-icon-button [routerLink]="'/chat-base-products/edit/'+product.id" (click)="$event.stopPropagation();">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <!-- <button mat-icon-button (click)="$event.stopPropagation();deleteItem(product)">
+                <mat-icon>delete</mat-icon>
+              </button> -->
+            </div>
+          </mat-cell>
+        </ng-container>
+
+
+        <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+
+        <mat-row *cdkRowDef="let product; columns: displayedColumns;" class="product" matRipple [routerLink]="'/products/view/'+product.id">
+        </mat-row>
+      </mat-table>
+
+      <mat-paginator #paginator [length]="itemsCount" [pageIndex]="0" [pageSize]="100" [pageSizeOptions]="[5, 10, 25, 100]" (page)="getItemsPaging()">
+      </mat-paginator>
+
+      <!--[pageIndex]="page"
+      [pageSize]="itemsPerPage"-->
+
+    </div>
+    <!-- / CONTENT CARD -->
+  </div>
+  <!-- / CENTER -->
+</div>

@@ -1,0 +1,160 @@
+<div id="products" class="page-layout carded fullwidth" fusePerfectScrollbar>
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg mat-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+    <!-- HEADER -->
+    <form class="header white-fg" fxLayout="column" fxLayoutAlign="center space-around" [formGroup]="filtersForm"
+      style="margin: 17px 0;">
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <!-- APP TITLE -->
+        <div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
+          <mat-icon class="logo-icon mr-16" *fuseIfOnDom
+            [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }">block</mat-icon>
+          <span class="logo-text h1" *fuseIfOnDom
+            [@animate]="{ value: '*', params: { delay: '100ms', x: '-25px' } }">Block</span>
+        </div>
+        <!-- / APP TITLE -->
+
+        <!-- SEARCH -->
+        <div class="search-input-wrapper mx-12 m-md-0" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+          <label for="search" class="mr-8">
+            <mat-icon class="secondary-text">search</mat-icon>
+          </label>
+          <mat-form-field floatPlaceholder="never" fxFlex="1 0 auto">
+            <input type="text" placeholder="Blocker" (keyup)="keyUpOwner()" aria-label="user" matInput formControlName="owner"
+              name="country" [matAutocomplete]="auto" />
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let iso of owners" [value]="iso.username">
+                {{ iso.username }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <!-- <mat-form-field floatPlaceholder="never" fxFlex="1 0 auto">
+            <input id="search" matInput #filter placeholder="Search" />
+          </mat-form-field> -->
+          <label for="search" class="mr-8">
+            <mat-icon class="secondary-text">search</mat-icon>
+          </label>
+          <mat-form-field floatPlaceholder="never" fxFlex="1 0 auto" >
+            <input type="text" placeholder="Related User" (keyup)="keyUpUser()" aria-label="user" matInput
+              formControlName="user" name="country" [matAutocomplete]="auto2" />
+            <mat-autocomplete #auto2="matAutocomplete">
+              <mat-option *ngFor="let iso of users" [value]="iso.username">
+                {{ iso.username }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <!-- / SEARCH -->
+        <!-- 
+        <button
+          mat-raised-button
+          [routerLink]="'/reports/new'"
+          class="add-product-button mat-white-bg  mt-sm-0"
+        >
+          <span> NEW </span>
+        </button> -->
+
+        <button type="button" mat-raised-button type="submit" (click)="clearFilter()"
+          class="add-product-button mat-white-bg  mt-sm-0">
+          <span> CLEAR </span>
+        </button>
+
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px">
+        <mat-form-field>
+          <input matInput (click)="picker.open()" [matDatepicker]="picker" placeholder="Date From"
+            formControlName="from" name="createdAt" />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput (click)="topicker.open()" [matDatepicker]="topicker" placeholder="Date To"
+            formControlName="to" name="createdAt" />
+          <mat-datepicker-toggle matSuffix [for]="topicker"></mat-datepicker-toggle>
+          <mat-datepicker #topicker></mat-datepicker>
+        </mat-form-field>
+
+        <button mat-raised-button type="submit" (click)="applyFilter()"
+          class="add-product-button mat-white-bg  mt-sm-0">
+          <span> FILTER </span>
+        </button>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+        <!-- <button
+          mat-raised-button
+          (click)="exportAsExcelFile()"
+          class="add-product-button mat-white-bg  mt-sm-0"
+        >
+          Export
+        </button> -->
+
+        <div>
+        </div>
+      </div>
+    </form>
+    <!-- / HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card mat-white-bg">
+      <mat-table class="products-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{ value: '50' }"
+        fusePerfectScrollbar>
+        
+        <ng-container cdkColumnDef="user">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>User</mat-header-cell>
+          <mat-cell *cdkCellDef="let product">
+            <p class="text-truncate">{{ product.user?.username }}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="blocker">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Blocker</mat-header-cell>
+          <mat-cell *cdkCellDef="let product">
+            <p class="text-truncate">{{ product.owner.username }}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="blocker-gender">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Blocker Gender</mat-header-cell>
+          <mat-cell *cdkCellDef="let product">
+            <mat-icon *ngIf="product.owner.gender == 'male'" class="active-icon light-blue-800-fg s-25">sentiment_satisfied
+            </mat-icon>
+            <mat-icon *ngIf="product.owner.gender == 'female'" class="active-icon pink-300-fg s-25">face</mat-icon>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="user-gender">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>User Gender</mat-header-cell>
+          <mat-cell *cdkCellDef="let product">
+            <mat-icon *ngIf="product.user?.gender == 'male'" class="active-icon light-blue-800-fg s-25">sentiment_satisfied
+            </mat-icon>
+            <mat-icon *ngIf="product.user?.gender == 'female'" class="active-icon pink-300-fg s-25">face</mat-icon>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="createdAt">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Creation Date</mat-header-cell>
+          <mat-cell *cdkCellDef="let product">
+            <p class="text-truncate">{{ product.createdAt | date:'dd-MM-yyyy HH:mm' }}</p>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+
+        <mat-row *cdkRowDef="let product; columns: displayedColumns" class="product" matRipple
+          [routerLink]="'/reports/view/' + product.id">
+        </mat-row>
+      </mat-table>
+
+      <mat-paginator #paginator [length]="itemsCount" [pageIndex]="0" [pageSize]="100"
+        [pageSizeOptions]="[5, 10, 25, 100]" (page)="getItemsPaging()">
+      </mat-paginator>
+    </div>
+    <!-- / CONTENT CARD -->
+  </div>
+  <!-- / CENTER -->
+</div>

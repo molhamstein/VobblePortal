@@ -1,3 +1,5 @@
+import { FilterComponent } from './../../../../dialog/filter/filter.component';
+import { AppConfig } from './../../../../shared/app.config';
 import { Item } from "./../item.model";
 import { TypeGoodsService } from "../../type-goods/type-goods.service";
 import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
@@ -44,22 +46,25 @@ export class ItemsListComponent implements OnInit {
   searchInput: FormControl;
   dialogRef: any;
 
+  chipsFilter = [];
+  filtersObject = { "country": "", "createdFrom": "", "createdTo": "", "type": "" }
+  filterKey = { "country": true, "createdFrom": true, "createdTo": true, "type": true }
+
+
   dataSource: FilesDataSource | null;
   displayedColumns = [
     "owner",
     "country",
     "product",
-    "storeType",
+    "type",
+    "price",
     "startAt",
     "endAt",
-    "isConsumed",
-    "valid",
     "btns"
   ];
   itemsCount: number = 0;
   type_goods: any[];
 
-  filtersForm: FormGroup;
   filteredOptions: Observable<string[]>;
 
   @ViewChild(MatPaginator)
@@ -84,7 +89,6 @@ export class ItemsListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getTypeGoods();
 
     this.dataSource = new FilesDataSource(
       this.itemsService,
@@ -102,32 +106,34 @@ export class ItemsListComponent implements OnInit {
         this.dataSource.filter = this.filter.nativeElement.value;
       });
 
-    this.filtersForm = this.formBuilder.group({
-      type: new FormControl(""),
-      country: new FormControl(""),
-      from: new FormControl(""),
-      to: new FormControl("")
+
+  }
+
+  openFilter() {
+    let dialogRef = this.dialog.open(FilterComponent, {
+      width: '600px',
+      data: { "filter": this.filtersObject, "filterKey": this.filterKey }
     });
 
-    this.filteredOptions = this.filtersForm.controls.country.valueChanges.pipe(
-      startWith(""),
-      map(val => this.filterC(val))
-    );
-  }
-
-  filterC(val: string): any[] {
-    return countries.filter(option => option.iso.toLowerCase().includes(val));
-  }
-
-  getTypeGoods() {
-    this.typeGoodsService.getItems().then(items => {
-      this.type_goods = items;
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.filtersObject = result;
+        this.getItemsPaging();
+        this.chipsFilter = [];
+        for (let key in this.filtersObject) {
+          if (this.filtersObject[key] != "")
+            this.chipsFilter.push({ key: key, value: this.filtersObject[key] });
+        }
+      }
     });
+
   }
+
 
   clearFilter() {
-    this.filtersForm.reset();
-    this.filter.nativeElement.value = "";
+    this.chipsFilter = [];
+    this.filtersObject = { "country": "", "createdFrom": "", "createdTo": "", "type": "" }
+      this.filter.nativeElement.value = "";
     this.itemsService.getItemsCount("");
     this.getItemsPaging();
   }
@@ -137,7 +143,7 @@ export class ItemsListComponent implements OnInit {
       .getItemsPaging(
         this.paginator.pageIndex,
         this.paginator.pageSize,
-        this.filtersForm.value,
+        this.filtersObject,
         this.filter.nativeElement.value
       )
       .then(items => {
@@ -146,12 +152,17 @@ export class ItemsListComponent implements OnInit {
   }
 
   exportAsExcelFile(): void {
-    this.itemsService.export(this.filtersForm.value).then(res => {
+    this.itemsService.export(this.filtersObject).then(res => {
       if (res) {
         window.location.href = res;
       }
     });
   }
+
+  openNewTab(contact) {
+    window.open(AppConfig.siteUrl + "items/view/" + contact.id)
+  }
+
 
   deleteItem(contact) {
     this.confirmDialogRef = this.dialog.open(FuseConfirmDialogComponent, {
@@ -268,5 +279,5 @@ export class FilesDataSource extends DataSource<any> {
     });
   }
 
-  disconnect() {}
+  disconnect() { }
 }

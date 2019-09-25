@@ -32,7 +32,7 @@ export class TopicsService implements Resolve<any> {
     private router: Router,
     private progressBarService: ProgressBarService,
     private helpersService: HelpersService
-  ) {}
+  ) { }
 
   resolve(
     route: ActivatedRouteSnapshot,
@@ -62,8 +62,8 @@ export class TopicsService implements Resolve<any> {
       this.http
         .get(
           AppConfig.apiUrl +
-            "topics?access_token=" +
-            this.authService.getToken()
+          "topics?access_token=" +
+          this.authService.getToken()
         )
         .subscribe(
           (response: any) => {
@@ -94,12 +94,13 @@ export class TopicsService implements Resolve<any> {
       this.http
         .get<Topic[]>(
           AppConfig.apiUrl +
-            "topics?filter[limit]=" +
-            itemsPerPage +
-            "&filter[skip]=" +
-            offset +
-            "&access_token=" +
-            this.authService.getToken()
+          "topics?filter[limit]=" +
+          itemsPerPage +
+          "&filter[skip]=" +
+          offset +
+          "&filter[order]=createdAt%20DESC" +
+          "&access_token=" +
+          this.authService.getToken()
         )
         .subscribe(
           (response: any) => {
@@ -131,8 +132,8 @@ export class TopicsService implements Resolve<any> {
       this.http
         .get<Topic[]>(
           AppConfig.apiUrl +
-            "topics/count?access_token=" +
-            this.authService.getToken()
+          "topics/count?access_token=" +
+          this.authService.getToken()
         )
         .subscribe(
           (response: any) => {
@@ -165,10 +166,10 @@ export class TopicsService implements Resolve<any> {
       this.http
         .delete<Topic>(
           AppConfig.apiUrl +
-            "topics/" +
-            item.id +
-            "?access_token=" +
-            this.authService.getToken()
+          "topics/" +
+          item.id +
+          "?access_token=" +
+          this.authService.getToken()
         )
         .subscribe(
           data => {
@@ -206,10 +207,10 @@ export class TopicsService implements Resolve<any> {
       this.http
         .get<Topic>(
           AppConfig.apiUrl +
-            "topics/" +
-            itemId +
-            "?access_token=" +
-            this.authService.getToken()
+          "topics/" +
+          itemId +
+          "?access_token=" +
+          this.authService.getToken()
         )
         .subscribe(
           item => {
@@ -241,10 +242,10 @@ export class TopicsService implements Resolve<any> {
       this.http
         .patch<Topic>(
           AppConfig.apiUrl +
-            "topics/" +
-            item.id +
-            "?access_token=" +
-            this.authService.getToken(),
+          "topics/" +
+          item.id +
+          "?access_token=" +
+          this.authService.getToken(),
           item
         )
         .subscribe(

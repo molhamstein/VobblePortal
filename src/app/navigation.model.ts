@@ -87,12 +87,6 @@ export class NavigationModel {
                 title: "List",
                 type: "item",
                 url: "/items/list"
-              },
-              {
-                id: "new",
-                title: "New",
-                type: "item",
-                url: "/items/new"
               }
             ]
           },
@@ -113,6 +107,26 @@ export class NavigationModel {
                 title: "New",
                 type: "item",
                 url: "/products/new"
+              }
+            ]
+          },
+          {
+            id: "chat-base-products",
+            title: "Chat Base Product",
+            type: "collapse",
+            icon: "chat_bubble",
+            children: [
+              {
+                id: "list",
+                title: "List",
+                type: "item",
+                url: "/chat-base-products/list"
+              },
+              {
+                id: "new",
+                title: "New",
+                type: "item",
+                url: "/chat-base-products/new"
               }
             ]
           },
@@ -178,10 +192,24 @@ export class NavigationModel {
           },
           {
             id: "extend-message",
-            title: "Extend Message",
+            title: "Chat Extend",
             type: "item",
-            icon: "dashboard",
+            icon: "add_alarm",
             url: "/extend-message"
+          },
+          {
+            id: "gift-items",
+            title: "Gift Items",
+            type: "item",
+            icon: "card_giftcard",
+            url: "/gift-items"
+          },
+          {
+            id: "block",
+            title: "Block",
+            type: "item",
+            icon: "block",
+            url: "/block/list"
           }
         ]
       }

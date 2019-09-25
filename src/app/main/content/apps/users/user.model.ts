@@ -22,6 +22,8 @@ export class User {
   repliesBottlesCount: number;
   lastLogin: Date;
   isActive: boolean;
+  deviceId:string;
+  device:any
 
   constructor(user) {
     this.id = user.id; // || FuseUtils.generateGUID();
@@ -45,5 +47,7 @@ export class User {
     this.repliesBottlesCount = user.repliesBottlesCount || 0;
     this.foundBottlesCount = user.foundBottlesCount || 0;
     this.isActive = user.isActive || false;
+    this.deviceId = user.deviceId || null;
+    this.device = user.device || null;
   }
 }

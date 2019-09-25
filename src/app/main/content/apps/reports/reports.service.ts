@@ -62,7 +62,7 @@ export class ReportsService implements Resolve<any> {
       this.http
         .get(
           AppConfig.apiUrl +
-          "reports?filter[include]=report_Type&filter[include]=owner&access_token=" +
+          "reports?filter[order]=createdAt%20DESC&filter[include]=report_Type&filter[include]=owner&access_token=" +
           this.authService.getToken()
         )
         .subscribe(
@@ -96,17 +96,17 @@ export class ReportsService implements Resolve<any> {
         itemsPerPage +
         ', "skip":' +
         offset +
-        ',"include":"report_Type","include":"bottle","include":"owner"';
+        ',"include":"report_Type","include":"bottle","include":"owner","order":"createdAt DESC"';
 
       let api = AppConfig.apiUrl + "reports?" + _filter;
 
       if (filterBy && filterBy !== null) {
         let values = filterBy;
         let filter = "";
-        if (values.from)
-          filter += ',{"createdAt":{"gt":"' + values.from + '"}}';
-        if (values.to)
-          filter += ',{"createdAt":{"lt":"' + values.to + '"}}';
+        if (values.createdFrom)
+          filter += ',{"createdAt":{"gt":"' + values.createdFrom + '"}}';
+        if (values.createdTo)
+          filter += ',{"createdAt":{"lt":"' + values.createdTo + '"}}';
 
         if (filter.charAt(0) === ",") {
           filter = filter.substr(1);
@@ -164,10 +164,10 @@ export class ReportsService implements Resolve<any> {
     if (values && values !== null) {
       let filter = "";
 
-      if (values.from)
-        filter += ',{"createdAt":{"gt":"' + values.from + '"}}';
-      if (values.to)
-        filter += ',{"createdAt":{"lt":"' + values.to + '"}}';
+      if (values.createdFrom)
+        filter += ',{"createdAt":{"gt":"' + values.createdFrom + '"}}';
+      if (values.createdTo)
+        filter += ',{"createdAt":{"lt":"' + values.createdTo + '"}}';
 
       if (filter.charAt(0) === ",") {
         filter = filter.substr(1);

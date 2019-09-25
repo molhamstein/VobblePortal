@@ -1,0 +1,92 @@
+<div class="dialog-content-wrapper">
+  <mat-toolbar matDialogTitle class="mat-accent m-0">
+    <div style="padding-top: 7px;" fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+      <span class="title dialog-title">Filter</span>
+      <button style="float: right;" mat-button class="mat-icon-button" (click)="dialogRef.close()"
+        aria-label="Close dialog">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
+  <div mat-dialog-content class="p-24 m-0" fusePerfectScrollbar>
+    <form name="userFilterForm" [formGroup]="filterForm" class="event-form">
+      <div fxLayout="column" fxLayout.gt-md="row wrap" fxLayoutAlign.gt-md="space-around center" fxFlex>
+        <mat-form-field fxFlex="30" *ngIf="filterKey.gender">
+          <mat-select placeholder="Gender" formControlName="gender" name="gender">
+            <mat-option [value]=""> No filter</mat-option>
+            <mat-option value="male"> Male</mat-option>
+            <mat-option value="female"> Female</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field fxFlex="30" *ngIf="filterKey.status !=null">
+          <mat-select placeholder="Status" formControlName="status">
+            <mat-option [value]=""> No filter</mat-option>
+            <mat-option value="active">Active</mat-option>
+            <mat-option value="deactivated">De-Activated</mat-option>
+            <mat-option value="pending">Pending</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field fxFlex="30" *ngIf="filterKey.type">
+          <mat-select placeholder="Type Goods" formControlName="type">
+            <mat-option *ngFor="let type of type_goods" [value]="type.id">
+              <span>{{ type.name_en }} / {{ type.name_ar }}</span>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field fxFlex="30" *ngIf="filterKey.shoreId">
+
+          <mat-select placeholder="Shore" formControlName="shoreId">
+            <mat-option [value]=""> No filter</mat-option>
+            <mat-option *ngFor="let shore of shores" [value]="shore.id">
+              <img *ngIf="shore.cover && shore.cover != ''" [src]="shore.cover"
+                style=" border-radius: 50%;object-fit: cover; margin-top: 8px; margin-right: 5px;height: 30px;width: 30px;" />
+              <span> {{ shore.name_en }} {{ shore.name_ar }}</span>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field fxFlex="30" *ngIf="filterKey.country">
+          <input type="text" placeholder="Country" aria-label="Country" matInput formControlName="country"
+            name="country" [matAutocomplete]="auto" />
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let iso of (filteredOptions | async)" [value]="iso.iso">
+              {{ iso.name }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="30" *ngIf="filterKey.lastLoginFrom">
+          <input (click)="picker3.open()" matInput [matDatepicker]="picker3" placeholder="Last Login From"
+            formControlName="lastLoginFrom" name="lastLoginFrom" />
+          <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+          <mat-datepicker #picker3></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="30" *ngIf="filterKey.createdFrom">
+          <input (click)="picker.open()" matInput [matDatepicker]="picker" placeholder="Creation Date From"
+            formControlName="createdFrom" name="createdFrom" />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="30" *ngIf="filterKey.createdTo">
+          <input (click)="picker2.open()" matInput [matDatepicker]="picker2" placeholder="Creation Date To"
+            formControlName="createdTo" name="createdTo" />
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </form>
+
+  </div>
+
+  <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="space-between center">
+
+    <button mat-raised-button class="save-button mat-accent" (click)="saveFilter()" aria-label="SAVE">
+      Filter
+    </button>
+    <!-- <button mat-raised-button class="save-button mat-accent" (click)="save(false,startPicker,endPicker)" [disabled]="eventForm.invalid" aria-label="SAVE">
+            {{ 'Dialog.Add_Slotes.SAVE' | translate }}
+        </button> -->
+
+  </div>
+</div>

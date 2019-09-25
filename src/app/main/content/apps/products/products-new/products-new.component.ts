@@ -40,7 +40,7 @@ export class ProductsNewComponent implements OnInit {
       name_ar: { required: true },
       name_en: { required: true },
       price: { required: true },
-
+      price_coins: { required: true },
       description_ar: { required: true },
       description_en: { required: true }
     };
@@ -52,10 +52,12 @@ export class ProductsNewComponent implements OnInit {
     this.form = this.formBuilder.group({
       name_ar: ["", Validators.required],
       name_en: ["", Validators.required],
+      price_coins: [0, Validators.required],
       price: [0, Validators.required],
       description_ar: ["", Validators.required],
       description_en: ["", Validators.required],
       bottleCount: [0],
+      coinsCount: [0],
       validity: [0],
       androidProduct: [""],
       appleProduct: [""],

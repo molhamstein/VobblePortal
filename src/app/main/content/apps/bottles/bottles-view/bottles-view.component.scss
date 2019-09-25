@@ -418,7 +418,7 @@
 
   .usersDiv {
     width: 100%;
-    padding: 0px 10px;
+    padding: 0px 0px;
     max-height: 210px;
     overflow-y: auto;
 
@@ -445,4 +445,12 @@
     }
   }
 
+}
+
+
+.customBadge {
+  background-color: orange;
+  width: 40px;
+  border-radius: 5px;
+  margin-left: 10px;
 }

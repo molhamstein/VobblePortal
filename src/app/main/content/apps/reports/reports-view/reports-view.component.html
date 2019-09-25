@@ -82,7 +82,7 @@
                         </td>
 
                         <td>
-                          <span class=" text-truncate">{{item.createdAt | date}}</span>
+                          <span class=" text-truncate">{{item.createdAt | date:'dd-MM-yyyy HH:mm'}}</span>
                         </td>
 
                         <td [routerLink]="'/users/view/'+item.ownerId">
@@ -123,7 +123,7 @@
 
 
                         <td [routerLink]="'/bottles/view/'+item.bottle.id">
-                          <span class="link-span  text-truncate">{{item.bottle.createdAt | date}}</span>
+                          <span class="link-span  text-truncate">{{item.bottle.createdAt | date:'dd-MM-yyyy HH:mm'}}</span>
                         </td>
 
                         <td [routerLink]="'/users/view/'+item.bottle.ownerId">

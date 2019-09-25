@@ -97,7 +97,7 @@ export class BottlesService implements Resolve<any> {
     const _paging =
       'filter={"limit":' +
       itemsPerPage +
-      ', "skip":' +
+      ', "offset":' +
       offset +
       ',"order":"createdAt DESC"';
 
@@ -294,7 +294,7 @@ export class BottlesService implements Resolve<any> {
           itemId +
           "?access_token=" +
           this.authService.getToken() +
-          "&filter=" + JSON.stringify({ "include": "userComplete" })
+          "&filter=" + JSON.stringify({ "include": ["userComplete", "userSeen", "userReplaies"] })
         )
         .subscribe(
           item => {

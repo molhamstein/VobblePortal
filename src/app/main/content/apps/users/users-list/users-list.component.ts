@@ -1,3 +1,4 @@
+import { FilterComponent } from './../../../../dialog/filter/filter.component';
 import { Subject } from 'rxjs/Subject';
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 
@@ -35,8 +36,9 @@ import { map, startWith, debounceTime, distinctUntilChanged } from "rxjs/operato
   animations: fuseAnimations
 })
 export class UsersListComponent implements OnInit {
-  filtersForm: FormGroup;
-  filteredOptions: Observable<string[]>;
+  chipsFilter = [];
+  filtersObject = { "gender": "", "status": "", "country": "", "lastLoginFrom": "", "createdFrom": "", "createdTo": "" }
+  filterKey = { "gender": true, "status": true, "country": true, "lastLoginFrom": true, "createdFrom": true, "createdTo": true }
 
   defaultAvatar: string;
   searchInput: FormControl;
@@ -51,12 +53,8 @@ export class UsersListComponent implements OnInit {
     "lastLogin",
     "gender",
     "country",
-    "totalBottlesThrown",
-    "extraBottlesCount",
-    "bottlesCount",
-    "repliesBottlesCount",
-    "foundBottlesCount",
-    "repliesReceivedCount",
+    "bottles",
+    "replies",
     "status",
     "btns"
   ];
@@ -94,7 +92,29 @@ export class UsersListComponent implements OnInit {
       .subscribe(model => this.model = model);
   }
 
+  openFilter() {
+    let dialogRef = this.dialog.open(FilterComponent, {
+      width: '600px',
+      data: { "filter": this.filtersObject, "filterKey": this.filterKey }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.filtersObject = result;
+        this.getItemsPaging(true);
+        this.chipsFilter = [];
+        for (let key in this.filtersObject) {
+          if (this.filtersObject[key] != "")
+            this.chipsFilter.push({ key: key, value: this.filtersObject[key] });
+        }
+      }
+    });
+
+  }
+
+
   ngOnInit() {
+
     this.defaultAvatar = AppConfig.defaultAvatar;
     this.dataSource = new FilesDataSource(
       this.usersService,
@@ -102,18 +122,14 @@ export class UsersListComponent implements OnInit {
       this.sort
     );
 
-    this.filtersForm = this.formBuilder.group({
-      gender: new FormControl(""),
-      country: new FormControl(""),
-      createdFrom: new FormControl(""),
-      createdTo: new FormControl(""),
-      status: new FormControl("")
-    });
-
-    this.filteredOptions = this.filtersForm.controls.country.valueChanges.pipe(
-      startWith(""),
-      map(val => this.filterC(val))
-    );
+    // this.filtersForm = this.formBuilder.group({
+    //   gender: new FormControl(""),
+    //   country: new FormControl(""),
+    //   createdFrom: new FormControl(""),
+    //   lastLoginFrom: new FormControl(""),
+    //   createdTo: new FormControl(""),
+    //   status: new FormControl("")
+    // });
   }
 
   filterC(val: string): any[] {
@@ -133,8 +149,8 @@ export class UsersListComponent implements OnInit {
   }
   clearFilter() {
     this.paginator.pageIndex = 0
-
-    this.filtersForm.reset();
+    this.chipsFilter = []
+    this.filtersObject = { "gender": "", "status": "", "country": "", "lastLoginFrom": "", "createdFrom": "", "createdTo": "" }
     this.filter.nativeElement.value = "";
     this.usersService.getItemsCount("");
     this.getItemsPaging();
@@ -148,7 +164,7 @@ export class UsersListComponent implements OnInit {
       .getItemsPaging(
         this.paginator.pageIndex,
         this.paginator.pageSize,
-        this.filtersForm.value,
+        this.filtersObject,
         this.filter.nativeElement.value
       )
       .then(items => {
@@ -157,11 +173,28 @@ export class UsersListComponent implements OnInit {
   }
 
   exportAsExcelFile(): void {
-    this.usersService.export(this.filtersForm.value).then(res => {
+    this.usersService.export(this.filtersObject).then(res => {
       if (res) {
         window.location.href = res;
       }
     });
+  }
+
+  openNewTab(contact) {
+    window.open(AppConfig.siteUrl + "users/view/" + contact.id)
+  }
+
+  isNewUser(date) {
+    var diff = Math.abs(new Date().getTime() - new Date(date).getTime()) / 3600000;
+
+    if (diff > 24 * 7)
+      return "notActiveUser"
+    else if (diff > 24)
+      return "fewActiveUser"
+    else if (diff > 6)
+      return "meniActiveUser"
+    else
+      return "activeUser"
   }
 
   deleteProduct(contact) {

@@ -1,3 +1,4 @@
+import { FilterComponent } from './main/dialog/filter/filter.component';
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { HttpModule } from "@angular/http";
@@ -36,6 +37,8 @@ import { DashboardModule } from "./main/content/apps/dashboard/dashboard.module"
 import { MAT_DATE_LOCALE } from "../../node_modules/@angular/material";
 import { TestBottlesModule } from "./main/content/apps/test bottles/test-bottles.module";
 import { ExtendMessageModule } from "./main/content/apps/extend-message/extend-message.module";
+import { BlockModule } from "./main/content/apps/block/block.module";
+import { GiftItemModule } from './main/content/apps/gift-items/gift-items.module';
 
 const appRoutes: Routes = [
   {
@@ -69,6 +72,11 @@ const appRoutes: Routes = [
     canLoad: [AuthGuardService]
   },
   {
+    path: "chat-base-products",
+    loadChildren: "./main/content/apps/chat-base-products/chat-base-products.module#ChatBaseProductsModule",
+    canLoad: [AuthGuardService]
+  },
+  {
     path: "topics",
     loadChildren: "./main/content/apps/topics/topics.module#TopicsModule",
     canLoad: [AuthGuardService]
@@ -76,6 +84,11 @@ const appRoutes: Routes = [
   {
     path: "reports",
     loadChildren: "./main/content/apps/reports/reports.module#ReportsModule",
+    canLoad: [AuthGuardService]
+  },
+  {
+    path: "block",
+    loadChildren: "./main/content/apps/block/block.module#BlockModule",
     canLoad: [AuthGuardService]
   },
   {
@@ -88,6 +101,12 @@ const appRoutes: Routes = [
     path: "extend-message",
     loadChildren:
       "./main/content/apps/extend-message/extend-message.module#ExtendMessageModule",
+    canLoad: [AuthGuardService]
+  },
+  {
+    path: "gift-items",
+    loadChildren:
+      "./main/content/apps/gift-items/gift-items.module#GiftItemModule",
     canLoad: [AuthGuardService]
   },
   {
@@ -107,7 +126,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, FilterComponent],
   imports: [
     BrowserModule,
     HttpModule,
@@ -128,13 +147,16 @@ const appRoutes: Routes = [
     ProductsModule,
     TopicsModule,
     ReportsModule,
+    BlockModule,
     ReportTypesModule,
     TypeGoodsModule,
     DashboardModule,
     ExtendMessageModule,
-
+    GiftItemModule,
     PagesModule
   ],
+
+  entryComponents: [FilterComponent],
   providers: [
     FuseSplashScreenService,
     FuseConfigService,

@@ -13,7 +13,9 @@ export class Bottle {
   owner: User;
   bottleId: string;
   repliesUserCount: number;
-  userComplete=[];
+  userComplete = [];
+  userSeen = []
+  userReplaies = []
 
   constructor(bottle) {
     this.id = bottle.id; // || FuseUtils.generateGUID();
@@ -29,5 +31,8 @@ export class Bottle {
     this.owner = bottle.owner || {};
     this.shore = bottle.shore || {};
     this.userComplete = bottle.userComplete || [];
+    this.userSeen = bottle.userSeen || [];
+    this.userReplaies = bottle.userReplaies || [];
+    
   }
 }

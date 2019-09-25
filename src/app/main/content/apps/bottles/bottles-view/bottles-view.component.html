@@ -33,10 +33,10 @@
           class="add-product-button mat-white-bg  mt-sm-0">
           <span> EDIT </span>
         </button>
-        <button mat-raised-button *ngIf="item.status!='deactive'" (click)="deleteItem()"
+        <!-- <button mat-raised-button *ngIf="item.status!='deactive'" (click)="deleteItem()"
           class="add-product-button mt-sm-0" color="warn">
           <span> DELETE </span>
-        </button>
+        </button> -->
       </div>
       <!-- / APP TITLE -->
 
@@ -52,7 +52,9 @@
         <mat-tab-group>
 
           <mat-tab label="Bottle Details">
-
+            <ng-template matTabLabel>
+              <span>Bottle Details</span>
+            </ng-template>
             <div class="order-details tab-content p-24" fusePerfectScrollbar>
 
               <div class="section pb-48">
@@ -103,7 +105,7 @@
                           <span class=" text-truncate">{{item.weight}}</span>
                         </td>
                         <td>
-                          <span class=" text-truncate">{{item.createdAt | date}}</span>
+                          <span class=" text-truncate">{{item.createdAt | date:'dd-MM-yyyy HH:mm'}}</span>
                         </td>
                         <td>
                           <span class=" text-truncate">{{item.repliesUserCount}}</span>
@@ -124,13 +126,58 @@
                   <source [src]="item.file" type="video/mp4"> Your browser does not support the video tag.
                 </video>
                 <div class="compleatedUserDiv">
-                  <h3 class="title">User Compleated</h3>
-                  <div class="usersDiv">
-                    <div class="item" *ngFor="let oneUser of item.userComplete" [routerLink]="'/users/view/' + oneUser.userId">
-                      <div class="col">{{oneUser.user.username}}</div>
-                      <div class="col">{{ oneUser.createdAt | date }}</div>
-                    </div>
-                  </div>
+                  <mat-tab-group dynamicHeight>
+                    <mat-tab label="asdadddd">
+                      <ng-template matTabLabel>
+                        <span>User Compleated</span><span class="customBadge">{{item.userComplete.length}}</span>
+                      </ng-template>
+                      <div class="usersDiv">
+                        <div class="item" *ngFor="let oneUser of item.userComplete"
+                          [routerLink]="'/users/view/' + oneUser.userId">
+                          <!-- <div *ngIf="oneUser.user"> -->
+                            <div class="col">{{oneUser.user != null ?oneUser.user.username : "unknown"}}</div>
+                            <div class="col">{{ oneUser.createdAt | date:'dd-MM-yyyy HH:mm' }}</div>
+                          <!-- </div> -->
+                        </div>
+                      </div>
+                    </mat-tab>
+
+                    <mat-tab label="asdad">
+                      <ng-template matTabLabel>
+                        <span>User Seen</span><span class="customBadge"
+                          style="background-color: green">{{item.userSeen.length}}</span>
+                      </ng-template>
+
+                      <div class="usersDiv">
+                        <div class="item" *ngFor="let oneUser of item.userSeen"
+                          [routerLink]="'/users/view/' + oneUser.userId">
+                          <div *ngIf="oneUser.users">
+
+                            <div class="col">{{oneUser.users.username}}</div>
+                            <div class="col">{{ oneUser.createdAt | date:'dd-MM-yyyy HH:mm' }}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </mat-tab>
+
+                    <mat-tab label="User Compleated">
+                      <ng-template matTabLabel>
+                        <span>User Replaies</span><span class="customBadge"
+                          style="background-color: red">{{item.userReplaies.length}}</span>
+                      </ng-template>
+
+                      <div class="usersDiv">
+                        <div class="item" *ngFor="let oneUser of item.userReplaies"
+                          [routerLink]="'/users/view/' + oneUser.userId">
+                          <div class="col">{{oneUser.user.username}}</div>
+                          <div class="col">{{ oneUser.createdAt | date:'dd-MM-yyyy HH:mm' }}</div>
+                        </div>
+                      </div>
+                    </mat-tab>
+
+                  </mat-tab-group>
+                  <!-- <h3 class="title">User Compleated</h3> -->
+
                 </div>
 
               </div>

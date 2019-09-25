@@ -1,3 +1,6 @@
+import { MatDialog } from '@angular/material';
+import { FuseConfirmDialogComponent } from './../../../../../core/components/confirm-dialog/confirm-dialog.component';
+import { MatDialogRef } from '@angular/material';
 import {
   Component,
   OnInit,
@@ -46,8 +49,12 @@ export class UsersEditComponent implements OnInit, OnDestroy {
   @ViewChild("file")
   fileSelector: ElementRef;
 
+  confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
+
+  deviceStatus = "active";
   constructor(
     private formBuilder: FormBuilder,
+    public dialog: MatDialog,
     private router: Router,
     private authService: AuthService,
     private helpersService: HelpersService,
@@ -72,7 +79,8 @@ export class UsersEditComponent implements OnInit, OnDestroy {
     const originalUsername = this.item.username;
     this.defaultAvatar = AppConfig.defaultAvatar;
     this.image = this.item.image;
-
+    if (this.item.device)
+      this.deviceStatus = this.item.device.status;
     this.form = this.formBuilder.group({
       id: [this.item.id],
       gender: [this.item.gender, Validators.required],
@@ -131,6 +139,39 @@ export class UsersEditComponent implements OnInit, OnDestroy {
     return countries.filter(option =>
       option.iso.toLowerCase().includes(val.toLowerCase())
     );
+  }
+
+
+  changeDeviceStatus(value) {
+    this.confirmDialogRef = this.dialog.open(FuseConfirmDialogComponent, {
+      disableClose: false
+    });
+
+    this.confirmDialogRef.componentInstance.confirmMessage =
+      "Are you sure you want to change status device to " + value + "?";
+    this.progressBarService.toggle();
+    this.confirmDialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.usersService.deactivateDevice(this.item.deviceId, value).then(
+          val => {
+            this.helpersService.showActionSnackbar(PageAction.Update, true, "device");
+            this.router.navigate(["/users/list"]);
+            this.progressBarService.toggle();
+          },
+          reason => {
+            this.helpersService.showActionSnackbar(
+              PageAction.Update,
+              false,
+              "device",
+              { style: "failed-snackbar" }
+            );
+            this.progressBarService.toggle();
+            console.log("error ", reason);
+          }
+        );
+      }
+      this.confirmDialogRef = null;
+    });
   }
 
   ngOnDestroy() {

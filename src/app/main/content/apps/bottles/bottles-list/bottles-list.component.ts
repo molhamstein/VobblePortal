@@ -1,3 +1,4 @@
+import { FilterComponent } from './../../../../dialog/filter/filter.component';
 import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { fuseAnimations } from "../../../../../core/animations";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
@@ -35,7 +36,12 @@ import { ShoresService } from "../../shores/shores.service";
   animations: fuseAnimations
 })
 export class BottlesListComponent implements OnInit {
-  filtersForm: FormGroup;
+
+  chipsFilter = [];
+  filtersObject = { "gender": "", "country": "", "shoreId": "", "createdFrom": "", "createdTo": "" }
+  filterKey = { "gender": true, "country": true, "shoreId": true, "createdFrom": true, "createdTo": true }
+
+
   filteredOptions: Observable<string[]>;
   shores: Shore[] = [];
   searchInput: FormControl;
@@ -80,7 +86,6 @@ export class BottlesListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getShores();
 
     this.defaultIcon = AppConfig.defaultShoreIcon;
 
@@ -99,18 +104,9 @@ export class BottlesListComponent implements OnInit {
         this.dataSource.filter = this.filter.nativeElement.value;
       });
 
-    this.filtersForm = this.formBuilder.group({
-      gender: new FormControl(""),
-      country: new FormControl(""),
-      createdFrom: new FormControl(""),
-      createdTo: new FormControl(""),
-      shoreId: new FormControl("")
-    });
 
-    this.filteredOptions = this.filtersForm.controls.country.valueChanges.pipe(
-      startWith(""),
-      map(val => this.filterC(val))
-    );
+
+
   }
 
   filterC(val: string): any[] {
@@ -119,11 +115,37 @@ export class BottlesListComponent implements OnInit {
 
   clearFilter() {
     this.paginator.pageIndex = 0
-    this.filtersForm.reset();
+    this.chipsFilter = []
+    this.filtersObject = { "gender": "", "country": "", "shoreId": "", "createdFrom": "", "createdTo": "" }
     this.filter.nativeElement.value = "";
     this.bottlesService.getItemsCount("");
     this.getItemsPaging();
   }
+
+  openFilter() {
+    let dialogRef = this.dialog.open(FilterComponent, {
+      width: '600px',
+      data: { "filter": this.filtersObject, "filterKey": this.filterKey }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.filtersObject = result;
+        this.getItemsPaging(true);
+        this.chipsFilter = [];
+        for (let key in this.filtersObject) {
+          if (this.filtersObject[key] != "") {
+            var viewKey = key;
+            if (key == "shoreId")
+              viewKey = "shore";
+            this.chipsFilter.push({ key: viewKey, value: this.filtersObject[key] });
+          }
+        }
+      }
+    });
+
+  }
+
 
   getItemsPaging(isFilter = false) {
     if (isFilter) {
@@ -133,7 +155,7 @@ export class BottlesListComponent implements OnInit {
       .getItemsPaging(
         this.paginator.pageIndex,
         this.paginator.pageSize,
-        this.filtersForm.value,
+        this.filtersObject,
         this.filter.nativeElement.value
       )
       .then(items => {
@@ -141,22 +163,31 @@ export class BottlesListComponent implements OnInit {
       });
   }
 
-  getShores() {
-    this.shoresService.getItems().then(
-      items => {
-        this.shores = items;
-      },
-      error => { }
-    );
-  }
+
 
   exportAsExcelFile(): void {
-    this.bottlesService.export(this.filtersForm.value).then(res => {
+    this.bottlesService.export(this.filtersObject).then(res => {
       if (res) {
         console.log(res);
         window.location.href = res;
       }
     });
+  }
+
+  openNewTab(contact) {
+    window.open(AppConfig.siteUrl + "bottles/view/" + contact.id)
+  }
+
+  isNewBottle(date) {
+    var diff = Math.abs(new Date().getTime() - new Date(date).getTime()) / 3600000;
+    if (diff > 24 * 7)
+      return "oldBottle"
+    else if (diff > 24)
+      return "fewActiveBottle"
+    else if (diff > 6)
+      return "meniActiveBottle"
+    else
+      return "newBottle"
   }
 
   deleteItem(contact) {
@@ -197,6 +228,8 @@ export class FilesDataSource extends DataSource<any> {
   set filter(filter: string) {
     this._filterChange.next(filter);
   }
+
+
 
   constructor(
     private bottlesService: BottlesService,
