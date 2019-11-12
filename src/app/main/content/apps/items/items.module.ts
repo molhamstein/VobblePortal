@@ -53,6 +53,6 @@ const routes: Routes = [
   providers   : [
     ItemsService
   ],
-  declarations: [ItemsListComponent, ItemsNewComponent, ItemsEditComponent, ItemsViewComponent]
+  declarations: [ItemsListComponent, ItemsNewComponent, ItemsEditComponent,ItemsViewComponent]
 })
 export class ItemsModule { }

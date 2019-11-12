@@ -68,7 +68,12 @@
         <ng-container cdkColumnDef="image">
           <mat-header-cell *cdkHeaderCellDef>Image</mat-header-cell>
           <mat-cell *cdkCellDef="let product">
-            <mat-icon *ngIf="product.device != null && product.device.status!='active'" class="active-icon mat-icon material-icons" role="img" aria-hidden="true" style="position: absolute;font-size: 18px;">mobile_off</mat-icon>
+            <mat-icon *ngIf="product.device != null && product.device.status!='active'"
+              class="active-icon mat-icon material-icons" role="img" aria-hidden="true"
+              style="position: absolute;font-size: 18px;">mobile_off</mat-icon>
+            <mat-icon *ngIf="product.totalPaid>0" class="active-icon mat-icon material-icons" role="img"
+              aria-hidden="true" style="position: absolute;font-size: 18px;top: 50px;color: gold;">monetization_on
+            </mat-icon>
             <img class="product-image" [className]="isNewUser(product.lastLogin)"
               *ngIf="product.image && product.image != ' '" [alt]="product.username" [src]="product.image" />
             <img [className]="isNewUser(product.lastLogin)" *ngIf="!product.image || product.image == ' '"

@@ -52,7 +52,6 @@
       <div class="content">
 
         <mat-tab-group>
-
           <mat-tab label="User Details">
 
             <div class="order-details tab-content p-24" fusePerfectScrollbar>
@@ -250,6 +249,11 @@
                 </table>
               </div>
 
+            </div>
+          </mat-tab>
+          <mat-tab label="Transaction">
+            <div class="order-details tab-content p-24" fusePerfectScrollbar>
+              <app-transaction [userId]="item.id"></app-transaction>
             </div>
           </mat-tab>
         </mat-tab-group>

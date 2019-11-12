@@ -24,19 +24,18 @@ import { Error404Module } from './errors/404/error-404.module';
 
         ForgotPassword2Module,
 
-       // ResetPassword2Module,
+        // ResetPassword2Module,
         LockModule,
-       // MailConfirmModule,
+        // MailConfirmModule,
 
         // Coming-soon
-       // ComingSoonModule,
+        // ComingSoonModule,
 
         // Errors
         Error404Module,
-       // Error500Module,
+        // Error500Module,
 
     ]
 })
-export class PagesModule
-{
+export class PagesModule {
 }

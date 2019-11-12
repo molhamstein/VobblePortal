@@ -6,3 +6,69 @@
   position: absolute;
   border-radius: 50%;
 }
+
+
+.customTable {
+  width: 100%;
+  border-spacing: 0px;
+
+  thead {
+    tr {
+      background-color: #d8d8d8;
+      height: 45px;
+
+      td {
+        padding: 0px 10px;
+        font-family: Roboto, "Helvetica Neue", sans-serif;
+        font-size: 15px;
+        font-weight: 500;
+
+        &:first-child {
+          width: 25%;
+        }
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      background-color: #ffffff;
+      height: 45px;
+
+      &:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      td {
+        padding: 0px 10px;
+        font-family: Roboto, "Helvetica Neue", sans-serif;
+        font-size: 13px;
+
+        &:first-child {
+          width: 25%;
+        }
+
+        &.allProduct {
+          padding: 10px 20px;
+
+          .oneProduct {
+            width: 100%;
+
+            span {
+              display: inline-grid;
+            }
+
+            .name {
+              width: 50%;
+            }
+
+            .number {
+              width: 25%;
+              display: contents;
+            }
+          }
+        }
+      }
+    }
+  }
+}

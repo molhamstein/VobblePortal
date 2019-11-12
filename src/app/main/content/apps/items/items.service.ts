@@ -112,7 +112,6 @@ export class ItemsService implements Resolve<any> {
         _searching = '{"owner.username": "' + searchBy + '"}';
       }
     }
-
     let _filtering = "";
     if (filterBy && filterBy !== "") {
       if (filterBy.type) {
@@ -125,13 +124,20 @@ export class ItemsService implements Resolve<any> {
         _filtering += ',{"owner.ISOCode":"' + filterBy.country + '"}';
       }
 
+      if (filterBy.createdFrom) {
+        _filtering += ',{"startAt":{"gt":"' + filterBy.createdFrom + '"}}';
+      }
+
       if (filterBy.from) {
         _filtering += ',{"startAt":{"gt":"' + filterBy.from + '"}}';
       }
       if (filterBy.relatedUserId) {
         _filtering += ',{"relatedUserId":"' + filterBy.relatedUserId + '"}';
       }
-      
+
+      if (filterBy.createdTo) {
+        _filtering += ',{"endAt":{"lt":"' + filterBy.createdTo + '"}}';
+      }
       if (filterBy.to) {
         _filtering += ',{"endAt":{"lt":"' + filterBy.to + '"}}';
       }
@@ -385,9 +391,9 @@ export class ItemsService implements Resolve<any> {
       if (values.country)
         filter += ',{"owner.ISOCode":"' + values.country + '"}';
 
-      if (values.from) filter += ',{"startAt":{"gt":"' + values.from + '"}}';
+      if (values.createdFrom) filter += ',{"startAt":{"gt":"' + values.createdFrom + '"}}';
 
-      if (values.to) filter += ',{"endAt":{"lt":"' + values.to + '"}}';
+      if (values.createdTo) filter += ',{"endAt":{"lt":"' + values.createdTo + '"}}';
 
       if (filter.charAt(0) === ",") {
         filter = filter.substr(1);

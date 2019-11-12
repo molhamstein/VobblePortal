@@ -51,7 +51,7 @@ const routes: Routes = [
     UsersListComponent,
     UsersEditComponent,
     UsersViewComponent,
-    UsersNewComponent
+    UsersNewComponent,
   ]
 })
-export class UsersModule {}
+export class UsersModule { }

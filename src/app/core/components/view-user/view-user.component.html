@@ -1,69 +1,76 @@
 <h1 matDialogTitle>view</h1>
 <div mat-dialog-content>
-<div style=""></div>
-  <ngx-datatable style="min-height: 300px;max-height: 400px;" class="material vertical-scroll"
-    [rows]="users"  [headerHeight]="50" [rowHeight]="50" [footerHeight]="50" [scrollbarV]="true"
-    [scrollbarH]="false">
-    <ngx-datatable-footer>
-    </ngx-datatable-footer>
-    <ngx-datatable-column [canAutoResize]="true" [sortable]="true" prop="product">
-        <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
-          <span>Product</span>
-        </ng-template>
-        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-          <span *ngIf="row.product">
-            {{value.name_en}}
-          </span>
-          <span *ngIf="row.chatProduct">
-            {{row.chatProduct.name_en}}
-          </span>
-        </ng-template>
-      </ngx-datatable-column>
-    <ngx-datatable-column [canAutoResize]="true" [sortable]="true" prop="owner">
-      <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
-        <span>Owner</span>
-      </ng-template>
-      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-        <span>
-          {{value?.username}}
-        </span>
-      </ng-template>
-    </ngx-datatable-column>
-    <ngx-datatable-column [canAutoResize]="true" [sortable]="true" prop="relatedUser">
-      <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
-        <span>Related User</span>
-      </ng-template>
-      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-        <span>
-          {{value?.username}}
-        </span>
-      </ng-template>
-    </ngx-datatable-column>
-    
-    <ngx-datatable-column [canAutoResize]="true" [sortable]="true" prop="startAt">
-      <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
-        <span>Created At</span>
-      </ng-template>
-      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-        <span *ngIf="row.startAt">
-          {{value | date: 'dd-MM-yyyy HH:mm'}}
-        </span>
-        <span *ngIf="row.createdAt">
-          {{row.createdAt | date: 'dd-MM-yyyy HH:mm'}}
-        </span>
-      </ng-template>
-    </ngx-datatable-column>
-    <ngx-datatable-column [canAutoResize]="true" [sortable]="true" prop="price">
-      <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
-        <span>Price</span>
-      </ng-template>
-      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-        <span>
-          {{value}}
-        </span>
-      </ng-template>
-    </ngx-datatable-column>
-  </ngx-datatable>
+  <mat-tab-group>
+    <mat-tab label="items">
+      <ngx-datatable style="min-height: 300px;max-height: 400px;" class="material vertical-scroll" [rows]="users"
+        [headerHeight]="50" [rowHeight]="50" [footerHeight]="50" [scrollbarV]="true" [scrollbarH]="false">
+        <ngx-datatable-footer>
+        </ngx-datatable-footer>
+        <ngx-datatable-column [canAutoResize]="true" [sortable]="true" prop="product">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
+            <span>Product</span>
+          </ng-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <span *ngIf="row.product">
+              {{value.name_en}}
+            </span>
+            <span *ngIf="row.chatProduct">
+              {{row.chatProduct.name_en}}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column [canAutoResize]="true" [sortable]="true" prop="owner">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
+            <span>Owner</span>
+          </ng-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <span>
+              {{value?.username}}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column [canAutoResize]="true" [sortable]="true" prop="relatedUser">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
+            <span>Related User</span>
+          </ng-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <span>
+              {{value?.username}}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column [canAutoResize]="true" [sortable]="true" prop="startAt">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
+            <span>Created At</span>
+          </ng-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <span *ngIf="row.startAt">
+              {{value | date: 'dd-MM-yyyy HH:mm'}}
+            </span>
+            <span *ngIf="row.createdAt">
+              {{row.createdAt | date: 'dd-MM-yyyy HH:mm'}}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column [canAutoResize]="true" [sortable]="true" prop="price">
+          <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
+            <span>Price</span>
+          </ng-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <span>
+              {{value}}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </mat-tab>
+    <mat-tab label="transaction" *ngIf="users && users.length>0">
+      <div>
+        <app-transaction [userId]="users[0].ownerId"></app-transaction>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
 
 </div>
 <div mat-dialog-actions class="pt-24">

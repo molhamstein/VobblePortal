@@ -37,8 +37,8 @@ import { map, startWith, debounceTime, distinctUntilChanged } from "rxjs/operato
 })
 export class UsersListComponent implements OnInit {
   chipsFilter = [];
-  filtersObject = { "gender": "", "status": "", "country": "", "lastLoginFrom": "", "createdFrom": "", "createdTo": "" }
-  filterKey = { "gender": true, "status": true, "country": true, "lastLoginFrom": true, "createdFrom": true, "createdTo": true }
+  filtersObject = { "gender": "", "status": "", "country": "", "isVip": "", "lastLoginFrom": "", "createdFrom": "", "createdTo": "" }
+  filterKey = { "gender": true, "status": true, "country": true, "lastLoginFrom": true, "createdFrom": true, "isVip": true, "createdTo": true }
 
   defaultAvatar: string;
   searchInput: FormControl;
@@ -150,7 +150,7 @@ export class UsersListComponent implements OnInit {
   clearFilter() {
     this.paginator.pageIndex = 0
     this.chipsFilter = []
-    this.filtersObject = { "gender": "", "status": "", "country": "", "lastLoginFrom": "", "createdFrom": "", "createdTo": "" }
+    this.filtersObject = { "gender": "", "status": "", "isVip": "", "country": "", "lastLoginFrom": "", "createdFrom": "", "createdTo": "" }
     this.filter.nativeElement.value = "";
     this.usersService.getItemsCount("");
     this.getItemsPaging();

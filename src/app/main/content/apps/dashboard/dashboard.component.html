@@ -41,7 +41,6 @@
                         class="add-product-button mat-white-bg  mt-sm-0">
                         <span> FILTER </span>
                       </button>
-
                       <button mat-raised-button (click)="exportTimeStates()"
                         class="add-product-button mat-white-bg  mt-sm-0">
                         <span> EXPORT </span>
@@ -192,7 +191,7 @@
                 <div class="mat-card-front mat-white-bg ">
                   <!-- <div class="fuse-widget-front mat-white-bg mat-elevation-z2"> -->
                   <div class="px-16 border-bottom" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutWrap>
-                    <form [formGroup]="filtersAllItemForm" >
+                    <form [formGroup]="filtersAllItemForm">
                       <mat-form-field>
                         <mat-select placeholder="Products" formControlName="productsId" multiple>
                           <mat-option *ngFor="let oneProducts of products;let i = index" [value]="oneProducts.id">
@@ -226,47 +225,110 @@
                         class="add-product-button mat-white-bg  mt-sm-0">
                         <span> FILTER </span>
                       </button>
-
+                      <button mat-raised-button type="submit" (click)="applyAllItemFilter()"
+                        class="add-product-button mat-white-bg  mt-sm-0">
+                        <span> EXPORT </span>
+                      </button>
                     </form>
                   </div>
 
+                  <mat-tab-group>
+                    <mat-tab label="Chart">
 
-                  <div class="px-16 border-bottom" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutWrap>
+                      <div class="px-16 border-bottom" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutWrap>
 
 
-                    <div fxFlex class="py-8 h3">All items</div>
+                        <div fxFlex class="py-8 h3">All items</div>
 
-                    <div fxFlex="0 1 auto" class="py-8" fxLayout="row">
-                      <button mat-button class="px-16" (click)="this.allItem.currentRange = 'itemCount'"
-                        [disabled]="this.allItem.currentRange == 'itemCount'">
-                        Items - Count
-                      </button>
-                      <button mat-button class="px-16" (click)="this.allItem.currentRange = 'coinsCount'"
-                        [disabled]="this.allItem.currentRange == 'coinsCount'">
-                        Coins - Count
-                      </button>
+                        <div fxFlex="0 1 auto" class="py-8" fxLayout="row">
+                          <button mat-button class="px-16" (click)="this.allItem.currentRange = 'itemCount'"
+                            [disabled]="this.allItem.currentRange == 'itemCount'">
+                            Items - Count
+                          </button>
+                          <button mat-button class="px-16" (click)="this.allItem.currentRange = 'coinsCount'"
+                            [disabled]="this.allItem.currentRange == 'coinsCount'">
+                            Coins - Count
+                          </button>
 
-                      <button mat-button class="px-16" (click)="this.allItem.currentRange = 'itemCost'"
-                        [disabled]="this.allItem.currentRange == 'itemCost'">
-                        Items - Price
-                      </button>
-                      <button mat-button class="px-16" (click)="this.allItem.currentRange = 'coinsCost'"
-                        [disabled]="this.allItem.currentRange == 'coinsCost'">
-                        Coins - Price
-                      </button>
+                          <button mat-button class="px-16" (click)="this.allItem.currentRange = 'itemCost'"
+                            [disabled]="this.allItem.currentRange == 'itemCost'">
+                            Items - Price
+                          </button>
+                          <button mat-button class="px-16" (click)="this.allItem.currentRange = 'coinsCost'"
+                            [disabled]="this.allItem.currentRange == 'coinsCost'">
+                            Coins - Price
+                          </button>
 
-                    </div>
-                  </div>
+                        </div>
+                      </div>
 
-                  <div class="h-420">
-                    <ngx-charts-bar-vertical-stacked *fuseIfOnDom [scheme]="allItem.scheme"
-                      [results]="this.AllItemsChartData.mainChart[this.allItem.currentRange]"
-                      [gradient]="allItem.gradient" [xAxis]="allItem.xAxis" [yAxis]="allItem.yAxis"
-                      [legend]="allItem.legend" [showXAxisLabel]="allItem.showXAxisLabel"
-                      [showYAxisLabel]="allItem.showYAxisLabel" [xAxisLabel]="allItem.xAxisLabel"
-                      [yAxisLabel]="allItem.yAxisLabel" (select)="allItem.onSelect($event)">
-                    </ngx-charts-bar-vertical-stacked>
-                  </div>
+                      <div class="h-420">
+                        <ngx-charts-bar-vertical-stacked *fuseIfOnDom [scheme]="allItem.scheme"
+                          [results]="this.AllItemsChartData.mainChart[this.allItem.currentRange]"
+                          [gradient]="allItem.gradient" [xAxis]="allItem.xAxis" [yAxis]="allItem.yAxis"
+                          [legend]="allItem.legend" [showXAxisLabel]="allItem.showXAxisLabel"
+                          [showYAxisLabel]="allItem.showYAxisLabel" [xAxisLabel]="allItem.xAxisLabel"
+                          [yAxisLabel]="allItem.yAxisLabel" (select)="allItem.onSelect($event)">
+                        </ngx-charts-bar-vertical-stacked>
+                      </div>
+                    </mat-tab>
+                    <mat-tab label="Table">
+                      <div>
+                        <button mat-button class="px-16" (click)="currentTab = 'item'"
+                          [disabled]="currentTab == 'item'">
+                          Items
+                        </button>
+                        <button mat-button class="px-16" (click)="currentTab = 'coins'"
+                          [disabled]="currentTab == 'coins'">
+                          Coins
+                        </button>
+                      </div>
+                      <div *ngIf="currentTab == 'coins'">
+                        <table class="customTable">
+                          <thead>
+                            <tr>
+                              <td>date</td>
+                              <td>products</td>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let oneDay of report[1]">
+                              <td>{{oneDay.date}}</td>
+                              <td class="allProduct">
+                                <div class="oneProduct" *ngFor="let oneProduct of oneDay['data'];">
+                                  <span class="name">{{oneProduct.product.name_ar}}</span>
+                                  <span class="number">Count :{{oneProduct.count}}</span>
+                                  <span class="number">Cost :{{oneProduct.cost}}</span>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div *ngIf="currentTab == 'item'">
+                        <table class="customTable">
+                          <thead>
+                            <tr>
+                              <td>date</td>
+                              <td>products</td>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let oneDay of report[0]">
+                              <td>{{oneDay.date}}</td>
+                              <td class="allProduct">
+                                <div class="oneProduct" *ngFor="let oneProduct of oneDay['data'];">
+                                  <span class="name">{{oneProduct.product.name_ar}}</span>
+                                  <span class="number">Count :{{oneProduct.count}}</span>
+                                  <span class="number">Cost :{{oneProduct.cost}}</span>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </mat-tab>
+                  </mat-tab-group>
                 </div>
 
                 <!-- </div> -->

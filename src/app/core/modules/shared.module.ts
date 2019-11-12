@@ -1,3 +1,4 @@
+import { TransactionComponent } from './../../main/transaction/transaction.component';
 import { FuseViewUserComponent } from './../components/view-user/view-user.component';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -26,7 +27,7 @@ import { MarkdownModule } from 'angular2-markdown';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-    declarations   : [
+    declarations: [
         FuseMatSidenavHelperDirective,
         FuseMatSidenavTogglerDirective,
         FuseConfirmDialogComponent,
@@ -35,9 +36,10 @@ import { TranslateModule } from '@ngx-translate/core';
         FuseHljsComponent,
         FuseIfOnDomDirective,
         FusePerfectScrollbarDirective,
-        FuseMaterialColorPickerComponent
+        FuseMaterialColorPickerComponent,
+        TransactionComponent
     ],
-    imports        : [
+    imports: [
         FlexLayoutModule,
         MaterialModule,
         CommonModule,
@@ -49,7 +51,7 @@ import { TranslateModule } from '@ngx-translate/core';
         NgxDatatableModule,
         MarkdownModule
     ],
-    exports        : [
+    exports: [
         FlexLayoutModule,
         MaterialModule,
         CommonModule,
@@ -67,12 +69,13 @@ import { TranslateModule } from '@ngx-translate/core';
         FuseIfOnDomDirective,
         FuseMaterialColorPickerComponent,
         MarkdownModule,
-        TranslateModule
+        TranslateModule,
+        TransactionComponent
     ],
     entryComponents: [
-        FuseConfirmDialogComponent,FuseViewUserComponent
+        FuseConfirmDialogComponent, FuseViewUserComponent
     ],
-    providers      : [
+    providers: [
         CookieService,
         FuseMatchMedia,
         FuseNavbarVerticalService,
@@ -81,7 +84,6 @@ import { TranslateModule } from '@ngx-translate/core';
     ]
 })
 
-export class SharedModule
-{
+export class SharedModule {
 
 }

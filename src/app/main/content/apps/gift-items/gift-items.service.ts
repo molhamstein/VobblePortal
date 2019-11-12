@@ -96,9 +96,9 @@ export class GiftItemsService {
   getItemsRelatedCount(filter): Promise<any> {
     const api =
       AppConfig.apiUrl +
-      "chatItems/chatExtendReportRelatedCount?" +
+      "chatItems/chatExtendReportRelatedCount?filter=" +
       filter +
-      "access_token=" +
+      "&access_token=" +
       this.authService.getToken();
 
     console.log(api);
@@ -196,20 +196,20 @@ export class GiftItemsService {
   getChatExtendReportRelatedUser(filter) {
     let url =
       AppConfig.apiUrl +
-      "chatItems/chatExtendReportRelated/?access_token=" +
+      "chatItems/chatExtendReportRelated/?filter=" + JSON.stringify(filter) + "&access_token=" +
       this.authService.getToken();
+    this.getItemsRelatedCount(filter);
+    // if (filter && filter.from != "") {
+    //   url += "&from=" + filter.from;
+    // }
 
-    if (filter && filter.from != "") {
-      url += "&from=" + filter.from;
-    }
+    // if (filter && filter.to != "") {
+    //   url += "&to=" + filter.to;
+    // }
 
-    if (filter && filter.to != "") {
-      url += "&to=" + filter.to;
-    }
-
-    if (filter && filter.userId != "") {
-      url += "&userId=" + filter.userId;
-    }
+    // if (filter && filter.userId != "") {
+    //   url += "&userId=" + filter.userId;
+    // }
 
     return new Promise((resolve, reject) => {
       this.http.get(url).subscribe((response: any) => {
@@ -387,6 +387,8 @@ export class GiftItemsService {
     });
   }
 
+
+
   getItems(filter): Promise<any> {
     let url =
       AppConfig.apiUrl +
@@ -503,6 +505,31 @@ export class GiftItemsService {
     });
   }
 
+  export(filter): any {
+    let url =
+      AppConfig.apiUrl +
+      "chatItems/export/?access_token=" +
+      this.authService.getToken();
+    if (filter) {
+      url += "&filter=" + JSON.stringify(filter)
+    }
+
+    return new Promise((resolve, reject) => {
+      // send get request
+      this.http.get(url).subscribe(
+        items => {
+          console.log(items);
+          resolve(items["path"]);
+        },
+        error => {
+          console.log("error ", error);
+
+          reject();
+        }
+      );
+    });
+  }
+
   exportTimeStates(filter): Promise<any> {
     let url =
       AppConfig.apiUrl +
@@ -606,6 +633,9 @@ export class GiftItemsService {
       }
       if (filterBy.relatedUserId) {
         _filtering += ',{"relatedUserId":"' + filterBy.relatedUserId + '"}';
+      }
+      if (filterBy.userId) {
+        _filtering += ',{"ownerId":"' + filterBy.userId + '"}';
       }
 
       if (filterBy.to) {

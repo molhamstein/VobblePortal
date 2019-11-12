@@ -65,7 +65,7 @@ export class ExtendMessageComponent implements OnInit {
 
 
   itemsCount: number = 0;
-  itemsCountRelated:number=0;
+  itemsCountRelated: number = 0;
   mainItemsCount: number = 0
   curentTab = 0;
 
@@ -173,8 +173,8 @@ export class ExtendMessageComponent implements OnInit {
   }
 
 
-  
-  
+
+
   relatedUserkeyUp() {
     var lastSearch = ""
     var mainThis = this
@@ -260,8 +260,8 @@ export class ExtendMessageComponent implements OnInit {
 
   clearFilter() {
     this.filtersForm = this.formBuilder.group({
-      from: new FormControl(""),
-      to: new FormControl(""),
+      from: new FormControl(null),
+      to: new FormControl(null),
       relatedUser: new FormControl(""),
       user: new FormControl(""),
     });

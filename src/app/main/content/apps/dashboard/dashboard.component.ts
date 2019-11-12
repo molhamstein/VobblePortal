@@ -31,9 +31,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   lineChart: any = {};
   pieChart: any = {};
   today = new Date();
+  report = {};
   dateNow = Date.now();
   purchasesChartType = "count";
   users = []
+  currentTab = "item";
   colors = ["#ffebee", "#fce4ec", "#f3e5f5", "#ede7f6", "#e8eaf6", "#e3f2fd", "#e1f5fe", "#e0f7fa", "#e0f2f1", "#e8f5e9", "#f1f8e9", "#f9fbe7", "#fffde7", "#fff8e1", "#fff3e0", "#fbe9e7", "#efebe9", "#fafafa", "#eceff1", "#d32f2f", "#c2185b", "#7b1fa2", "#512da8", "#303f9f", "#1976d2", "#0288d1", "#0097a7", "#00796b", "#388e3c", "#689f38", "#afb42b", "#fbc02d", "#ffa000", "#f57c00", "#e64a19", "#9e9e9e", "#607d8b", "#d50000", "#c51162", "#aa00ff", "#6200ea", "#304ffe", "#2962ff", "#0091ea", "#00b8d4", "#00bfa5", "#00c853", "#64dd17", "#aeea00", "#ffd600", "#ffab00", "#ff6d00", "#dd2c00", "#3e2723", "#212121", "#263238"]
   constructor(
     private dashboardService: DashboardService,
@@ -129,6 +131,41 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
     return tempKey;
   }
+
+
+
+  reportToArray(array) {
+    var data = [[], []]
+    for (const key in array['coins']) {
+      if (array['coins'].hasOwnProperty(key)) {
+        const element = array['coins'][key];
+        var newArrayElement = []
+        for (const childKey in element['product']) {
+          if (element['product'].hasOwnProperty(childKey)) {
+            const newElement = element['product'][childKey];
+            newArrayElement.push(newElement)
+          }
+        }
+        data[0].unshift({ 'data': newArrayElement, 'date': key })
+      }
+    }
+
+    for (const key in array['dollar']) {
+      if (array['dollar'].hasOwnProperty(key)) {
+        const element = array['dollar'][key];
+        var newArrayElement = []
+        for (const childKey in element['product']) {
+          if (element['product'].hasOwnProperty(childKey)) {
+            const newElement = element['product'][childKey];
+            newArrayElement.push(newElement)
+          }
+        }
+        data[1].unshift({ 'data': newArrayElement, 'date': key })
+      }
+    }
+
+    return data
+  }
   ngOnInit() {
     let month, day, year;
     year = this.today.getFullYear();
@@ -172,6 +209,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.productSer.getAllItems().then(
       val => {
         this.products = val
+        this.report = this.reportToArray(this.dashboardService.allItems)
+        console.log("this.report")
+        console.log(this.report)
+        //   },
+        //  err => console.error(err), 
+        //  () => console.log('getBooks completed') 
+        //  );
+
         var sortedKeysCoins = this.sortKey(this.dashboardService.allItems['coins'])
         console.log("sorted_keys")
         console.log(sortedKeysCoins)
@@ -353,6 +398,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     console.log(filter);
     this.dashboardService.getAllItems(filter).then(
       val => {
+        this.report = this.reportToArray(this.dashboardService.allItems)
+
         let mainChart = { "itemCount": [], "coinsCount": [], "itemCost": [], "coinsCost": [] }
         for (const key in this.dashboardService.allItems['coins']) {
           if (this.dashboardService.allItems['coins'].hasOwnProperty(key)) {

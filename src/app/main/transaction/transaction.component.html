@@ -1,0 +1,68 @@
+<!-- <mat-tab-group *ngIf="data"> -->
+<div *ngIf="data">
+  <div>
+    <button mat-button class="px-16" (click)="currentTab = 'item'" [disabled]="currentTab == 'item'">
+      Items
+    </button>
+    <button mat-button class="px-16" (click)="currentTab = 'coins'" [disabled]="currentTab == 'coins'">
+      Coins
+    </button>
+    <button mat-button class="px-16" (click)="currentTab = 'result'" [disabled]="currentTab == 'result'">
+      Result
+    </button>
+  </div>
+  <div class="usersDiv" *ngIf="currentTab=='item'">
+    <div class="item">
+      <div>
+        <div class="col">Name</div>
+        <div class="col">Price</div>
+
+        <div class="col">Created At</div>
+      </div>
+    </div>
+    <div class="item" *ngFor="let oneItem of data['item']">
+      <div>
+        <div class="col">{{oneItem.product.name_en}}</div>
+        <div class="col">{{oneItem.price}}</div>
+        <div class="col">{{ oneItem.startAt | date:'dd-MM-yyyy HH:mm' }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="usersDiv" *ngIf="currentTab=='coins'">
+    <div class="item">
+      <div>
+        <div class="col">Name</div>
+        <div class="col">Price</div>
+
+        <div class="col">Created At</div>
+      </div>
+    </div>
+    <div class="item" *ngFor="let oneItem of data['coins']">
+
+      <div>
+        <div class="col">{{oneItem.product.name_en}}</div>
+        <div class="col">{{oneItem.price}}</div>
+
+        <div class="col">{{ oneItem.startAt | date:'dd-MM-yyyy HH:mm' }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="usersDiv" *ngIf="currentTab=='result'">
+    <div class="item">
+      <div>
+        <div class="col">Name</div>
+        <div class="col">Count</div>
+
+        <div class="col">Price</div>
+      </div>
+    </div>
+    <div class="item" *ngFor="let oneItem of data['groupe']">
+      <div>
+        <div class="col">{{oneItem.product.name_en}}</div>
+        <div class="col">{{ oneItem.count  }}</div>
+        <div class="col">{{ oneItem.totalRevenue  }} $</div>
+      </div>
+    </div>
+  </div>
+</div>

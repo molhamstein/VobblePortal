@@ -133,7 +133,7 @@ export class ItemsListComponent implements OnInit {
   clearFilter() {
     this.chipsFilter = [];
     this.filtersObject = { "country": "", "createdFrom": "", "createdTo": "", "type": "" }
-      this.filter.nativeElement.value = "";
+    this.filter.nativeElement.value = "";
     this.itemsService.getItemsCount("");
     this.getItemsPaging();
   }

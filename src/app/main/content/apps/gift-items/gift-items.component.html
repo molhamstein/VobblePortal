@@ -63,6 +63,11 @@
       </div>
 
       <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px">
+        <button mat-raised-button style="position: absolute;left: 30px" *ngIf="curentTab==2"
+          (click)="exportAsExcelFile()" class="add-product-button mat-white-bg  mt-sm-0">
+          Export
+        </button>
+
         <mat-form-field>
           <input matInput (click)="picker.open()" [matDatepicker]="picker" placeholder="Date From"
             formControlName="from" name="createdAt" />
@@ -95,7 +100,8 @@
     <!-- / HEADER -->
 
     <!-- CONTENT CARD -->
-    <div class="content-card mat-white-bg" class="custom-table" style="box-shadow:0px 4px 5px -2px rgba(0, 0, 0, 0.2), 0px 7px 10px 1px rgba(0, 0, 0, 0.14), 0px 2px 16px 1px rgba(0, 0, 0, 0.12)">
+    <div class="content-card mat-white-bg" class="custom-table"
+      style="box-shadow:0px 4px 5px -2px rgba(0, 0, 0, 0.2), 0px 7px 10px 1px rgba(0, 0, 0, 0.14), 0px 2px 16px 1px rgba(0, 0, 0, 0.12)">
       <mat-tab-group dynamicHeight (selectedTabChange)="changeTab($event)">
         <mat-tab label="Owner">
 

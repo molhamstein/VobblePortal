@@ -18,6 +18,13 @@
             <mat-option value="female"> Female</mat-option>
           </mat-select>
         </mat-form-field>
+        <mat-form-field fxFlex="30" *ngIf="filterKey.isVip">
+          <mat-select placeholder="Is VIP" formControlName="isVip" name="isVip">
+            <mat-option [value]=""> No filter</mat-option>
+            <mat-option value="true"> True</mat-option>
+            <mat-option value="false"> False</mat-option>
+          </mat-select>
+        </mat-form-field>
         <mat-form-field fxFlex="30" *ngIf="filterKey.status !=null">
           <mat-select placeholder="Status" formControlName="status">
             <mat-option [value]=""> No filter</mat-option>

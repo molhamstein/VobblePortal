@@ -126,7 +126,6 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, FilterComponent],
   imports: [
     BrowserModule,
     HttpModule,
@@ -170,6 +169,7 @@ const appRoutes: Routes = [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: MAT_DATE_LOCALE, useValue: "en-GB" }
   ],
+  declarations: [AppComponent, FilterComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

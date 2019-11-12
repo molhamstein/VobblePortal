@@ -174,9 +174,9 @@ export class GiftItemComponent implements OnInit {
   relatedUserkeyUp() {
     var lastSearch = ""
     var mainThis = this
-    lastSearch = mainThis.filtersForm.value.user
+    lastSearch = mainThis.filtersForm.value.relatedUser
     setTimeout(function () {
-      if (lastSearch == mainThis.filtersForm.value.user) {
+      if (lastSearch == mainThis.filtersForm.value.relatedUser) {
         // mainThis.getItemsPaging()
         if (lastSearch != "")
           mainThis.getRelatedUserByString()
@@ -263,8 +263,29 @@ export class GiftItemComponent implements OnInit {
     this.applyFilter();
   }
 
+
+  exportAsExcelFile() {
+    var filter = Object.assign({}, this.filtersForm.value)
+    if (filter.user != "")
+      filter['userId'] = this.countries.filter(function (el) {
+        return el.username <= filter.user
+      })[0].id;
+    if (filter.relatedUser != "")
+      filter['relatedUserId'] = this.relatedUser.filter(function (el) {
+        return el.username <= filter.relatedUser
+      })[0].id;
+    console.log(filter)
+    this.giftItemsServices.export(filter).then(res => {
+      if (res) {
+        window.location.href = res
+      }
+    });
+  }
+
+
   applyFilter() {
     var filter = Object.assign({}, this.filtersForm.value)
+    console.log(filter)
     if (filter.user != "")
       filter['userId'] = this.countries.filter(function (el) {
         return el.username <= filter.user
@@ -287,7 +308,7 @@ export class GiftItemComponent implements OnInit {
         filter['relatedUserId'] = this.relatedUser.filter(function (el) {
           return el.username <= filter.relatedUser
         })[0].id;
-      
+
       this.getMainItemsPaging(filter);
 
     }

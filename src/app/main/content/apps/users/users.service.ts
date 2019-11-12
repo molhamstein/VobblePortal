@@ -166,6 +166,18 @@ export class UsersService implements Resolve<any> {
         _searching_count += ',{"ISOCode":"' + filterBy.country + '"}';
       }
 
+      if (filterBy.isVip != "") {
+        console.log(filterBy.isVip)
+        if (filterBy.isVip == 'true') {
+          _searching_count += ',{"totalPaid":{"gt":' + 0 + '}}';
+          _filtering += ',{"totalPaid":{"gt":' + 0 + '}}';
+        }
+        else if (filterBy.isVip == 'false') {
+          _searching_count += ',{"totalPaid":' + 0 + '}';
+          _filtering += ',{"totalPaid":' + 0 + '}';
+        }
+      }
+
       if (filterBy.lastLoginFrom) {
         _filtering += ',{"lastLogin":{"gt":"' + filterBy.lastLoginFrom + '"}}';
         _searching_count +=
@@ -387,9 +399,13 @@ export class UsersService implements Resolve<any> {
 
   export(values): Promise<any> {
     let filter = "";
+    console.log(values)
     if (values && values !== null) {
       if (values.gender) filter += ',{"gender":"' + values.gender + '"}';
 
+      if (values.lastLoginFrom) {
+        filter += ',{"lastLogin":{"gt":"' + values.lastLoginFrom + '"}}';
+      }
       if (values.country) filter += ',{"ISOCode":"' + values.country + '"}';
 
       if (values.createdFrom)
@@ -474,6 +490,24 @@ export class UsersService implements Resolve<any> {
           }
         );
     });
+  }
+
+
+  getTransctionUser(userId) {
+    return new Promise((resolve, reject) => {
+      this.http
+        .get(
+          AppConfig.apiUrl +
+          "users/" +
+          userId +
+          "/getTransaction?access_token=" +
+          this.authService.getToken()
+        )
+        .subscribe(
+          data => {
+            resolve(data);
+          })
+    })
   }
 
   editItem(item: User): Promise<any> {

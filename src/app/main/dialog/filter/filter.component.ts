@@ -22,7 +22,7 @@ export class FilterComponent {
     userFilterForm: FormGroup;
     filteredOptions: Observable<string[]>;
     filterForm: FormGroup = new FormGroup({});
-    filterKey = { "status": false, "gender": false, "type": false, "shoreId": false, "country": false, "lastLoginFrom": false, "createdFrom": false, "createdTo": false };
+    filterKey = { "status": false, "gender": false, "type": false, "shoreId": false, "country": false, "lastLoginFrom": false, "createdFrom": false, "createdTo": false, "isVip": false };
     filter = {};
     // rate
     minRate;
@@ -49,6 +49,10 @@ export class FilterComponent {
 
         if (this.filterKey['gender']) {
             this.filterForm.addControl('gender', new FormControl(this.filter['gender']))
+        }
+
+        if (this.filterKey['isVip']) {
+            this.filterForm.addControl('isVip', new FormControl(this.filter['isVip']))
         }
 
         if (this.filterKey['status']) {
