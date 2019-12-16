@@ -191,6 +191,26 @@ export class NavigationModel {
             ]
           },
           {
+            id: "purchasesReports",
+            title: "Purchases Reports",
+            type: "collapse",
+            icon: "report",
+            children: [
+              {
+                id: "list",
+                title: "per user",
+                type: "item",
+                url: "/purchasesReports/perUser"
+              },
+              {
+                id: "list",
+                title: "per day",
+                type: "item",
+                url: "/purchasesReports/perDay"
+              }
+            ]
+          },
+          {
             id: "extend-message",
             title: "Chat Extend",
             type: "item",

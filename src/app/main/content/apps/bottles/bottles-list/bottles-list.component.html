@@ -6,8 +6,7 @@
   <!-- CENTER -->
   <div class="center">
     <!-- HEADER -->
-    <form class="header white-fg" fxLayout="column" fxLayoutAlign="center space-around"
-      style="margin: 17px 0;">
+    <form class="header white-fg" fxLayout="column" fxLayoutAlign="center space-around" style="margin: 17px 0;">
       <div fxLayout="row" fxLayoutAlign="space-between center">
         <!-- APP TITLE -->
         <div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
@@ -34,26 +33,25 @@
           <span> NEW </span>
         </button> -->
         <button type="button" mat-raised-button type="submit" (click)="clearFilter()"
-        class="add-product-button mat-white-bg  mt-sm-0">
-        <span> CLEAR </span>
-      </button>
+          class="add-product-button mat-white-bg  mt-sm-0">
+          <span> CLEAR </span>
+        </button>
 
 
-      <button mat-raised-button type="submit" (click)="openFilter()"
-        class="add-product-button mat-white-bg  mt-sm-0">
-        <span> FILTER </span>
-      </button>
+        <button mat-raised-button type="submit" (click)="openFilter()" class="add-product-button mat-white-bg  mt-sm-0">
+          <span> FILTER </span>
+        </button>
       </div>
       <div fxLayout="row" fxLayoutAlign="" fxLayoutGap="20px">
         <button mat-raised-button (click)="exportAsExcelFile()" class="add-product-button mat-white-bg  mt-sm-0">
           Export
         </button>
         <div style="display: inherit;">
-            <mat-chip-list aria-label="Fish selection" *ngFor="let object of chipsFilter">
-              <mat-chip style="margin: 0px 10px;">{{object.key}}</mat-chip>
-            </mat-chip-list>
-          </div>
+          <mat-chip-list aria-label="Fish selection" *ngFor="let object of chipsFilter">
+            <mat-chip style="margin: 0px 10px;">{{object.key}}</mat-chip>
+          </mat-chip-list>
         </div>
+      </div>
     </form>
     <!-- / HEADER -->
 
@@ -65,9 +63,10 @@
           <mat-header-cell *cdkHeaderCellDef>Thumbnail</mat-header-cell>
           <mat-cell *cdkCellDef="let product">
             <img class="product-image" [className]="isNewBottle(product.createdAt)"
-              *ngIf="product.thumbnail && product.thumbnail != ' '" [alt]="product.createdAt"
-              [src]="product.thumbnail" />
-            <img *ngIf="!product.thumbnail || product.thumbnail == ' '" [src]="defaultIcon" />
+              *ngIf="product.bottleType=='video'&& product.thumbnail && product.thumbnail != '' "
+              [alt]="product.createdAt" [src]="product.thumbnail" />
+            <img class="product-image" [className]="isNewBottle(product.createdAt)" *ngIf="product.bottleType=='audio'"
+              [alt]="product.createdAt" src="../../../../../../assets/images/logos/img-audio-thumbnail.png" />
           </mat-cell>
         </ng-container>
 

@@ -21,12 +21,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
   BottlesChartData;
   UsersChartData;
   ItemsChartData;
+  BottlesReportChartData;
   AllItemsChartData;
   products = []
   filtersForm: FormGroup;
   filtersAllItemForm: FormGroup
   purchasesFiltersForm: FormGroup;
   genderFiltersForm: FormGroup;
+  bottlesReportFiltersForm: FormGroup;
+
   allItem: any = {}
   lineChart: any = {};
   pieChart: any = {};
@@ -202,6 +205,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
       to: new FormControl(this.today)
     });
 
+    this.bottlesReportFiltersForm = this.formBuilder.group({
+      from: new FormControl(backdate),
+      to: new FormControl(this.today)
+    });
+
+    this.BottlesReportChartData = this.dashboardService.bottlesReport;
     this.BottlesChartData = this.dashboardService.bottles;
     this.UsersChartData = this.dashboardService.users;
     this.ItemsChartData = this.dashboardService.items;
@@ -364,6 +373,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
     );
   }
 
+  bottlesApplyFilter() {
+    this.progressBarService.toggle();
+
+    this.dashboardService.getBottlesReport(this.bottlesReportFiltersForm.value).then(
+      val => {
+        this.BottlesReportChartData = this.dashboardService.bottlesReport;
+        this.progressBarService.toggle();
+      },
+      reason => {
+        this.progressBarService.toggle();
+        console.log("error ", reason);
+      }
+    );
+  }
+
   getUserByString() {
     this.giftItemsServices
       .getUserByString(this.filtersAllItemForm.value.user)
@@ -383,6 +407,26 @@ export class DashboardComponent implements OnInit, OnDestroy {
       }
     }, 1500);
 
+  }
+  exportAllItemFilter() {
+    this.progressBarService.toggle();
+    var username = this.filtersAllItemForm.value.user
+    var filter = this.filtersAllItemForm.value
+    if (username != "" && username != null)
+      filter['ownerId'] = this.users.filter(function (el) {
+        return el.username <= username
+      })[0].id;
+    this.dashboardService.exportAllItems(filter).then(
+      val => {
+        if (val)
+          window.location.href = val;
+      }
+      ,
+      reason => {
+        // this.helpersService.showActionSnackbar(PageAction.Create, false, 'user', {style: 'failed-snackbar'});
+        this.progressBarService.toggle();
+        console.log("error ", reason);
+      })
   }
   applyAllItemFilter() {
     this.progressBarService.toggle();

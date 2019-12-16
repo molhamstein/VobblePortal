@@ -10,8 +10,9 @@ export const AppConfig = {
   defaultShoreCover: "assets/images/defaults/shore-cover.jpg",
   defaultShoreIcon: "assets/images/defaults/shore-icon.jpg",
   defaultProductIcon: "assets/images/defaults/product.png",
+  defaultAudioIcon: "assets/images/defaults/audio-icon.jpg",
   // siteUrl:"http://localhost:4200/#/",
-  siteUrl: "http://159.65.202.38/vobblePortal/#/",
+  siteUrl: "http://chabani.tv/vobblePortal/#/",
   authErrorCode: "AUTHORIZATION_REQUIRED",
   technicalException:
     "Technical Exception Happened, Please send a feedback to the developers team!"

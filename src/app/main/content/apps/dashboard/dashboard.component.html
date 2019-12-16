@@ -186,6 +186,54 @@
                   </div>
                 </div>
               </mat-card>
+
+
+              <mat-card [@animate]="{ value: '*', params: { y: '100%' } }" class="widget" fxLayout="column" fxFlex="100"
+                fxFlex.gt-sm="48">
+                <div class="mat-card-front mat-white-bg">
+                  <!-- border-bottom -->
+                  <div class="px-16 " fxLayout="row" fxLayoutAlign="space-between space-between">
+                    <div class="h3 p-16">Bottles</div>
+
+
+
+                    <form [formGroup]="bottlesReportFiltersForm" fxLayout="column">
+                      <mat-form-field>
+                        <input matInput (click)="bottlesPickerFrom.open()" [matDatepicker]="bottlesPickerFrom"
+                          placeholder="Date From" formControlName="from" />
+                        <mat-datepicker-toggle matSuffix [for]="bottlesPickerFrom"></mat-datepicker-toggle>
+                        <mat-datepicker #bottlesPickerFrom></mat-datepicker>
+                      </mat-form-field>
+
+                      <mat-form-field>
+                        <input matInput (click)="bottlesPickerTo.open()" [matDatepicker]="bottlesPickerTo"
+                          placeholder="Date To" formControlName="to" [max]="today"
+                          [min]="bottlesReportFiltersForm.value.from" />
+                        <mat-datepicker-toggle matSuffix [for]="bottlesPickerTo"></mat-datepicker-toggle>
+                        <mat-datepicker #bottlesPickerTo></mat-datepicker>
+                      </mat-form-field>
+
+                      <button mat-raised-button type="submit" (click)="bottlesApplyFilter()"
+                        class="add-product-button mat-white-bg  mt-sm-0">
+                        <span> FILTER </span>
+                      </button>
+                    </form>
+                  </div>
+
+                  <h3 *ngIf="BottlesReportChartData.length ===0">
+                    No data available
+                  </h3>
+                  <div class="h-400">
+                    <ngx-charts-pie-chart *fuseIfOnDom [scheme]="pieChart.scheme" [results]="BottlesReportChartData"
+                      [legend]="pieChart.showLegend" [explodeSlices]="false" [labels]="pieChart.labels"
+                      [doughnut]="pieChart.doughnut" [gradient]="pieChart.gradient"
+                      (select)="pieChart.onSelect($event)">
+                    </ngx-charts-pie-chart>
+                  </div>
+                </div>
+              </mat-card>
+
+
               <mat-card [@animate]="{ value: '*', params: { y: '100%' } }" class="widget" fxLayout="column" fxFlex="100"
                 style="margin: 10px 0px">
                 <div class="mat-card-front mat-white-bg ">
@@ -225,7 +273,7 @@
                         class="add-product-button mat-white-bg  mt-sm-0">
                         <span> FILTER </span>
                       </button>
-                      <button mat-raised-button type="submit" (click)="applyAllItemFilter()"
+                      <button mat-raised-button type="submit" (click)="exportAllItemFilter()"
                         class="add-product-button mat-white-bg  mt-sm-0">
                         <span> EXPORT </span>
                       </button>

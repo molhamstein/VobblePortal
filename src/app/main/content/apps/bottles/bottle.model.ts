@@ -10,6 +10,7 @@ export class Bottle {
   shoreId: string;
   shore: Shore;
   ownerId: string;
+  bottleType: string; 
   owner: User;
   bottleId: string;
   repliesUserCount: number;
@@ -33,6 +34,6 @@ export class Bottle {
     this.userComplete = bottle.userComplete || [];
     this.userSeen = bottle.userSeen || [];
     this.userReplaies = bottle.userReplaies || [];
-    
+    this.bottleType = bottle.bottleType || "video" ; 
   }
 }

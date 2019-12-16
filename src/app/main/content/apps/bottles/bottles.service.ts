@@ -117,6 +117,11 @@ export class BottlesService implements Resolve<any> {
         _filtering += ',{"owner.gender":"' + filterBy.gender + '"}';
       }
 
+      if (filterBy.bottleType) {
+        _filtering += ',{"bottleType":"' + filterBy.bottleType + '"}';
+      }
+
+
       if (filterBy.shoreId) {
         _filtering += ',{"shoreId":"' + filterBy.shoreId + '"}';
       }
@@ -391,7 +396,11 @@ export class BottlesService implements Resolve<any> {
     if (values && values !== null) {
       if (values.gender) filter += ',{"owner.gender":"' + values.gender + '"}';
 
+
       if (values.shoreId) filter += ',{"shoreId":"' + values.shoreId + '"}';
+
+
+      if (values.bottleType) filter += ',{"bottleType":"' + values.bottleType + '"}';
 
       if (values.country)
         filter += ',{"owner.ISOCode":"' + values.country + '"}';

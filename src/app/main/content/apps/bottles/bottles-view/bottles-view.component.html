@@ -120,11 +120,16 @@
 
                 <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
                   <mat-icon class="m-0 mr-16">video_library</mat-icon>
-                  <div class="h2 secondary-text">Bottle Video</div>
+                  <div *ngIf="item.bottleType == 'video'" class="h2 secondary-text">Bottle Video</div>
+                  <div *ngIf="item.bottleType == 'audio'" class="h2 secondary-text">Bottle Audio</div>
                 </div>
-                <video width="320" height="240" controls>
+                <video *ngIf="item.bottleType == 'video'" width="320" height="240" controls>
                   <source [src]="item.file" type="video/mp4"> Your browser does not support the video tag.
                 </video>
+                <audio *ngIf="item.bottleType == 'audio'" controls>
+                  <source [src]="item.file">
+                   Your browser does not support the audio tag.
+                </audio>
                 <div class="compleatedUserDiv">
                   <mat-tab-group dynamicHeight>
                     <mat-tab label="asdadddd">
@@ -135,8 +140,8 @@
                         <div class="item" *ngFor="let oneUser of item.userComplete"
                           [routerLink]="'/users/view/' + oneUser.userId">
                           <!-- <div *ngIf="oneUser.user"> -->
-                            <div class="col">{{oneUser.user != null ?oneUser.user.username : "unknown"}}</div>
-                            <div class="col">{{ oneUser.createdAt | date:'dd-MM-yyyy HH:mm' }}</div>
+                          <div class="col">{{oneUser.user != null ?oneUser.user.username : "unknown"}}</div>
+                          <div class="col">{{ oneUser.createdAt | date:'dd-MM-yyyy HH:mm' }}</div>
                           <!-- </div> -->
                         </div>
                       </div>

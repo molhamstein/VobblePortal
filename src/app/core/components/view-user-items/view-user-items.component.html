@@ -1,0 +1,54 @@
+<h1 matDialogTitle>{{user.username}}</h1>
+<div mat-dialog-content>
+  <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+    <div style="padding-left: 15px"><b>Pocket Coins :</b> <span>{{user.pocketCoins}}</span></div>
+    <div style="padding: 0px 15px"><b>Total Paid :</b> <span>{{user.totalPaid}}$</span></div>
+    <div style="padding-right: 15px"> <b>Total Paid Coins :</b> <span>{{user.totalPaidCoins}}</span></div>
+  </div>
+  <ngx-datatable style="min-height: 300px;max-height: 400px;margin:10px 0px;" class="material vertical-scroll"
+    [rows]="items" [headerHeight]="50" [rowHeight]="50" [footerHeight]="50" [scrollbarV]="true" [scrollbarH]="false">
+    <ngx-datatable-footer>
+    </ngx-datatable-footer>
+    <ngx-datatable-column [canAutoResize]="true" [sortable]="true" prop="product">
+      <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
+        <span>Product</span>
+      </ng-template>
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <span *ngIf="row.product">
+          {{row.product.name_en}}
+        </span>
+        <span *ngIf="row.chatProduct">
+          {{row.chatProduct.name_en}}
+        </span>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column [canAutoResize]="true" [sortable]="true" prop="startAt">
+      <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
+        <span>Created At</span>
+      </ng-template>
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <span *ngIf="row.startAt">
+          {{row.startAt | date: 'dd-MM-yyyy HH:mm'}}
+        </span>
+        <span *ngIf="row.createdAt">
+          {{row.createdAt | date: 'dd-MM-yyyy HH:mm'}}
+        </span>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column [canAutoResize]="true" [sortable]="true" prop="price">
+      <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
+        <span>Price</span>
+      </ng-template>
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <span>
+          {{value}}
+        </span>
+      </ng-template>
+    </ngx-datatable-column>
+  </ngx-datatable>
+
+</div>
+<div mat-dialog-actions class="pt-24">
+  <button mat-raised-button class="mat-accent mr-16" (click)="dialogRef.close(true)">Ok</button>
+</div>

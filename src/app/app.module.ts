@@ -92,6 +92,11 @@ const appRoutes: Routes = [
     canLoad: [AuthGuardService]
   },
   {
+    path: "purchasesReports",
+    loadChildren: "./main/content/apps/purchases-reports/purchases-reports.module#PurchasesReportsModule",
+    canLoad: [AuthGuardService]
+  },
+  {
     path: "dashboard",
     loadChildren:
       "./main/content/apps/dashboard/dashboard.module#DashboardModule",

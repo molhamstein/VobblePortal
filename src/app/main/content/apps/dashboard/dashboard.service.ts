@@ -19,6 +19,7 @@ import * as FileSaver from "file-saver";
 export class DashboardService {
   users: any[];
   bottles: any[];
+  bottlesReport: any[];
   onBottlesChanged: BehaviorSubject<any> = new BehaviorSubject({});
   items: any[];
   allItems: {};
@@ -64,6 +65,11 @@ export class DashboardService {
         to: new FormControl(today)
       });
 
+      const bottlesReportFiltersForm = this.formBuilder.group({
+        from: new FormControl(backdate),
+        to: new FormControl(today)
+      });
+
       const genderFiltersForm = this.formBuilder.group({
         from: new FormControl(backdate),
         to: new FormControl(today)
@@ -76,7 +82,9 @@ export class DashboardService {
         this.getItems(purchasesFiltersForm.value),
         this.getAllItems(purchasesFiltersForm.value),
         // this.getUsers(null)
+        this.getBottlesReport(bottlesReportFiltersForm.value),
         this.getUsers(genderFiltersForm.value)
+
       ]).then(() => {
         resolve();
       }, reject);
@@ -213,6 +221,34 @@ export class DashboardService {
     });
   }
 
+  exportAllItems(filter): Promise<any> {
+    let url =
+      AppConfig.apiUrl +
+      "items/exportReportOfAllItems/?access_token=" +
+      this.authService.getToken();
+
+    if (filter) {
+      if (filter.to) {
+        filter.to.setHours(23)
+        filter.to.setMinutes(59)
+      }
+      if (filter.from) {
+        filter.to.setMinutes(0)
+        filter.from.setHours(0)
+      }
+
+
+      url += "&filter=" + JSON.stringify({ "from": filter.from, "to": filter.to, "ownerId": filter.ownerId, "productsId": filter.productsId });
+    }
+
+    return new Promise((resolve, reject) => {
+      this.http.get(url).subscribe((response: any) => {
+        console.log(response);
+        resolve(response["path"]);
+
+      }, reject);
+    });
+  }
   getAllItems(filter): Promise<any> {
     let url =
       AppConfig.apiUrl +
@@ -281,6 +317,33 @@ export class DashboardService {
           }
         ];
         resolve(this.users);
+      }, reject);
+    });
+  }
+
+  getBottlesReport(filter): Promise<any> {
+    let url =
+      AppConfig.apiUrl +
+      "bottles/typeStateReport/?access_token=" +
+      this.authService.getToken();
+
+    if (filter) {
+      url += "&from=" + filter.from + "&to=" + filter.to;
+    }
+
+    return new Promise((resolve, reject) => {
+      this.http.get(url).subscribe((response: any) => {
+        this.bottlesReport = [
+          {
+            name: "audio",
+            value: response.audio
+          },
+          {
+            name: "video",
+            value: response.video
+          }
+        ];
+        resolve(this.bottlesReport);
       }, reject);
     });
   }

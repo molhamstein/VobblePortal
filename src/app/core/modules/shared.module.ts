@@ -1,3 +1,4 @@
+import { FuseViewUserItemsComponent } from './../components/view-user-items/view-user-items.component';
 import { TransactionComponent } from './../../main/transaction/transaction.component';
 import { FuseViewUserComponent } from './../components/view-user/view-user.component';
 import { NgModule } from '@angular/core';
@@ -25,6 +26,7 @@ import { FuseTranslationLoaderService } from '../services/translation-loader.ser
 import { CookieService } from 'ngx-cookie-service';
 import { MarkdownModule } from 'angular2-markdown';
 import { TranslateModule } from '@ngx-translate/core';
+import { FuseViewItemsComponent } from '../components/view-items/view-items.component';
 
 @NgModule({
     declarations: [
@@ -32,6 +34,8 @@ import { TranslateModule } from '@ngx-translate/core';
         FuseMatSidenavTogglerDirective,
         FuseConfirmDialogComponent,
         FuseViewUserComponent,
+        FuseViewUserItemsComponent,
+        FuseViewItemsComponent,
         FuseCountdownComponent,
         FuseHljsComponent,
         FuseIfOnDomDirective,
@@ -73,7 +77,7 @@ import { TranslateModule } from '@ngx-translate/core';
         TransactionComponent
     ],
     entryComponents: [
-        FuseConfirmDialogComponent, FuseViewUserComponent
+        FuseConfirmDialogComponent, FuseViewUserComponent, FuseViewUserItemsComponent,FuseViewItemsComponent,
     ],
     providers: [
         CookieService,

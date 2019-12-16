@@ -38,9 +38,8 @@ import { ShoresService } from "../../shores/shores.service";
 export class BottlesListComponent implements OnInit {
 
   chipsFilter = [];
-  filtersObject = { "gender": "", "country": "", "shoreId": "", "createdFrom": "", "createdTo": "" }
-  filterKey = { "gender": true, "country": true, "shoreId": true, "createdFrom": true, "createdTo": true }
-
+  filtersObject = { "gender": "", "country": "", "shoreId": "", "createdFrom": "", "createdTo": "", "bottleType": ""}
+  filterKey = { "gender": true, "country": true, "shoreId": true, "createdFrom": true, "createdTo": true, "bottleType" : true, }
 
   filteredOptions: Observable<string[]>;
   shores: Shore[] = [];
@@ -85,6 +84,8 @@ export class BottlesListComponent implements OnInit {
     );
   }
 
+
+  
   ngOnInit() {
 
     this.defaultIcon = AppConfig.defaultShoreIcon;
@@ -116,7 +117,7 @@ export class BottlesListComponent implements OnInit {
   clearFilter() {
     this.paginator.pageIndex = 0
     this.chipsFilter = []
-    this.filtersObject = { "gender": "", "country": "", "shoreId": "", "createdFrom": "", "createdTo": "" }
+    this.filtersObject = { "gender": "", "country": "", "shoreId": "", "createdFrom": "", "createdTo": "", "bottleType": "" }
     this.filter.nativeElement.value = "";
     this.bottlesService.getItemsCount("");
     this.getItemsPaging();

@@ -1,0 +1,47 @@
+<h1 matDialogTitle>Items</h1>
+<div mat-dialog-content>
+  <ngx-datatable style="min-height: 380px;max-height: 400px;margin:10px 0px;" class="material vertical-scroll"
+    [rows]="items" [headerHeight]="50" [rowHeight]="50" [footerHeight]="50" [scrollbarV]="true" [scrollbarH]="false">
+    <ngx-datatable-footer>
+    </ngx-datatable-footer>
+    <ngx-datatable-column [canAutoResize]="true" [sortable]="true" prop="product">
+      <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
+        <span>Product</span>
+      </ng-template>
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <span>
+          {{row.name_en}}
+        </span>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column [canAutoResize]="true" [sortable]="true" prop="username">
+      <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
+        <span>Username</span>
+      </ng-template>
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <span>
+          {{row.username}}
+        </span>
+      </ng-template>
+    </ngx-datatable-column>
+
+
+    <ngx-datatable-column [canAutoResize]="true" [sortable]="true" prop="startAt">
+      <ng-template let-column="column" ngx-datatable-header-template let-sort="sortFn">
+        <span>Created At</span>
+      </ng-template>
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <span>
+          {{row.startAt | date: 'dd-MM-yyyy HH:mm'}}
+        </span>
+      </ng-template>
+    </ngx-datatable-column>
+
+
+  </ngx-datatable>
+
+</div>
+<div mat-dialog-actions class="pt-24">
+  <button mat-raised-button class="mat-accent mr-16" (click)="dialogRef.close(true)">Ok</button>
+</div>
