@@ -42,6 +42,7 @@ export class BottlesEditComponent implements OnInit, OnDestroy {
   form: FormGroup;
   formErrors: any;
   video: string = "";
+  bottleType: string;
   blobFileToUpload;
   shores: Shore[] = [];
   users: User[] = [];
@@ -76,6 +77,8 @@ export class BottlesEditComponent implements OnInit, OnDestroy {
 
     this.getShores();
     this.video = this.item.file;
+    this.bottleType = this.item.bottleType;
+
     this.form = this.formBuilder.group({
       id: [this.item.id],
       file: [this.item.file],
@@ -137,7 +140,7 @@ export class BottlesEditComponent implements OnInit, OnDestroy {
       items => {
         this.shores = items;
       },
-      error => {}
+      error => { }
     );
   }
 
@@ -171,19 +174,32 @@ export class BottlesEditComponent implements OnInit, OnDestroy {
       if (typeof file !== "string") {
         formData.append("file", file);
         this.disableSave = true;
-        this.uploadFileService.uploadFile(formData, "video").then(
-          val => {
-            //console.log('val ', val);
-            this.form.value.thumbnail = val[0].thumbnail;
-            this.form.value.file = val[0].file;
-            this.disableSave = false;
-          },
-          reason => {
-            this.disableSave = false;
-            console.log("error ", reason);
-          }
-        );
-      } else {
+        if (this.bottleType == 'video') {
+          this.uploadFileService.uploadFile(formData, "video").then(
+            val => {
+              this.form.value.thumbnail = val[0].thumbnail;
+              this.form.value.file = val[0].file;
+              this.disableSave = false;
+            },
+            reason => {
+              this.disableSave = false;
+            }
+          );
+        }
+        else if (this.bottleType == 'audio') {
+          this.uploadFileService.uploadFile(formData, "audio").then(
+            val => {
+              this.form.value.thumbnail = this.item.thumbnail;
+              this.form.value.file = val[0].file;
+              this.disableSave = false;
+            },
+            reason => {
+              this.disableSave = false;
+            }
+          );
+        }
+      }
+      else {
         this.form.value.thumbnail = this.item.thumbnail;
         this.form.value.file = file;
       }

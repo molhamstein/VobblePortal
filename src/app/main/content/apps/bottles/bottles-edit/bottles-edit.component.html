@@ -95,19 +95,26 @@
 
       <div fxFlex="35%" class="form-errors-model mat-white-bg p-24 mat-elevation-z4">
         <div class="p-4 item-img" fxLayout="column" fxLayoutGap="3px">
-          <video width="315" height="240" controls *ngIf="video== ''"></video>
-          <video width="315" height="240" controls *ngIf="video!= ''">
-            <source *ngIf="video!= ''" [src]="video" type="video/mp4">
-            <source *ngIf="video!= ''" [src]="video" type="video/ogg">
-            <!--Your browser does not support the video tag.-->
+
+          <video width="315" height="240" controls *ngIf="bottleType == 'video' && video== ''"></video>
+
+          <video width="315" height="240" controls *ngIf="video!= '' && bottleType == 'video'">
+            <source [src]="video" type="video/mp4">
+            <source [src]="video" type="video/ogg">
           </video>
 
-          <input type="file" accept="video/*" #file name="video" fxHide (change)="onFileChange($event)">
+          <audio controls *ngIf="video == '' && bottleType == 'audio'"></audio>
+          <audio controls *ngIf="video != '' && bottleType == 'audio'">
+               <source [src]="video"> 
+          </audio>
+
+
+          <input *ngIf="bottleType == 'video'" type="file" accept="video/*" #file name="video" fxHide (change)="onFileChange($event)">
+          <input *ngIf="bottleType == 'audio'" type="file" accept="audio/*" #file name="audio" fxHide (change)="onFileChange($event)">
+          
           <button type="button" mat-raised-button color="primary" (click)="browseVideos()">Browse</button>
           <!-- <button type="button" mat-raised-button color="warn" (click)="removeFileVideo()" [disabled]="video==''">Remove</button> -->
         </div>
-
-
       </div>
 
 

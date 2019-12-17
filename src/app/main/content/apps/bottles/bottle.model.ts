@@ -34,6 +34,6 @@ export class Bottle {
     this.userComplete = bottle.userComplete || [];
     this.userSeen = bottle.userSeen || [];
     this.userReplaies = bottle.userReplaies || [];
-    this.bottleType = bottle.bottleType || "video" ; 
+    this.bottleType = bottle.bottleType || "" ; 
   }
 }

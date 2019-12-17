@@ -33,6 +33,7 @@ export class BottlesNewComponent implements OnInit {
   formErrors: any;
   blobFileToUpload;
   video: string = "";
+  bottleType: string = "";
   shores: Shore[] = [];
   topics: Topic[] = [];
   users: User[] = [];
@@ -77,6 +78,7 @@ export class BottlesNewComponent implements OnInit {
       shoreId: [""],
       topicId: [""],
       repliesUserCount: [""],
+      bottleType: "",
       ownerId: new FormControl(this.currentUser)
     });
 
@@ -84,6 +86,10 @@ export class BottlesNewComponent implements OnInit {
       startWith(""),
       map(val => this.filter(val))
     );
+
+    this.form["controls"].bottleType.valueChanges.subscribe(res => {
+      this.bottleType = res;
+    });
 
     this.form.valueChanges.subscribe(() => {
       this.onFormValuesChanged();
@@ -144,9 +150,9 @@ export class BottlesNewComponent implements OnInit {
   readFileVideo(inputValue: any): void {
     if (inputValue.files && inputValue.files[0]) {
       this.video = "";
-      // this.form.value.file = inputValue.files[0];
+
       this.blobFileToUpload = inputValue.files[0];
-      //   console.log("this.blobFileToUpload ", this.blobFileToUpload);
+
 
       this.uploadFiles(this.blobFileToUpload);
 
@@ -163,56 +169,54 @@ export class BottlesNewComponent implements OnInit {
     return false;
   }
 
-  // removeFileVideo() {
-  //   // this.video = "";
-  //   // this.form.value.file = "";
-  //   // this.form.value.thumbnail = "";
-  // }
 
   onFileChange(event) {
     this.readFileVideo(event.target);
   }
 
   uploadFiles(file) {
-    //  console.log("file ", file);
-    //  console.log("this.form.value.file ", this.form.value.file);
-    //  console.log("this.blobFileToUpload ", this.blobFileToUpload);
     if (file && file !== "") {
       const formData: FormData = new FormData();
 
-      //  console.log("typeof images[i] ", typeof file);
-      //if (typeof file !== 'string') {
-      formData.append("file", file);
-      // console.log("formData ", formData);
-      this.disableSave = true;
-      this.uploadFileService.uploadFile(formData, "video").then(
-        val => {
-          this.disableSave = false;
-          console.log("val ", val);
-          this.form.value.thumbnail = val[0].thumbnail;
-          this.form.value.file = val[0].file;
-          console.log("form ", this.form.value);
 
-          // this.submit();
-        },
-        reason => {
-          this.disableSave = false;
-          console.log("error ", reason);
-        }
-      );
-      /* } else {
-          //this.form.value.thumbnail = thisthumbnail;
-          //this.form.value.file = file;
-          this.submit();
-        }*/
+      formData.append("file", file);
+      this.disableSave = true;
+
+      if (this.bottleType == 'video') {
+        this.uploadFileService.uploadFile(formData, "video").then(
+          val => {
+            this.form.value.thumbnail = val[0].thumbnail;
+            this.form.value.file = val[0].file;
+            this.disableSave = false;
+          },
+          reason => {
+            this.disableSave = false;
+            // console.log("error add video", reason);
+          }
+        );
+      }
+      else if (this.bottleType == 'audio') {
+        this.uploadFileService.uploadFile(formData, "audio").then(
+          val => {
+            this.form.value.file = val[0].file;
+            this.disableSave = false;
+          },
+          reason => {
+            this.disableSave = false;
+            // console.log("error add audio", reason);
+          }
+        );
+      }
+
     }
-    // else this.submit();
   }
 
   submit() {
-    // delete this.form.value.id;
+
     this.form.value.ownerId = this.form.value.ownerId.id;
-    console.log("form add", this.form.value);
+
+    // console.log(this.form.value);
+
     this.bottlesService.newItem(this.form.value).then(
       val => {
         this.helpersService.showActionSnackbar(
@@ -231,15 +235,14 @@ export class BottlesNewComponent implements OnInit {
           { style: "failed-snackbar" }
         );
         this.progressBarService.toggle();
-        console.log("error ", reason);
+        console.log("reason ", reason);
       }
     );
   }
 
   onSubmit() {
     this.progressBarService.toggle();
-    console.log("form", this.form.value)
+    // console.log("form onSubmit ", this.form.value);
     this.submit();
-    // this.uploadFiles(this.blobFileToUpload);
   }
 }
