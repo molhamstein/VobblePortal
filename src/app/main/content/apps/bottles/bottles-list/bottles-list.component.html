@@ -66,7 +66,7 @@
               *ngIf="product.bottleType=='video'&& product.thumbnail && product.thumbnail != '' "
               [alt]="product.createdAt" [src]="product.thumbnail" />
             <img class="product-image" [className]="isNewBottle(product.createdAt)" *ngIf="product.bottleType=='audio'"
-              [alt]="product.createdAt" src="../../../../../../assets/images/logos/img-audio-thumbnail.png" />
+              [alt]="product.createdAt" [src]="defaultAudioIcon" />
           </mat-cell>
         </ng-container>
 

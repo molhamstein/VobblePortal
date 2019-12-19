@@ -68,6 +68,7 @@ export class BottlesListComponent implements OnInit {
   sort: MatSort;
 
   defaultIcon: string = "";
+  defaultAudioIcon: string = "";
   itemsCount: number = 0;
 
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
@@ -89,6 +90,7 @@ export class BottlesListComponent implements OnInit {
   ngOnInit() {
 
     this.defaultIcon = AppConfig.defaultShoreIcon;
+    this.defaultAudioIcon = AppConfig.defaultAudioIcon;
 
     this.dataSource = new FilesDataSource(
       this.bottlesService,
