@@ -115,6 +115,8 @@
                       <th>Creation Date</th>
                       <th>Last login</th>
                       <th>ISO Code</th>
+                      <th>Host Status</th>
+                      <th *ngIf="item.agency">Agency</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -151,6 +153,13 @@
 
                       <td>
                         <span class="text-truncate">{{item.ISOCode}}</span>
+                      </td>
+
+                      <td>
+                          <span class="text-truncate">{{item.isHost ? 'True' : 'False'}}</span>
+                      </td>
+                      <td *ngIf="item.agency">
+                          <span class="text-truncate"> {{ item.agency.name }}  </span>
                       </td>
 
                     </tr>

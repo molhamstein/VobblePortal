@@ -178,6 +178,16 @@ export class UsersService implements Resolve<any> {
         }
       }
 
+      if (filterBy.isHost != "") {
+        _filtering += ',{"isHost":"' + filterBy.isHost + '"}';
+        _searching_count += ',{"isHost":"' + filterBy.isHost + '"}';
+      }
+
+      if(filterBy.agency != ""){
+        _filtering += ',{"agencyId":"' + filterBy.agency + '"}';
+        _searching_count += ',{"agencyId":"' + filterBy.agency + '"}';
+      }
+
       if (filterBy.lastLoginFrom) {
         _filtering += ',{"lastLogin":{"gt":"' + filterBy.lastLoginFrom + '"}}';
         _searching_count +=

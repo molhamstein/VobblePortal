@@ -171,7 +171,7 @@ export class BottlesListComponent implements OnInit {
   exportAsExcelFile(): void {
     this.bottlesService.export(this.filtersObject).then(res => {
       if (res) {
-        console.log(res);
+       
         window.location.href = res;
       }
     });
@@ -199,14 +199,14 @@ export class BottlesListComponent implements OnInit {
     });
 
     this.confirmDialogRef.componentInstance.confirmMessage =
-      "Are you sure you want to delete?";
+      "do you want to delete the file?";
     this.progressBarService.toggle();
     this.confirmDialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.bottlesService.deleteItem(contact);
-        // this.itemsCount--;
-        this.getItemsPaging();
-      }
+      if (result)
+        this.bottlesService.deleteItem(contact, true);
+      else 
+         this.bottlesService.deleteItem(contact, false);
+      this.getItemsPaging();
       this.confirmDialogRef = null;
     });
   }

@@ -39,6 +39,9 @@ import { TestBottlesModule } from "./main/content/apps/test bottles/test-bottles
 import { ExtendMessageModule } from "./main/content/apps/extend-message/extend-message.module";
 import { BlockModule } from "./main/content/apps/block/block.module";
 import { GiftItemModule } from './main/content/apps/gift-items/gift-items.module';
+import { AgenciesModule } from './main/content/apps/agencies/agencies.module';
+import { CallsModule } from './main/content/apps/calls/calls.module';
+import { HostsModule } from './main/content/apps/hosts/hosts.module';
 
 const appRoutes: Routes = [
   {
@@ -74,6 +77,16 @@ const appRoutes: Routes = [
   {
     path: "chat-base-products",
     loadChildren: "./main/content/apps/chat-base-products/chat-base-products.module#ChatBaseProductsModule",
+    canLoad: [AuthGuardService]
+  },
+  {
+    path: "calls",
+    loadChildren: "./main/content/apps/calls/calls.module#CallsModule",
+    canLoad: [AuthGuardService]
+  },
+  {
+    path: "hosts",
+    loadChildren: "./main/content/apps/hosts/hosts.module#HostsModule",
     canLoad: [AuthGuardService]
   },
   {
@@ -157,7 +170,10 @@ const appRoutes: Routes = [
     DashboardModule,
     ExtendMessageModule,
     GiftItemModule,
-    PagesModule
+    PagesModule,
+    AgenciesModule,
+    CallsModule,
+    HostsModule,
   ],
 
   entryComponents: [FilterComponent],

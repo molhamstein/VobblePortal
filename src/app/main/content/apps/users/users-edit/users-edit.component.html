@@ -161,19 +161,40 @@
 
           </div>
 
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" fxLayoutGap="10px">
+            <mat-form-field fxFlex="50">
+              <mat-select placeholder="Host Status" formControlName="isHost">
+                <mat-option value="true"> True </mat-option>
+                <mat-option value="false"> False </mat-option>
+              </mat-select>
+
+              <mat-error *ngIf="formErrors.isHost.required">
+                Required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="50">
+              <mat-select placeholder="Agency" formControlName="agencyId">
+                <mat-option *ngFor="let agency of filteredAgencies" [value]="agency.id">
+                  {{ agency.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
           <div class="h2 mb-24" *ngIf="item.device">Device Details</div>
 
           <div fxLayout="row" *ngIf="item.device" fxLayoutAlign="space-between center" fxLayoutGap="10px">
             <!--<mat-checkbox formControlName="isActive">Active</mat-checkbox>-->
 
-            <button mat-raised-button type="button" *ngIf="deviceStatus!='active'" (click)="changeDeviceStatus('active')"
-              class="add-product-button mat-white-bg  mt-sm-0">
+            <button mat-raised-button type="button" *ngIf="deviceStatus!='active'"
+              (click)="changeDeviceStatus('active')" class="add-product-button mat-white-bg  mt-sm-0">
               <mat-icon class="active-icon mat-red-500-bg s-16">check</mat-icon>
               Active
             </button>
 
-            <button mat-raised-button type="button" *ngIf="deviceStatus=='active'" (click)="changeDeviceStatus('blocked')"
-              class="add-product-button mat-white-bg  mt-sm-0">
+            <button mat-raised-button type="button" *ngIf="deviceStatus=='active'"
+              (click)="changeDeviceStatus('blocked')" class="add-product-button mat-white-bg  mt-sm-0">
               <mat-icon class="active-icon mat-red-500-bg s-16">check</mat-icon>
               De-activated
             </button>

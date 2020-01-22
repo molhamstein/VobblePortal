@@ -131,6 +131,34 @@ export class NavigationModel {
             ]
           },
           {
+            id: "calls",
+            title: "Calls",
+            type: "collapse",
+            icon: "call",
+            children: [
+              {
+                id: "list",
+                title: "List",
+                type: "item",
+                url: "/calls/list"
+              },
+            ]
+          },
+          {
+            id: "hosts",
+            title: "Hosts",
+            type: "collapse",
+            icon: "supervised_user_circle",
+            children: [
+               {
+                 id: "list",
+                 title: "List",
+                 type: "item",
+                 url: "hosts/list"
+               },
+            ]
+          },
+          {
             id: "topics",
             title: "Topics",
             type: "collapse",

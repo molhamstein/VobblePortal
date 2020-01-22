@@ -6,6 +6,7 @@ import { UsersService } from "./users.service";
 import { UsersEditComponent } from "./users-edit/users-edit.component";
 import { UsersNewComponent } from "./users-new/users-new.component";
 import { UsersViewComponent } from "./users-view/users-view.component";
+import { AgenciesService } from "../agencies/agencies.service";
 
 const routes: Routes = [
   {
@@ -46,7 +47,7 @@ const routes: Routes = [
 @NgModule({
   imports: [SharedModule, RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [UsersService],
+  providers: [UsersService, AgenciesService],
   declarations: [
     UsersListComponent,
     UsersEditComponent,

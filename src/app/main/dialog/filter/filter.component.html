@@ -32,6 +32,39 @@
             <mat-option value="false"> False</mat-option>
           </mat-select>
         </mat-form-field>
+
+        <mat-form-field fxFlex="30" *ngIf="filterKey.isHost">
+          <mat-select placeholder="Is Host" formControlName="isHost" name="isHost">
+            <mat-option [value]=""> No filter</mat-option>
+            <mat-option value="true"> True</mat-option>
+            <mat-option value="false"> False</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="30" *ngIf="filterKey.agency">
+          <mat-select placeholder="Agency" formControlName="agency" name="agency">
+            <mat-option [value]=""> No filter</mat-option>
+            <mat-option *ngFor="let agency of agencies" [value]="agency.id"> {{agency.name}} </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="30" *ngIf="filterKey.relatedUserIsHost">
+          <mat-select placeholder="Reciver Is Host" formControlName="relatedUserIsHost" name="relatedUserIsHost">
+            <mat-option [value]=""> No filter</mat-option>
+            <mat-option value="true"> True</mat-option>
+            <mat-option value="false"> False</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="30" *ngIf="filterKey.relatedUserAgencyId">
+          <mat-select placeholder="Reciver Agency" formControlName="relatedUserAgencyId" name="relatedUserAgencyId">
+            <mat-option [value]=""> No filter</mat-option>
+            <mat-option *ngFor="let agency of agencies" [value]="agency.id"> {{agency.name}} </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+
         <mat-form-field fxFlex="30" *ngIf="filterKey.status !=null">
           <mat-select placeholder="Status" formControlName="status">
             <mat-option [value]=""> No filter</mat-option>
@@ -88,6 +121,60 @@
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
+
+        <!-- Calls Log Filter -->
+
+        <mat-form-field fxFlex="30" *ngIf="filterKey.startFrom">
+          <input (click)="pickerStartFrom.open()" matInput [matDatepicker]="pickerStartFrom"
+            placeholder="Started Date From" formControlName="startFrom" name="startFrom" />
+          <mat-datepicker-toggle matSuffix [for]="pickerStartFrom"></mat-datepicker-toggle>
+          <mat-datepicker #pickerStartFrom></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="30" *ngIf="filterKey.startTo">
+          <input (click)="pickerStartTo.open()" matInput [matDatepicker]="pickerStartTo" placeholder="Started Date To"
+            formControlName="startTo" name="startTo" />
+          <mat-datepicker-toggle matSuffix [for]="pickerStartTo"></mat-datepicker-toggle>
+          <mat-datepicker #pickerStartTo></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="30" *ngIf="filterKey.callStatus">
+          <mat-select placeholder="Call Status" formControlName="callStatus" name="callStatus">
+            <mat-option [value]=""> No filter</mat-option>
+            <mat-option value="ringing"> Ringing </mat-option>
+            <mat-option value="busy"> Busy </mat-option>
+            <mat-option value="decline"> Decline </mat-option>
+            <mat-option value="connected"> Connected </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+        <mat-form-field fxFlex="30" *ngIf="filterKey.owner">
+          <input type="text" placeholder="Owner" formControlName="owner" matInput [matAutocomplete]="auto2"
+            (input)="onSearch($event.target.value)">
+          <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let option of filteredOwners | async" [value]="option">
+              <img *ngIf="option.image && option.image!=''" [src]="option.image"
+                style=" border-radius: 50%;object-fit: cover; margin-top: 8px; margin-right: 5px;height: 30px;width: 30px;">
+              {{ option.username }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="30" *ngIf="filterKey.relatedUser">
+          <input type="text" placeholder="Reciver" formControlName="relatedUser" matInput [matAutocomplete]="auto"
+            (input)="onSearch($event.target.value)">
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let option of filteredUsers | async" [value]="option">
+              <img *ngIf="option.image && option.image!=''" [src]="option.image"
+                style=" border-radius: 50%;object-fit: cover; margin-top: 8px; margin-right: 5px;height: 30px;width: 30px;">
+              {{ option.username }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+
+
       </div>
     </form>
 

@@ -17,6 +17,7 @@ import { countries } from "typed-countries";
 import { Observable } from "rxjs";
 import { map, startWith } from "rxjs/operators";
 import { ProgressBarService } from "../../../../../core/services/progress-bar.service";
+import { AgenciesService } from "../../agencies/agencies.service";
 
 @Component({
   selector: "app-users-new",
@@ -32,6 +33,7 @@ export class UsersNewComponent implements OnInit {
   defaultAvatar: string;
 
   filteredOptions: Observable<string[]>;
+  filteredAgencies ; 
 
   @ViewChild("file")
   fileSelector: ElementRef;
@@ -43,14 +45,16 @@ export class UsersNewComponent implements OnInit {
     private helpersService: HelpersService,
     private progressBarService: ProgressBarService,
     private usersService: UsersService,
-    private uploadFileService: UploadFileService
+    private uploadFileService: UploadFileService,
+    private agenciesService: AgenciesService,
   ) {
     this.formErrors = {
       gender: { required: true },
       createdAt: { required: true },
       email: { required: true, email: true },
       username: { required: true, unique: true },
-      password: { required: true, minLength: true }
+      password: { required: true, minLength: true },
+      isHost: {required: true},
     };
   }
 
@@ -68,10 +72,8 @@ export class UsersNewComponent implements OnInit {
           Validators.maxLength(40),
           (username: FormControl) => {
             if (username.value != "") {
-              // console.log('username', username.value);
               this.authService.checkUsername(username.value).then(
                 data => {
-                  // console.log("data ", data);
                   username.setErrors(null);
                   this.formErrors.username.unique = true;
                 },
@@ -94,9 +96,9 @@ export class UsersNewComponent implements OnInit {
       foundBottlesCount: [""],
       createdAt: [new Date(), Validators.required],
       image: [""],
-      //  isActive: [true],
-      // nextRefill: [''],
-      ISOCode: new FormControl("")
+      isHost: [null , Validators.required],
+      ISOCode: new FormControl(""),
+      agencyId: new FormControl(""),
     });
 
     this.form.valueChanges.subscribe(() => {
@@ -107,6 +109,10 @@ export class UsersNewComponent implements OnInit {
       startWith(""),
       map(val => this.filter(val))
     );
+
+    this.agenciesService.getAgencies().subscribe(res => {
+         this.filteredAgencies = res ; 
+    });
   }
 
   filter(val: string): any[] {
@@ -114,6 +120,7 @@ export class UsersNewComponent implements OnInit {
       option.iso.toLowerCase().includes(val.toLowerCase())
     );
   }
+
 
   onFormValuesChanged() {
     for (const field in this.formErrors) {

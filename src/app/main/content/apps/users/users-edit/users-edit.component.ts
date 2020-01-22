@@ -28,6 +28,7 @@ import { countries } from "typed-countries";
 import { Observable } from "rxjs";
 import { map, startWith } from "rxjs/operators";
 import { ProgressBarService } from "../../../../../core/services/progress-bar.service";
+import { AgenciesService } from '../../agencies/agencies.service';
 
 @Component({
   selector: "app-users-edit",
@@ -45,6 +46,7 @@ export class UsersEditComponent implements OnInit, OnDestroy {
   defaultAvatar: string;
 
   filteredOptions: Observable<string[]>;
+  filteredAgencies;
 
   @ViewChild("file")
   fileSelector: ElementRef;
@@ -60,14 +62,16 @@ export class UsersEditComponent implements OnInit, OnDestroy {
     private helpersService: HelpersService,
     private progressBarService: ProgressBarService,
     private uploadFileService: UploadFileService,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private agenciesService: AgenciesService,
   ) {
     this.formErrors = {
       gender: { required: true },
       createdAt: { required: true },
       email: { required: true, email: true },
       username: { required: true, unique: true },
-      password: { required: true, minLength: true }
+      password: { required: true, minLength: true },
+      isHost: { required: true },
     };
   }
 
@@ -122,7 +126,9 @@ export class UsersEditComponent implements OnInit, OnDestroy {
       image: [this.item.image],
       //isActive: [this.item.isActive],
       // nextRefill: [this.item.nextRefill],
-      ISOCode: new FormControl(this.item.ISOCode)
+      ISOCode: new FormControl(this.item.ISOCode),
+      agencyId: new FormControl(this.item.agencyId),
+      isHost: [this.item.isHost ? "true" : "false", Validators.required],
     });
 
     this.form.valueChanges.subscribe(() => {
@@ -133,6 +139,11 @@ export class UsersEditComponent implements OnInit, OnDestroy {
       startWith(""),
       map(val => this.filter(val))
     );
+
+    this.agenciesService.getAgencies().subscribe(res => {
+      this.filteredAgencies = res;
+    });
+
   }
 
   filter(val: string): any[] {

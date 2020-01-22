@@ -1,0 +1,118 @@
+<div id="products" class="page-layout carded fullwidth" fusePerfectScrollbar>
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg mat-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+    <!-- HEADER -->
+    <form class="header white-fg" fxLayout="column" fxLayoutAlign="center space-around" style="margin: 17px 0;">
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <!-- APP TITLE -->
+        <div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
+          <mat-icon class="logo-icon mr-16" *fuseIfOnDom
+            [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }">supervised_user_circle</mat-icon>
+          <span class="logo-text h1" *fuseIfOnDom
+            [@animate]="{ value: '*', params: { delay: '100ms', x: '-25px' } }">Hosts Report</span>
+        </div>
+        <!-- / APP TITLE -->
+
+        <div fxLayout="row" fxLayoutAlign="" fxLayoutGap="20px">
+          <button type="button" mat-raised-button (click)="clearFilter()"
+            class="add-product-button mat-white-bg  mt-sm-0">
+            <span> CLEAR </span>
+          </button>
+
+          <button mat-raised-button type="submit" (click)="openFilter()"
+            class="add-product-button mat-white-bg  mt-sm-0">
+            <span> FILTER </span>
+          </button>
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="" fxLayoutGap="20px">
+        <button mat-raised-button (click)="exportAsExcelFile()" class="add-product-button mat-white-bg  mt-sm-0">
+          Export
+        </button>
+        <div style="display: inherit;">
+          <mat-chip-list aria-label="Fish selection" *ngFor="let object of chipsFilter">
+            <mat-chip style="margin: 0px 10px;">{{object.key}}</mat-chip>
+          </mat-chip-list>
+        </div>
+      </div>
+    </form>
+    <!-- / HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card mat-white-bg">
+      <mat-table class="products-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{ value: '50' }"
+        fusePerfectScrollbar>
+
+        <ng-container cdkColumnDef="name">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Name</mat-header-cell>
+          <mat-cell *cdkCellDef="let item">
+            <p class="text-truncate">{{ item.name }}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="agency">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Agency</mat-header-cell>
+          <mat-cell *cdkCellDef="let item">
+            <p class="text-truncate">{{ item.agency }}</p>
+          </mat-cell>
+        </ng-container>
+
+
+        <ng-container cdkColumnDef="callTotalCost">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Call Total Cost</mat-header-cell>
+          <mat-cell *cdkCellDef="let item">
+            <p class="text-truncate">{{ item.callTotalCost }}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="callCount">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Call Count</mat-header-cell>
+          <mat-cell *cdkCellDef="let item">
+            <p class="text-truncate">{{ item.callCount }}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="callTotalDuration">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Call Total Duration</mat-header-cell>
+          <mat-cell *cdkCellDef="let item">
+            <p class="text-truncate">{{ item.callTotalDuration }}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="giftTotalCost">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Gift Total Cost</mat-header-cell>
+          <mat-cell *cdkCellDef="let item">
+            <p class="text-truncate">{{ item.giftTotalCost }}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="itemTotalCost">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Item Total Cost</mat-header-cell>
+          <mat-cell *cdkCellDef="let item">
+            <p class="text-truncate">{{ item.itemTotalCost }}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="total">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Total</mat-header-cell>
+          <mat-cell *cdkCellDef="let item">
+            <p class="text-truncate">{{ item.total }}</p>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+
+        <mat-row *cdkRowDef="let item; columns: displayedColumns" class="product" matRipple>
+        </mat-row>
+      </mat-table>
+
+    </div>
+    <!-- / CONTENT CARD -->
+  </div>
+  <!-- / CENTER -->
+</div>

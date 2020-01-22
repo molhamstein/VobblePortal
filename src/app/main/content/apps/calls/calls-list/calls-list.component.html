@@ -1,0 +1,121 @@
+<div id="products" class="page-layout carded fullwidth" fusePerfectScrollbar>
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg mat-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+    <!-- HEADER -->
+    <form class="header white-fg" fxLayout="column" fxLayoutAlign="center space-around" style="margin: 17px 0;">
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <!-- APP TITLE -->
+        <div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
+          <mat-icon class="logo-icon mr-16" *fuseIfOnDom
+            [@animate]="{ value: '*', params: { delay: '50ms', scale: '0.2' } }">call</mat-icon>
+          <span class="logo-text h1" *fuseIfOnDom
+            [@animate]="{ value: '*', params: { delay: '100ms', x: '-25px' } }">Calls Log</span>
+        </div>
+        <!-- / APP TITLE -->
+
+        <div fxLayout="row" fxLayoutAlign="" fxLayoutGap="20px">
+          <button type="button" mat-raised-button (click)="clearFilter()"
+            class="add-product-button mat-white-bg  mt-sm-0">
+            <span> CLEAR </span>
+          </button>
+
+          <button mat-raised-button type="submit" (click)="openFilter()"
+            class="add-product-button mat-white-bg  mt-sm-0">
+            <span> FILTER </span>
+          </button>
+
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="" fxLayoutGap="20px">
+        <button mat-raised-button (click)="exportAsExcelFile()" class="add-product-button mat-white-bg  mt-sm-0">
+          Export
+        </button>
+        <div style="display: inherit;">
+          <mat-chip-list aria-label="Fish selection" *ngFor="let object of chipsFilter">
+            <mat-chip style="margin: 0px 10px;">{{object.key}}</mat-chip>
+          </mat-chip-list>
+        </div>
+      </div>
+    </form>
+    <!-- / HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card mat-white-bg">
+      <mat-table class="products-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{ value: '50' }"
+        fusePerfectScrollbar>
+
+        <ng-container cdkColumnDef="caller">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Caller</mat-header-cell>
+          <mat-cell *cdkCellDef="let item">
+            <p class="text-truncate">{{ item.owner?.username }}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="reciver">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Reciver</mat-header-cell>
+          <mat-cell *cdkCellDef="let item">
+            <p class="text-truncate">{{ item.relatedUser?.username }}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="dateCreated">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Date Created</mat-header-cell>
+          <mat-cell *cdkCellDef="let item">
+            <p class="text-truncate">{{ item.createdAt | date:'dd-MM-yyyy HH:mm' }}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="dateStarted">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Date Started</mat-header-cell>
+          <mat-cell *cdkCellDef="let item">
+            <p class="text-truncate">{{ item.startAt | date:'dd-MM-yyyy HH:mm' }}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="dateEnded">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Date Ended</mat-header-cell>
+          <mat-cell *cdkCellDef="let item">
+            <p class="text-truncate">{{ item.endAt | date:'dd-MM-yyyy HH:mm' }}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="callStatus">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Status</mat-header-cell>
+          <mat-cell *cdkCellDef="let item">
+            <p class="text-truncate">{{ item.status }}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="duration">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Duration</mat-header-cell>
+          <mat-cell *cdkCellDef="let item">
+            <p class="text-truncate">{{ item.duration }}</p>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="coinsDeducted">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Coins Deducted</mat-header-cell>
+          <mat-cell *cdkCellDef="let item">
+            <p class="text-truncate">{{ item.coins }}</p>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+
+        <mat-row *cdkRowDef="let item; columns: displayedColumns" class="product" matRipple>
+        </mat-row>
+      </mat-table>
+
+      <mat-paginator #paginator [length]="itemsCount" [pageIndex]="0" [pageSize]="100"
+        [pageSizeOptions]="[5, 10, 25, 100]" (page)="getItemsPaging()">
+      </mat-paginator>
+    </div>
+    <!-- / CONTENT CARD -->
+  </div>
+  <!-- / CENTER -->
+</div>

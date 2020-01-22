@@ -51,10 +51,10 @@ export class BottlesViewComponent implements OnInit, OnDestroy
     this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
     this.progressBarService.toggle();
     this.confirmDialogRef.afterClosed().subscribe(result => {
-      if ( result )
-      {
-        this.bottlesService.deleteItem(this.item);
-      }
+      if (result)
+        this.bottlesService.deleteItem(this.item, true);
+      else 
+         this.bottlesService.deleteItem(this.item, false);
       this.confirmDialogRef = null;
     });
 

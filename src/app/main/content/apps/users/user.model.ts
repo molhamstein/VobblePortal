@@ -23,7 +23,10 @@ export class User {
   lastLogin: Date;
   isActive: boolean;
   deviceId:string;
-  device:any
+  device:any;
+  isHost: Boolean;
+  agencyId: string ;
+  agency: any; 
 
   constructor(user) {
     this.id = user.id; // || FuseUtils.generateGUID();
@@ -49,5 +52,8 @@ export class User {
     this.isActive = user.isActive || false;
     this.deviceId = user.deviceId || null;
     this.device = user.device || null;
+    this.isHost = user.isHost || false ; 
+    this.agency = user.agency || null ; 
+    if(this.agency != null) this.agencyId = this.agency.id || null ; 
   }
 }
