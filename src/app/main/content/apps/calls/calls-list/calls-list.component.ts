@@ -182,7 +182,7 @@ export class FilesDataSource extends DataSource<any> {
 
       this.filteredData = [...data];
 
-      data = this.sortData(data);
+
 
       return data;
     });
@@ -194,30 +194,6 @@ export class FilesDataSource extends DataSource<any> {
     }
     return FuseUtils.filterArrayByString(data, this.filter);
   }
-
-  sortData(data): any[] {
-    if (!this._sort.active || this._sort.direction === "") {
-      return data;
-    }
-
-    return data.sort((a, b) => {
-      let propertyA: number | string = "";
-      let propertyB: number | string = "";
-
-      switch (this._sort.active) {
-        case "duration":
-          [propertyA, propertyB] = [a.duration, b.duration];
-          break;
-      }
-
-      const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
-      const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
-
-      return (
-        (valueA < valueB ? -1 : 1) * (this._sort.direction === "asc" ? 1 : -1)
-      );
-    });
-  }
-
+  
   disconnect() { }
 }

@@ -36,7 +36,14 @@
         </button>
         <div style="display: inherit;">
           <mat-chip-list aria-label="Fish selection" *ngFor="let object of chipsFilter">
-            <mat-chip style="margin: 0px 10px;">{{object.key}}</mat-chip>
+            <mat-chip style="margin: 0px 10px;"
+              *ngIf="object.key == 'startFrom' || object.key == 'startTo';else elseBlock">
+              {{ object.value | date }}</mat-chip>
+            <ng-template #elseBlock>
+              <mat-chip style="margin: 0px 10px;">
+                {{ object.key  }}
+              </mat-chip>
+            </ng-template>
           </mat-chip-list>
         </div>
       </div>

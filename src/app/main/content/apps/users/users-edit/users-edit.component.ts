@@ -129,6 +129,7 @@ export class UsersEditComponent implements OnInit, OnDestroy {
       ISOCode: new FormControl(this.item.ISOCode),
       agencyId: new FormControl(this.item.agencyId),
       isHost: [this.item.isHost ? "true" : "false", Validators.required],
+      pocketCoins: [this.item.pocketCoins],
     });
 
     this.form.valueChanges.subscribe(() => {
@@ -223,22 +224,21 @@ export class UsersEditComponent implements OnInit, OnDestroy {
   }
 
   onFileChange(event) {
-    //console.log(event);
+
     this.readFile(event.target);
   }
 
   uploadImage(image) {
-    //console.log('image ', image);
-    //console.log('this.form.value.image ', this.form.value.image);
+
     if (image && image !== "") {
       const formData: FormData = new FormData();
-      //console.log('typeof images[i] ', typeof image);
+
       if (typeof image !== "string") {
         formData.append("file", image);
-        //console.log('formData ', formData);
+
         this.uploadFileService.uploadFile(formData).then(
           val => {
-            //console.log('val ', val);
+
             this.form.value.image = val[0].file;
             this.submit();
           },
@@ -256,7 +256,7 @@ export class UsersEditComponent implements OnInit, OnDestroy {
   }
 
   submit() {
-    //console.log('form add', this.form.value);
+
     this.usersService.editItem(this.form.value).then(
       val => {
         this.helpersService.showActionSnackbar(PageAction.Update, true, "user");

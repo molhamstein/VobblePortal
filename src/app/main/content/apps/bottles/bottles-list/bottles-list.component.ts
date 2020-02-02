@@ -98,13 +98,14 @@ export class BottlesListComponent implements OnInit {
       this.sort
     );
     Observable.fromEvent(this.filter.nativeElement, "keyup")
-      .debounceTime(150)
+      .debounceTime(1000)
       .distinctUntilChanged()
       .subscribe(() => {
         if (!this.dataSource) {
           return;
         }
         this.dataSource.filter = this.filter.nativeElement.value;
+        this.getItemsPaging();
       });
 
 

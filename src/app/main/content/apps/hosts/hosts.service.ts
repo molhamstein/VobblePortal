@@ -8,6 +8,7 @@ import { AppConfig } from '../../../shared/app.config';
 import { map } from 'rxjs/operators';
 import { Hosts } from '../hosts/hosts.model';
 
+
 @Injectable()
 export class HostsService implements Resolve<any> {
 
@@ -44,13 +45,24 @@ export class HostsService implements Resolve<any> {
     let filter = "";
 
 
-    if (values.startFrom)
-      filter += '"createdAt":{"gte":"' + values.startFrom + '"},';
-    if (values.startTo)
-      filter += '"createdAt":{"lte":"' + values.startTo + '"},';
+    if (values.startFrom || values.startTo) {    
+      if (values.startFrom)
+        filter += '"createdAt":{"gte":"' + values.startFrom + '"},';
+      if (values.startTo)
+        filter += '"createdAt":{"lte":"' + values.startTo + '"},';
+    }
+    else { 
+      let today = new Date();
+      let priorDate = new Date().setDate(today.getDate()-30);
+      let lastMonth = new Date(priorDate);
+      
+      filter += '"createdAt":{"gte":"' + lastMonth + '"},';
+      filter += '"createdAt":{"lte":"' + today + '"},';
+    }
+
     if (values.ownerId)
       filter += '"relatedUserId":"' + values.ownerId + '",';
-    if (values.isHost) 
+    if (values.isHost)
       filter += '"relatedUser.isHost":' + values.isHost + ',';
     if (values.agency)
       filter += '"relatedUser.agencyId":"' + values.agency + '",';
@@ -114,7 +126,7 @@ export class HostsService implements Resolve<any> {
   }
 
 
- 
+
 
   export(filterBy): Promise<any> {
 

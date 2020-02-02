@@ -37,8 +37,8 @@ import { map, startWith, debounceTime, distinctUntilChanged } from "rxjs/operato
 })
 export class UsersListComponent implements OnInit {
   chipsFilter = [];
-  filtersObject = { "gender": "", "status": "", "country": "","agency" : "", "isHost": "", "isVip": "", "lastLoginFrom": "", "createdFrom": "", "createdTo": "" }
-  filterKey = { "gender": true, "status": true, "country": true, "agency" : true, "isHost": true, "lastLoginFrom": true, "createdFrom": true, "isVip": true, "createdTo": true }
+  filtersObject = { "gender": "", "status": "", "country": "", "agency": "", "isHost": "", "isVip": "", "lastLoginFrom": "", "createdFrom": "", "createdTo": "" }
+  filterKey = { "gender": true, "status": true, "country": true, "agency": true, "isHost": true, "lastLoginFrom": true, "createdFrom": true, "isVip": true, "createdTo": true }
 
   defaultAvatar: string;
   searchInput: FormControl;
@@ -122,31 +122,22 @@ export class UsersListComponent implements OnInit {
       this.sort
     );
 
-    // this.filtersForm = this.formBuilder.group({
-    //   gender: new FormControl(""),
-    //   country: new FormControl(""),
-    //   createdFrom: new FormControl(""),
-    //   lastLoginFrom: new FormControl(""),
-    //   createdTo: new FormControl(""),
-    //   status: new FormControl("")
-    // });
+    Observable.fromEvent(this.filter.nativeElement, "keyup")
+      .debounceTime(1000)
+      .distinctUntilChanged()
+      .subscribe(() => {
+        if (!this.dataSource) {
+          return;
+        }
+        this.dataSource.filter = this.filter.nativeElement.value;
+        this.getItemsPaging();
+      });
   }
 
   filterC(val: string): any[] {
     return countries.filter(option => option.iso.toLowerCase().includes(val));
   }
 
-  keyUp() {
-    var lastSearch = ""
-    var mainThis = this
-    lastSearch = mainThis.filter.nativeElement.value
-    setTimeout(function () {
-      if (lastSearch == mainThis.filter.nativeElement.value) {
-        mainThis.getItemsPaging()
-      }
-    }, 1500);
-
-  }
   clearFilter() {
     this.paginator.pageIndex = 0
     this.chipsFilter = []

@@ -104,11 +104,11 @@
 
 
             <mat-form-field fxFlex="50">
-                <mat-select placeholder="Agency" formControlName="agencyId">
-                     <mat-option *ngFor="let agency of filteredAgencies" [value]="agency.id">
-                          {{ agency.name }} 
-                     </mat-option>
-                </mat-select>
+              <mat-select placeholder="Agency" formControlName="agencyId">
+                <mat-option *ngFor="let agency of filteredAgencies" [value]="agency.id">
+                  {{ agency.name }}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
 
 
@@ -172,6 +172,14 @@
             </mat-form-field>
 
           </div>
+
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" fxLayoutGap="10px">
+            <mat-form-field fxFlex="50">
+              <input matInput placeholder="Pocket Coins" type="number" formControlName="pocketCoins">
+            </mat-form-field>
+          </div>
+
+
 
         </form>
       </div>

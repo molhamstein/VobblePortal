@@ -48,8 +48,7 @@ export class CallsService implements Resolve<any>{
   makeFilter(filterBy, key) {
 
     let values = filterBy;
-    let filter = "";
-
+    let filter = "" ; 
 
     if (values.startFrom)
       filter += '"createdAt":{"gte":"' + values.startFrom + '"},';
@@ -80,8 +79,8 @@ export class CallsService implements Resolve<any>{
       filter = filter.slice(0, -1);
 
     if (key === 'filter') {
-      if (filter !== "") filter = '{"where":{' + filter + '}}';
-      else filter = '{"where":{}}';
+      if (filter !== "") filter = '"where":{' + filter + '}';
+      else filter = '"where":{}';
     }
     else if (key === 'count') {
       if (filter !== "") filter = "{" + filter + "}";
@@ -95,19 +94,21 @@ export class CallsService implements Resolve<any>{
     return new Promise((resolve, reject) => {
       let offset = page * itemsPerPage;
 
-      const _filter =
-        'filter={"limit":' +
-        itemsPerPage +
-        ', "skip":' +
-        offset +
-        ',"include":"","order":"createdAt DESC"';
+
+     
+      let paging = ',"order": "createdAt DESC","limit":' + itemsPerPage + ',"offset":' + offset ;
+      
+      
 
       let api = AppConfig.apiUrl + "callLogs/getFilterCallLog?"
-        + "access_token=" + this.authService.getToken() + "&filter=";
+        + "access_token=" + this.authService.getToken() + "&filter={";
 
 
       let filter = this.makeFilter(filterBy, "filter");
       api += filter;
+      api += paging ; 
+
+      api += "}";
 
       this.http.get<Calls[]>(api).pipe(
         map(response => {
@@ -152,7 +153,6 @@ export class CallsService implements Resolve<any>{
     return new Promise((resolve, reject) => {
       this.http.get<Calls[]>(api).subscribe(
         (response: any) => {
-          response.count = 1;
           this.itemsCount = response.count;
           this.onItemsCountChanged.next(this.itemsCount);
           resolve(this.itemsCount);

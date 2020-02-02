@@ -27,6 +27,7 @@ export class User {
   isHost: Boolean;
   agencyId: string ;
   agency: any; 
+  pocketCoins: number ; 
 
   constructor(user) {
     this.id = user.id; // || FuseUtils.generateGUID();
@@ -54,6 +55,7 @@ export class User {
     this.device = user.device || null;
     this.isHost = user.isHost || false ; 
     this.agency = user.agency || null ; 
+    this.pocketCoins = user.pocketCoins || 0 ;
     if(this.agency != null) this.agencyId = this.agency.id || null ; 
   }
 }

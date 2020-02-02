@@ -152,13 +152,6 @@
               </mat-autocomplete>
             </mat-form-field>
 
-
-            <!--  <mat-form-field fxFlex="50">
-              <input matInput [matDatepicker]="picker_refill" placeholder="Next refill" formControlName="nextRefill">
-              <mat-datepicker-toggle matSuffix [for]="picker_refill"></mat-datepicker-toggle>
-              <mat-datepicker #picker_refill></mat-datepicker>
-            </mat-form-field>-->
-
           </div>
 
           <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" fxLayoutGap="10px">
@@ -179,6 +172,12 @@
                   {{ agency.name }}
                 </mat-option>
               </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" fxLayoutGap="10px">
+            <mat-form-field fxFlex="50">
+              <input matInput placeholder="Pocket Coins" type="number" formControlName="pocketCoins">
             </mat-form-field>
           </div>
 

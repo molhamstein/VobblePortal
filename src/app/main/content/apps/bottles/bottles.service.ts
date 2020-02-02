@@ -71,7 +71,7 @@ export class BottlesService implements Resolve<any> {
             resolve(response);
           },
           error => {
-           
+
             if (error.error.error.code === AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -89,7 +89,7 @@ export class BottlesService implements Resolve<any> {
   }
 
   getItemsPaging(page, itemsPerPage, filterBy, searchBy): Promise<any> {
-    let _customApi = "?";
+    let _customApi = "";
 
     // PAGING //
     const offset = page * itemsPerPage;
@@ -104,7 +104,6 @@ export class BottlesService implements Resolve<any> {
     let _searching = "";
     if (searchBy && searchBy !== "") {
       if (searchBy) {
-        // 'filter={"where":{"and":[{"owner.username":"' + keyword + '"}]}}';
         _searching = '{"owner.username": "' + searchBy + '"}';
       }
     }
@@ -150,11 +149,11 @@ export class BottlesService implements Resolve<any> {
       }
     }
 
-    if (_searching !== "" || _filtering !== "") {
-      this.getItemsCount('filter={"where":{"and":[' + _searching + "]}}&");
-      _searching = ',"where":{"and":[' + _searching + "]}";
-      _customApi = "/filterBottle?";
-    }
+    this.getItemsCount('filter={"where":{"and":[' + _searching + "]}}&");
+    _searching = ',"where":{"and":[' + _searching + "]}";
+    _customApi = "/filterBottle?";
+
+
 
     const api =
       AppConfig.apiUrl +
@@ -170,13 +169,13 @@ export class BottlesService implements Resolve<any> {
 
       this.http.get<Bottle[]>(api).subscribe(
         (response: any) => {
-   
+
           this.items = response;
           this.onItemsChanged.next(this.items);
           resolve(this.items);
         },
         error => {
-     
+
           if (error.error.error.code === AppConfig.authErrorCode)
             this.router.navigate(["/error-404"]);
           else
@@ -206,32 +205,18 @@ export class BottlesService implements Resolve<any> {
       "access_token=" +
       this.authService.getToken();
 
-    //   api =
-    //     AppConfig.apiUrl +
-    //     "bottles/countBottle?" +
-    //     filter +
-    //     "&access_token=" +
-    //     this.authService.getToken();
-    // } else {
-    //   api =
-    //     AppConfig.apiUrl +
-    //     "bottles/count?access_token=" +
-    //     this.authService.getToken();
-    // }
-
-
 
     return new Promise((resolve, reject) => {
       this.http.get<Bottle[]>(api).subscribe(
         (response: any) => {
-         
+
           this.itemsCount = response.count;
           this.onItemsCountChanged.next(this.itemsCount);
-         
+
           resolve(this.itemsCount);
         },
         error => {
-     
+
           if (error.error.error.code === AppConfig.authErrorCode)
             this.router.navigate(["/error-404"]);
           else
@@ -252,12 +237,12 @@ export class BottlesService implements Resolve<any> {
     return new Promise((resolve, reject) => {
       const index = this.items.indexOf(item);
       this.http.delete<Bottle>(
-          AppConfig.apiUrl + "bottles/" + item.id +
-          "/deactiveBottle?access_token=" + this.authService.getToken() + "&deleteFile=" + deleteFile
-        )
+        AppConfig.apiUrl + "bottles/" + item.id +
+        "/deactiveBottle?access_token=" + this.authService.getToken() + "&deleteFile=" + deleteFile
+      )
         .subscribe(
           data => {
-       
+
             this.items.splice(index, 1);
             this.onItemsChanged.next(this.items);
             this.onItemsCountChanged.next(this.itemsCount);
@@ -298,7 +283,7 @@ export class BottlesService implements Resolve<any> {
         )
         .subscribe(
           item => {
-   
+
             this.item = item;
             this.onItemChanged.next(this.item);
             resolve(item);
@@ -337,7 +322,7 @@ export class BottlesService implements Resolve<any> {
             resolve(true);
           },
           error => {
-         
+
             if (error.error.error.code === AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -365,11 +350,11 @@ export class BottlesService implements Resolve<any> {
         )
         .subscribe(
           data => {
-            
+
             resolve(true);
           },
           error => {
-            
+
             if (error.error.error.code === AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -430,7 +415,7 @@ export class BottlesService implements Resolve<any> {
             resolve(items["path"]);
           },
           error => {
-           
+
             if (error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else

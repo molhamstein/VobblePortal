@@ -18,7 +18,11 @@ import { FilterComponent } from '../../../../dialog/filter/filter.component';
 export class HostsListComponent implements OnInit {
 
 
-  chipsFilter = [];
+  today = new Date();
+  priorDate = new Date().setDate(this.today.getDate() - 30);
+  lastMonth = new Date(this.priorDate);
+
+  chipsFilter = [{key: "startFrom", value: this.lastMonth}, {key: "startTo", value: this.today}];
   filtersObject = { "startFrom": "", "startTo": "", "owner": "", "isHost": "", "agency": "" };
   filterKey = { "startFrom": true, "startTo": true, "owner": true, "isHost": true, "agency": true };
 
@@ -91,7 +95,7 @@ export class HostsListComponent implements OnInit {
   }
 
   clearFilter() {
-    this.chipsFilter = [];
+    this.chipsFilter = [{key: "startFrom", value: this.lastMonth}, {key: "startTo", value: this.today}];
     this.filtersObject = { "startFrom": "", "startTo": "", "owner": "", "isHost": "", "agency": "" };
     this.getItemsPaging();
   }

@@ -99,6 +99,7 @@ export class UsersNewComponent implements OnInit {
       isHost: [null , Validators.required],
       ISOCode: new FormControl(""),
       agencyId: new FormControl(""),
+      pocketCoins: [""],
     });
 
     this.form.valueChanges.subscribe(() => {
