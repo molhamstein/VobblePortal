@@ -65,8 +65,8 @@ export class ExtendMessageService {
       api += "&to=" + filter.to;
     }
 
-    if (filter && filter.user != "") {
-      api += "&userId=" + filter.user.id;
+    if (filter && filter.userId != "") {
+      api += "&userId=" + filter.userId;
     }
 
     return new Promise((resolve, reject) => {
@@ -103,8 +103,8 @@ export class ExtendMessageService {
       url += "&to=" + filter.to;
     }
 
-    if (filter && filter.user != "") {
-      url += "&userId=" + filter.user.id;
+    if (filter && filter.userId != "") {
+      url += "&userId=" + filter.userId;
     }
 
     this.getItemsCount(filter);
@@ -141,8 +141,8 @@ export class ExtendMessageService {
       api += "&to=" + filter.to;
     }
 
-    if (filter && filter.user != "") {
-      api += "&userId=" + filter.user.id;
+    if (filter && filter.userId != "") {
+      api += "&userId=" + filter.userId;
     }
 
     return new Promise((resolve, reject) => {
@@ -178,8 +178,8 @@ export class ExtendMessageService {
       url += "&to=" + filter.to;
     }
 
-    if (filter && filter.user != "") {
-      url += "&userId=" + filter.user.id;
+    if (filter && filter.userId != "") {
+      url += "&userId=" + filter.userId;
     }
 
     this.getItemsRelatedCount(filter);
