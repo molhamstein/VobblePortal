@@ -47,25 +47,25 @@ export class HostsService implements Resolve<any> {
 
     if (values.startFrom || values.startTo) {    
       if (values.startFrom)
-        filter += '"createdAt":{"gte":"' + values.startFrom + '"},';
+        filter += '{"createdAt":{"gte":"' + values.startFrom + '"}},';
       if (values.startTo)
-        filter += '"createdAt":{"lte":"' + values.startTo + '"},';
+        filter += '{"createdAt":{"lte":"' + values.startTo + '"}},';
     }
     else { 
       let today = new Date();
       let priorDate = new Date().setDate(today.getDate()-30);
       let lastMonth = new Date(priorDate);
       
-      filter += '"createdAt":{"gte":"' + lastMonth + '"},';
-      filter += '"createdAt":{"lte":"' + today + '"},';
+      filter += '{"createdAt":{"gte":"' + lastMonth + '"}},';
+      filter += '{"createdAt":{"lte":"' + today + '"}},';
     }
 
     if (values.ownerId)
-      filter += '"relatedUserId":"' + values.ownerId + '",';
+      filter += '{"relatedUserId":"' + values.ownerId + '"},';
     if (values.isHost)
-      filter += '"relatedUser.isHost":' + values.isHost + ',';
+      filter += '{"relatedUser.isHost":' + values.isHost + '},';
     if (values.agency)
-      filter += '"relatedUser.agencyId":"' + values.agency + '",';
+      filter += '{"relatedUser.agencyId":"' + values.agency + '"},';
 
     if (filter.charAt(0) === ",") {
       filter = filter.substr(1);
@@ -73,9 +73,12 @@ export class HostsService implements Resolve<any> {
     if (filter.charAt(filter.length - 1) === ",")
       filter = filter.slice(0, -1);
 
+    // filter={"where":{"and":[{"createdAt":{"gte":"2010-01-21T09:52:30.427Z"}},
+    //                         {"createdAt":{"lte":"2010-01-21T09:52:30.427Z"}}]}}
+
     if (key === 'filter') {
-      if (filter !== "") filter = '{"where":{' + filter + '}}';
-      else filter = '{"where":{}}';
+      if (filter !== "") filter = '{"where":{"and":[' + filter + ']}}';
+      else filter = '{"where":{"and":[]}}';
     }
     else if (key === 'export') {
       if (filter !== "") filter = "{" + filter + "}";

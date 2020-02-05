@@ -66,13 +66,13 @@ export class ItemsService implements Resolve<any> {
         )
         .subscribe(
           (response: any) => {
-            
+
             this.items = response;
             this.onItemsChanged.next(this.items);
             resolve(response);
           },
           error => {
-            
+
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -155,11 +155,11 @@ export class ItemsService implements Resolve<any> {
       }
     }
 
-    if (_searching !== "" || _filtering !== "") {
-      this.getItemsCount('filter={"where":{"and":[' + _searching + "]}}&");
-      _searching = ',"where":{"and":[' + _searching + "]}";
-      _customApi = "/filterItem?";
-    }
+
+    this.getItemsCount('filter={"where":{"and":[' + _searching + "]}}&");
+    _searching = ',"where":{"and":[' + _searching + "]}";
+    _customApi = "/filterItem?";
+
 
     const api =
       AppConfig.apiUrl +
@@ -170,18 +170,18 @@ export class ItemsService implements Resolve<any> {
       "}&access_token=" +
       this.authService.getToken();
 
-   
+
 
     return new Promise((resolve, reject) => {
       this.http.get<Item[]>(api).subscribe(
         (response: any) => {
-          
+
           this.items = response;
           this.onItemsChanged.next(this.items);
           resolve(this.items);
         },
         error => {
-          
+
           if (error.error.error.code == AppConfig.authErrorCode)
             this.router.navigate(["/error-404"]);
           else
@@ -211,18 +211,18 @@ export class ItemsService implements Resolve<any> {
       "access_token=" +
       this.authService.getToken();
 
-    
+
 
     return new Promise((resolve, reject) => {
       this.http.get<Item[]>(api).subscribe(
         (response: any) => {
-          
+
           this.itemsCount = response.count;
           this.onItemsCountChanged.next(this.itemsCount);
           resolve(this.itemsCount);
         },
         error => {
-          
+
           if (error.error.error.code == AppConfig.authErrorCode)
             this.router.navigate(["/error-404"]);
           else
@@ -252,7 +252,7 @@ export class ItemsService implements Resolve<any> {
         )
         .subscribe(
           data => {
-            
+
             this.items.splice(index, 1);
             this.onItemsChanged.next(this.items);
             this.itemsCount--;
@@ -262,7 +262,7 @@ export class ItemsService implements Resolve<any> {
             resolve(true);
           },
           error => {
-            
+
             this.progressBarService.toggle();
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
@@ -293,13 +293,13 @@ export class ItemsService implements Resolve<any> {
         )
         .subscribe(
           item => {
-            
+
             this.item = item;
             this.onItemChanged.next(this.item);
             resolve(item);
           },
           error => {
-            
+
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -332,7 +332,7 @@ export class ItemsService implements Resolve<any> {
             resolve(true);
           },
           error => {
-            
+
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -350,7 +350,7 @@ export class ItemsService implements Resolve<any> {
   }
 
   newItem(item: Item): Promise<any> {
-    
+
     return new Promise((resolve, reject) => {
       this.http
         .post<Item>(
@@ -361,11 +361,11 @@ export class ItemsService implements Resolve<any> {
         )
         .subscribe(
           data => {
-            
+
             resolve(true);
           },
           error => {
-            
+
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -418,11 +418,11 @@ export class ItemsService implements Resolve<any> {
         )
         .subscribe(
           items => {
-            
+
             resolve(items["path"]);
           },
           error => {
-            
+
             if (error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else

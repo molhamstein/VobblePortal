@@ -2,7 +2,7 @@ import { ItemsService } from './../items/items.service';
 import { ExtendMessageService } from './extend-message.service';
 import { FuseUtils } from './../../../../core/fuseUtils';
 import { fuseAnimations } from './../../../../core/animations';
-import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 
 import {
@@ -20,9 +20,6 @@ import "rxjs/add/operator/map";
 import "rxjs/add/operator/debounceTime";
 import "rxjs/add/operator/distinctUntilChanged";
 import "rxjs/add/observable/fromEvent";
-import { ProgressBarService } from '../../../../core/services/progress-bar.service';
-import { map, startWith, debounceTime, distinctUntilChanged } from "rxjs/operators";
-import { ReportsService } from '../reports/reports.service';
 import { FuseViewUserComponent } from '../../../../core/components/view-user/view-user.component';
 
 
@@ -63,32 +60,34 @@ export class ExtendMessageComponent implements OnInit {
     "btns"
   ];
 
-
   itemsCount: number = 0;
   itemsCountRelated: number = 0;
-  mainItemsCount: number = 0
+  mainItemsCount: number = 0;
   curentTab = 0;
 
-  @ViewChild(MatPaginator)
+  @ViewChild('paginator')
   paginator: MatPaginator;
-  // @ViewChild("filter")
-  // filter: ElementRef;
   @ViewChild(MatSort)
   sort: MatSort;
 
+  @ViewChild('paginatorRelated')
+  paginatorRelated: MatPaginator;
+
   viewUserRef: MatDialogRef<FuseViewUserComponent>;
 
-  constructor(
-    private extendMessageService: ExtendMessageService,
-    private progressBarService: ProgressBarService,
-    private itemsService: ItemsService,
-    public dialog: MatDialog,
-    private formBuilder: FormBuilder
-  ) {
-    this.itemsCount = this.extendMessageService.getLengthItem();
+  constructor(private extendMessageService: ExtendMessageService, private itemsService: ItemsService,
+    public dialog: MatDialog, private formBuilder: FormBuilder) {
+
+
+
+    this.extendMessageService.onItemsCountChanged.subscribe(count => {
+      this.itemsCount = count;
+    });
+
     this.itemsService.onItemsCountChanged.subscribe(count => {
       this.mainItemsCount = count;
     });
+
   }
 
   ngOnInit() {
@@ -100,11 +99,9 @@ export class ExtendMessageComponent implements OnInit {
 
     this.dataSourceRelatedUser = new FilesDataSourceRelated(
       this.extendMessageService,
-      this.paginator,
+      this.paginatorRelated,
       this.sort
     );
-
-
 
     this.filtersForm = this.formBuilder.group({
       from: new FormControl(""),
@@ -116,28 +113,22 @@ export class ExtendMessageComponent implements OnInit {
 
   viewUsers(userId, isOwner) {
 
-    this.extendMessageService
-      .getUserRelated(userId, isOwner)
-      .then((data: any) => {
-        console.log(data);
-        this.viewUserRef = this.dialog.open(FuseViewUserComponent, {
-          width: '7 00px',
-          data: { "data": data, "isOwner": isOwner },
-          disableClose: false
-        });
+    this.extendMessageService.getUserRelated(userId, isOwner).then((data: any) => {
+      console.log(data);
+      this.viewUserRef = this.dialog.open(FuseViewUserComponent, {
+        width: '700px',
+        data: { "data": data, "isOwner": isOwner },
+        disableClose: false
       });
+    });
 
   }
-  countries = []
-  relatedUser = []
+
+  countries = [];
+  relatedUser = [];
+
   filterC(val: string): any[] {
     return this.countries.filter(option => option.iso.toLowerCase().includes(val));
-  }
-  getItemsPaging(isFilter = false) {
-    if (isFilter) {
-      this.paginator.pageIndex = 0
-    }
-
   }
 
   getUserByString() {
@@ -156,24 +147,18 @@ export class ExtendMessageComponent implements OnInit {
       });
   }
 
-
-
   keyUp() {
     var lastSearch = ""
     var mainThis = this
     lastSearch = mainThis.filtersForm.value.user
     setTimeout(function () {
       if (lastSearch == mainThis.filtersForm.value.user) {
-        // mainThis.getItemsPaging()
         if (lastSearch != "")
           mainThis.getUserByString()
       }
     }, 1500);
 
   }
-
-
-
 
   relatedUserkeyUp() {
     var lastSearch = ""
@@ -189,55 +174,36 @@ export class ExtendMessageComponent implements OnInit {
 
   }
 
-
-
-
-  changeTab($event) {
-    this.paginator.pageIndex = 0
-    console.log($event.index)
-    var filter = Object.assign({}, this.filtersForm.value)
-    if (filter.user != "")
-      filter['userId'] = this.countries.filter(function (el) {
-        return el.username <= filter.user
-      })[0].id;
-
-    this.curentTab = $event.index
-    this.getItemsPaging(true);
-    if ($event.index == 0)
-      this.extendMessageService
-        .getChatExtendReportOwner(filter)
-        .then((data: any) => {
-          this.dataSource.connect();
-
-          this.itemsCount = this.extendMessageService.getLengthItem();
-        });
-    else if ($event.index == 1)
-      this.extendMessageService
-        .getChatExtendReportRelatedUser(filter)
-        .then((data: any) => {
-          // this.dataSourceRelatedUser.connect();
-
-          this.itemsCountRelated = this.extendMessageService.getLengthItemRelated();
-        });
-    else {
-      if (filter.relatedUser != "")
-        filter['relatedUserId'] = this.relatedUser.filter(function (el) {
-          return el.username <= filter.relatedUser
-        })[0].id;
-      filter.typeItem = "Chat Extend"
-      this.getMainItemsPaging(filter);
-
+  getItemsPaging(isFilter = false) {
+    if (isFilter) {
+      this.paginator.pageIndex = 0;
+      this.paginatorRelated.pageIndex = 0;
     }
 
+    console.log(this.paginatorRelated);
+
+    if (this.curentTab == 0) {
+      this.extendMessageService.getItems(
+        this.paginator.pageIndex,
+        this.paginator.pageSize,
+        this.filtersForm.value
+      ).then(items => {
+        this.dataSource.connect();
+      });
+    }
+    else if (this.curentTab == 1) {
+      this.extendMessageService.getItemsRelated(
+        this.paginatorRelated.pageIndex,
+        this.paginatorRelated.pageSize,
+        this.filtersForm.value
+      ).then(items => {
+        this.dataSourceRelatedUser.connect();
+      });
+    }
   }
 
   getMainItemsPaging(filter) {
-    this.itemsService
-      .getItemsPaging(
-        this.paginator.pageIndex,
-        this.paginator.pageSize,
-        filter, ""
-      )
+    this.itemsService.getItemsPaging(this.paginator.pageIndex, this.paginator.pageSize, filter, "")
       .then(items => {
         this.dataSourceItem = new FilesDataSourceItem(
           this.itemsService,
@@ -248,15 +214,44 @@ export class ExtendMessageComponent implements OnInit {
       });
   }
 
-  // exportAsExcelFile(): void {
-  //   this.reportsService.export(this.filtersForm.value).then(res => {
-  //     if (res) {
-  //       console.log(res);
-  //       window.location.href = res;
-  //     }
-  //   });
-  // }
 
+  changeTab($event) {
+
+    this.curentTab = $event.index;
+    if (this.curentTab == 1) {
+       !this.dataSourceRelatedUser.paginator ? this.dataSourceRelatedUser.paginator = this.paginatorRelated : null ;  
+    }
+
+
+
+
+    this.paginator.pageIndex = 0;
+    this.paginatorRelated.pageIndex = 0;
+
+
+
+    if (this.curentTab <= 1) {
+      this.getItemsPaging(true);
+      return;
+    }
+
+
+    let filter = Object.assign({}, this.filtersForm.value)
+    if (filter.user != "") {
+      filter['userId'] = this.countries.filter(function (el) {
+        return el.username <= filter.user;
+      })[0].id;
+    }
+
+    if (filter.relatedUser != "") {
+      filter['relatedUserId'] = this.relatedUser.filter(function (el) {
+        return el.username <= filter.relatedUser;
+      })[0].id;
+    }
+    filter.typeItem = "Chat Extend";
+    this.getMainItemsPaging(filter);
+
+  }
 
   clearFilter() {
     this.filtersForm = this.formBuilder.group({
@@ -269,34 +264,34 @@ export class ExtendMessageComponent implements OnInit {
   }
 
   applyFilter() {
-    var filter = Object.assign({}, this.filtersForm.value)
-    if (filter.user != "")
+    let filter = Object.assign({}, this.filtersForm.value);
+
+    if (filter.user != "") {
       filter['userId'] = this.countries.filter(function (el) {
-        return el.username <= filter.user
+        return el.username <= filter.user;
       })[0].id;
-    if (this.curentTab == 0)
-      this.extendMessageService
-        .getChatExtendReportOwner(filter)
-        .then((data: any) => {
-          this.itemsCount = this.extendMessageService.getLengthItem();
-        });
-    else if (this.curentTab == 1)
-
-      this.extendMessageService
-        .getChatExtendReportRelatedUser(filter)
-        .then((data: any) => {
-          this.itemsCountRelated = this.extendMessageService.getLengthItem();
-        });
+    }
+    if (this.curentTab == 0) {
+      this.extendMessageService.getChatExtendReportOwner(filter).then((data: any) => {
+        this.itemsCount = this.extendMessageService.getLengthItem();
+      });
+    }
+    else if (this.curentTab == 1) {
+      this.extendMessageService.getChatExtendReportRelatedUser(filter).then((data: any) => {
+        this.itemsCountRelated = this.extendMessageService.getLengthItem();
+      });
+    }
     else {
-      if (filter.relatedUser != "")
+      if (filter.relatedUser != "") {
         filter['relatedUserId'] = this.relatedUser.filter(function (el) {
-          return el.username <= filter.relatedUser
+          return el.username <= filter.relatedUser;
         })[0].id;
-      filter.typeItem = "Chat Extend"
+      }
+      filter.typeItem = "Chat Extend";
       this.getMainItemsPaging(filter);
-
     }
   }
+
 
 }
 
@@ -319,6 +314,8 @@ export class FilesDataSource extends DataSource<any> {
   set filter(filter: string) {
     this._filterChange.next(filter);
   }
+
+
 
   constructor(
     private extendMessageService: ExtendMessageService,
@@ -410,6 +407,14 @@ export class FilesDataSourceRelated extends DataSource<any> {
 
   set filter(filter: string) {
     this._filterChange.next(filter);
+  }
+
+  get paginator(): MatPaginator {
+    return this._paginator;
+  }
+
+  set paginator(paginator: MatPaginator) {
+    this._paginator = paginator;
   }
 
   constructor(

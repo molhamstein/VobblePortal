@@ -97,13 +97,14 @@ export class ItemsListComponent implements OnInit {
     );
 
     Observable.fromEvent(this.filter.nativeElement, "keyup")
-      .debounceTime(150)
+      .debounceTime(700)
       .distinctUntilChanged()
       .subscribe(() => {
         if (!this.dataSource) {
           return;
         }
         this.dataSource.filter = this.filter.nativeElement.value;
+        this.getItemsPaging();
       });
 
 

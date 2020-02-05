@@ -32,9 +32,6 @@
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
-          <!-- <mat-form-field floatPlaceholder="never" fxFlex="1 0 auto">
-            <input id="search" matInput #filter placeholder="Search" />
-          </mat-form-field> -->
           <label for="search" class="mr-8" *ngIf="curentTab==2">
             <mat-icon class="secondary-text">search</mat-icon>
           </label>
@@ -57,9 +54,6 @@
           <span> CLEAR </span>
         </button>
 
-        <!-- <button mat-raised-button [routerLink]="'/reports/new'" class="add-product-button mat-white-bg  mt-sm-0">
-          <span> NEW </span>
-        </button> -->
       </div>
 
       <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px">
@@ -95,8 +89,9 @@
     <!-- / HEADER -->
 
     <!-- CONTENT CARD -->
-    <div class="content-card mat-white-bg" class="custom-table" style="box-shadow:0px 4px 5px -2px rgba(0, 0, 0, 0.2), 0px 7px 10px 1px rgba(0, 0, 0, 0.14), 0px 2px 16px 1px rgba(0, 0, 0, 0.12)">
-      <mat-tab-group dynamicHeight (selectedTabChange)="changeTab($event)">
+    <div class="content-card mat-white-bg" class="custom-table"
+      style="box-shadow:0px 4px 5px -2px rgba(0, 0, 0, 0.2), 0px 7px 10px 1px rgba(0, 0, 0, 0.14), 0px 2px 16px 1px rgba(0, 0, 0, 0.12)">
+      <mat-tab-group  (selectedTabChange)="changeTab($event)">
         <mat-tab label="Owner">
 
           <mat-table class="products-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{ value: '50' }"
@@ -168,7 +163,7 @@
             </mat-row>
           </mat-table>
 
-          <mat-paginator [pageIndex]="0" [pageSize]="100" [pageSizeOptions]="[5, 10, 25, 100]" (page)="getItemsPaging()"
+          <mat-paginator #paginator [pageIndex]="0" [pageSize]="100" [pageSizeOptions]="[5, 10, 25, 100]" (page)="getItemsPaging()"
             [length]="itemsCount"></mat-paginator>
 
         </mat-tab>
@@ -243,10 +238,11 @@
           </mat-table>
 
 
-          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [length]="itemsCountRelated"></mat-paginator>
+          <mat-paginator #paginatorRelated [pageIndex]="0" [pageSize]="100" [pageSizeOptions]="[5, 10, 25, 100]" (page)="getItemsPaging()"
+          [length]="itemsCount"></mat-paginator>
 
         </mat-tab>
-        <mat-tab label="Items">
+        <mat-tab label="Items" >
           <mat-table class="products-table" #table [dataSource]="dataSourceItem" matSort
             [@animateStagger]="{ value: '50' }" fusePerfectScrollbar>
             <ng-container cdkColumnDef="owner">
@@ -342,7 +338,7 @@
             </mat-row>
           </mat-table>
 
-          <mat-paginator #paginator [length]="mainItemsCount" [pageIndex]="0" [pageSize]="100"
+          <mat-paginator [length]="mainItemsCount" [pageIndex]="0" [pageSize]="100"
             [pageSizeOptions]="[5, 10, 25, 100]" (page)="getItemsPaging()">
           </mat-paginator>
         </mat-tab>

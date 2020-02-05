@@ -12,6 +12,9 @@ const routes: Routes = [
     component: ExtendMessageComponent,
     resolve: {
       data: ExtendMessageService
+    },
+    data: {
+      resolverType: "list", page: 0, itemsPerPage: 100
     }
   }
 ];

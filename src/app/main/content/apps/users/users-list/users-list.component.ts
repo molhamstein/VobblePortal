@@ -123,7 +123,7 @@ export class UsersListComponent implements OnInit {
     );
 
     Observable.fromEvent(this.filter.nativeElement, "keyup")
-      .debounceTime(1000)
+      .debounceTime(700)
       .distinctUntilChanged()
       .subscribe(() => {
         if (!this.dataSource) {

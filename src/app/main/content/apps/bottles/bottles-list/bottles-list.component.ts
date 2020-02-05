@@ -1,13 +1,12 @@
 import { FilterComponent } from './../../../../dialog/filter/filter.component';
 import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { fuseAnimations } from "../../../../../core/animations";
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { FormControl } from "@angular/forms";
 import {
   MatPaginator,
   MatSort,
   MatDialogRef,
   MatDialog,
-  PageEvent
 } from "@angular/material";
 import { FuseConfirmDialogComponent } from "../../../../../core/components/confirm-dialog/confirm-dialog.component";
 import { AppConfig } from "../../../../shared/app.config";
@@ -25,9 +24,8 @@ import { FuseUtils } from "../../../../../core/fuseUtils";
 import { BottlesService } from "../bottles.service";
 import { ProgressBarService } from "../../../../../core/services/progress-bar.service";
 import { countries } from "typed-countries";
-import { map, startWith } from "rxjs/operators";
 import { Shore } from "../../shores/shore.model";
-import { ShoresService } from "../../shores/shores.service";
+
 
 @Component({
   selector: "app-bottles-list",
@@ -77,8 +75,6 @@ export class BottlesListComponent implements OnInit {
     private bottlesService: BottlesService,
     private progressBarService: ProgressBarService,
     public dialog: MatDialog,
-    private formBuilder: FormBuilder,
-    private shoresService: ShoresService
   ) {
     this.bottlesService.onItemsCountChanged.subscribe(
       count => (this.itemsCount = count)
@@ -98,7 +94,7 @@ export class BottlesListComponent implements OnInit {
       this.sort
     );
     Observable.fromEvent(this.filter.nativeElement, "keyup")
-      .debounceTime(1000)
+      .debounceTime(700)
       .distinctUntilChanged()
       .subscribe(() => {
         if (!this.dataSource) {

@@ -22,8 +22,8 @@ export class HostsListComponent implements OnInit {
   priorDate = new Date().setDate(this.today.getDate() - 30);
   lastMonth = new Date(this.priorDate);
 
-  chipsFilter = [{key: "startFrom", value: this.lastMonth}, {key: "startTo", value: this.today}];
-  filtersObject = { "startFrom": "", "startTo": "", "owner": "", "isHost": "", "agency": "" };
+  chipsFilter = [{key: "startFrom", value: this.lastMonth}, {key: "startTo", value: this.today}, {key: "isHost", value: true}];
+  filtersObject = { "startFrom": this.lastMonth, "startTo": this.today, "owner": "", "isHost": "true", "agency": "" };
   filterKey = { "startFrom": true, "startTo": true, "owner": true, "isHost": true, "agency": true };
 
 
@@ -95,8 +95,8 @@ export class HostsListComponent implements OnInit {
   }
 
   clearFilter() {
-    this.chipsFilter = [{key: "startFrom", value: this.lastMonth}, {key: "startTo", value: this.today}];
-    this.filtersObject = { "startFrom": "", "startTo": "", "owner": "", "isHost": "", "agency": "" };
+    this.chipsFilter = [{key: "startFrom", value: this.lastMonth}, {key: "startTo", value: this.today}, {key: "isHost", value: true}];
+    this.filtersObject = { "startFrom": this.lastMonth, "startTo": this.today, "owner": "", "isHost": "true", "agency": "" };
     this.getItemsPaging();
   }
 
