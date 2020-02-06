@@ -90,6 +90,11 @@ const appRoutes: Routes = [
     canLoad: [AuthGuardService]
   },
   {
+    path: "agency",
+    loadChildren: "./main/content/apps/agencies/agencies.module#AgenciesModule",
+    canLoad: [AuthGuardService]
+  },
+  {
     path: "topics",
     loadChildren: "./main/content/apps/topics/topics.module#TopicsModule",
     canLoad: [AuthGuardService]

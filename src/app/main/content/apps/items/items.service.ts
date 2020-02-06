@@ -136,10 +136,10 @@ export class ItemsService implements Resolve<any> {
       }
 
       if (filterBy.createdTo) {
-        _filtering += ',{"endAt":{"lt":"' + filterBy.createdTo + '"}}';
+        _filtering += ',{"startAt":{"lt":"' + filterBy.createdTo + '"}}';
       }
       if (filterBy.to) {
-        _filtering += ',{"endAt":{"lt":"' + filterBy.to + '"}}';
+        _filtering += ',{"startAt":{"lt":"' + filterBy.to + '"}}';
       }
 
       if (!_searching && _filtering.charAt(0) === ",") {

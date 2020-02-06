@@ -42,11 +42,16 @@ export class ExtendMessageService {
       let page = route.data["page"];
       let itemsPerPage = route.data["itemsPerPage"];
 
+      let today = new Date();
+      let lastMonth = new Date(new Date().setDate(today.getDate() - 30));
+
+      let filter = {from: lastMonth, to: today};
+
       Promise.all([
-        this.getItems(page, itemsPerPage, ""),
-        this.getItemsCount(""),
-        this.getItemsRelated(page, itemsPerPage, ""),
-        this.getItemsRelatedCount(""),
+        this.getItems(page, itemsPerPage, filter),
+        this.getItemsCount(filter),
+        this.getItemsRelated(page, itemsPerPage, filter),
+        this.getItemsRelatedCount(filter),
       ]).then(() => {
         resolve();
       }, reject);
@@ -56,6 +61,7 @@ export class ExtendMessageService {
   getItemsCount(filter): Promise<any> {
     let api = AppConfig.apiUrl + "items/chatExtendReportOwnerCount?access_token="
       + this.authService.getToken();
+
 
     if (filter && filter.from != "") {
       api += "&from=" + filter.from;

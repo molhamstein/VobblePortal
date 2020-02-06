@@ -1,0 +1,169 @@
+<div id="order" class="page-layout carded fullwidth" fusePerfectScrollbar>
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg mat-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+    <!-- HEADER -->
+    <div class="header white-fg" fxLayout="row" fxLayoutAlign="space-between center">
+      <!-- APP TITLE -->
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <button class="mr-16" mat-icon-button [routerLink]="'/agency/list'">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+
+        <div fxLayout="column" fxLayoutAlign="start start" *fuseIfOnDom
+          [@animate]="{ value: '*', params: { delay: '100ms', x: '-25px' } }">
+          <div class="h2">Agency</div>
+        </div>
+      </div>
+
+      <div>
+        <button mat-raised-button [routerLink]="'/agency/edit/' + item.id"
+          class="add-product-button mat-white-bg  mt-sm-0">
+          <span> EDIT </span>
+        </button>
+        <button mat-raised-button (click)="deleteItem()" class="add-product-button mt-sm-0" color="warn">
+          <span> DELETE </span>
+        </button>
+      </div>
+
+      <!-- / APP TITLE -->
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card mat-white-bg">
+      <!-- CONTENT -->
+      <div class="content">
+        <mat-tab-group>
+          <mat-tab label="Agency Details">
+            <div class="order-details tab-content p-24" fusePerfectScrollbar>
+              <div class="section pb-48">
+
+                <div class="customer">
+                  <table class="simple">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Created At</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td> <span class="name text-truncate">
+                            {{ item.name }}
+                          </span></td>
+                        <td> <span class="text-truncate">
+                            {{ item.createdAt | date:'dd-MM-yyyy HH:mm' }}
+                          </span> </td>
+                        <td>
+                          <mat-icon *ngIf="item.status == 'active'" class="active-icon mat-green-600-bg s-16">check
+                          </mat-icon>
+                          <mat-icon *ngIf="item.status == 'deactivated'" class="active-icon mat-red-500-bg s-16">close
+                          </mat-icon>
+                          <mat-icon *ngIf="item.status == 'pending'" class="active-icon mat-gray-500-bg s-16">
+                            hourglass_empty
+                          </mat-icon>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="section pb-48">
+                <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+                  <mat-icon class="m-0 mr-16">style</mat-icon>
+                  <div class="h2 secondary-text">Users Information</div>
+                </div>
+
+                <table class="simple">
+                  <thead>
+                    <tr>
+                      <th> Image </th>
+                      <th> Name </th>
+                      <th> Login Type </th>
+                      <th> Last Login </th>
+                      <th> Gender </th>
+                      <th> Country </th>
+                      <th> Bottles </th>
+                      <th> Replies </th>
+                      <th> Status </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let user of users">
+                      <td>
+                        <mat-icon *ngIf="user.device != null && user.device.status!='active'"
+                          class="active-icon mat-icon material-icons" role="img" aria-hidden="true"
+                          style="position: absolute;font-size: 18px;">mobile_off</mat-icon>
+                        <mat-icon *ngIf="user.totalPaid>0" class="active-icon mat-icon material-icons" role="img"
+                          aria-hidden="true" style="position: absolute;font-size: 18px;top: 50px;color: gold;">
+                          monetization_on
+                        </mat-icon>
+                        <img class="product-image" [className]="isNewUser(user.lastLogin)"
+                          *ngIf="user.image && user.image != ' '" [alt]="user.username"
+                          [src]="user.image" />
+                        <img [className]="isNewUser(user.lastLogin)" *ngIf="!user.image || user.image == ' '"
+                          [src]="defaultAvatar" />
+                      </td>
+
+                      <td> <span class="text-truncate"> {{ user.username }} </span> </td>
+                      <td> <span class="text-truncate"> {{ user.typeLogIn }} </span> </td>
+                      <td> <span class="text-truncate"> {{ user.lastLogin | date:'dd-MM-yyyy HH:mm' }} </span> </td>
+                      <td>
+                        <mat-icon *ngIf="user.gender == 'male'" class="active-icon light-blue-800-fg s-25">
+                          sentiment_satisfied
+                        </mat-icon>
+                        <mat-icon *ngIf="user.gender == 'female'" class="active-icon pink-300-fg s-25">
+                          face
+                        </mat-icon>
+                      </td>
+                      <td> <span class="text-truncate" *ngIf="user.country"> {{ user.country.name }} </span> </td>
+
+                      <td>
+                        <div fxLayout="column">
+                          <p class="text-truncate" style="width: 80px;margin: 0px;text-align: left;"><b>Thrown :</b>
+                            {{ user.totalBottlesThrown }}</p>
+                          <p class="text-truncate" style="width: 80px;margin: 0px;text-align: left;"><b>Extra :</b>
+                            {{ user.extraBottlesCount }}</p>
+                          <p class="text-truncate" style="width: 80px;margin: 0px;text-align: left;"><b>Has :</b>
+                            {{ user.bottlesCount }}</p>
+                          <p class="text-truncate" style="width: 80px;margin: 0px;text-align: left;"><b>Found :</b>
+                            {{ user.foundBottlesCount }}</p>
+                        </div>
+                      </td>
+                      <td>
+                        <div fxLayout="column">
+                          <p class="text-truncate" style="width: 80px;margin: 0px;text-align: left;"><b>Sent :</b>
+                            {{ user.repliesBottlesCount }}</p>
+                          <p class="text-truncate" style="width: 80px;margin: 0px;text-align: left;"><b>Received :</b>
+                            {{ user.repliesReceivedCount }}</p>
+                        </div>
+                      </td>
+                      <td>
+                        <mat-icon *ngIf="user.status == 'active'" class="active-icon mat-green-600-bg s-16">check
+                        </mat-icon>
+                        <mat-icon *ngIf="user.status == 'deactivated'" class="active-icon mat-red-500-bg s-16">close
+                        </mat-icon>
+                        <mat-icon *ngIf="user.status == 'pending'" class="active-icon mat-gray-500-bg s-16">
+                          hourglass_empty
+                        </mat-icon>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+      <!-- / CONTENT -->
+    </div>
+    <!-- / CONTENT CARD -->
+  </div>
+  <!-- / CENTER -->
+</div>

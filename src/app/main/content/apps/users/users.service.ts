@@ -167,7 +167,6 @@ export class UsersService implements Resolve<any> {
       }
 
       if (filterBy.isVip != "") {
-        console.log(filterBy.isVip)
         if (filterBy.isVip == 'true') {
           _searching_count += ',{"totalPaid":{"gt":' + 0 + '}}';
           _filtering += ',{"totalPaid":{"gt":' + 0 + '}}';

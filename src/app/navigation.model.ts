@@ -159,6 +159,26 @@ export class NavigationModel {
             ]
           },
           {
+            id: "agency",
+            title: "Agencies",
+            type: "collapse",
+            icon: "business_center",
+            children: [
+                {
+                  id: "list",
+                  title: "List",
+                  type: "item",
+                  url: "/agency/list"
+                },
+                {
+                  id: "new",
+                  title: "New",
+                  type: "item",
+                  url: "/agency/new"
+                }
+            ]
+          },
+          {
             id: "topics",
             title: "Topics",
             type: "collapse",

@@ -110,9 +110,12 @@ export class ExtendMessageComponent implements OnInit {
       );
     });
 
+    let today = new Date();
+    let lastMonth = new Date(new Date().setDate(today.getDate() - 30));
+
     this.filtersForm = this.formBuilder.group({
-      from: new FormControl(""),
-      to: new FormControl(""),
+      from: new FormControl(lastMonth),
+      to: new FormControl(today),
       user: new FormControl(""),
       relatedUser: new FormControl(""),
     });
@@ -121,7 +124,7 @@ export class ExtendMessageComponent implements OnInit {
   viewUsers(userId, isOwner) {
 
     this.extendMessageService.getUserRelated(userId, isOwner).then((data: any) => {
-      console.log(data);
+
       this.viewUserRef = this.dialog.open(FuseViewUserComponent, {
         width: '700px',
         data: { "data": data, "isOwner": isOwner },
@@ -254,9 +257,13 @@ export class ExtendMessageComponent implements OnInit {
   }
 
   clearFilter() {
+
+    let today = new Date();
+    let lastMonth = new Date(new Date().setDate(today.getDate() - 30));
+    
     this.filtersForm = this.formBuilder.group({
-      from: new FormControl(null),
-      to: new FormControl(null),
+      from: new FormControl(today),
+      to: new FormControl(lastMonth),
       relatedUser: new FormControl(""),
       user: new FormControl(""),
     });
