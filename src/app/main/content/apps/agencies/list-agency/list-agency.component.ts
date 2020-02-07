@@ -17,7 +17,7 @@ import { AppConfig } from '../../../../shared/app.config';
 export class ListAgencyComponent implements OnInit {
 
 
-  searchInput: FormControl;
+  
 
   dataSource: FilesDataSource | null;
 
@@ -30,8 +30,6 @@ export class ListAgencyComponent implements OnInit {
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
 
-  @ViewChild("filter")
-  filter: ElementRef;
 
   @ViewChild(MatSort)
   sort: MatSort;
@@ -52,16 +50,6 @@ export class ListAgencyComponent implements OnInit {
       this.sort
     );
 
-    Observable.fromEvent(this.filter.nativeElement, "keyup")
-      .debounceTime(700)
-      .distinctUntilChanged()
-      .subscribe(() => {
-        if (!this.dataSource) {
-          return;
-        }
-        this.dataSource.filter = this.filter.nativeElement.value;
-        this.getItemsPaging();
-      });
 
   }
 
@@ -79,9 +67,6 @@ export class ListAgencyComponent implements OnInit {
     });
   }
 
-  exportAsExcelFile(): void {
-
-  }
 
   openNewTab(contact) {
     window.open(AppConfig.siteUrl + "agencies/view/" + contact.id)

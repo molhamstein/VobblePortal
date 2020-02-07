@@ -17,28 +17,12 @@
         </div>
         <!-- / APP TITLE -->
 
-        <!-- SEARCH -->
-        <div class="search-input-wrapper mx-12 m-md-0" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
-          <label for="search" class="mr-8">
-            <mat-icon class="secondary-text">search</mat-icon>
-          </label>
-          <mat-form-field floatPlaceholder="never" fxFlex="1 0 auto">
-            <input id="search" matInput #filter placeholder="Search" />
-          </mat-form-field>
-        </div>
-        <!-- / SEARCH -->
 
-        <button type="button" mat-raised-button type="submit" (click)="clearFilter()"
-          class="add-product-button mat-white-bg  mt-sm-0">
-          <span> CLEAR </span>
-        </button>
+
+
 
       </div>
-      <div fxLayout="row" fxLayoutAlign="" fxLayoutGap="20px">
-        <button mat-raised-button (click)="exportAsExcelFile()" class="add-product-button mat-white-bg  mt-sm-0">
-          Export
-        </button>
-      </div>
+
     </form>
     <!-- / HEADER -->
 
