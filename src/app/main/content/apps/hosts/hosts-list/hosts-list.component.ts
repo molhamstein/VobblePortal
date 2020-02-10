@@ -96,7 +96,7 @@ export class HostsListComponent implements OnInit {
 
   clearFilter() {
     this.chipsFilter = [{key: "startFrom", value: this.lastMonth}, {key: "startTo", value: this.today}, {key: "isHost", value: true}];
-    this.filtersObject = { "startFrom": this.lastMonth, "startTo": this.today, "owner": "", "isHost": "true", "agency": "" };
+    this.filtersObject = { "startFrom": this.lastMonth, "startTo": this.today, "owner": "", "isHost": "true", "agency": "" };;
     this.getItemsPaging();
   }
 

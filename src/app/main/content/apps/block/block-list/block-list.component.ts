@@ -173,7 +173,6 @@ export class BlockListComponent implements OnInit {
   exportAsExcelFile(): void {
     this.blockService.export(this.filtersForm.value).then(res => {
       if (res) {
-        console.log(res);
         window.location.href = res;
       }
     });
@@ -222,18 +221,6 @@ export class BlockListComponent implements OnInit {
     this.blockService
       .getItemsCount(filter)
       .then(count => (this.itemsCount = count));
-    // this.progressBarService.toggle();
-
-    // this.blockService.filterBy(this.filtersForm.value).then(
-    //   val => {
-    //     this.progressBarService.toggle();
-    //   },
-    //   reason => {
-    //     this.progressBarService.toggle();
-
-    //     console.log("error ", reason);
-    //   }
-    // );
   }
 }
 

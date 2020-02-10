@@ -64,6 +64,9 @@ export class HostsService implements Resolve<any> {
       filter += '{"relatedUserId":"' + values.ownerId + '"},';
     if (values.isHost)
       filter += '{"relatedUser.isHost":' + values.isHost + '},';
+    else 
+      filter += '{"relatedUser.isHost":' + true + '},';
+
     if (values.agency)
       filter += '{"relatedUser.agencyId":"' + values.agency + '"},';
 

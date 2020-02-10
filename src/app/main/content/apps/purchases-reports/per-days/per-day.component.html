@@ -192,6 +192,38 @@
           </mat-cell>
         </ng-container>
 
+        <ng-container cdkColumnDef="unlockchat">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Unlock Chat</mat-header-cell>
+          <mat-cell *cdkCellDef="let day" matTooltip="Unlock Chat" (click)="viewItems(day.unlockChatArray)">
+            <div fxLayout="column">
+
+              <p class="text-truncate" style="width: 50px;margin: 5px auto">Cost :</p>
+              <p class="text-truncate" style="width: 50px;margin: 5px auto">Count :</p>
+            </div>
+
+            <div fxLayout="column">
+              <p class="text-truncate" style="margin: 5px auto"><b>{{ day.totalUnlockChat }}</b> </p>
+              <p class="text-truncate" style="margin: 5px auto"><b>{{ day.countUnlockChat }}</b></p>
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="filterByType">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Filter By Type</mat-header-cell>
+          <mat-cell *cdkCellDef="let day" matTooltip="Filter By Type" (click)="viewItems(day.filterByTypeArray)">
+            <div fxLayout="column">
+
+              <p class="text-truncate" style="width: 50px;margin: 5px auto">Cost :</p>
+              <p class="text-truncate" style="width: 50px;margin: 5px auto">Count :</p>
+            </div>
+
+            <div fxLayout="column">
+              <p class="text-truncate" style="margin: 5px auto"><b>{{ day.totalFilterByType }}</b> </p>
+              <p class="text-truncate" style="margin: 5px auto"><b>{{ day.countFilterByType }}</b></p>
+            </div>
+          </mat-cell>
+        </ng-container>
+
 
         <ng-container cdkColumnDef="reply">
           <mat-header-cell *cdkHeaderCellDef mat-sort-header>Reply</mat-header-cell>
@@ -359,6 +391,38 @@
             <div fxLayout="column">
               <p class="text-truncate" style="margin: 5px auto"><b>{{ day.totalExtendChat }}</b> </p>
               <p class="text-truncate" style="margin: 5px auto"><b>{{ day.countExtendChat }}</b></p>
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="unlockchat">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Unlock Chat</mat-header-cell>
+          <mat-cell *cdkCellDef="let day" matTooltip="Unlock Chat" (click)="viewItems(day.unlockChatArray)">
+            <div fxLayout="column">
+
+              <p class="text-truncate" style="width: 50px;margin: 5px auto">Cost :</p>
+              <p class="text-truncate" style="width: 50px;margin: 5px auto">Count :</p>
+            </div>
+
+            <div fxLayout="column">
+              <p class="text-truncate" style="margin: 5px auto"><b>{{ day.totalUnlockChat }}</b> </p>
+              <p class="text-truncate" style="margin: 5px auto"><b>{{ day.countUnlockChat }}</b></p>
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="filterByType">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Filter By Type</mat-header-cell>
+          <mat-cell *cdkCellDef="let day" matTooltip="Filter By Type" (click)="viewItems(day.filterByTypeArray)">
+            <div fxLayout="column">
+
+              <p class="text-truncate" style="width: 50px;margin: 5px auto">Cost :</p>
+              <p class="text-truncate" style="width: 50px;margin: 5px auto">Count :</p>
+            </div>
+
+            <div fxLayout="column">
+              <p class="text-truncate" style="margin: 5px auto"><b>{{ day.totalFilterByType }}</b> </p>
+              <p class="text-truncate" style="margin: 5px auto"><b>{{ day.countFilterByType }}</b></p>
             </div>
           </mat-cell>
         </ng-container>

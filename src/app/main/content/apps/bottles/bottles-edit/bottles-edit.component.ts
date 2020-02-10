@@ -12,12 +12,9 @@ import {
   FormControl
 } from "@angular/forms";
 import { fuseAnimations } from "../../../../../core/animations";
-import { AppConfig } from "../../../../shared/app.config";
 import { PageAction } from "../../../../shared/enums/page-action";
 import { Router } from "@angular/router";
 import { HelpersService } from "../../../../shared/helpers.service";
-import { FuseSplashScreenService } from "../../../../../core/services/splash-screen.service";
-import { AuthService } from "../../../pages/authentication/auth.service";
 import { BottlesService } from "../bottles.service";
 import { UploadFileService } from "../../../../shared/upload-file.service";
 import { ShoresService } from "../../shores/shores.service";
@@ -227,7 +224,6 @@ export class BottlesEditComponent implements OnInit, OnDestroy {
           { style: "failed-snackbar" }
         );
         this.progressBarService.toggle();
-        console.log("error ", reason);
       }
     );
   }

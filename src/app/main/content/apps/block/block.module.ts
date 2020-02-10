@@ -11,7 +11,7 @@ const routes: Routes = [
     resolve  : {
       items: BlockService
     },
-    data: {resolverType: 'list', page:0, itemsPerPage:100}
+    data: {resolverType: 'list', page:0, itemsPerPage:50}
   }
  
 ];

@@ -14,7 +14,7 @@ const routes: Routes = [
       data: ExtendMessageService
     },
     data: {
-      resolverType: "list", page: 0, itemsPerPage: 100
+      resolverType: "list", page: 0, itemsPerPage: 50
     }
   }
 ];

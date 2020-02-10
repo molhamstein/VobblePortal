@@ -1,12 +1,9 @@
 import { TypeGoodsService } from './../../content/apps/type-goods/type-goods.service';
 import { countries } from 'typed-countries';
 import { startWith, map } from 'rxjs/operators';
-import { FuseTranslationLoaderService } from './../../../core/services/translation-loader.service';
-import { TranslateService } from '@ngx-translate/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Component, Inject } from '@angular/core';
-import { filter } from 'rxjs/operator/filter';
 import { Observable } from 'rxjs';
 import { ShoresService } from '../../content/apps/shores/shores.service';
 import { AgenciesService } from '../../content/apps/agencies/agencies.service';
@@ -25,7 +22,28 @@ export class FilterComponent {
     userFilterForm: FormGroup;
     filteredOptions: Observable<string[]>;
     filterForm: FormGroup = new FormGroup({});
-    filterKey = { "status": false, "gender": false, "type": false, "shoreId": false, "country": false, "lastLoginFrom": false, "createdFrom": false, "createdTo": false, "isVip": false, "bottleType": false, };
+    filterKey = {
+        "status": false,
+        "gender": false,
+        "type": false,
+        "shoreId": false,
+        "country": false,
+        "lastLoginFrom": false,
+        "createdFrom": false,
+        "createdTo": false,
+        "isVip": false,
+        "bottleType": false,
+        "relatedUsed": false,
+        "owner": false,
+        "callStatus": false,
+        "startTo": false,
+        "startFrom": false,
+        "relatedUserAgencyId": false,
+        "relatedUserIsHost": false,
+        "agency": false,
+        "isHost": false,
+        "relatedUser": false
+    };
     filter = {};
     // rate
     minRate;
@@ -51,7 +69,6 @@ export class FilterComponent {
         public agenciesService: AgenciesService,
         public dialogRef: MatDialogRef<FilterComponent>,
         @Inject(MAT_DIALOG_DATA) public data,
-        private _formBuilder: FormBuilder,
         private userServ: UsersService,
     ) {
         this.filterKey = data['filterKey'];

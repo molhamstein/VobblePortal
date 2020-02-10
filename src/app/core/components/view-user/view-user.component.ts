@@ -13,8 +13,6 @@ export class FuseViewUserComponent implements OnInit {
     ) {
         this.users = data.data;
         this.isOwner = data.isOwner;
-        console.log("this.users")
-        console.log(this.users)
     }
 
     ngOnInit() {

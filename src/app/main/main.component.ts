@@ -26,8 +26,6 @@ export class FuseMainComponent implements OnInit, OnDestroy
         @Inject(DOCUMENT) private document: any
     )
     {
-      //router.events.subscribe((url:any) => console.log(url));
-      //console.log("router.url ",router.url);  // to print only path eg:"/login"
 
         this.onSettingsChanged =
             this.fuseConfig.onSettingsChanged

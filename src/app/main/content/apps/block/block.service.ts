@@ -1,4 +1,3 @@
-import { User } from './../users/user.model';
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
@@ -68,13 +67,11 @@ export class BlockService implements Resolve<any> {
         )
         .subscribe(
           (response: any) => {
-            // console.log('response reports', response);
             this.items = response;
             this.onItemsChanged.next(this.items);
             resolve(response);
           },
           error => {
-            console.log("error ", error);
             this.helpersService.showActionSnackbar(
               null,
               false,
@@ -127,7 +124,6 @@ export class BlockService implements Resolve<any> {
 
       api += "}&access_token=" + this.authService.getToken();
 
-      console.log(api);
 
       this.http
         .get<Block[]>(
@@ -142,13 +138,11 @@ export class BlockService implements Resolve<any> {
         )
         .subscribe(
           (response: any) => {
-            console.log("response reports", response);
             this.items = response;
             this.onItemsChanged.next(this.items);
             resolve(response);
           },
           error => {
-            console.log("error ", error);
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -200,17 +194,14 @@ export class BlockService implements Resolve<any> {
         this.authService.getToken();
     }
 
-    console.log(api);
     return new Promise((resolve, reject) => {
       this.http.get<Block[]>(api).subscribe(
         (response: any) => {
-          // console.log('count reports', response);
           this.itemsCount = response.count;
           this.onItemsCountChanged.next(this.itemsCount);
           resolve(this.itemsCount);
         },
         error => {
-          console.log("error ", error);
           if (error.error.error.code == AppConfig.authErrorCode)
             this.router.navigate(["/error-404"]);
           else
@@ -240,7 +231,6 @@ export class BlockService implements Resolve<any> {
         )
         .subscribe(
           data => {
-            // console.log(data);
             this.items.splice(index, 1);
             this.onItemsChanged.next(this.items);
             this.itemsCount--;
@@ -250,7 +240,6 @@ export class BlockService implements Resolve<any> {
             resolve(true);
           },
           error => {
-            console.log("error ", error);
             this.progressBarService.toggle();
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
@@ -281,13 +270,11 @@ export class BlockService implements Resolve<any> {
         )
         .subscribe(
           item => {
-            // console.log('item ', item);
             this.item = item;
             this.onItemChanged.next(this.item);
             resolve(item);
           },
           error => {
-            console.log("error ", error);
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -317,11 +304,9 @@ export class BlockService implements Resolve<any> {
         )
         .subscribe(
           data => {
-            // console.log('data ', data);
             resolve(true);
           },
           error => {
-            console.log("error ", error);
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -342,11 +327,9 @@ export class BlockService implements Resolve<any> {
     return new Promise((resolve, reject) => {
       this.http.post<Block>(AppConfig.apiUrl + "reports", item).subscribe(
         data => {
-          // console.log(data);
           resolve(true);
         },
         error => {
-          console.log("error ", error);
           if (error.error.error.code == AppConfig.authErrorCode)
             this.router.navigate(["/error-404"]);
           else
@@ -388,13 +371,11 @@ export class BlockService implements Resolve<any> {
         )
         .subscribe(
           data => {
-            console.log(data);
             this.items = data;
             this.onItemsChanged.next(this.items);
             resolve(true);
           },
           error => {
-            console.log("error ", error);
             if (error.error.error.code === AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -436,11 +417,9 @@ export class BlockService implements Resolve<any> {
         )
         .subscribe(
           items => {
-            console.log(items);
             resolve(items["path"]);
           },
           error => {
-            console.log("error ", error);
             if (error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else

@@ -1,4 +1,3 @@
-import { AppConfig } from "../../../shared/app.config";
 
 export class Topic {
   id: string;

@@ -2,18 +2,17 @@ import { Component } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { FuseConfigService } from '../../core/services/config.service';
 import { TranslateService } from '@ngx-translate/core';
-import {AuthService} from "../content/pages/authentication/auth.service";
-import {AppConfig} from "../shared/app.config";
-import {Subject} from "rxjs/Subject";
+import { AuthService } from "../content/pages/authentication/auth.service";
+import { AppConfig } from "../shared/app.config";
+import { Subject } from "rxjs/Subject";
 
 @Component({
-    selector   : 'fuse-toolbar',
+    selector: 'fuse-toolbar',
     templateUrl: './toolbar.component.html',
-    styleUrls  : ['./toolbar.component.scss']
+    styleUrls: ['./toolbar.component.scss']
 })
 
-export class FuseToolbarComponent
-{
+export class FuseToolbarComponent {
     currentUser: any;
     userStatusOptions: any[];
     languages: any;
@@ -21,64 +20,62 @@ export class FuseToolbarComponent
     showLoadingBar: boolean;
     horizontalNav: boolean;
     defaultAvatar: string;
-    progressBarVisibilityChange : Subject<boolean> = new Subject<boolean>();
+    progressBarVisibilityChange: Subject<boolean> = new Subject<boolean>();
 
 
 
-  constructor(
+    constructor(
         private router: Router,
         private fuseConfig: FuseConfigService,
         private translate: TranslateService,
         private authService: AuthService
-    )
-    {
+    ) {
 
-      this.progressBarVisibilityChange.subscribe((value) => {
-        this.showLoadingBar = value
-      });
+        this.progressBarVisibilityChange.subscribe((value) => {
+            this.showLoadingBar = value
+        });
 
 
-      this.currentUser = authService.getCurrentUser();
-      this.defaultAvatar = AppConfig.defaultAvatar;
-      //console.log(' this.currentUser ',  this.currentUser);
+        this.currentUser = authService.getCurrentUser();
+        this.defaultAvatar = AppConfig.defaultAvatar;
         this.userStatusOptions = [
             {
                 'title': 'Online',
-                'icon' : 'icon-checkbox-marked-circle',
+                'icon': 'icon-checkbox-marked-circle',
                 'color': '#4CAF50'
             },
             {
                 'title': 'Away',
-                'icon' : 'icon-clock',
+                'icon': 'icon-clock',
                 'color': '#FFC107'
             },
             {
                 'title': 'Do not Disturb',
-                'icon' : 'icon-minus-circle',
+                'icon': 'icon-minus-circle',
                 'color': '#F44336'
             },
             {
                 'title': 'Invisible',
-                'icon' : 'icon-checkbox-blank-circle-outline',
+                'icon': 'icon-checkbox-blank-circle-outline',
                 'color': '#BDBDBD'
             },
             {
                 'title': 'Offline',
-                'icon' : 'icon-checkbox-blank-circle-outline',
+                'icon': 'icon-checkbox-blank-circle-outline',
                 'color': '#616161'
             }
         ];
 
         this.languages = [
             {
-                'id'   : 'en',
+                'id': 'en',
                 'title': 'English',
-                'flag' : 'us'
+                'flag': 'us'
             },
             {
-                'id'   : 'tr',
+                'id': 'tr',
                 'title': 'Turkish',
-                'flag' : 'tr'
+                'flag': 'tr'
             }
         ];
 
@@ -86,12 +83,10 @@ export class FuseToolbarComponent
 
         router.events.subscribe(
             (event) => {
-                if ( event instanceof NavigationStart )
-                {
+                if (event instanceof NavigationStart) {
                     this.showLoadingBar = true;
                 }
-                if ( event instanceof NavigationEnd )
-                {
+                if (event instanceof NavigationEnd) {
                     this.showLoadingBar = false;
                 }
             });
@@ -102,14 +97,12 @@ export class FuseToolbarComponent
 
     }
 
-    search(value)
-    {
+    search(value) {
         // Do your search here...
-       // console.log(value);
+        // console.log(value);
     }
 
-    setLanguage(lang)
-    {
+    setLanguage(lang) {
         // Set the selected language for toolbar
         this.selectedLanguage = lang;
 
@@ -117,8 +110,8 @@ export class FuseToolbarComponent
         this.translate.use(lang.id);
     }
 
-    logout(){
-      this.authService.logout();
-      this.router.navigate(['/auth/login']);
+    logout() {
+        this.authService.logout();
+        this.router.navigate(['/auth/login']);
     }
 }

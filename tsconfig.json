@@ -20,6 +20,9 @@
     "genDir": "release/",
     "strictMetadataEmit": true,
     "skipTemplateCodegen": true,
-    "annotationsAs": "decorators"
+    "annotationsAs": "decorators",
+    "preserveWhitespaces": false
   }
+
+ 
 }

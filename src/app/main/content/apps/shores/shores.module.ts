@@ -15,7 +15,7 @@ const routes: Routes = [
     resolve  : {
       data: ShoresService
     },
-    data: {resolverType: 'list', page:0, itemsPerPage:100}
+    data: {resolverType: 'list', page:0, itemsPerPage:50}
   },
   {
     path     : 'new',

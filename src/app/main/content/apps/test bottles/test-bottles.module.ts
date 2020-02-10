@@ -12,7 +12,7 @@ const routes: Routes = [
     resolve  : {
       data: TestBottlesService
     },
-    // data: {resolverType: 'list', page:0, itemsPerPage:100}
+    // data: {resolverType: 'list', page:0, itemsPerPage:50}
   },
   {
     path     : 'new',
@@ -20,7 +20,7 @@ const routes: Routes = [
     resolve  : {
       data: TestBottlesService
     },
-    // data: {resolverType: 'list', page:0, itemsPerPage:100}
+    // data: {resolverType: 'list', page:0, itemsPerPage:50}
   }
   // {
   //   path     : 'edit/:id',

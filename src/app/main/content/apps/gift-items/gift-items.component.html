@@ -174,7 +174,7 @@
             </mat-row>
           </mat-table>
 
-          <mat-paginator [pageIndex]="0" [pageSize]="100" [pageSizeOptions]="[5, 10, 25, 100]" (page)="getItemsPaging()"
+          <mat-paginator [pageIndex]="0" [pageSize]="50" [pageSizeOptions]="[5, 10, 25, 50]" (page)="getItemsPaging()"
             [length]="itemsCount"></mat-paginator>
 
         </mat-tab>
@@ -249,7 +249,7 @@
           </mat-table>
 
 
-          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [length]="itemsCountRelated"></mat-paginator>
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 50]" [length]="itemsCountRelated"></mat-paginator>
 
         </mat-tab>
         <mat-tab label="Items">
@@ -328,8 +328,8 @@
             </mat-row>
           </mat-table>
 
-          <mat-paginator #paginator [length]="mainItemsCount" [pageIndex]="0" [pageSize]="100"
-            [pageSizeOptions]="[5, 10, 25, 100]" (page)="getItemsPaging()">
+          <mat-paginator #paginator [length]="mainItemsCount" [pageIndex]="0" [pageSize]="50"
+            [pageSizeOptions]="[5, 10, 25, 50]" (page)="getItemsPaging()">
           </mat-paginator>
         </mat-tab>
 
