@@ -22,10 +22,6 @@
           <div class="h2">
             User {{item.username}}
           </div>
-          <!-- <div class="subtitle secondary-text">
-            <span>from</span>
-            <span>{{order.customer.firstName}} {{order.customer.lastName}}</span>
-          </div>-->
         </div>
       </div>
 
@@ -34,9 +30,6 @@
           class="add-product-button mat-white-bg  mt-sm-0">
           <span> EDIT </span>
         </button>
-        <!-- <button mat-raised-button (click)="deleteItem()" class="add-product-button mt-sm-0" color="warn">
-          <span> DELETE </span>
-        </button> -->
       </div>
 
 
@@ -160,10 +153,10 @@
                       </td>
 
                       <td>
-                          <span class="text-truncate">{{item.isHost ? 'True' : 'False'}}</span>
+                        <span class="text-truncate">{{item.isHost ? 'True' : 'False'}}</span>
                       </td>
                       <td *ngIf="item.agency">
-                          <span class="text-truncate"> {{ item.agency.name }}  </span>
+                        <span class="text-truncate"> {{ item.agency.name }} </span>
                       </td>
 
                     </tr>
@@ -228,6 +221,7 @@
                       <th>Active</th>
                       <th>Shore</th>
                       <th>Replies User</th>
+                      <th>View Status</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -256,6 +250,14 @@
                       </td>
                       <td>
                         <span class="text-truncate"> {{bottle.repliesUserCount}} </span>
+                      </td>
+                      <td>
+                        <div *ngIf="bottle.viewStatus =='active'">
+                          <mat-icon class="avatar active-icon mat-green-600-bg s-16">check</mat-icon>Active
+                        </div>
+                        <div *ngIf="bottle.viewStatus =='deactive'">
+                          <mat-icon class="avatar active-icon mat-red-500-bg s-16">close</mat-icon>De-activated
+                        </div>
                       </td>
                     </tr>
                   </tbody>

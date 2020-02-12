@@ -65,7 +65,7 @@ export class PerDayComponent implements OnInit {
 
   viewItems(data) {
     this.dialogRef = this.dialog.open(FuseViewItemsComponent, {
-      width: '700px',
+      width: '500px',
       data: { data: data },
       disableClose: false
     });
@@ -84,8 +84,8 @@ export class PerDayComponent implements OnInit {
     "unlockchat",
     "filterByType",
     "reply",
-    "gift"
-    // "product"
+    "gift",
+    "call"
   ];
 
   disconnect() { }

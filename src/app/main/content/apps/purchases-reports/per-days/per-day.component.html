@@ -18,35 +18,6 @@
         </div>
         <!-- / APP TITLE -->
 
-        <!-- SEARCH -->
-        <!-- <div class="search-input-wrapper mx-12 m-md-0" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
-          <label for="search" class="mr-8">
-            <mat-icon class="secondary-text">search</mat-icon>
-          </label>
-          <mat-form-field floatPlaceholder="never" fxFlex="1 0 auto">
-            <input type="text" placeholder="User" (keyup)="keyUp()" aria-label="user" matInput formControlName="user"
-              name="country" [matAutocomplete]="auto" />
-            <mat-autocomplete #auto="matAutocomplete">
-              <mat-option *ngFor="let iso of countries" [value]="iso.username">
-                {{ iso.username }}
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-        
-          <label for="search" class="mr-8" *ngIf="curentTab==2">
-            <mat-icon class="secondary-text">search</mat-icon>
-          </label>
-          <mat-form-field floatPlaceholder="never" fxFlex="1 0 auto" *ngIf="curentTab==2">
-            <input type="text" placeholder="Related User" (keyup)="relatedUserkeyUp()" aria-label="user" matInput
-              formControlName="relatedUser" name="country" [matAutocomplete]="auto" />
-            <mat-autocomplete #auto="matAutocomplete">
-              <mat-option *ngFor="let iso of relatedUser" [value]="iso.username">
-                {{ iso.username }}
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-        </div> -->
-
         <mat-form-field>
           <input matInput (click)="picker.open()" [matDatepicker]="picker" placeholder="Date From"
             formControlName="from" name="createdAt" />
@@ -71,9 +42,7 @@
           <span> FILTER </span>
         </button>
 
-        <!-- <button mat-raised-button [routerLink]="'/reports/new'" class="add-product-button mat-white-bg  mt-sm-0">
-            <span> NEW </span>
-          </button> -->
+
       </div>
 
       <div fxLayout="row" fxLayoutAlign="" fxLayoutGap="20px">
@@ -117,7 +86,7 @@
 
         <ng-container cdkColumnDef="gender">
           <mat-header-cell *cdkHeaderCellDef mat-sort-header>Gender</mat-header-cell>
-          <mat-cell *cdkCellDef="let day" matTooltip="Gender" (click)="viewItems(day.filterByGenderArray)">
+          <mat-cell *cdkCellDef="let day" matTooltip="Gender">
             <div fxLayout="column">
 
               <p class="text-truncate" style="width: 50px;margin: 5px auto">Cost :</p>
@@ -134,7 +103,7 @@
 
         <ng-container cdkColumnDef="country">
           <mat-header-cell *cdkHeaderCellDef mat-sort-header>Country</mat-header-cell>
-          <mat-cell *cdkCellDef="let day" matTooltip="Country" (click)="viewItems(day.filterByCountryArray)">
+          <mat-cell *cdkCellDef="let day" matTooltip="Country">
             <div fxLayout="column">
 
               <p class="text-truncate" style="width: 50px;margin: 5px auto">Cost :</p>
@@ -161,7 +130,7 @@
 
         <ng-container cdkColumnDef="coins">
           <mat-header-cell *cdkHeaderCellDef mat-sort-header>Coins</mat-header-cell>
-          <mat-cell *cdkCellDef="let day" matTooltip="Coins" (click)="viewItems(day.coinsArray)">
+          <mat-cell *cdkCellDef="let day" matTooltip="Coins">
             <div fxLayout="column">
 
               <p class="text-truncate" style="width: 50px;margin: 5px auto">Cost :</p>
@@ -178,7 +147,7 @@
 
         <ng-container cdkColumnDef="extendChat">
           <mat-header-cell *cdkHeaderCellDef mat-sort-header>Extend Chat</mat-header-cell>
-          <mat-cell *cdkCellDef="let day" matTooltip="Extend Chat" (click)="viewItems(day.extendChatArray)">
+          <mat-cell *cdkCellDef="let day" matTooltip="Extend Chat">
             <div fxLayout="column">
 
               <p class="text-truncate" style="width: 50px;margin: 5px auto">Cost :</p>
@@ -194,7 +163,7 @@
 
         <ng-container cdkColumnDef="unlockchat">
           <mat-header-cell *cdkHeaderCellDef mat-sort-header>Unlock Chat</mat-header-cell>
-          <mat-cell *cdkCellDef="let day" matTooltip="Unlock Chat" (click)="viewItems(day.unlockChatArray)">
+          <mat-cell *cdkCellDef="let day" matTooltip="Unlock Chat">
             <div fxLayout="column">
 
               <p class="text-truncate" style="width: 50px;margin: 5px auto">Cost :</p>
@@ -210,7 +179,7 @@
 
         <ng-container cdkColumnDef="filterByType">
           <mat-header-cell *cdkHeaderCellDef mat-sort-header>Filter By Type</mat-header-cell>
-          <mat-cell *cdkCellDef="let day" matTooltip="Filter By Type" (click)="viewItems(day.filterByTypeArray)">
+          <mat-cell *cdkCellDef="let day" matTooltip="Filter By Type">
             <div fxLayout="column">
 
               <p class="text-truncate" style="width: 50px;margin: 5px auto">Cost :</p>
@@ -227,7 +196,7 @@
 
         <ng-container cdkColumnDef="reply">
           <mat-header-cell *cdkHeaderCellDef mat-sort-header>Reply</mat-header-cell>
-          <mat-cell *cdkCellDef="let day" matTooltip="Reply" (click)="viewItems(day.repliesArray)">
+          <mat-cell *cdkCellDef="let day" matTooltip="Reply">
             <div fxLayout="column">
 
               <p class="text-truncate" style="width: 50px;margin: 5px auto">Cost :</p>
@@ -244,7 +213,7 @@
 
         <ng-container cdkColumnDef="bottle">
           <mat-header-cell *cdkHeaderCellDef mat-sort-header>Bottle</mat-header-cell>
-          <mat-cell *cdkCellDef="let day" matTooltip="Bottle" (click)="viewItems(day.bottleArray)">
+          <mat-cell *cdkCellDef="let day" matTooltip="Bottle">
             <div fxLayout="column">
 
               <p class="text-truncate" style="width: 50px;margin: 5px auto">Cost :</p>
@@ -260,7 +229,7 @@
 
         <ng-container cdkColumnDef="gift">
           <mat-header-cell *cdkHeaderCellDef mat-sort-header>Gift</mat-header-cell>
-          <mat-cell *cdkCellDef="let day" matTooltip="Gift" (click)="viewItems(day.giftArray)">
+          <mat-cell *cdkCellDef="let day" matTooltip="Gift">
             <div fxLayout="column">
 
               <p class="text-truncate" style="width: 50px;margin: 5px auto">Cost :</p>
@@ -270,6 +239,22 @@
             <div fxLayout="column">
               <p class="text-truncate" style="margin: 5px auto"><b>{{ day.totalGift }}</b> </p>
               <p class="text-truncate" style="margin: 5px auto"><b>{{ day.countGift }}</b></p>
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="call">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Call</mat-header-cell>
+          <mat-cell *cdkCellDef="let day" matTooltip="Call">
+            <div fxLayout="column">
+
+              <p class="text-truncate" style="width: 50px;margin: 5px auto">Cost :</p>
+              <p class="text-truncate" style="width: 50px;margin: 5px auto">Count :</p>
+            </div>
+
+            <div fxLayout="column">
+              <p class="text-truncate" style="margin: 5px auto"><b>{{ day.totalCall }}</b> </p>
+              <p class="text-truncate" style="margin: 5px auto"><b>{{ day.countCall }}</b></p>
             </div>
           </mat-cell>
         </ng-container>
@@ -285,7 +270,7 @@
         <ng-container cdkColumnDef="date">
           <mat-header-cell *cdkHeaderCellDef mat-sort-header>Date</mat-header-cell>
           <mat-cell *cdkCellDef="let user" style="width:30px">
-            <p class="text-truncate">{{ user.date }}</p>
+            <p class="text-truncate">{{ user.date | date:'dd-MM-yyyy' }}</p>
           </mat-cell>
         </ng-container>
 
@@ -477,55 +462,21 @@
           </mat-cell>
         </ng-container>
 
-        <!-- 
-      <ng-container cdkColumnDef="gender">
-        <mat-header-cell *cdkHeaderCellDef mat-sort-header>gender</mat-header-cell>
-        <mat-cell *cdkCellDef="let product" style="width:30px">
-          <p class="text-truncate">{{ product.owner.gender }}</p>
-        </mat-cell>
-      </ng-container>
+        <ng-container cdkColumnDef="call">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>Call</mat-header-cell>
+          <mat-cell *cdkCellDef="let day" matTooltip="Call" (click)="viewItems(day.callArray)">
+            <div fxLayout="column">
 
-
-      <ng-container cdkColumnDef="country">
-        <mat-header-cell *cdkHeaderCellDef mat-sort-header>country</mat-header-cell>
-        <mat-cell *cdkCellDef="let product">
-          <p class="text-truncate">{{ product.owner.country?.name }}</p>
-        </mat-cell>
-      </ng-container>
-
-      <ng-container cdkColumnDef="count">
-        <mat-header-cell *cdkHeaderCellDef mat-sort-header>Count</mat-header-cell>
-        <mat-cell *cdkCellDef="let product">
-          <div fxLayout="column">
-
-            <p class="text-truncate" style="width: 50px;"><b>Cost :</b></p>
-            <p class="text-truncate" style="width: 50px;"><b>Count :</b></p>
-          </div>
-
-          <div fxLayout="column">
-            <p class="text-truncate">{{ product.totalCost }}</p>
-            <p class="text-truncate">{{ product.totalCount }}</p>
-          </div>
-        </mat-cell>
-      </ng-container>
-
-
-      <ng-container cdkColumnDef="product">
-        <mat-header-cell *cdkHeaderCellDef mat-sort-header>product</mat-header-cell>
-        <mat-cell *cdkCellDef="let product">
-
-          <div fxFlex="column">
-            <div *ngFor="let oneProduct of product.products">
-              <div style="width: 100%">
-                <p class="text-truncate">{{ oneProduct.name_en }} <span> {{ oneProduct.count }}</span>
-                  ,{{ oneProduct.cost }}$
-                </p>
-
-              </div>
+              <p class="text-truncate" style="width: 50px;margin: 5px auto">Cost :</p>
+              <p class="text-truncate" style="width: 50px;margin: 5px auto">Count :</p>
             </div>
-          </div>
-        </mat-cell>
-      </ng-container> -->
+
+            <div fxLayout="column">
+              <p class="text-truncate" style="margin: 5px auto"><b>{{ day.totalCall }}</b> </p>
+              <p class="text-truncate" style="margin: 5px auto"><b>{{ day.countCall }}</b></p>
+            </div>
+          </mat-cell>
+        </ng-container>
 
         <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
 

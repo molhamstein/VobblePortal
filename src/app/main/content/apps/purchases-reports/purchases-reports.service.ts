@@ -93,6 +93,7 @@ export class PurchasesReportsService implements Resolve<any> {
               "countReply": 0,
               "countUnlockChat": 0,
               "countFilterByType": 0,
+              "countCall": 0,
               "totalBottle": 0,
               "totalCoins": 0,
               "totalExtendChat": 0,
@@ -103,6 +104,7 @@ export class PurchasesReportsService implements Resolve<any> {
               "totalSpentCoins": 0,
               "totalUnlockChat": 0,
               "totalFilterByType": 0,
+              "totalCall" : 0,
             }
             for (let index = 0; index < response.length; index++) {
               const element = response[index];
@@ -146,6 +148,7 @@ export class PurchasesReportsService implements Resolve<any> {
               totalObject['countReply'] += element.countReply
               totalObject['countUnlockChat'] += element.countUnlockChat
               totalObject['countFilterByType'] += element.countFilterByType
+              totalObject['countCall'] += element.countCall
               totalObject['totalBottle'] += element.totalBottle
               totalObject['totalCoins'] += element.totalCoins
               totalObject['totalExtendChat'] += element.totalExtendChat
@@ -156,6 +159,7 @@ export class PurchasesReportsService implements Resolve<any> {
               totalObject['totalSpentCoins'] += element.totalSpentCoins
               totalObject['totalUnlockChat'] += element.totalUnlockChat
               totalObject['totalFilterByType'] += element.totalFilterByType
+              totalObject['totalCall'] += element.totalCall
             }
             this.onePerDaysChanged.next(this.perDay);
             this.totalPerDay.push(totalObject)
@@ -309,6 +313,7 @@ export class PurchasesReportsService implements Resolve<any> {
     json[0]['Gift'] = this.totalPerDay[0]['totalGift'];
     json[0]['Filter By Type'] = this.totalPerDay[0]['totalFilterByType'];
     json[0]['Unlock Chat'] = this.totalPerDay[0]['totalUnlockChat'];
+    json[0]['Call'] = this.totalPerDay[0]['totalCall'];
     json[1] = {}
     json[1]['Date'] = filter.to.getDate() + "-" + (filter.to.getMonth() + 1) + "-" + filter.to.getFullYear();
     json[1]['Title'] = "Count"
@@ -321,6 +326,7 @@ export class PurchasesReportsService implements Resolve<any> {
     json[1]['Gift'] = this.totalPerDay[0]['countGift'];
     json[1]['Filter By Type'] = this.totalPerDay[0]['countFilterByType'];
     json[1]['Unlock Chat'] = this.totalPerDay[0]['countUnlockChat'];
+    json[1]['Call'] = this.totalPerDay[0]['countCall'];
 
     console.log("json ", json);
     const excelFileName = "Item_Total_";

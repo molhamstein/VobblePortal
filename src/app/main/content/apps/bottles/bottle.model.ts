@@ -15,8 +15,11 @@ export class Bottle {
   bottleId: string;
   repliesUserCount: number;
   userComplete = [];
-  userSeen = []
-  userReplaies = []
+  userSeen = [];
+  userReplaies = [];
+  viewStatus: string ; 
+  totalWeight: number ; 
+  addedScores: number ; 
 
   constructor(bottle) {
     this.id = bottle.id; // || FuseUtils.generateGUID();
@@ -34,6 +37,9 @@ export class Bottle {
     this.userComplete = bottle.userComplete || [];
     this.userSeen = bottle.userSeen || [];
     this.userReplaies = bottle.userReplaies || [];
-    this.bottleType = bottle.bottleType || "" ; 
+    this.bottleType = bottle.bottleType || "" ;
+    this.viewStatus = bottle.viewStatus || "" ; 
+    this.addedScores = bottle.addedScores || 0 ;
+    this.totalWeight = bottle.totalWeight || this.addedScores + this.weight ;  
   }
 }

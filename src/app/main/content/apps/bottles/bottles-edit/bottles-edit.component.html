@@ -72,6 +72,24 @@
             </mat-form-field>
 
           </div>
+
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" fxLayoutGap="10px">
+            <mat-form-field fxFlex="30">
+              <input readonly type="number" placeholder="Total Weight" formControlName="totalWeight" matInput>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="30">
+              <input readonly type="number" placeholder="Weight" formControlName="weight" matInput>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="30">
+              <input type="number" placeholder="Added Scores" formControlName="addedScores" matInput>
+            </mat-form-field>
+
+        
+          </div>
+
+
           <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" fxLayoutGap="10px">
             <mat-form-field fxFlex="50">
               <input type="text" placeholder="Owner" formControlName="ownerId" matInput [matAutocomplete]="auto"
@@ -105,13 +123,15 @@
 
           <audio controls *ngIf="video == '' && bottleType == 'audio'"></audio>
           <audio controls *ngIf="video != '' && bottleType == 'audio'">
-               <source [src]="video"> 
+            <source [src]="video">
           </audio>
 
 
-          <input *ngIf="bottleType == 'video'" type="file" accept="video/*" #file name="video" fxHide (change)="onFileChange($event)">
-          <input *ngIf="bottleType == 'audio'" type="file" accept="audio/*" #file name="audio" fxHide (change)="onFileChange($event)">
-          
+          <input *ngIf="bottleType == 'video'" type="file" accept="video/*" #file name="video" fxHide
+            (change)="onFileChange($event)">
+          <input *ngIf="bottleType == 'audio'" type="file" accept="audio/*" #file name="audio" fxHide
+            (change)="onFileChange($event)">
+
           <button type="button" mat-raised-button color="primary" (click)="browseVideos()">Browse</button>
           <!-- <button type="button" mat-raised-button color="warn" (click)="removeFileVideo()" [disabled]="video==''">Remove</button> -->
         </div>

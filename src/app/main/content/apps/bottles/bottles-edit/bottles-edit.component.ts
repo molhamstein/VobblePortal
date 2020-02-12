@@ -84,13 +84,22 @@ export class BottlesEditComponent implements OnInit, OnDestroy {
       createdAt: [this.item.createdAt, Validators.required],
       shoreId: [this.item.shoreId],
       repliesUserCount: [this.item.repliesUserCount],
-      ownerId: new FormControl(this.item.owner)
+      ownerId: new FormControl(this.item.owner),
+      totalWeight: new FormControl(this.item.totalWeight),
+      weight: new FormControl(this.item.weight),
+      addedScores: new FormControl(this.item.addedScores),
     });
 
     this.filteredUsers = this.form["controls"].ownerId.valueChanges.pipe(
       startWith(""),
       map(val => this.filter(val))
     );
+
+    this.form["controls"].addedScores.valueChanges.subscribe(val => {
+        this.form.patchValue({
+             totalWeight: val + this.item.weight
+        }); 
+    })
 
     this.form.valueChanges.subscribe(() => {
       this.onFormValuesChanged();
