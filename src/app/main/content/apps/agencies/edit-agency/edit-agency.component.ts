@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { fuseAnimations } from '../../../../../core/animations';
-import { Agency } from '../agency.model';
-import { Subscription } from 'rxjs';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { fuseAnimations } from '../../../../../core/animations';
+import { PageAction } from '../../../../shared/enums/page-action';
 import { HelpersService } from '../../../../shared/helpers.service';
 import { AgenciesService } from '../agencies.service';
-import { PageAction } from '../../../../shared/enums/page-action';
+import { Agency } from '../agency.model';
 
 @Component({
   selector: 'app-edit-agency',

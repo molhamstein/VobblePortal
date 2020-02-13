@@ -1,26 +1,21 @@
-import { TestBottlesService } from './../test-bottles.service';
-import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormControl
-} from "@angular/forms";
-import { fuseAnimations } from "../../../../../core/animations";
-import { PageAction } from "../../../../shared/enums/page-action";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
-import { HelpersService } from "../../../../shared/helpers.service";
-import { AuthService } from "../../../pages/authentication/auth.service";
-import { UploadFileService } from "../../../../shared/upload-file.service";
-import { ShoresService } from "../../shores/shores.service";
-import { Shore } from "../../shores/shore.model";
-import { ProgressBarService } from "../../../../../core/services/progress-bar.service";
 import { Observable } from "rxjs";
-import { User } from "../../users/user.model";
 import { map, startWith } from "rxjs/operators";
-import { UsersService } from "../../users/users.service";
-import { TopicsService } from "../../topics/topics.service";
+import { fuseAnimations } from "../../../../../core/animations";
+import { ProgressBarService } from "../../../../../core/services/progress-bar.service";
+import { PageAction } from "../../../../shared/enums/page-action";
+import { HelpersService } from "../../../../shared/helpers.service";
+import { UploadFileService } from "../../../../shared/upload-file.service";
+import { AuthService } from "../../../pages/authentication/auth.service";
+import { Shore } from "../../shores/shore.model";
+import { ShoresService } from "../../shores/shores.service";
 import { Topic } from "../../topics/topic.model";
+import { TopicsService } from "../../topics/topics.service";
+import { User } from "../../users/user.model";
+import { UsersService } from "../../users/users.service";
+import { TestBottlesService } from './../test-bottles.service';
 
 @Component({
   selector: "app-test-bottles-new",

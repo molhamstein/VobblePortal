@@ -1,19 +1,19 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import 'rxjs/add/operator/startWith';
+import { MatDialog, MatDialogRef } from "@angular/material";
+import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/observable/merge';
-import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/observable/fromEvent';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/startWith';
 import { Subscription } from 'rxjs/Subscription';
 import { fuseAnimations } from "../../../../../core/animations";
-import { Bottle } from "../bottle.model";
-import { BottlesService } from "../bottles.service";
-import { MatDialogRef, MatDialog } from "@angular/material";
 import { FuseConfirmDialogComponent } from "../../../../../core/components/confirm-dialog/confirm-dialog.component";
 import { ProgressBarService } from "../../../../../core/services/progress-bar.service";
 import { PageAction } from '../../../../shared/enums/page-action';
 import { HelpersService } from '../../../../shared/helpers.service';
+import { Bottle } from "../bottle.model";
+import { BottlesService } from "../bottles.service";
 
 @Component({
   selector: 'app-bottles-view',

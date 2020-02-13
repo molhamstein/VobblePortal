@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { fuseAnimations } from '../../../../../core/animations';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { Subscription } from 'rxjs';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { fuseAnimations } from '../../../../../core/animations';
 import { FuseConfirmDialogComponent } from '../../../../../core/components/confirm-dialog/confirm-dialog.component';
+import { AppConfig } from '../../../../shared/app.config';
+import { User } from '../../users/user.model';
+import { UsersService } from '../../users/users.service';
 import { AgenciesService } from '../agencies.service';
 import { Agency } from '../agency.model';
-import { UsersService } from '../../users/users.service';
-import { User } from '../../users/user.model';
-import { AppConfig } from '../../../../shared/app.config';
 
 @Component({
   selector: 'app-view-agency',

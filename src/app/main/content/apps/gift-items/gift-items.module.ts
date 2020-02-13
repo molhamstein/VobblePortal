@@ -1,10 +1,9 @@
-import { Routes } from "@angular/router";
-import { SharedModule } from "./../../../../core/modules/shared.module";
-import { RouterModule } from "@angular/router";
 import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
 import { NgxChartsModule } from "@swimlane/ngx-charts";
-import { GiftItemsService } from "./gift-items.service";
+import { SharedModule } from "./../../../../core/modules/shared.module";
 import { GiftItemComponent } from "./gift-items.component";
+import { GiftItemsService } from "./gift-items.service";
 
 const routes: Routes = [
   {

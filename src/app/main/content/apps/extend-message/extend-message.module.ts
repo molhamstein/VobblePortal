@@ -1,10 +1,9 @@
-import { Routes } from "@angular/router";
-import { SharedModule } from "./../../../../core/modules/shared.module";
-import { RouterModule } from "@angular/router";
 import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
 import { NgxChartsModule } from "@swimlane/ngx-charts";
-import { ExtendMessageService } from "./extend-message.service";
+import { SharedModule } from "./../../../../core/modules/shared.module";
 import { ExtendMessageComponent } from "./extend-message.component";
+import { ExtendMessageService } from "./extend-message.service";
 
 const routes: Routes = [
   {

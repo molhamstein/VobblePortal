@@ -1,19 +1,19 @@
-import {Component, OnInit} from '@angular/core';
-import {fuseAnimations} from "../../../../../core/animations";
-import {FormGroup, FormBuilder, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
-import {HelpersService} from "../../../../shared/helpers.service";
-import {PageAction} from "../../../../shared/enums/page-action";
-import {ProgressBarService} from "../../../../../core/services/progress-bar.service";
-import {User} from "../../users/user.model";
-import {UsersService} from "../../users/users.service";
-import {AuthService} from "../../../pages/authentication/auth.service";
-import {ReportsService} from "../reports.service";
-import {Bottle} from "../../bottles/bottle.model";
-import {BottlesService} from "../../bottles/bottles.service";
-import {ReportTypesService} from "../../report-types/report-types.service";
-import {Report} from "../report.model";
-import {Subscription} from "rxjs";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import { Subscription } from "rxjs";
+import { fuseAnimations } from "../../../../../core/animations";
+import { ProgressBarService } from "../../../../../core/services/progress-bar.service";
+import { PageAction } from "../../../../shared/enums/page-action";
+import { HelpersService } from "../../../../shared/helpers.service";
+import { AuthService } from "../../../pages/authentication/auth.service";
+import { Bottle } from "../../bottles/bottle.model";
+import { BottlesService } from "../../bottles/bottles.service";
+import { ReportTypesService } from "../../report-types/report-types.service";
+import { User } from "../../users/user.model";
+import { UsersService } from "../../users/users.service";
+import { Report } from "../report.model";
+import { ReportsService } from "../reports.service";
 
 @Component({
   selector: 'app-reports-edit',

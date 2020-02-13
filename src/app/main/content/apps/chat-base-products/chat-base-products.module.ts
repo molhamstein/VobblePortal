@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from "@angular/router";
 import { SharedModule } from "../../../../core/modules/shared.module";
-import { Routes, RouterModule } from "@angular/router";
-import { ChatBasrProductsService } from './chat-base-products.service';
+import { ChatBaseProductsEditComponent } from './chat-base-products-edit/chat-base-products-edit.component';
 import { ChatBaseProductsListComponent } from './chat-base-products-list/chat-base-products-list.component';
 import { ChatBaseProductsNewComponent } from './chat-base-products-new/chat-base-products-new.component';
-import { ChatBaseProductsEditComponent } from './chat-base-products-edit/chat-base-products-edit.component';
-import { ChatProductsNewComponent } from './chat-products-new/chat-products-new.component';
+import { ChatBasrProductsService } from './chat-base-products.service';
 import { ChatProductsEditComponent } from './chat-products-edit/chat-products-edit.component';
+import { ChatProductsNewComponent } from './chat-products-new/chat-products-new.component';
 
 const routes: Routes = [
   {

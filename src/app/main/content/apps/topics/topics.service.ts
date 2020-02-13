@@ -1,21 +1,16 @@
-import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-
-import {
-  ActivatedRouteSnapshot,
-  Resolve,
-  RouterStateSnapshot,
-  Router
-} from "@angular/router";
-import { Observable } from "rxjs/Observable";
+import { Injectable } from "@angular/core";
+import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from "@angular/router";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
-
-import { AuthService } from "../../pages/authentication/auth.service";
-import { AppConfig } from "../../../shared/app.config";
-
-import { HelpersService } from "../../../shared/helpers.service";
+import { Observable } from "rxjs/Observable";
 import { ProgressBarService } from "../../../../core/services/progress-bar.service";
+import { AppConfig } from "../../../shared/app.config";
+import { HelpersService } from "../../../shared/helpers.service";
+import { AuthService } from "../../pages/authentication/auth.service";
 import { Topic } from "./topic.model";
+
+
+
 
 @Injectable()
 export class TopicsService implements Resolve<any> {

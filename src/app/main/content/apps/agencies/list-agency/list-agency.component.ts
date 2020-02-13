@@ -1,12 +1,12 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { fuseAnimations } from '../../../../../core/animations';
-import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
-import { MatPaginator, MatSort } from '@angular/material';
-import { AgenciesService } from '../agencies.service';
-import { Observable, BehaviorSubject } from 'rxjs';
 import { DataSource } from '@angular/cdk/table';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { MatPaginator, MatSort } from '@angular/material';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { fuseAnimations } from '../../../../../core/animations';
 import { FuseUtils } from '../../../../../core/fuseUtils';
 import { AppConfig } from '../../../../shared/app.config';
+import { AgenciesService } from '../agencies.service';
 
 @Component({
   selector: 'app-list-agency',

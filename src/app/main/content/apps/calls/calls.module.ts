@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CallsService } from './calls.service';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../../../../core/modules/shared.module';
-import { CallsListComponent } from './calls-list/calls-list.component';
 import { UsersService } from '../users/users.service';
+import { CallsListComponent } from './calls-list/calls-list.component';
+import { CallsService } from './calls.service';
 
 const routes: Routes = [
   {

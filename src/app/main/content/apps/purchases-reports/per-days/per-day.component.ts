@@ -1,20 +1,18 @@
-import { PurchasesReportsService } from './../purchases-reports.service';
-import { Component, OnInit } from "@angular/core";
-import { fuseAnimations } from "../../../../../core/animations";
-import { FormControl, FormBuilder, FormGroup } from "@angular/forms";
-import {
-  MatDialog
-} from "@angular/material";
 import { DataSource } from "@angular/cdk/collections";
-import { Observable } from "rxjs/Observable";
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
-import "rxjs/add/operator/startWith";
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { MatDialog } from "@angular/material";
+import "rxjs/add/observable/fromEvent";
 import "rxjs/add/observable/merge";
-import "rxjs/add/operator/map";
 import "rxjs/add/operator/debounceTime";
 import "rxjs/add/operator/distinctUntilChanged";
-import "rxjs/add/observable/fromEvent";
+import "rxjs/add/operator/map";
+import "rxjs/add/operator/startWith";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { Observable } from "rxjs/Observable";
+import { fuseAnimations } from "../../../../../core/animations";
 import { FuseViewItemsComponent } from '../../../../../core/components/view-items/view-items.component';
+import { PurchasesReportsService } from './../purchases-reports.service';
 
 @Component({
   selector: "app-per-day",

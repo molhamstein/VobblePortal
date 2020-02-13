@@ -1,29 +1,22 @@
-import { ItemsService } from './../items/items.service';
-import { FuseUtils } from './../../../../core/fuseUtils';
-import { fuseAnimations } from './../../../../core/animations';
-import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
-
-import {
-  MatPaginator,
-  MatSort,
-  MatDialogRef,
-  MatDialog
-} from "@angular/material";
 import { DataSource } from "@angular/cdk/collections";
-import { Observable } from "rxjs/Observable";
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
-import "rxjs/add/operator/startWith";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { MatDialog, MatDialogRef, MatPaginator, MatSort } from "@angular/material";
+import "rxjs/add/observable/fromEvent";
 import "rxjs/add/observable/merge";
-import "rxjs/add/operator/map";
 import "rxjs/add/operator/debounceTime";
 import "rxjs/add/operator/distinctUntilChanged";
-import "rxjs/add/observable/fromEvent";
-import { ProgressBarService } from '../../../../core/services/progress-bar.service';
-import { map, startWith, debounceTime, distinctUntilChanged } from "rxjs/operators";
-import { ReportsService } from '../reports/reports.service';
+import "rxjs/add/operator/map";
+import "rxjs/add/operator/startWith";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { Observable } from "rxjs/Observable";
 import { FuseViewUserComponent } from '../../../../core/components/view-user/view-user.component';
+import { ProgressBarService } from '../../../../core/services/progress-bar.service';
+import { fuseAnimations } from './../../../../core/animations';
+import { FuseUtils } from './../../../../core/fuseUtils';
+import { ItemsService } from './../items/items.service';
 import { GiftItemsService } from './gift-items.service';
+
 
 
 @Component({

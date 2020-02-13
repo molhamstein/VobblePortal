@@ -1,11 +1,11 @@
-import { TopicsNewComponent } from './topics-new/topics-new.component';
 import { NgModule } from '@angular/core';
-import {TopicsService} from "./topics.service";
-import {SharedModule} from "../../../../core/modules/shared.module";
-import {Routes, RouterModule} from "@angular/router";
-import { TopicsListComponent } from './topics-list/topics-list.component';
+import { RouterModule, Routes } from "@angular/router";
+import { SharedModule } from "../../../../core/modules/shared.module";
 import { TopicsEditComponent } from './topics-edit/topics-edit.component';
+import { TopicsListComponent } from './topics-list/topics-list.component';
+import { TopicsNewComponent } from './topics-new/topics-new.component';
 import { TopicsViewComponent } from './topics-view/topics-view.component';
+import { TopicsService } from "./topics.service";
 
 const routes: Routes = [
   {

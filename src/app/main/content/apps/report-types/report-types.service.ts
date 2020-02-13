@@ -1,15 +1,14 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Router} from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { ProgressBarService } from "../../../../core/services/progress-bar.service";
+import { AppConfig } from "../../../shared/app.config";
+import { HelpersService } from "../../../shared/helpers.service";
+import { AuthService } from "../../pages/authentication/auth.service";
 
-import {AuthService} from "../../pages/authentication/auth.service";
-import {AppConfig} from "../../../shared/app.config";
 
-import {HelpersService} from "../../../shared/helpers.service";
-import {ProgressBarService} from "../../../../core/services/progress-bar.service";
+
 
 @Injectable()
 export class ReportTypesService {

@@ -1,14 +1,11 @@
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import * as shape from "d3-shape";
+import { fuseAnimations } from "./../../../../core/animations";
+import { ProgressBarService } from "./../../../../core/services/progress-bar.service";
 import { GiftItemsService } from './../gift-items/gift-items.service';
 import { ProductsService } from './../products/products.service';
-import { ProgressBarService } from "./../../../../core/services/progress-bar.service";
-import { FormControl } from "@angular/forms";
-import { FormBuilder } from "@angular/forms";
-import { FormGroup } from "@angular/forms";
-import { fuseAnimations } from "./../../../../core/animations";
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
 import { DashboardService } from "./dashboard.service";
-import * as shape from "d3-shape";
-import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: "app-dashboard",

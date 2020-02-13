@@ -1,20 +1,13 @@
-import { User } from './../users/user.model';
-import { FormBuilder } from "@angular/forms";
-import { FormControl } from "@angular/forms";
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
-import { AuthService } from "./../../pages/authentication/auth.service";
-import { Injectable } from "@angular/core";
-import {
-  ActivatedRouteSnapshot,
-  Resolve,
-  RouterStateSnapshot
-} from "@angular/router";
-import { Observable } from "rxjs/Observable";
 import { HttpClient } from "@angular/common/http";
-import { AppConfig } from "../../../shared/app.config";
-
+import { Injectable } from "@angular/core";
+import { FormBuilder, FormControl } from "@angular/forms";
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { Observable } from "rxjs/Observable";
 import * as XLSX from "xlsx";
-import * as FileSaver from "file-saver";
+import { AppConfig } from "../../../shared/app.config";
+import { AuthService } from "./../../pages/authentication/auth.service";
+
 
 @Injectable()
 export class GiftItemsService {

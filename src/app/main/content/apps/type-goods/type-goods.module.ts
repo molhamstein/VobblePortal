@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import {SharedModule} from "../../../../core/modules/shared.module";
-import {TypeGoodsService} from "./type-goods.service";
+import { SharedModule } from "../../../../core/modules/shared.module";
+import { TypeGoodsService } from "./type-goods.service";
 
 @NgModule({
   imports: [

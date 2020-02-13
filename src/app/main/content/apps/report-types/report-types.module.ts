@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import {SharedModule} from "../../../../core/modules/shared.module";
-import {ReportTypesService} from "./report-types.service";
+import { SharedModule } from "../../../../core/modules/shared.module";
+import { ReportTypesService } from "./report-types.service";
 
 @NgModule({
   imports: [

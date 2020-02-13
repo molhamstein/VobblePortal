@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from "@angular/router";
 import { SharedModule } from "../../../../core/modules/shared.module";
-import { Routes, RouterModule } from "@angular/router";
-import { PurchasesReportsService } from './purchases-reports.service';
-import { PerUserComponent } from './per-users/per-user.component';
 import { PerDayComponent } from './per-days/per-day.component';
+import { PerUserComponent } from './per-users/per-user.component';
+import { PurchasesReportsService } from './purchases-reports.service';
 
 const routes: Routes = [
   {

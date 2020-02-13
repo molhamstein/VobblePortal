@@ -1,27 +1,18 @@
-import { PurchasesReportsService } from './../purchases-reports.service';
-import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
-import { fuseAnimations } from "../../../../../core/animations";
-import { FormControl, FormBuilder, FormGroup } from "@angular/forms";
-import {
-  MatPaginator,
-  MatSort,
-  MatDialogRef,
-  MatDialog
-} from "@angular/material";
-import { FuseConfirmDialogComponent } from "../../../../../core/components/confirm-dialog/confirm-dialog.component";
 import { DataSource } from "@angular/cdk/collections";
-import { Observable } from "rxjs/Observable";
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
-import "rxjs/add/operator/startWith";
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { MatDialog } from "@angular/material";
+import "rxjs/add/observable/fromEvent";
 import "rxjs/add/observable/merge";
-import "rxjs/add/operator/map";
 import "rxjs/add/operator/debounceTime";
 import "rxjs/add/operator/distinctUntilChanged";
-import "rxjs/add/observable/fromEvent";
-import { FuseUtils } from "../../../../../core/fuseUtils";
-import { ProgressBarService } from "../../../../../core/services/progress-bar.service";
-import { AppConfig } from "../../../../shared/app.config";
+import "rxjs/add/operator/map";
+import "rxjs/add/operator/startWith";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { Observable } from "rxjs/Observable";
+import { fuseAnimations } from "../../../../../core/animations";
 import { FuseViewUserItemsComponent } from '../../../../../core/components/view-user-items/view-user-items.component';
+import { PurchasesReportsService } from './../purchases-reports.service';
 
 @Component({
   selector: "app-per-user",

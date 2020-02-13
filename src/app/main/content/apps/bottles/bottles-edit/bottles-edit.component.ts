@@ -1,30 +1,19 @@
-import {
-  Component,
-  OnInit,
-  ElementRef,
-  ViewChild,
-  OnDestroy
-} from "@angular/core";
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormControl
-} from "@angular/forms";
-import { fuseAnimations } from "../../../../../core/animations";
-import { PageAction } from "../../../../shared/enums/page-action";
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { HelpersService } from "../../../../shared/helpers.service";
-import { BottlesService } from "../bottles.service";
-import { UploadFileService } from "../../../../shared/upload-file.service";
-import { ShoresService } from "../../shores/shores.service";
-import { Shore } from "../../shores/shore.model";
-import { Bottle } from "../bottle.model";
+import { Observable, Subscription } from "rxjs";
+import { map, startWith } from "rxjs/operators";
+import { fuseAnimations } from "../../../../../core/animations";
 import { ProgressBarService } from "../../../../../core/services/progress-bar.service";
+import { PageAction } from "../../../../shared/enums/page-action";
+import { HelpersService } from "../../../../shared/helpers.service";
+import { UploadFileService } from "../../../../shared/upload-file.service";
+import { Shore } from "../../shores/shore.model";
+import { ShoresService } from "../../shores/shores.service";
 import { User } from "../../users/user.model";
 import { UsersService } from "../../users/users.service";
-import { Subscription, Observable } from "rxjs";
-import { map, startWith } from "rxjs/operators";
+import { Bottle } from "../bottle.model";
+import { BottlesService } from "../bottles.service";
 
 @Component({
   selector: "app-bottles-edit",

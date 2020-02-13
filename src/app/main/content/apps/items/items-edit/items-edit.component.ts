@@ -1,17 +1,17 @@
-import {Component, OnInit} from '@angular/core';
-import {fuseAnimations} from "../../../../../core/animations";
-import {FormGroup, FormBuilder, Validators, FormControl} from "@angular/forms";
-import {Router} from "@angular/router";
-import {HelpersService} from "../../../../shared/helpers.service";
-import {PageAction} from "../../../../shared/enums/page-action";
-import {ItemsService} from "../items.service";
-import {ProductsService} from "../../products/products.service";
-import {ProgressBarService} from "../../../../../core/services/progress-bar.service";
-import {User} from "../../users/user.model";
-import {UsersService} from "../../users/users.service";
-import {Subscription, Observable} from "rxjs";
-import {Item} from "../item.model";
-import {map, startWith} from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import { Observable, Subscription } from "rxjs";
+import { map, startWith } from 'rxjs/operators';
+import { fuseAnimations } from "../../../../../core/animations";
+import { ProgressBarService } from "../../../../../core/services/progress-bar.service";
+import { PageAction } from "../../../../shared/enums/page-action";
+import { HelpersService } from "../../../../shared/helpers.service";
+import { ProductsService } from "../../products/products.service";
+import { User } from "../../users/user.model";
+import { UsersService } from "../../users/users.service";
+import { Item } from "../item.model";
+import { ItemsService } from "../items.service";
 
 @Component({
   selector: 'app-items-edit',

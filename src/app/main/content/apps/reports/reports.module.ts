@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from "@angular/router";
+import { SharedModule } from "../../../../core/modules/shared.module";
+import { ReportsEditComponent } from './reports-edit/reports-edit.component';
 import { ReportsListComponent } from './reports-list/reports-list.component';
 import { ReportsNewComponent } from './reports-new/reports-new.component';
-import { ReportsEditComponent } from './reports-edit/reports-edit.component';
 import { ReportsViewComponent } from './reports-view/reports-view.component';
-import {Routes, RouterModule} from "@angular/router";
-import {ReportsService} from "./reports.service";
-import {SharedModule} from "../../../../core/modules/shared.module";
+import { ReportsService } from "./reports.service";
 
 const routes: Routes = [
   {

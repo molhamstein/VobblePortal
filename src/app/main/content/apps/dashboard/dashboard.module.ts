@@ -1,10 +1,9 @@
-import { Routes } from "@angular/router";
-import { SharedModule } from "./../../../../core/modules/shared.module";
-import { RouterModule } from "@angular/router";
-import { DashboardService } from "./dashboard.service";
 import { NgModule } from "@angular/core";
-import { DashboardComponent } from "./dashboard.component";
+import { RouterModule, Routes } from "@angular/router";
 import { NgxChartsModule } from "@swimlane/ngx-charts";
+import { SharedModule } from "./../../../../core/modules/shared.module";
+import { DashboardComponent } from "./dashboard.component";
+import { DashboardService } from "./dashboard.service";
 
 const routes: Routes = [
   {

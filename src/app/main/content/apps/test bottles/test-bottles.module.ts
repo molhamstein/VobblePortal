@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import {Routes, RouterModule} from "@angular/router";
-import {SharedModule} from "../../../../core/modules/shared.module";
-import { TestBottlesService } from './test-bottles.service';
+import { RouterModule, Routes } from "@angular/router";
+import { SharedModule } from "../../../../core/modules/shared.module";
 import { TestBottlesListComponent } from './test-bottles-list/test-bottles-list.component';
 import { TestBottlesNewComponent } from './test-bottles-new/test-bottles-new.component';
+import { TestBottlesService } from './test-bottles.service';
 
 const routes: Routes = [
   {

@@ -1,17 +1,17 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import 'rxjs/add/operator/startWith';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef } from "@angular/material";
+import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/observable/merge';
-import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/observable/fromEvent';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/startWith';
 import { Subscription } from 'rxjs/Subscription';
-import {fuseAnimations} from "../../../../../core/animations";
-import {FuseConfirmDialogComponent} from "../../../../../core/components/confirm-dialog/confirm-dialog.component";
-import {MatDialogRef, MatDialog} from "@angular/material";
-import {ProgressBarService} from "../../../../../core/services/progress-bar.service";
-import {Topic} from "../topic.model";
-import {TopicsService} from "../topics.service";
+import { fuseAnimations } from "../../../../../core/animations";
+import { FuseConfirmDialogComponent } from "../../../../../core/components/confirm-dialog/confirm-dialog.component";
+import { ProgressBarService } from "../../../../../core/services/progress-bar.service";
+import { Topic } from "../topic.model";
+import { TopicsService } from "../topics.service";
 
 @Component({
   selector: 'app-topics-view',

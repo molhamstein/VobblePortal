@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import {Routes, RouterModule} from "@angular/router";
-import {SharedModule} from "../../../../core/modules/shared.module";
+import { RouterModule, Routes } from "@angular/router";
+import { SharedModule } from "../../../../core/modules/shared.module";
 import { BlockListComponent } from './block-list/block-list.component';
 import { BlockService } from './block.service';
 

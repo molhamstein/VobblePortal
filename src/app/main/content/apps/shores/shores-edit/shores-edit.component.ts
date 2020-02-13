@@ -1,16 +1,15 @@
-import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
-import {fuseAnimations} from "../../../../../core/animations";
-import {FormGroup, FormBuilder, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
-import {HelpersService} from "../../../../shared/helpers.service";
-import {FuseSplashScreenService} from "../../../../../core/services/splash-screen.service";
-import {UploadFileService} from "../../../../shared/upload-file.service";
-import {ShoresService} from "../shores.service";
-import {AppConfig} from "../../../../shared/app.config";
-import {PageAction} from "../../../../shared/enums/page-action";
-import {Subscription} from "rxjs";
-import {Shore} from "../shore.model";
-import {ProgressBarService} from "../../../../../core/services/progress-bar.service";
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import { Subscription } from "rxjs";
+import { fuseAnimations } from "../../../../../core/animations";
+import { ProgressBarService } from "../../../../../core/services/progress-bar.service";
+import { AppConfig } from "../../../../shared/app.config";
+import { PageAction } from "../../../../shared/enums/page-action";
+import { HelpersService } from "../../../../shared/helpers.service";
+import { UploadFileService } from "../../../../shared/upload-file.service";
+import { Shore } from "../shore.model";
+import { ShoresService } from "../shores.service";
 
 @Component({
   selector: 'app-shores-edit',

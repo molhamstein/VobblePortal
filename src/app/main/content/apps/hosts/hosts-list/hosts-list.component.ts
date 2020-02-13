@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FuseUtils } from '../../../../../core/fuseUtils';
-import { Observable, BehaviorSubject, Subject } from 'rxjs';
-import { HostsService } from '../hosts.service';
-import { MatPaginator, MatSort, MatDialogRef, MatDialog } from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogRef, MatSort } from '@angular/material';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { fuseAnimations } from '../../../../../core/animations';
 import { FuseConfirmDialogComponent } from '../../../../../core/components/confirm-dialog/confirm-dialog.component';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { FuseUtils } from '../../../../../core/fuseUtils';
 import { FilterComponent } from '../../../../dialog/filter/filter.component';
+import { HostsService } from '../hosts.service';
 
 @Component({
   selector: 'app-hosts-list',

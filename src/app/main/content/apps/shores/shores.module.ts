@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from "@angular/router";
+import { SharedModule } from "../../../../core/modules/shared.module";
+import { ShoresEditComponent } from './shores-edit/shores-edit.component';
 import { ShoresListComponent } from './shores-list/shores-list.component';
 import { ShoresNewComponent } from './shores-new/shores-new.component';
-import { ShoresEditComponent } from './shores-edit/shores-edit.component';
 import { ShoresViewComponent } from './shores-view/shores-view.component';
-import {Routes, RouterModule} from "@angular/router";
-import {ShoresService} from "./shores.service";
-import {SharedModule} from "../../../../core/modules/shared.module";
+import { ShoresService } from "./shores.service";
 
 
 const routes: Routes = [

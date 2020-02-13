@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HostsListComponent } from './hosts-list/hosts-list.component';
-import { HostsService } from './hosts.service';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { Routes } from '@angular/router/src/config';
 import { SharedModule } from '../../../../core/modules/shared.module';
-import { RouterModule } from '@angular/router';
 import { UsersService } from '../users/users.service';
+import { HostsListComponent } from './hosts-list/hosts-list.component';
+import { HostsService } from './hosts.service';
 
 
 

@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Resolve, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from '../../pages/authentication/auth.service';
-import { HelpersService } from '../../../shared/helpers.service';
-import { AppConfig } from '../../../shared/app.config';
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { AppConfig } from '../../../shared/app.config';
+import { HelpersService } from '../../../shared/helpers.service';
+import { AuthService } from '../../pages/authentication/auth.service';
 import { Hosts } from '../hosts/hosts.model';
 
 
@@ -75,9 +75,6 @@ export class HostsService implements Resolve<any> {
     }
     if (filter.charAt(filter.length - 1) === ",")
       filter = filter.slice(0, -1);
-
-    // filter={"where":{"and":[{"createdAt":{"gte":"2010-01-21T09:52:30.427Z"}},
-    //                         {"createdAt":{"lte":"2010-01-21T09:52:30.427Z"}}]}}
 
     if (key === 'filter') {
       if (filter !== "") filter = '{"where":{"and":[' + filter + ']}}';

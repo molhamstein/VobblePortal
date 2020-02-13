@@ -1,14 +1,14 @@
-import { TypeGoodsService } from './../../content/apps/type-goods/type-goods.service';
-import { countries } from 'typed-countries';
-import { startWith, map } from 'rxjs/operators';
-import { FormGroup, FormControl } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Component, Inject } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Observable } from 'rxjs';
-import { ShoresService } from '../../content/apps/shores/shores.service';
+import { map, startWith } from 'rxjs/operators';
+import { countries } from 'typed-countries';
 import { AgenciesService } from '../../content/apps/agencies/agencies.service';
+import { ShoresService } from '../../content/apps/shores/shores.service';
 import { User } from '../../content/apps/users/user.model';
 import { UsersService } from '../../content/apps/users/users.service';
+import { TypeGoodsService } from './../../content/apps/type-goods/type-goods.service';
 
 
 

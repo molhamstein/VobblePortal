@@ -1,4 +1,4 @@
-import {AppConfig} from "../../../shared/app.config";
+import { AppConfig } from "../../../shared/app.config";
 export class Shore
 {
   id: string;

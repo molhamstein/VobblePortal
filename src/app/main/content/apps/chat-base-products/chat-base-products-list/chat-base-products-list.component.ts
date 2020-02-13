@@ -1,22 +1,17 @@
-import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
-import { fuseAnimations } from "../../../../../core/animations";
-import { FormControl } from "@angular/forms";
-import {
-  MatPaginator,
-  MatSort,
-  MatDialogRef,
-  MatDialog
-} from "@angular/material";
-import { FuseConfirmDialogComponent } from "../../../../../core/components/confirm-dialog/confirm-dialog.component";
 import { DataSource } from "@angular/cdk/collections";
-import { Observable } from "rxjs/Observable";
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
-import "rxjs/add/operator/startWith";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { FormControl } from "@angular/forms";
+import { MatDialog, MatDialogRef, MatPaginator, MatSort } from "@angular/material";
+import "rxjs/add/observable/fromEvent";
 import "rxjs/add/observable/merge";
-import "rxjs/add/operator/map";
 import "rxjs/add/operator/debounceTime";
 import "rxjs/add/operator/distinctUntilChanged";
-import "rxjs/add/observable/fromEvent";
+import "rxjs/add/operator/map";
+import "rxjs/add/operator/startWith";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { Observable } from "rxjs/Observable";
+import { fuseAnimations } from "../../../../../core/animations";
+import { FuseConfirmDialogComponent } from "../../../../../core/components/confirm-dialog/confirm-dialog.component";
 import { FuseUtils } from "../../../../../core/fuseUtils";
 import { ProgressBarService } from "../../../../../core/services/progress-bar.service";
 import { AppConfig } from "../../../../shared/app.config";

@@ -1,34 +1,21 @@
-import { MatDialog } from '@angular/material';
-import { FuseConfirmDialogComponent } from './../../../../../core/components/confirm-dialog/confirm-dialog.component';
-import { MatDialogRef } from '@angular/material';
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-  ElementRef
-} from "@angular/core";
-import { User } from "../user.model";
-import { Subscription } from "rxjs";
-import { fuseAnimations } from "../../../../../core/animations";
-import { UsersService } from "../users.service";
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  FormControl
-} from "@angular/forms";
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { Router } from "@angular/router";
-import { AuthService } from "../../../pages/authentication/auth.service";
-import { HelpersService } from "../../../../shared/helpers.service";
+import { Observable, Subscription } from "rxjs";
+import { map, startWith } from "rxjs/operators";
+import { countries } from "typed-countries";
+import { fuseAnimations } from "../../../../../core/animations";
+import { ProgressBarService } from "../../../../../core/services/progress-bar.service";
 import { AppConfig } from "../../../../shared/app.config";
 import { PageAction } from "../../../../shared/enums/page-action";
+import { HelpersService } from "../../../../shared/helpers.service";
 import { UploadFileService } from "../../../../shared/upload-file.service";
-import { countries } from "typed-countries";
-import { Observable } from "rxjs";
-import { map, startWith } from "rxjs/operators";
-import { ProgressBarService } from "../../../../../core/services/progress-bar.service";
+import { AuthService } from "../../../pages/authentication/auth.service";
 import { AgenciesService } from '../../agencies/agencies.service';
+import { User } from "../user.model";
+import { UsersService } from "../users.service";
+import { FuseConfirmDialogComponent } from './../../../../../core/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: "app-users-edit",

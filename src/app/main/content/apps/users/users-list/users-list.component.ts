@@ -1,33 +1,28 @@
-import { FilterComponent } from './../../../../dialog/filter/filter.component';
-import { Subject } from 'rxjs/Subject';
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
-
-import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { UsersService } from "../users.service";
 import { DataSource } from "@angular/cdk/collections";
-import { Observable } from "rxjs/Observable";
-
-import {
-  MatPaginator,
-  MatSort,
-  MatDialogRef,
-  MatDialog
-} from "@angular/material";
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
-import "rxjs/add/operator/startWith";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { FormBuilder, FormControl } from "@angular/forms";
+import { MatDialog, MatDialogRef, MatPaginator, MatSort } from "@angular/material";
+import "rxjs/add/observable/fromEvent";
 import "rxjs/add/observable/merge";
-import "rxjs/add/operator/map";
 import "rxjs/add/operator/debounceTime";
 import "rxjs/add/operator/distinctUntilChanged";
-import "rxjs/add/observable/fromEvent";
-import { fuseAnimations } from "../../../../../core/animations";
-import { FuseUtils } from "../../../../../core/fuseUtils";
-import { AppConfig } from "../../../../shared/app.config";
-import { FuseConfirmDialogComponent } from "../../../../../core/components/confirm-dialog/confirm-dialog.component";
-import { ProgressBarService } from "../../../../../core/services/progress-bar.service";
-
+import "rxjs/add/operator/map";
+import "rxjs/add/operator/startWith";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { Observable } from "rxjs/Observable";
+import { debounceTime, distinctUntilChanged } from "rxjs/operators";
+import { Subject } from 'rxjs/Subject';
 import { countries } from "typed-countries";
-import { map, startWith, debounceTime, distinctUntilChanged } from "rxjs/operators";
+import { fuseAnimations } from "../../../../../core/animations";
+import { FuseConfirmDialogComponent } from "../../../../../core/components/confirm-dialog/confirm-dialog.component";
+import { FuseUtils } from "../../../../../core/fuseUtils";
+import { ProgressBarService } from "../../../../../core/services/progress-bar.service";
+import { AppConfig } from "../../../../shared/app.config";
+import { UsersService } from "../users.service";
+import { FilterComponent } from './../../../../dialog/filter/filter.component';
+
+
+
 
 @Component({
   selector: "app-users-list",

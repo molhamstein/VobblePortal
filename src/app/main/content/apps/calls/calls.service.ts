@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
-import { Resolve, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from '../../pages/authentication/auth.service';
-import { HelpersService } from '../../../shared/helpers.service';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { AppConfig } from '../../../shared/app.config';
-import { Calls } from './calls.model';
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { AppConfig } from '../../../shared/app.config';
+import { HelpersService } from '../../../shared/helpers.service';
+import { AuthService } from '../../pages/authentication/auth.service';
+import { Calls } from './calls.model';
 
 @Injectable()
 

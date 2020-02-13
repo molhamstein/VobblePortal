@@ -1,12 +1,12 @@
 import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
-import { UsersListComponent } from "./users-list/users-list.component";
+import { RouterModule, Routes } from "@angular/router";
 import { SharedModule } from "../../../../core/modules/shared.module";
-import { UsersService } from "./users.service";
+import { AgenciesService } from "../agencies/agencies.service";
 import { UsersEditComponent } from "./users-edit/users-edit.component";
+import { UsersListComponent } from "./users-list/users-list.component";
 import { UsersNewComponent } from "./users-new/users-new.component";
 import { UsersViewComponent } from "./users-view/users-view.component";
-import { AgenciesService } from "../agencies/agencies.service";
+import { UsersService } from "./users.service";
 
 const routes: Routes = [
   {

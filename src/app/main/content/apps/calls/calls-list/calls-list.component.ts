@@ -1,15 +1,13 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { fuseAnimations } from '../../../../../core/animations';
 import { DataSource } from '@angular/cdk/collections';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogRef, MatPaginator, MatSort } from '@angular/material';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { CallsService } from '../calls.service';
-import { MatPaginator, MatSort, MatDialogRef, MatDialog } from '@angular/material';
-import { FuseUtils } from '../../../../../core/fuseUtils';
-import { FuseConfirmDialogComponent } from '../../../../../core/components/confirm-dialog/confirm-dialog.component';
-import { ProgressBarService } from '../../../../../core/services/progress-bar.service';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
+import { fuseAnimations } from '../../../../../core/animations';
+import { FuseConfirmDialogComponent } from '../../../../../core/components/confirm-dialog/confirm-dialog.component';
+import { FuseUtils } from '../../../../../core/fuseUtils';
 import { FilterComponent } from '../../../../dialog/filter/filter.component';
+import { CallsService } from '../calls.service';
 
 @Component({
   selector: 'app-calls-list',

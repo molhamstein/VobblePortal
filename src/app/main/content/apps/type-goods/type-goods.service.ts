@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
+import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { AuthService } from "../../pages/authentication/auth.service";
 import { AppConfig } from "../../../shared/app.config";
 import { HelpersService } from "../../../shared/helpers.service";
+import { AuthService } from "../../pages/authentication/auth.service";
 
 @Injectable()
 export class TypeGoodsService {

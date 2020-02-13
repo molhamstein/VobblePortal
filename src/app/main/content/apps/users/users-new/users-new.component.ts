@@ -1,23 +1,18 @@
-import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormControl
-} from "@angular/forms";
-import { fuseAnimations } from "../../../../../core/animations";
-import { AppConfig } from "../../../../shared/app.config";
-import { UsersService } from "../users.service";
-import { PageAction } from "../../../../shared/enums/page-action";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { HelpersService } from "../../../../shared/helpers.service";
-import { AuthService } from "../../../pages/authentication/auth.service";
-import { UploadFileService } from "../../../../shared/upload-file.service";
-import { countries } from "typed-countries";
 import { Observable } from "rxjs";
 import { map, startWith } from "rxjs/operators";
+import { countries } from "typed-countries";
+import { fuseAnimations } from "../../../../../core/animations";
 import { ProgressBarService } from "../../../../../core/services/progress-bar.service";
+import { AppConfig } from "../../../../shared/app.config";
+import { PageAction } from "../../../../shared/enums/page-action";
+import { HelpersService } from "../../../../shared/helpers.service";
+import { UploadFileService } from "../../../../shared/upload-file.service";
+import { AuthService } from "../../../pages/authentication/auth.service";
 import { AgenciesService } from "../../agencies/agencies.service";
+import { UsersService } from "../users.service";
 
 @Component({
   selector: "app-users-new",

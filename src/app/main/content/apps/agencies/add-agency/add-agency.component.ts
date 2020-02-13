@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { fuseAnimations } from '../../../../../core/animations';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { fuseAnimations } from '../../../../../core/animations';
+import { PageAction } from '../../../../shared/enums/page-action';
 import { HelpersService } from '../../../../shared/helpers.service';
 import { AgenciesService } from '../agencies.service';
-import { PageAction } from '../../../../shared/enums/page-action';
 
 @Component({
   selector: 'app-add-agency',

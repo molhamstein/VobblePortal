@@ -1,14 +1,14 @@
-import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
-import { fuseAnimations } from "../../../../../core/animations";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { HelpersService } from "../../../../shared/helpers.service";
-import { PageAction } from "../../../../shared/enums/page-action";
+import { fuseAnimations } from "../../../../../core/animations";
 import { ProgressBarService } from "../../../../../core/services/progress-bar.service";
-import { ProductsService } from "../products.service";
 import { AppConfig } from "../../../../shared/app.config";
+import { PageAction } from "../../../../shared/enums/page-action";
+import { HelpersService } from "../../../../shared/helpers.service";
 import { UploadFileService } from "../../../../shared/upload-file.service";
 import { TypeGoodsService } from "../../type-goods/type-goods.service";
+import { ProductsService } from "../products.service";
 
 @Component({
   selector: "app-products-new",

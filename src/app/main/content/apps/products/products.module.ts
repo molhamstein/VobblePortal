@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
-import {ProductsService} from "./products.service";
-import {SharedModule} from "../../../../core/modules/shared.module";
+import { RouterModule, Routes } from "@angular/router";
+import { SharedModule } from "../../../../core/modules/shared.module";
+import { ProductsEditComponent } from './products-edit/products-edit.component';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { ProductsNewComponent } from './products-new/products-new.component';
-import { ProductsEditComponent } from './products-edit/products-edit.component';
 import { ProductsViewComponent } from './products-view/products-view.component';
-import {Routes, RouterModule} from "@angular/router";
+import { ProductsService } from "./products.service";
 
 const routes: Routes = [
   {
