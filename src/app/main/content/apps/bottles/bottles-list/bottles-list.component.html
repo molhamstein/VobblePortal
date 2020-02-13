@@ -28,10 +28,6 @@
         </div>
         <!-- / SEARCH -->
 
-        <!-- <button type="button" mat-raised-button [routerLink]="'/bottles/new'"
-          class="add-product-button mat-white-bg  mt-sm-0">
-          <span> NEW </span>
-        </button> -->
         <button type="button" mat-raised-button type="submit" (click)="clearFilter()"
           class="add-product-button mat-white-bg  mt-sm-0">
           <span> CLEAR </span>
@@ -61,7 +57,7 @@
         fusePerfectScrollbar>
         <ng-container cdkColumnDef="thumbnail">
           <mat-header-cell *cdkHeaderCellDef>Thumbnail</mat-header-cell>
-          <mat-cell *cdkCellDef="let product">
+          <mat-cell *cdkCellDef="let product" (click)="openView(product)">
             <img class="product-image" [className]="isNewBottle(product.createdAt)"
               *ngIf="product.bottleType=='video'&& product.thumbnail && product.thumbnail != '' "
               [alt]="product.createdAt" [src]="product.thumbnail" />
@@ -72,14 +68,14 @@
 
         <ng-container cdkColumnDef="createdAt">
           <mat-header-cell *cdkHeaderCellDef mat-sort-header>Creation Date</mat-header-cell>
-          <mat-cell *cdkCellDef="let product">
+          <mat-cell *cdkCellDef="let product" (click)="openNewTab(product)">
             <p class="text-truncate">{{ product.createdAt | date:'dd-MM-yyyy HH:mm' }}</p>
           </mat-cell>
         </ng-container>
 
         <ng-container cdkColumnDef="status">
           <mat-header-cell *cdkHeaderCellDef>Active</mat-header-cell>
-          <mat-cell *cdkCellDef="let product" fxShow.gt-xs>
+          <mat-cell *cdkCellDef="let product" fxShow.gt-xs (click)="openNewTab(product)">
             <mat-icon *ngIf="product.status == 'active'" class="active-icon mat-green-600-bg s-16">check</mat-icon>
             <mat-icon *ngIf="product.status == 'deactive'" class="active-icon mat-red-500-bg s-16">close</mat-icon>
             <mat-icon *ngIf="product.status == 'pending'" class="active-icon mat-gray-500-bg s-16">hourglass_empty
@@ -89,14 +85,14 @@
 
         <ng-container cdkColumnDef="owner">
           <mat-header-cell *cdkHeaderCellDef mat-sort-header>Owner</mat-header-cell>
-          <mat-cell *cdkCellDef="let product">
+          <mat-cell *cdkCellDef="let product" (click)="openNewTab(product)">
             <p class="text-truncate">{{ product.owner.username }}</p>
           </mat-cell>
         </ng-container>
 
         <ng-container cdkColumnDef="gender">
           <mat-header-cell *cdkHeaderCellDef mat-sort-header>Owner Gender</mat-header-cell>
-          <mat-cell *cdkCellDef="let product">
+          <mat-cell *cdkCellDef="let product" (click)="openNewTab(product)">
             <mat-icon *ngIf="product.owner.gender == 'male'" class="active-icon light-blue-800-fg s-25">
               sentiment_satisfied</mat-icon>
             <mat-icon *ngIf="product.owner.gender == 'female'" class="active-icon pink-300-fg s-25">face</mat-icon>
@@ -106,7 +102,7 @@
 
         <ng-container cdkColumnDef="country">
           <mat-header-cell *cdkHeaderCellDef mat-sort-header fxHide fxShow.gt-md>Owner ISO Code</mat-header-cell>
-          <mat-cell *cdkCellDef="let product" fxHide fxShow.gt-md>
+          <mat-cell *cdkCellDef="let product" fxHide fxShow.gt-md (click)="openNewTab(product)">
             <p class="text-truncate" *ngIf="product.owner.country">
               {{ product.owner.country.code }}
             </p>
@@ -115,7 +111,7 @@
 
         <ng-container cdkColumnDef="shore">
           <mat-header-cell *cdkHeaderCellDef mat-sort-header>Shore</mat-header-cell>
-          <mat-cell *cdkCellDef="let product">
+          <mat-cell *cdkCellDef="let product" (click)="openNewTab(product)">
             <p class="text-truncate">
               {{ product.shore.name_en }}/{{ product.shore.name_ar }}
             </p>
@@ -124,14 +120,14 @@
 
         <ng-container cdkColumnDef="repliesUserCount">
           <mat-header-cell *cdkHeaderCellDef mat-sort-header>Replies</mat-header-cell>
-          <mat-cell *cdkCellDef="let product">
+          <mat-cell *cdkCellDef="let product" (click)="openNewTab(product)">  
             <p class="text-truncate">{{ product.repliesUserCount}}</p>
           </mat-cell>
         </ng-container>
 
         <ng-container cdkColumnDef="bottleCompleteCount">
           <mat-header-cell *cdkHeaderCellDef mat-sort-header>Complete</mat-header-cell>
-          <mat-cell *cdkCellDef="let product">
+          <mat-cell *cdkCellDef="let product" (click)="openNewTab(product)">
             <p class="text-truncate">{{ product.bottleCompleteCount}}</p>
           </mat-cell>
         </ng-container>
@@ -162,7 +158,7 @@
         <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
 
         <mat-row *cdkRowDef="let product; columns: displayedColumns" class="product" matRipple
-          [routerLink]="'/bottles/view/' + product.id">
+         >
         </mat-row>
       </mat-table>
       <mat-paginator #paginator [length]="itemsCount" [pageIndex]="0" [pageSize]="50"

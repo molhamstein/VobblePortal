@@ -53,7 +53,7 @@ export class BottlesNewComponent implements OnInit {
     private authService: AuthService,
     private bottlesService: BottlesService
   ) {
-    this.currentUser = authService.getCurrentUser();
+    this.currentUser = this.authService.getCurrentUser();
 
     this.formErrors = {
       file: { required: true },

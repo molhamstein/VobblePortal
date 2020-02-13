@@ -19,6 +19,9 @@ import { AppConfig } from "../../../../shared/app.config";
 import { Shore } from "../../shores/shore.model";
 import { BottlesService } from "../bottles.service";
 import { FilterComponent } from './../../../../dialog/filter/filter.component';
+import { BottlesViewModalComponent } from "../bottles-view-modal/bottles-view-modal.component";
+import { Bottle } from "../bottle.model";
+import { Router } from "@angular/router";
 
 
 
@@ -31,8 +34,8 @@ import { FilterComponent } from './../../../../dialog/filter/filter.component';
 export class BottlesListComponent implements OnInit {
 
   chipsFilter = [];
-  filtersObject = { "gender": "", "country": "", "shoreId": "", "createdFrom": "", "createdTo": "", "bottleType": ""}
-  filterKey = { "gender": true, "country": true, "shoreId": true, "createdFrom": true, "createdTo": true, "bottleType" : true, }
+  filtersObject = { "gender": "", "country": "", "shoreId": "", "createdFrom": "", "createdTo": "", "bottleType": "" }
+  filterKey = { "gender": true, "country": true, "shoreId": true, "createdFrom": true, "createdTo": true, "bottleType": true, }
 
   filteredOptions: Observable<string[]>;
   shores: Shore[] = [];
@@ -69,6 +72,7 @@ export class BottlesListComponent implements OnInit {
   constructor(
     private bottlesService: BottlesService,
     private progressBarService: ProgressBarService,
+    private router: Router,
     public dialog: MatDialog,
   ) {
     this.bottlesService.onItemsCountChanged.subscribe(
@@ -77,7 +81,7 @@ export class BottlesListComponent implements OnInit {
   }
 
 
-  
+
   ngOnInit() {
 
     this.defaultIcon = AppConfig.defaultShoreIcon;
@@ -115,6 +119,17 @@ export class BottlesListComponent implements OnInit {
     this.filter.nativeElement.value = "";
     this.bottlesService.getItemsCount("");
     this.getItemsPaging();
+  }
+
+  openView(bottle: Bottle) {
+    this.dialog.open(BottlesViewModalComponent, {
+      width: '600px',
+      data: { "bottle": bottle }
+    });
+  }
+
+  openNewTab(contact) {
+    this.router.navigate(["/bottles/view/" + contact.id]);
   }
 
   openFilter() {
@@ -163,15 +178,13 @@ export class BottlesListComponent implements OnInit {
   exportAsExcelFile(): void {
     this.bottlesService.export(this.filtersObject).then(res => {
       if (res) {
-       
+
         window.location.href = res;
       }
     });
   }
 
-  openNewTab(contact) {
-    window.open(AppConfig.siteUrl + "bottles/view/" + contact.id)
-  }
+
 
   isNewBottle(date) {
     var diff = Math.abs(new Date().getTime() - new Date(date).getTime()) / 3600000;
@@ -196,8 +209,8 @@ export class BottlesListComponent implements OnInit {
     this.confirmDialogRef.afterClosed().subscribe(result => {
       if (result)
         this.bottlesService.deleteItem(contact, true);
-      else 
-         this.bottlesService.deleteItem(contact, false);
+      else
+        this.bottlesService.deleteItem(contact, false);
       this.getItemsPaging();
       this.confirmDialogRef = null;
     });

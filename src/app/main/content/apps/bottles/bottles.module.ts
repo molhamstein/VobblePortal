@@ -4,6 +4,7 @@ import { SharedModule } from "../../../../core/modules/shared.module";
 import { BottlesEditComponent } from './bottles-edit/bottles-edit.component';
 import { BottlesListComponent } from './bottles-list/bottles-list.component';
 import { BottlesNewComponent } from './bottles-new/bottles-new.component';
+import { BottlesViewModalComponent } from './bottles-view-modal/bottles-view-modal.component';
 import { BottlesViewComponent } from './bottles-view/bottles-view.component';
 import { BottlesService } from "./bottles.service";
 
@@ -49,9 +50,14 @@ const routes: Routes = [
     RouterModule.forChild(routes),
   ],
   exports: [RouterModule],
+
+  entryComponents: [
+    BottlesViewModalComponent
+  ],
+
   providers   : [
     BottlesService
   ],
-  declarations: [BottlesListComponent, BottlesNewComponent, BottlesEditComponent, BottlesViewComponent]
+  declarations: [BottlesListComponent, BottlesNewComponent, BottlesEditComponent, BottlesViewComponent, BottlesViewModalComponent]
 })
 export class BottlesModule { }
