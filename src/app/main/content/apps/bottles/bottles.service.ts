@@ -114,6 +114,13 @@ export class BottlesService implements Resolve<any> {
         _filtering += ',{"bottleType":"' + filterBy.bottleType + '"}';
       }
 
+      if(filterBy.status) { 
+        _filtering += ',{"status":"' + filterBy.status + '"}' ;
+      }
+
+      if(filterBy.viewStatus) { 
+        _filtering += ',{"viewStatus":"' + filterBy.viewStatus + '"}' ;
+      }
 
       if (filterBy.shoreId) {
         _filtering += ',{"shoreId":"' + filterBy.shoreId + '"}';

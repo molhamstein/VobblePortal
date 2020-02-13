@@ -120,7 +120,7 @@
 
         <ng-container cdkColumnDef="repliesUserCount">
           <mat-header-cell *cdkHeaderCellDef mat-sort-header>Replies</mat-header-cell>
-          <mat-cell *cdkCellDef="let product" (click)="openNewTab(product)">  
+          <mat-cell *cdkCellDef="let product" (click)="openNewTab(product)">
             <p class="text-truncate">{{ product.repliesUserCount}}</p>
           </mat-cell>
         </ng-container>
@@ -132,6 +132,15 @@
           </mat-cell>
         </ng-container>
 
+        <ng-container cdkColumnDef="viewStatus">
+          <mat-header-cell *cdkHeaderCellDef>View Status</mat-header-cell>
+          <mat-cell *cdkCellDef="let product" fxShow.gt-xs (click)="openNewTab(product)">
+            <mat-icon *ngIf="product.viewStatus == 'active'" class="active-icon mat-green-600-bg s-16">check</mat-icon>
+            <mat-icon *ngIf="product.viewStatus == 'deactive'" class="active-icon mat-red-500-bg s-16">close</mat-icon>
+            <mat-icon *ngIf="product.viewStatus == 'pending'" class="active-icon mat-gray-500-bg s-16">hourglass_empty
+            </mat-icon>
+          </mat-cell>
+        </ng-container>
 
 
         <ng-container cdkColumnDef="btns">
@@ -157,8 +166,7 @@
 
         <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
 
-        <mat-row *cdkRowDef="let product; columns: displayedColumns" class="product" matRipple
-         >
+        <mat-row *cdkRowDef="let product; columns: displayedColumns" class="product" matRipple>
         </mat-row>
       </mat-table>
       <mat-paginator #paginator [length]="itemsCount" [pageIndex]="0" [pageSize]="50"

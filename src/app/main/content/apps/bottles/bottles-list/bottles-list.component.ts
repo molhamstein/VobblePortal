@@ -34,8 +34,8 @@ import { Router } from "@angular/router";
 export class BottlesListComponent implements OnInit {
 
   chipsFilter = [];
-  filtersObject = { "gender": "", "country": "", "shoreId": "", "createdFrom": "", "createdTo": "", "bottleType": "" }
-  filterKey = { "gender": true, "country": true, "shoreId": true, "createdFrom": true, "createdTo": true, "bottleType": true, }
+  filtersObject = { "gender": "", "country": "", "shoreId": "", "createdFrom": "", "createdTo": "", "bottleType": "", "status" : "",  "viewStatus": ""}
+  filterKey = { "gender": true, "country": true, "shoreId": true, "createdFrom": true, "createdTo": true, "bottleType": true, "status" : true, "viewStatus" : true }
 
   filteredOptions: Observable<string[]>;
   shores: Shore[] = [];
@@ -53,6 +53,7 @@ export class BottlesListComponent implements OnInit {
     "shore",
     "repliesUserCount",
     "bottleCompleteCount",
+    "viewStatus",
     "btns"
   ];
 
@@ -115,7 +116,7 @@ export class BottlesListComponent implements OnInit {
   clearFilter() {
     this.paginator.pageIndex = 0
     this.chipsFilter = []
-    this.filtersObject = { "gender": "", "country": "", "shoreId": "", "createdFrom": "", "createdTo": "", "bottleType": "" }
+    this.filtersObject = { "gender": "", "country": "", "shoreId": "", "createdFrom": "", "createdTo": "", "bottleType": "", "status" : "",  "viewStatus": ""}
     this.filter.nativeElement.value = "";
     this.bottlesService.getItemsCount("");
     this.getItemsPaging();
@@ -151,7 +152,7 @@ export class BottlesListComponent implements OnInit {
             this.chipsFilter.push({ key: viewKey, value: this.filtersObject[key] });
           }
         }
-      }
+      } 
     });
 
   }

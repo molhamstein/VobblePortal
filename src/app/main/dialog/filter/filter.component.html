@@ -73,6 +73,17 @@
             <mat-option value="pending">Pending</mat-option>
           </mat-select>
         </mat-form-field>
+
+
+        <mat-form-field fxFlex="30" *ngIf="filterKey.viewStatus !=null">
+          <mat-select placeholder="View Status" formControlName="viewStatus">
+            <mat-option [value]=""> No filter</mat-option>
+            <mat-option value="active">Active</mat-option>
+            <mat-option value="deactivated">De-Activated</mat-option>
+            <mat-option value="pending">Pending</mat-option>
+          </mat-select>
+        </mat-form-field>
+
         <mat-form-field fxFlex="30" *ngIf="filterKey.type">
           <mat-select placeholder="Type Goods" formControlName="type">
             <mat-option *ngFor="let type of type_goods" [value]="type.id">

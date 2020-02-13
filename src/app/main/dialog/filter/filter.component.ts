@@ -42,7 +42,8 @@ export class FilterComponent {
         "relatedUserIsHost": false,
         "agency": false,
         "isHost": false,
-        "relatedUser": false
+        "relatedUser": false,
+        "viewStatus": false
     };
     filter = {};
     // rate
@@ -92,7 +93,11 @@ export class FilterComponent {
         }
 
         if (this.filterKey['status']) {
-            this.filterForm.addControl('status', new FormControl(this.filter['status']))
+            this.filterForm.addControl('status', new FormControl(this.filter['status']));
+        }
+
+        if(this.filterKey['viewStatus']) { 
+             this.filterForm.addControl('viewStatus' , new FormControl(this.filter['viewStatus']));
         }
 
         if (this.filterKey['country']) {
@@ -188,13 +193,6 @@ export class FilterComponent {
         this.typeGoodsService.getItems().then(items => {
             this.type_goods = items;
         });
-    }
-
-    isEnLang() {
-        // if (this.mainServ.loginServ.getLang() == "ar")
-        //     return false
-        // else
-        //     return true
     }
 
     filterC(val: string): any[] {
