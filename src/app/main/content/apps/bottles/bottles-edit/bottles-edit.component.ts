@@ -85,9 +85,9 @@ export class BottlesEditComponent implements OnInit, OnDestroy {
     );
 
     this.form["controls"].addedScores.valueChanges.subscribe(val => {
-        this.form.patchValue({
-             totalWeight: val + this.item.weight
-        }); 
+      this.form.patchValue({
+        totalWeight: val + this.item.weight
+      });
     })
 
     this.form.valueChanges.subscribe(() => {
@@ -206,6 +206,11 @@ export class BottlesEditComponent implements OnInit, OnDestroy {
 
     this.bottlesService.editItem(this.form.value).then(
       val => {
+
+        if (this.form.value.status == 'active') {
+           this.activeViewStatus();
+        }
+
         this.helpersService.showActionSnackbar(
           PageAction.Update,
           true,
