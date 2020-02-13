@@ -371,6 +371,28 @@ export class BottlesService implements Resolve<any> {
     });
   }
 
+  updateViewStatus(values: any): Promise<any> {
+    let data = { bottles: values };
+    return new Promise((resolve, reject) => {
+      
+      this.http.put(AppConfig.apiUrl + "bottles/makeBottleViewStatus?access_token=" +
+        this.authService.getToken(), data).subscribe(
+          data => {
+            resolve(true);
+          },
+          error => {
+            if (error.error.error.code === AppConfig.authErrorCode)
+              this.router.navigate(["/error-404"]);
+            else {
+              this.helpersService.showActionSnackbar(null, false, "", { style: "failed-snackbar" }
+                , AppConfig.technicalException);
+            }
+            reject();
+          }
+        );
+    });
+  }
+
   export(values): Promise<any> {
     let filter = "";
     if (values && values !== null) {

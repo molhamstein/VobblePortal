@@ -13,10 +13,6 @@ import { FuseNavbarVerticalToggleDirective } from './navbar/vertical/navbar-vert
 import { FuseNavbarHorizontalComponent } from './navbar/horizontal/navbar-horizontal.component';
 import { FuseQuickPanelComponent } from './quick-panel/quick-panel.component';
 import { FuseThemeOptionsComponent } from '../core/components/theme-options/theme-options.component';
-import { FuseShortcutsModule } from '../core/components/shortcuts/shortcuts.module';
-import { FuseSearchBarModule } from '../core/components/search-bar/search-bar.module';
-
-
 
 @NgModule({
   declarations: [
@@ -34,8 +30,6 @@ import { FuseSearchBarModule } from '../core/components/search-bar/search-bar.mo
     SharedModule,
     RouterModule,
     FuseNavigationModule,
-    FuseShortcutsModule,
-    FuseSearchBarModule
   ],
   exports: [
     FuseMainComponent, FuseContentComponent
@@ -45,3 +39,7 @@ import { FuseSearchBarModule } from '../core/components/search-bar/search-bar.mo
 
 export class FuseMainModule {
 }
+
+
+  //  FuseShortcutsModule,
+  //  FuseSearchBarModule

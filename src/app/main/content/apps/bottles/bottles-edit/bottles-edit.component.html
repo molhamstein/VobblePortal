@@ -18,10 +18,15 @@
         </div>
       </div>
     </div>
-    <button mat-raised-button type="submit" (click)="onSubmit()" [disabled]="form.invalid  || video=='' || disableSave"
-      class="add-product-button mat-white-bg  mt-sm-0">
-      <span> SAVE </span>
-    </button>
+    <div>
+      <button mat-raised-button (click)="activeViewStatus()" class="add-product-button mat-white-bg  mt-sm-0">
+        <span> Activate </span>
+      </button>
+      <button mat-raised-button type="submit" (click)="onSubmit()"
+        [disabled]="form.invalid  || video=='' || disableSave" class="add-product-button mat-white-bg  mt-sm-0">
+        <span> SAVE </span>
+      </button>
+    </div>
   </div>
   <!-- / HEADER -->
 
@@ -86,7 +91,7 @@
               <input type="number" placeholder="Added Scores" formControlName="addedScores" matInput>
             </mat-form-field>
 
-        
+
           </div>
 
 

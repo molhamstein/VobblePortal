@@ -6,32 +6,32 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
 import { Subscription } from 'rxjs/Subscription';
-import {fuseAnimations} from "../../../../../core/animations";
-import {Bottle} from "../bottle.model";
-import {BottlesService} from "../bottles.service";
-import {MatDialogRef, MatDialog} from "@angular/material";
-import {FuseConfirmDialogComponent} from "../../../../../core/components/confirm-dialog/confirm-dialog.component";
-import {ProgressBarService} from "../../../../../core/services/progress-bar.service";
+import { fuseAnimations } from "../../../../../core/animations";
+import { Bottle } from "../bottle.model";
+import { BottlesService } from "../bottles.service";
+import { MatDialogRef, MatDialog } from "@angular/material";
+import { FuseConfirmDialogComponent } from "../../../../../core/components/confirm-dialog/confirm-dialog.component";
+import { ProgressBarService } from "../../../../../core/services/progress-bar.service";
+import { PageAction } from '../../../../shared/enums/page-action';
+import { HelpersService } from '../../../../shared/helpers.service';
 
 @Component({
   selector: 'app-bottles-view',
   templateUrl: './bottles-view.component.html',
   styleUrls: ['./bottles-view.component.scss'],
-  animations   : fuseAnimations
+  animations: fuseAnimations
 })
-export class BottlesViewComponent implements OnInit, OnDestroy
-{
+export class BottlesViewComponent implements OnInit, OnDestroy {
   item: Bottle;
   onItemChanged: Subscription;
 
   dialogRef: any;
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
 
-  constructor(private bottlesService: BottlesService,
-              private progressBarService: ProgressBarService,
-              public dialog: MatDialog){}
+  constructor(private bottlesService: BottlesService, private progressBarService: ProgressBarService,
+    public dialog: MatDialog, private helpersService: HelpersService) { }
 
-  ngOnInit(){
+  ngOnInit() {
     this.onItemChanged =
       this.bottlesService.onItemChanged
         .subscribe(item => {
@@ -39,8 +39,26 @@ export class BottlesViewComponent implements OnInit, OnDestroy
         });
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.onItemChanged.unsubscribe();
+  }
+
+  activeViewStatus() {
+    let data = [];
+    data.push(this.item.id);
+    this.bottlesService.updateViewStatus(data).then(
+      val => {
+        this.helpersService.showActionSnackbar(
+          PageAction.Update, true, "bottle"
+        );
+      },
+      reason => {
+        this.helpersService.showActionSnackbar(
+          PageAction.Update, false, "bottle",
+          { style: "failed-snackbar" }
+        );
+      }
+    );
   }
 
   deleteItem() {
@@ -53,8 +71,8 @@ export class BottlesViewComponent implements OnInit, OnDestroy
     this.confirmDialogRef.afterClosed().subscribe(result => {
       if (result)
         this.bottlesService.deleteItem(this.item, true);
-      else 
-         this.bottlesService.deleteItem(this.item, false);
+      else
+        this.bottlesService.deleteItem(this.item, false);
       this.confirmDialogRef = null;
     });
 
