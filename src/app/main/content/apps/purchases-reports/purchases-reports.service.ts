@@ -80,7 +80,7 @@ export class PurchasesReportsService implements Resolve<any> {
         )
         .subscribe(
           (response: any) => {
-            //console.log('response products', response);
+            //
             this.perDay = response;
             this.totalPerDay = []
             var totalObject = {
@@ -168,7 +168,7 @@ export class PurchasesReportsService implements Resolve<any> {
             resolve(response);
           },
           error => {
-            console.log("error ", error);
+            
             this.helpersService.showActionSnackbar(
               null,
               false,
@@ -204,13 +204,13 @@ export class PurchasesReportsService implements Resolve<any> {
         )
         .subscribe(
           (response: any) => {
-            //console.log('response products', response);
+            //
             this.perUsers = response;
             this.onePerUsersChanged.next(this.perUsers);
             resolve(response);
           },
           error => {
-            console.log("error ", error);
+            
             this.helpersService.showActionSnackbar(
               null,
               false,
@@ -237,11 +237,11 @@ export class PurchasesReportsService implements Resolve<any> {
         )
         .subscribe(
           (response: any) => {
-            //console.log('response products', response);
+            //
             resolve(response);
           },
           error => {
-            console.log("error ", error);
+            
             this.helpersService.showActionSnackbar(
               null,
               false,
@@ -281,7 +281,7 @@ export class PurchasesReportsService implements Resolve<any> {
             resolve(items["path"]);
           },
           error => {
-            console.log("error ", error);
+            
             if (error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -328,7 +328,7 @@ export class PurchasesReportsService implements Resolve<any> {
     json[1]['Unlock Chat'] = this.totalPerDay[0]['countUnlockChat'];
     json[1]['Call'] = this.totalPerDay[0]['countCall'];
 
-    console.log("json ", json);
+    
     const excelFileName = "Item_Total_";
 
     const workbook = XLSX.utils.book_new(); // create a new blank book

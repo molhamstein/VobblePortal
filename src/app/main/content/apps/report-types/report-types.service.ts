@@ -31,12 +31,12 @@ export class ReportTypesService {
     return new Promise((resolve, reject) => {
         this.http.get(AppConfig.apiUrl + 'reportTypes?access_token=' + this.authService.getToken())
           .subscribe((response: any) => {
-           // console.log('response reportTypes', response);
+           // 
             this.items = response;
             this.onItemsChanged.next(this.items);
             resolve(response);
           }, error => {
-            console.log('error ', error);
+            
             this.helpersService.showActionSnackbar(null, false, '', {style: 'failed-snackbar'}, AppConfig.technicalException);
             reject();
           })

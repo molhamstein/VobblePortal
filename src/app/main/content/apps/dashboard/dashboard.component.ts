@@ -68,7 +68,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         domain: this.colors
       },
       onSelect: (ev) => {
-        console.log(ev);
+        
       }
     };
     this.lineChart = {
@@ -85,7 +85,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       },
       curve: shape.curveBasis,
       onSelect: ev => {
-        console.log(ev);
+        
       }
     };
 
@@ -103,7 +103,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         domain: ["#f44336", "#9c27b0", "#03a9f4", "#e91e63"]
       },
       onSelect: ev => {
-        console.log(ev);
+        
       }
     };
 
@@ -123,10 +123,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     var tempKey = keys.sort(function (a, b) {
       var c = new Date(a).getTime()
       var d = new Date(b).getTime()
-      console.log(a)
-      console.log(new Date(a))
-      console.log(b)
-      console.log(new Date(b))
+      
+      
+      
+      
       if (d < c)
         return 1
       else
@@ -219,16 +219,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
       val => {
         this.products = val
         this.report = this.reportToArray(this.dashboardService.allItems)
-        console.log("this.report")
-        console.log(this.report)
+        
+        
         //   },
-        //  err => console.error(err), 
-        //  () => console.log('getBooks completed') 
+        //  err => , 
+        //  () =>  
         //  );
 
         var sortedKeysCoins = this.sortKey(this.dashboardService.allItems['coins'])
-        console.log("sorted_keys")
-        console.log(sortedKeysCoins)
+        
+        
         sortedKeysCoins.forEach(key => {
           const element = this.dashboardService.allItems['coins'][key];
           let tempObjectCount = {
@@ -312,7 +312,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         })
 
 
-        console.log(mainChart)
+        
       },
       reason => {
       }
@@ -327,9 +327,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
       },
       'mainChart': mainChart
     }
-    //  console.log("this.BottlesChartData ", this.BottlesChartData);
-    //  console.log("this.UsersChartData ", this.UsersChartData);
-    //  console.log("this.ItemsChartData ", this.ItemsChartData);
+    //  
+    //  
+    //  
   }
 
   ngOnDestroy() { }
@@ -351,7 +351,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       reason => {
         // this.helpersService.showActionSnackbar(PageAction.Create, false, 'user', {style: 'failed-snackbar'});
         this.progressBarService.toggle();
-        console.log("error ", reason);
+        
       }
     );
   }
@@ -368,7 +368,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       reason => {
         // this.helpersService.showActionSnackbar(PageAction.Create, false, 'user', {style: 'failed-snackbar'});
         this.progressBarService.toggle();
-        console.log("error ", reason);
+        
       }
     );
   }
@@ -383,7 +383,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       },
       reason => {
         this.progressBarService.toggle();
-        console.log("error ", reason);
+        
       }
     );
   }
@@ -425,7 +425,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       reason => {
         // this.helpersService.showActionSnackbar(PageAction.Create, false, 'user', {style: 'failed-snackbar'});
         this.progressBarService.toggle();
-        console.log("error ", reason);
+        
       })
   }
   applyAllItemFilter() {
@@ -436,10 +436,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
       filter['ownerId'] = this.users.filter(function (el) {
         return el.username <= username
       })[0].id;
-    console.log("username");
-    console.log(username);
-    console.log("filter");
-    console.log(filter);
+    
+    
+    
+    
     this.dashboardService.getAllItems(filter).then(
       val => {
         this.report = this.reportToArray(this.dashboardService.allItems)
@@ -541,7 +541,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       reason => {
         // this.helpersService.showActionSnackbar(PageAction.Create, false, 'user', {style: 'failed-snackbar'});
         this.progressBarService.toggle();
-        console.log("error ", reason);
+        
       }
     );
 
@@ -558,7 +558,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       reason => {
         // this.helpersService.showActionSnackbar(PageAction.Create, false, 'user', {style: 'failed-snackbar'});
         this.progressBarService.toggle();
-        console.log("error ", reason);
+        
       }
     );
   }

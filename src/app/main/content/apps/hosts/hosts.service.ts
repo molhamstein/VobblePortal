@@ -114,7 +114,7 @@ export class HostsService implements Resolve<any> {
         resolve(response);
       },
         error => {
-          console.log("error ", error);
+          
           if (error.error.error.code == AppConfig.authErrorCode)
             this.router.navigate(["/error-404"]);
           else

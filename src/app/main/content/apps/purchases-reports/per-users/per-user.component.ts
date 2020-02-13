@@ -76,7 +76,7 @@ export class PerUserComponent implements OnInit {
     this.purchaseSer
       .getItemsByUser(this.filtersForm.value, object.ownerId)
       .then((data: any) => {
-        console.log(data);
+        
         this.dialogRef = this.dialog.open(FuseViewUserItemsComponent, {
           width: '7 00px',
           data: { "owner": object.owner, data: data },

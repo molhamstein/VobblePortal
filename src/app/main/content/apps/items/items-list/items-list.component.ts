@@ -222,7 +222,7 @@ export class FilesDataSource extends DataSource<any> {
     ];
 
     return Observable.merge(...displayDataChanges).map(() => {
-      console.log("this.itemsService.items ", this.itemsService.items);
+      
       let data = this.itemsService.items;
 
       data = this.filterData(data);

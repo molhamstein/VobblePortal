@@ -91,24 +91,24 @@ export class TopicsNewComponent implements OnInit {
   }
 
   onFileChange(event) {
-    //console.log(event);
+    //
     this.readFile(event.target);
   }
 
   uploadImage(image) {
     if (image && image !== "") {
       const formData: FormData = new FormData();
-      //console.log('typeof images[i] ', typeof image);
+      //
       if (typeof image !== "string") {
         formData.append("file", image);
         this.uploadFileService.uploadFile(formData).then(
           val => {
-            //console.log('val ', val);
+            //
             this.form.value.icon = val[0].file;
             this.submit();
           },
           reason => {
-            console.log("error ", reason);
+            
           }
         );
       } else {
@@ -122,7 +122,7 @@ export class TopicsNewComponent implements OnInit {
 
   submit() {
     this.progressBarService.toggle();
-    // console.log('onSubmit ', this.form.value);
+    // 
     this.topicsService.newItem(this.form.value).then(
       val => {
         this.helpersService.showActionSnackbar(
@@ -141,7 +141,7 @@ export class TopicsNewComponent implements OnInit {
           { style: "failed-snackbar" }
         );
         this.progressBarService.toggle();
-        console.log("error ", reason);
+        
       }
     );
   }

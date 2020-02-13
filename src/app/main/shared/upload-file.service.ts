@@ -17,11 +17,11 @@ export class UploadFileService {
         this.http.post(AppConfig.apiUrl + 'uploadFiles/videos/upload?access_token=' + this.authService.getToken(), items)
           .subscribe(
             data => {
-              //  console.log('data ', data);
+              //  
               resolve(data);
             },
             error => {
-              console.log('error ', error);
+              
               this.helpersService.showActionSnackbar(null, false, '', { style: 'failed-snackbar' }, AppConfig.technicalException);
               reject();
             }
@@ -33,7 +33,7 @@ export class UploadFileService {
              resolve(data);
           },
           error => {
-            console.log('error', error);
+            
             this.helpersService.showActionSnackbar(null, false, '', { style: 'failed-snackbar' }, AppConfig.technicalException);
             reject();
           })
@@ -42,11 +42,11 @@ export class UploadFileService {
         this.http.post(AppConfig.apiUrl + 'uploadFiles/images/upload?access_token=' + this.authService.getToken(), items)
           .subscribe(
             data => {
-              // console.log('data ', data);
+              // 
               resolve(data);
             },
             error => {
-              console.log('error ', error);
+              
               this.helpersService.showActionSnackbar(null, false, '', { style: 'failed-snackbar' }, AppConfig.technicalException);
               reject();
             }

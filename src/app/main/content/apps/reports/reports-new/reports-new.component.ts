@@ -100,7 +100,7 @@ export class ReportsNewComponent implements OnInit {
   }
 
   onSubmit() {
-    //console.log('onSubmit ', this.form.value);
+    //
     this.progressBarService.toggle();
     this.reportsService.newItem(this.form.value).then((val) => {
       this.helpersService.showActionSnackbar(PageAction.Create, true, 'report');
@@ -109,7 +109,7 @@ export class ReportsNewComponent implements OnInit {
     }, (reason) => {
       this.helpersService.showActionSnackbar(PageAction.Create, false, 'report', {style: 'failed-snackbar'});
       this.progressBarService.toggle();
-      console.log('error ', reason);
+      
     });
   }
 

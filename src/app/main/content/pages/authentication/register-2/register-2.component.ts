@@ -51,11 +51,11 @@ export class FuseRegister2Component implements OnInit {
           if(username.value != '') {
             this.authService.checkUsername(username.value).then(
               (data) => {
-                //console.log("data ", data);
+                //
                 this.registerFormErrors.username.unique = true;
                 username.setErrors(null);
               }, (reason) => {
-                console.log('error ', reason);
+                
                 this.registerFormErrors.username.unique = false;
                 username.setErrors({unique: false});
               }
@@ -77,7 +77,7 @@ export class FuseRegister2Component implements OnInit {
   }
 
   checkIfMatchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
-    //console.log('passwordConfirmationKey');
+    //
     return (group: FormGroup) => {
       let passwordInput = group.controls[passwordKey],
         passwordConfirmationInput = group.controls[passwordConfirmationKey];
@@ -109,17 +109,17 @@ export class FuseRegister2Component implements OnInit {
   }
 
   onSubmit() {
-   // console.log('submit');
+   // 
     this.authService.register(this.registerForm.value).then(
       (data) => {
-        //console.log("data ", data);
+        //
         this.router.navigate(['auth/login']);
         this.helpers.showActionSnackbar(null, false, '',"Registration succeed");
         this.loadingScreen.hide();
       }, (reason) => {
         this.helpers.showActionSnackbar(null, false, '', {style: 'failed-snackbar'}, "Registration failed");
         this.loadingScreen.hide();
-        console.log('error ', reason);
+        
       }
     )
   }

@@ -137,7 +137,7 @@ export class ShoresEditComponent implements OnInit {
     }, (reason) => {
       this.helpersService.showActionSnackbar(PageAction.Update, false, 'shore', {style: 'failed-snackbar'});
       this.progressBarService.toggle();
-      console.log('error ', reason);
+      
     });
   }
 
@@ -195,7 +195,7 @@ export class ShoresEditComponent implements OnInit {
       this.form.value.cover = val[0].file;
       this.submit();
     }, (reason) => {
-      console.log('error ', reason);
+      
     });
   }
 
@@ -206,7 +206,7 @@ export class ShoresEditComponent implements OnInit {
       this.form.value.icon = val[0].file;
       this.submit();
     }, (reason) => {
-      console.log('error ', reason);
+      
     });
   }
 
@@ -219,7 +219,7 @@ export class ShoresEditComponent implements OnInit {
       this.form.value.icon = val[1].file;
       this.submit();
     }, (reason) => {
-      console.log('error ', reason);
+      
     });
   }
 

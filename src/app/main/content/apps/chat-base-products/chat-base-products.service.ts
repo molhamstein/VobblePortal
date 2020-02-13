@@ -73,13 +73,13 @@ export class ChatBasrProductsService implements Resolve<any> {
         )
         .subscribe(
           (response: any) => {
-            //console.log('response products', response);
+            //
             this.items = response;
             this.onItemsChanged.next(this.items);
             resolve(response);
           },
           error => {
-            console.log("error ", error);
+            
             this.helpersService.showActionSnackbar(
               null,
               false,
@@ -105,13 +105,13 @@ export class ChatBasrProductsService implements Resolve<any> {
         )
         .subscribe(
           (response: any) => {
-            console.log("response products", response);
+            
             this.items = response;
             this.onItemsChanged.next(this.items);
             resolve(response);
           },
           error => {
-            console.log("error ", error);
+            
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -131,7 +131,7 @@ export class ChatBasrProductsService implements Resolve<any> {
   getItemsPaging(page, itemsPerPage): Promise<any> {
     return new Promise((resolve, reject) => {
       var offset = page * itemsPerPage;
-      // console.log(' offset ', offset);
+      // 
       this.http
         .get<ChatBaseProduct[]>(
           AppConfig.apiUrl +
@@ -144,13 +144,13 @@ export class ChatBasrProductsService implements Resolve<any> {
         )
         .subscribe(
           (response: any) => {
-            console.log("response products", response);
+            
             this.items = response;
             this.onItemsChanged.next(this.items);
             resolve(response);
           },
           error => {
-            console.log("error ", error);
+            
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -177,13 +177,13 @@ export class ChatBasrProductsService implements Resolve<any> {
         )
         .subscribe(
           (response: any) => {
-            //console.log('count products', response);
+            //
             this.itemsCount = response.count;
             this.onItemsCountChanged.next(this.itemsCount);
             resolve(response);
           },
           error => {
-            console.log("error ", error);
+            
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -213,7 +213,7 @@ export class ChatBasrProductsService implements Resolve<any> {
         )
         .subscribe(
           data => {
-            // console.log(data);
+            // 
             this.items.splice(index, 1);
             this.onItemsChanged.next(this.items);
             this.itemsCount--;
@@ -223,7 +223,7 @@ export class ChatBasrProductsService implements Resolve<any> {
             resolve(true);
           },
           error => {
-            console.log("error ", error);
+            
             this.progressBarService.toggle();
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
@@ -254,15 +254,15 @@ export class ChatBasrProductsService implements Resolve<any> {
         )
         .subscribe(
           item => {
-            //console.log('item ', item);
+            //
             this.item = item;
-            console.log("this.item")
-            console.log(this.item)
+            
+            
             this.onItemChanged.next(this.item);
             resolve(item);
           },
           error => {
-            console.log("error ", error);
+            
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -292,13 +292,13 @@ export class ChatBasrProductsService implements Resolve<any> {
         )
         .subscribe(
           item => {
-            //console.log('item ', item);
+            //
             this.item = item;
             this.onItemChanged.next(this.item);
             resolve(item);
           },
           error => {
-            console.log("error ", error);
+            
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -327,11 +327,11 @@ export class ChatBasrProductsService implements Resolve<any> {
         )
         .subscribe(
           data => {
-            //console.log('data ', data);
+            //
             resolve(true);
           },
           error => {
-            console.log("error ", error);
+            
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -361,11 +361,11 @@ export class ChatBasrProductsService implements Resolve<any> {
         )
         .subscribe(
           data => {
-            //console.log('data ', data);
+            //
             resolve(true);
           },
           error => {
-            console.log("error ", error);
+            
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -388,11 +388,11 @@ export class ChatBasrProductsService implements Resolve<any> {
       this.http.post<ChatBaseProduct>(AppConfig.apiUrl + "chatProducts?access_token=" +
         this.authService.getToken(), item).subscribe(
           data => {
-            //  console.log(data);
+            //  
             resolve(true);
           },
           error => {
-            console.log("error ", error);
+            
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -414,11 +414,11 @@ export class ChatBasrProductsService implements Resolve<any> {
       this.http.post<ChatBaseProduct>(AppConfig.apiUrl + "baseChatProducts?access_token=" +
         this.authService.getToken(), item).subscribe(
           data => {
-            //  console.log(data);
+            //  
             resolve(true);
           },
           error => {
-            console.log("error ", error);
+            
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else

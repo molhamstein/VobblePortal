@@ -101,17 +101,17 @@ export class GiftItemsService {
       "&access_token=" +
       this.authService.getToken();
 
-    console.log(api);
+
     return new Promise((resolve, reject) => {
       this.http.get(api).subscribe(
         (response: any) => {
-          console.log("response.count ", response.count);
+
           this.itemsRelatedCount = response.count;
           // this.onItemsCountChanged.next(this.itemsCount);
           resolve(this.itemsRelatedCount);
         },
         error => {
-          console.log("error ", error);
+
           // if (error.error.error.code == AppConfig.authErrorCode)
           //   this.router.navigate(["/error-404"]);
           // else
@@ -137,17 +137,17 @@ export class GiftItemsService {
       "access_token=" +
       this.authService.getToken();
 
-    console.log(api);
+
     return new Promise((resolve, reject) => {
       this.http.get(api).subscribe(
         (response: any) => {
-          console.log("response.count ", response.count);
+
           this.itemsCount = response.count;
           // this.onItemsCountChanged.next(this.itemsCount);
           resolve(this.itemsCount);
         },
         error => {
-          console.log("error ", error);
+
           // if (error.error.error.code == AppConfig.authErrorCode)
           //   this.router.navigate(["/error-404"]);
           // else
@@ -199,21 +199,11 @@ export class GiftItemsService {
       "chatItems/chatExtendReportRelated/?filter=" + JSON.stringify(filter) + "&access_token=" +
       this.authService.getToken();
     this.getItemsRelatedCount(filter);
-    // if (filter && filter.from != "") {
-    //   url += "&from=" + filter.from;
-    // }
 
-    // if (filter && filter.to != "") {
-    //   url += "&to=" + filter.to;
-    // }
-
-    // if (filter && filter.userId != "") {
-    //   url += "&userId=" + filter.userId;
-    // }
 
     return new Promise((resolve, reject) => {
       this.http.get(url).subscribe((response: any) => {
-        console.log("items ", response);
+
         this.orginalItems = response.map(x => Object.assign({}, x));
 
         this.itemsRelated = response.map(item => {
@@ -224,7 +214,7 @@ export class GiftItemsService {
             totalCount: item.totalCount,
           };
         });
-        console.log(this.itemsRelated);
+
         this.onItemsChanged.next(this.itemsRelated);
         resolve(this.itemsRelated);
       }, reject);
@@ -244,7 +234,7 @@ export class GiftItemsService {
       return 0
   }
   getChatExtendReportOwner(filter) {
-    console.log(filter)
+
     var mainFilter = {};
     let url =
       AppConfig.apiUrl +
@@ -267,7 +257,7 @@ export class GiftItemsService {
 
     return new Promise((resolve, reject) => {
       this.http.get(url).subscribe((response: any) => {
-        console.log("items ", response);
+
         this.orginalItems = response.map(x => Object.assign({}, x));
 
         this.items = response.map(item => {
@@ -294,12 +284,12 @@ export class GiftItemsService {
         "bottles/timeStateReport/?access_token=" +
         this.authService.getToken();
 
-      console.log("filter ", filter);
+
       if (filter) {
         url += "&from=" + filter.from + "&to=" + filter.to;
       }
 
-      console.log("url ", url);
+
       this.http.get(url).subscribe((response: any) => {
         const getDateArray = (start, end) => {
           const arr = new Array();
@@ -323,7 +313,7 @@ export class GiftItemsService {
             );
 
             tempArray = fromDatesArray.map(val => {
-              //  console.log(val);
+              //  
               return {
                 value: 0,
                 name: val
@@ -409,7 +399,7 @@ export class GiftItemsService {
 
     return new Promise((resolve, reject) => {
       this.http.get(url).subscribe((response: any) => {
-        console.log("items ", response);
+
         this.orginalItems = response.map(x => Object.assign({}, x));
 
         this.items = response.map(item => {
@@ -420,7 +410,7 @@ export class GiftItemsService {
             totalCount: item.totalCount,
           };
         });
-        console.log(this.items);
+
         this.onItemsChanged.next(this.items);
         resolve(this.items);
       }, reject);
@@ -447,7 +437,7 @@ export class GiftItemsService {
 
     return new Promise((resolve, reject) => {
       this.http.get(url).subscribe((response: any) => {
-        console.log("items ", response);
+
         this.orginalItems = response.map(x => Object.assign({}, x));
 
         this.itemsRelated = response.map(item => {
@@ -458,7 +448,7 @@ export class GiftItemsService {
             totalCount: item.totalCount,
           };
         });
-        console.log(this.itemsRelated);
+
         this.onItemsChanged.next(this.items);
         resolve(this.itemsRelated);
       }, reject);
@@ -466,14 +456,14 @@ export class GiftItemsService {
   }
 
   purchasesChartTypeChanged(type) {
-    //  console.log("purchasesChartTypeChanged ", type);
+    //  
     this.items = this.orginalItems.map(item => {
       return {
         name: item.country,
         value: item[type]
       };
     });
-    //  console.log("this.items ", this.items);
+    //  
     this.onItemsChanged.next(this.items);
   }
 
@@ -489,7 +479,7 @@ export class GiftItemsService {
 
     return new Promise((resolve, reject) => {
       this.http.get(url).subscribe((response: any) => {
-        console.log("users ", response);
+
         this.users = [
           {
             name: "Male",
@@ -518,11 +508,11 @@ export class GiftItemsService {
       // send get request
       this.http.get(url).subscribe(
         items => {
-          console.log(items);
+
           resolve(items["path"]);
         },
         error => {
-          console.log("error ", error);
+
 
           reject();
         }
@@ -544,11 +534,11 @@ export class GiftItemsService {
       // send get request
       this.http.get(url).subscribe(
         items => {
-          console.log(items);
+
           resolve(items["path"]);
         },
         error => {
-          console.log("error ", error);
+
 
           reject();
         }
@@ -569,11 +559,11 @@ export class GiftItemsService {
     return new Promise((resolve, reject) => {
       // this.http.get(url).subscribe(
       //   items => {
-      //     console.log(items);
+      //     
       //     resolve(items["path"]);
       //   },
       //   error => {
-      //     console.log("error ", error);
+      //     
       //     reject();
       //   }
       // );
@@ -582,7 +572,7 @@ export class GiftItemsService {
 
   exportAsExcelFile(): void {
     const json = this.orginalItems;
-    console.log("json ", json);
+
     const excelFileName = "Item_State_Report_";
 
     const workbook = XLSX.utils.book_new(); // create a new blank book
@@ -670,18 +660,18 @@ export class GiftItemsService {
       "}&access_token=" +
       this.authService.getToken();
 
-    console.log("api ", api);
+
 
     return new Promise((resolve, reject) => {
       this.http.get(api).subscribe(
         (response: any) => {
-          console.log("response items", response);
+
           this.itemsChat = response;
           this.onItemsChanged.next(this.items);
           resolve(this.items);
         },
         error => {
-          console.log("error ", error);
+
           // if (error.error.error.code == AppConfig.authErrorCode)
           //   this.router.navigate(["/error-404"]);
           // else
@@ -706,17 +696,17 @@ export class GiftItemsService {
       "access_token=" +
       this.authService.getToken();
 
-    console.log(api);
+
     return new Promise((resolve, reject) => {
       this.http.get(api).subscribe(
         (response: any) => {
-          console.log("response.count ", response.count);
+
           this.itemsChatCount = response.count;
           this.onItemsCountChanged.next(this.itemsChatCount);
           resolve(this.itemsChatCount);
         },
         error => {
-          console.log("error ", error);
+
           // if (error.error.error.code == AppConfig.authErrorCode)
           //   this.router.navigate(["/error-404"]);
           // else

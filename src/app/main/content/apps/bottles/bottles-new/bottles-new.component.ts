@@ -191,7 +191,7 @@ export class BottlesNewComponent implements OnInit {
           },
           reason => {
             this.disableSave = false;
-            // console.log("error add video", reason);
+            // 
           }
         );
       }
@@ -203,7 +203,7 @@ export class BottlesNewComponent implements OnInit {
           },
           reason => {
             this.disableSave = false;
-            // console.log("error add audio", reason);
+            // 
           }
         );
       }
@@ -215,7 +215,7 @@ export class BottlesNewComponent implements OnInit {
 
     this.form.value.ownerId = this.form.value.ownerId.id;
 
-    // console.log(this.form.value);
+    // 
 
     this.bottlesService.newItem(this.form.value).then(
       val => {
@@ -235,14 +235,14 @@ export class BottlesNewComponent implements OnInit {
           { style: "failed-snackbar" }
         );
         this.progressBarService.toggle();
-        console.log("reason ", reason);
+        
       }
     );
   }
 
   onSubmit() {
     this.progressBarService.toggle();
-    // console.log("form onSubmit ", this.form.value);
+    // 
     this.submit();
   }
 }

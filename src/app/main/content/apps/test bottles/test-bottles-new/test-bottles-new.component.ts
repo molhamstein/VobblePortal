@@ -142,7 +142,7 @@ export class TestBottlesNewComponent implements OnInit {
         for (const key in this.videos) {
           if (this.videos.hasOwnProperty(key)) {
             const element = this.videos[key];
-            console.log(element);
+            
             this.data.push(element);
           }
         }
@@ -157,14 +157,14 @@ export class TestBottlesNewComponent implements OnInit {
           { style: "failed-snackbar" }
         );
         this.progressBarService.toggle();
-        console.log("error ", reason);
+        
       }
     );
   }
 
   onSubmit() {
     this.progressBarService.toggle();
-    console.log("form", this.form.value)
+    
     this.submit();
     // this.uploadFiles(this.blobFileToUpload);
   }

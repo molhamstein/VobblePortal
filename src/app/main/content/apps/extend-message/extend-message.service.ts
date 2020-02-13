@@ -251,7 +251,7 @@ export class ExtendMessageService {
 
     return new Promise((resolve, reject) => {
       this.http.get(url).subscribe((response: any) => {
-        console.log("items ", response);
+        
         this.orginalItems = response.map(x => Object.assign({}, x));
 
         this.itemsRelated = response.map(item => {
@@ -262,7 +262,7 @@ export class ExtendMessageService {
             totalCount: item.totalCount,
           };
         });
-        console.log(this.itemsRelated);
+        
         this.onItemsChanged.next(this.itemsRelated);
         resolve(this.itemsRelated);
       }, reject);
@@ -282,7 +282,7 @@ export class ExtendMessageService {
       return 0
   }
   getChatExtendReportOwner(filter) {
-    console.log(filter)
+    
     var mainFilter = {};
     let url =
       AppConfig.apiUrl +
@@ -305,7 +305,7 @@ export class ExtendMessageService {
 
     return new Promise((resolve, reject) => {
       this.http.get(url).subscribe((response: any) => {
-        console.log("items ", response);
+        
         this.orginalItems = response.map(x => Object.assign({}, x));
 
         this.items = response.map(item => {
@@ -332,12 +332,12 @@ export class ExtendMessageService {
         "bottles/timeStateReport/?access_token=" +
         this.authService.getToken();
 
-      console.log("filter ", filter);
+      
       if (filter) {
         url += "&from=" + filter.from + "&to=" + filter.to;
       }
 
-      console.log("url ", url);
+      
       this.http.get(url).subscribe((response: any) => {
         const getDateArray = (start, end) => {
           const arr = new Array();
@@ -451,7 +451,7 @@ export class ExtendMessageService {
 
     return new Promise((resolve, reject) => {
       this.http.get(url).subscribe((response: any) => {
-        console.log("users ", response);
+        
         this.users = [
           {
             name: "Male",
@@ -481,11 +481,11 @@ export class ExtendMessageService {
       // send get request
       this.http.get(url).subscribe(
         items => {
-          console.log(items);
+          
           resolve(items["path"]);
         },
         error => {
-          console.log("error ", error);
+          
 
           reject();
         }
@@ -510,7 +510,7 @@ export class ExtendMessageService {
 
   exportAsExcelFile(): void {
     const json = this.orginalItems;
-    console.log("json ", json);
+    
     const excelFileName = "Item_State_Report_";
 
     const workbook = XLSX.utils.book_new(); // create a new blank book

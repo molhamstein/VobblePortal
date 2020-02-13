@@ -100,12 +100,12 @@ export class UsersEditComponent implements OnInit, OnDestroy {
               if (username.value != "") {
                 this.authService.checkUsername(username.value).then(
                   data => {
-                    // console.log("data ", data);
+                    // 
                     username.setErrors(null);
                     this.formErrors.username.unique = true;
                   },
                   reason => {
-                    console.log("error ", reason);
+                    
                     this.formErrors.username.unique = false;
                     username.setErrors({ unique: false });
                   }
@@ -178,7 +178,7 @@ export class UsersEditComponent implements OnInit, OnDestroy {
               { style: "failed-snackbar" }
             );
             this.progressBarService.toggle();
-            console.log("error ", reason);
+            
           }
         );
       }
@@ -243,7 +243,7 @@ export class UsersEditComponent implements OnInit, OnDestroy {
             this.submit();
           },
           reason => {
-            console.log("error ", reason);
+            
           }
         );
       } else {
@@ -271,7 +271,7 @@ export class UsersEditComponent implements OnInit, OnDestroy {
           { style: "failed-snackbar" }
         );
         this.progressBarService.toggle();
-        console.log("error ", reason);
+        
       }
     );
   }

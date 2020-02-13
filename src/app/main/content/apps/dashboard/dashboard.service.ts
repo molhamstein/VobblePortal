@@ -100,12 +100,12 @@ export class DashboardService {
         "bottles/timeStateReport/?access_token=" +
         this.authService.getToken();
 
-      console.log("filter ", filter);
+      
       if (filter) {
         url += "&from=" + filter.from + "&to=" + filter.to;
       }
 
-      console.log("url ", url);
+      
       this.http.get(url).subscribe((response: any) => {
         const getDateArray = (start, end) => {
           const arr = new Array();
@@ -129,7 +129,7 @@ export class DashboardService {
             );
 
             //   tempArray = fromDatesArray.map(val => {
-            //     //  console.log(val);
+            //     //  
             //     return {
             //       value: 0,
             //       name: val
@@ -205,7 +205,7 @@ export class DashboardService {
 
     return new Promise((resolve, reject) => {
       this.http.get(url).subscribe((response: any) => {
-        console.log("items ", response);
+        
         this.orginalItems = response.map(x => Object.assign({}, x));
 
         this.items = response.map(item => {
@@ -243,7 +243,7 @@ export class DashboardService {
 
     return new Promise((resolve, reject) => {
       this.http.get(url).subscribe((response: any) => {
-        console.log(response);
+        
         resolve(response["path"]);
 
       }, reject);
@@ -271,7 +271,7 @@ export class DashboardService {
 
     return new Promise((resolve, reject) => {
       this.http.get(url).subscribe((response: any) => {
-        console.log("items ", response);
+        
         // this.orginalItems = response.map(x => Object.assign({}, x));
         this.allItems = response;
 
@@ -282,14 +282,14 @@ export class DashboardService {
   }
 
   purchasesChartTypeChanged(type) {
-    //  console.log("purchasesChartTypeChanged ", type);
+    //  
     this.items = this.orginalItems.map(item => {
       return {
         name: item.country,
         value: item[type]
       };
     });
-    //  console.log("this.items ", this.items);
+    //  
     this.onItemsChanged.next(this.items);
   }
 
@@ -305,7 +305,7 @@ export class DashboardService {
 
     return new Promise((resolve, reject) => {
       this.http.get(url).subscribe((response: any) => {
-        console.log("users ", response);
+        
         this.users = [
           {
             name: "Male",
@@ -362,11 +362,11 @@ export class DashboardService {
       // send get request
       this.http.get(url).subscribe(
         items => {
-          console.log(items);
+          
           resolve(items["path"]);
         },
         error => {
-          console.log("error ", error);
+          
 
           reject();
         }
@@ -387,11 +387,11 @@ export class DashboardService {
     return new Promise((resolve, reject) => {
       // this.http.get(url).subscribe(
       //   items => {
-      //     console.log(items);
+      //     
       //     resolve(items["path"]);
       //   },
       //   error => {
-      //     console.log("error ", error);
+      //     
       //     reject();
       //   }
       // );
@@ -400,7 +400,7 @@ export class DashboardService {
 
   exportAsExcelFile(): void {
     const json = this.orginalItems;
-    console.log("json ", json);
+    
     const excelFileName = "Item_State_Report_";
 
     const workbook = XLSX.utils.book_new(); // create a new blank book

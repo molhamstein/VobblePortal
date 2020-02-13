@@ -83,7 +83,7 @@ export class UsersService implements Resolve<any> {
             resolve(bottles);
           },
           error => {
-            console.log("error ", error);
+            
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -110,13 +110,13 @@ export class UsersService implements Resolve<any> {
         )
         .subscribe(
           (response: any) => {
-            // console.log("response users", response);
+            // 
             this.items = response;
             this.onUsersChanged.next(this.items);
             resolve(response);
           },
           err => {
-            console.log("err", err);
+            
             if (err.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -241,13 +241,13 @@ export class UsersService implements Resolve<any> {
     return new Promise((resolve, reject) => {
       this.http.get<User[]>(api).subscribe(
         (response: any) => {
-          // console.log("response users", response);
+          // 
           this.items = response;
           this.onUsersChanged.next(this.items);
           resolve(true);
         },
         error => {
-          console.log("error ", error);
+          
           if (error.error.error.code === AppConfig.authErrorCode) {
             this.router.navigate(["/error-404"]);
           } else {
@@ -274,17 +274,17 @@ export class UsersService implements Resolve<any> {
       "access_token=" +
       this.authService.getToken();
 
-    console.log(api);
+    
     return new Promise((resolve, reject) => {
       this.http.get(api).subscribe(
         (response: any) => {
-          console.log("response.count ", response.count);
+          
           this.itemsCount = response.count;
           this.onItemsCountChanged.next(this.itemsCount);
           resolve(this.itemsCount);
         },
         error => {
-          console.log("error ", error);
+          
           if (error.error.error.code == AppConfig.authErrorCode)
             this.router.navigate(["/error-404"]);
           else
@@ -316,7 +316,7 @@ export class UsersService implements Resolve<any> {
             resolve(response);
           },
           err => {
-            console.log("err", err);
+            
             if (err.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -348,7 +348,7 @@ export class UsersService implements Resolve<any> {
             resolve(true);
           },
           error => {
-            console.log("error ", error);
+            
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -388,7 +388,7 @@ export class UsersService implements Resolve<any> {
             resolve(true);
           },
           error => {
-            console.log("error ", error);
+            
             this.progressBarService.toggle();
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
@@ -408,7 +408,7 @@ export class UsersService implements Resolve<any> {
 
   export(values): Promise<any> {
     let filter = "";
-    console.log(values)
+    
     if (values && values !== null) {
       if (values.gender) filter += ',{"gender":"' + values.gender + '"}';
 
@@ -449,7 +449,7 @@ export class UsersService implements Resolve<any> {
             resolve(items["path"]);
           },
           error => {
-            console.log("error ", error);
+            
             if (error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -484,7 +484,7 @@ export class UsersService implements Resolve<any> {
             resolve(item);
           },
           error => {
-            console.log("error ", error);
+            
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -535,7 +535,7 @@ export class UsersService implements Resolve<any> {
             resolve(true);
           },
           error => {
-            console.log("error ", error);
+            
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -556,11 +556,11 @@ export class UsersService implements Resolve<any> {
     return new Promise((resolve, reject) => {
       this.http.post<User>(AppConfig.apiUrl + "users", item).subscribe(
         data => {
-          // console.log(data);
+          // 
           resolve(true);
         },
         error => {
-          console.log("error ", error);
+          
           if (error.error.error.code == AppConfig.authErrorCode)
             this.router.navigate(["/error-404"]);
           else

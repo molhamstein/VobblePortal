@@ -68,13 +68,13 @@ export class TestBottlesService implements Resolve<any> {
         )
         .subscribe(
           (response: any) => {
-            //console.log('response products', response);
+            //
             this.items = response;
             this.onItemsChanged.next(this.items);
             resolve(response);
           },
           error => {
-            console.log("error ", error);
+            
             this.helpersService.showActionSnackbar(
               null,
               false,
@@ -98,13 +98,13 @@ export class TestBottlesService implements Resolve<any> {
         )
         .subscribe(
           (response: any) => {
-            //console.log('response products', response);
+            //
             this.items = response;
             this.onItemsChanged.next(this.items);
             resolve(response);
           },
           error => {
-            console.log("error ", error);
+            
             this.helpersService.showActionSnackbar(
               null,
               false,
@@ -121,7 +121,7 @@ export class TestBottlesService implements Resolve<any> {
   // getItemsPaging(page, itemsPerPage): Promise<any> {
   //   return new Promise((resolve, reject) => {
   //     var offset = page * itemsPerPage;
-  //     // console.log(' offset ', offset);
+  //     // 
   //     this.http
   //       .get<Topic[]>(
   //         AppConfig.apiUrl +
@@ -134,13 +134,13 @@ export class TestBottlesService implements Resolve<any> {
   //       )
   //       .subscribe(
   //         (response: any) => {
-  //           console.log("response products", response);
+  //           
   //           this.items = response;
   //           this.onItemsChanged.next(this.items);
   //           resolve(response);
   //         },
   //         error => {
-  //           console.log("error ", error);
+  //           
   //           if (error.error.error.code == AppConfig.authErrorCode)
   //             this.router.navigate(["/error-404"]);
   //           else
@@ -167,13 +167,13 @@ export class TestBottlesService implements Resolve<any> {
   //       )
   //       .subscribe(
   //         (response: any) => {
-  //           //console.log('count products', response);
+  //           //
   //           this.itemsCount = response.count;
   //           this.onItemsCountChanged.next(this.itemsCount);
   //           resolve(response);
   //         },
   //         error => {
-  //           console.log("error ", error);
+  //           
   //           if (error.error.error.code == AppConfig.authErrorCode)
   //             this.router.navigate(["/error-404"]);
   //           else
@@ -203,7 +203,7 @@ export class TestBottlesService implements Resolve<any> {
   //       )
   //       .subscribe(
   //         data => {
-  //           // console.log(data);
+  //           // 
   //           this.items.splice(index, 1);
   //           this.onItemsChanged.next(this.items);
   //           this.itemsCount--;
@@ -213,7 +213,7 @@ export class TestBottlesService implements Resolve<any> {
   //           resolve(true);
   //         },
   //         error => {
-  //           console.log("error ", error);
+  //           
   //           this.progressBarService.toggle();
   //           if (error.error.error.code == AppConfig.authErrorCode)
   //             this.router.navigate(["/error-404"]);
@@ -244,13 +244,13 @@ export class TestBottlesService implements Resolve<any> {
   //       )
   //       .subscribe(
   //         item => {
-  //           //console.log('item ', item);
+  //           //
   //           this.item = item;
   //           this.onItemChanged.next(this.item);
   //           resolve(item);
   //         },
   //         error => {
-  //           console.log("error ", error);
+  //           
   //           if (error.error.error.code == AppConfig.authErrorCode)
   //             this.router.navigate(["/error-404"]);
   //           else
@@ -280,11 +280,11 @@ export class TestBottlesService implements Resolve<any> {
   //       )
   //       .subscribe(
   //         data => {
-  //           //console.log('data ', data);
+  //           //
   //           resolve(true);
   //         },
   //         error => {
-  //           console.log("error ", error);
+  //           
   //           if (error.error.error.code == AppConfig.authErrorCode)
   //             this.router.navigate(["/error-404"]);
   //           else
@@ -305,11 +305,11 @@ export class TestBottlesService implements Resolve<any> {
   //   return new Promise((resolve, reject) => {
   //     this.http.post<Topic>(AppConfig.apiUrl + "topics", item).subscribe(
   //       data => {
-  //         //  console.log(data);
+  //         //  
   //         resolve(true);
   //       },
   //       error => {
-  //         console.log("error ", error);
+  //         
   //         if (error.error.error.code == AppConfig.authErrorCode)
   //           this.router.navigate(["/error-404"]);
   //         else

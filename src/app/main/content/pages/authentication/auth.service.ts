@@ -37,11 +37,11 @@ export class AuthService {
         )
         .subscribe(
           data => {
-            //  console.log('data ', data);
+            //  
             resolve(true);
           },
           err => {
-            console.log("err ", err);
+            
             reject(new AppException("Failed registration"));
           }
         );
@@ -63,11 +63,11 @@ export class AuthService {
         )
         .subscribe(
           data => {
-            // console.log('data ', data);
+            // 
             resolve(true);
           },
           err => {
-            // console.log('err ', err);
+            // 
             reject(new AppException("Failed"));
           }
         );
@@ -89,7 +89,7 @@ export class AuthService {
             this.loadingScreen.hide();
           },
           error => {
-            console.log("error ", error);
+            
             reject(new AppException("unknown error"));
             this.loadingScreen.hide();
           }
@@ -153,13 +153,13 @@ export class AuthService {
       })
         .subscribe(
           data => {
-            console.log('data ', data);
+            
           })
     })
   }*/
 
   forgot_password(email: string): Promise<any> {
-    // console.log(email);
+    // 
     return new Promise((resolve, reject) => {
       const headers = new HttpHeaders().set("Content-Type", "application/json");
       this.http
@@ -172,11 +172,11 @@ export class AuthService {
         )
         .subscribe(
           data => {
-            //console.log('data ', data);
+            //
             resolve(data);
           },
           error => {
-            console.log(error);
+            
             reject(false);
           }
         );
@@ -189,7 +189,7 @@ export class AuthService {
   }
 
   getCurrentUser() {
-    //console.log('getCurrentUser ', this.me);
+    //
     if (this.me != null) return this.me;
     return "";
   }

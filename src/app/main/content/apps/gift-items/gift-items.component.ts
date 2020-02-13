@@ -115,7 +115,7 @@ export class GiftItemComponent implements OnInit {
     this.giftItemsServices
       .getUserRelated(userId, isOwner)
       .then((data: any) => {
-        console.log(data);
+        
         this.viewUserRef = this.dialog.open(FuseViewUserComponent, {
           width: '7 00px',
           data: { "data": data, "isOwner": isOwner },
@@ -190,7 +190,7 @@ export class GiftItemComponent implements OnInit {
 
   changeTab($event) {
     this.paginator.pageIndex = 0
-    console.log($event.index)
+    
     var filter = Object.assign({}, this.filtersForm.value)
     if (filter.user != "")
       filter['userId'] = this.countries.filter(function (el) {
@@ -246,7 +246,7 @@ export class GiftItemComponent implements OnInit {
   // exportAsExcelFile(): void {
   //   this.reportsService.export(this.filtersForm.value).then(res => {
   //     if (res) {
-  //       console.log(res);
+  //       
   //       window.location.href = res;
   //     }
   //   });
@@ -274,7 +274,7 @@ export class GiftItemComponent implements OnInit {
       filter['relatedUserId'] = this.relatedUser.filter(function (el) {
         return el.username <= filter.relatedUser
       })[0].id;
-    console.log(filter)
+    
     this.giftItemsServices.export(filter).then(res => {
       if (res) {
         window.location.href = res
@@ -285,7 +285,7 @@ export class GiftItemComponent implements OnInit {
 
   applyFilter() {
     var filter = Object.assign({}, this.filtersForm.value)
-    console.log(filter)
+    
     if (filter.user != "")
       filter['userId'] = this.countries.filter(function (el) {
         return el.username <= filter.user
@@ -538,7 +538,7 @@ export class FilesDataSourceItem extends DataSource<any> {
     ];
 
     return Observable.merge(...displayDataChanges).map(() => {
-      console.log("this.itemsService.items ", this.itemsService.itemsChat);
+      
       let data = this.itemsService.itemsChat;
 
       data = this.filterData(data);

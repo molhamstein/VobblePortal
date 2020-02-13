@@ -99,7 +99,7 @@ export class FuseToolbarComponent {
 
     search(value) {
         // Do your search here...
-        // console.log(value);
+        // 
     }
 
     setLanguage(lang) {

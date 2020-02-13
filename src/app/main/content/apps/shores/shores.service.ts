@@ -66,13 +66,13 @@ export class ShoresService implements Resolve<any> {
         )
         .subscribe(
           (response: any) => {
-            //console.log('response shores', response);
+            //
             this.items = response;
             this.onItemsChanged.next(this.items);
             resolve(response);
           },
           error => {
-            console.log("error ", error);
+            
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -92,7 +92,7 @@ export class ShoresService implements Resolve<any> {
   getItemsPaging(page, itemsPerPage): Promise<any> {
     return new Promise((resolve, reject) => {
       var offset = page * itemsPerPage;
-      //console.log(' offset ', offset);
+      //
       this.http
         .get<Shore[]>(
           AppConfig.apiUrl +
@@ -105,13 +105,13 @@ export class ShoresService implements Resolve<any> {
         )
         .subscribe(
           (response: any) => {
-            // console.log("response shores", response);
+            // 
             this.items = response;
             this.onItemsChanged.next(this.items);
             resolve(response);
           },
           error => {
-            console.log("error ", error);
+            
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -138,13 +138,13 @@ export class ShoresService implements Resolve<any> {
         )
         .subscribe(
           (response: any) => {
-            //console.log('count shores', response);
+            //
             this.itemsCount = response.count;
             this.onItemsCountChanged.next(this.itemsCount);
             resolve(response);
           },
           error => {
-            console.log("error ", error);
+            
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -174,7 +174,7 @@ export class ShoresService implements Resolve<any> {
         )
         .subscribe(
           data => {
-            // console.log(data);
+            // 
             this.items.splice(index, 1);
             this.onItemsChanged.next(this.items);
             this.itemsCount--;
@@ -184,7 +184,7 @@ export class ShoresService implements Resolve<any> {
             resolve(true);
           },
           error => {
-            console.log("error ", error);
+            
             this.progressBarService.toggle();
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
@@ -215,13 +215,13 @@ export class ShoresService implements Resolve<any> {
         )
         .subscribe(
           item => {
-            // console.log('item ', item);
+            // 
             this.item = item;
             this.onItemChanged.next(this.item);
             resolve(item);
           },
           error => {
-            console.log("error ", error);
+            
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -254,7 +254,7 @@ export class ShoresService implements Resolve<any> {
             resolve(true);
           },
           error => {
-            console.log("error ", error);
+            
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else
@@ -282,11 +282,11 @@ export class ShoresService implements Resolve<any> {
         )
         .subscribe(
           data => {
-            // console.log(data);
+            // 
             resolve(true);
           },
           error => {
-            console.log("error ", error);
+            
             if (error.error.error.code == AppConfig.authErrorCode)
               this.router.navigate(["/error-404"]);
             else

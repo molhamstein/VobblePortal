@@ -78,7 +78,7 @@ export class UsersNewComponent implements OnInit {
                   this.formErrors.username.unique = true;
                 },
                 reason => {
-                  console.log("error ", reason);
+                  
                   this.formErrors.username.unique = false;
                   username.setErrors({ unique: false });
                 }
@@ -140,7 +140,7 @@ export class UsersNewComponent implements OnInit {
     if (inputValue.files && inputValue.files[0]) {
       // this.form.value.file = inputValue.files[0];
       this.blobFileToUpload = inputValue.files[0];
-      console.log("this.blobFileToUpload ", this.blobFileToUpload);
+      
       const reader: FileReader = new FileReader();
       reader.readAsDataURL(inputValue.files[0]);
       reader.onload = event => {
@@ -160,24 +160,24 @@ export class UsersNewComponent implements OnInit {
   }
 
   onFileChange(event) {
-    //console.log(event);
+    //
     this.readFile(event.target);
   }
 
   uploadImage(image) {
     if (image && image !== "") {
       const formData: FormData = new FormData();
-      //console.log('typeof images[i] ', typeof image);
+      //
       if (typeof image !== "string") {
         formData.append("file", image);
         this.uploadFileService.uploadFile(formData).then(
           val => {
-            //console.log('val ', val);
+            //
             this.form.value.image = val[0].file;
             this.submit();
           },
           reason => {
-            console.log("error ", reason);
+            
           }
         );
       } else {
@@ -191,7 +191,7 @@ export class UsersNewComponent implements OnInit {
 
   submit() {
     delete this.form.value.id;
-    console.log("form add", this.form.value);
+    
     this.usersService.newItem(this.form.value).then(
       val => {
         this.helpersService.showActionSnackbar(PageAction.Create, true, "user");
@@ -207,7 +207,7 @@ export class UsersNewComponent implements OnInit {
         );
         this.progressBarService.toggle();
 
-        console.log("error ", reason);
+        
       }
     );
   }

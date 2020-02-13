@@ -87,7 +87,7 @@ export class TopicsEditComponent implements OnInit {
 
   submit() {
     this.progressBarService.toggle();
-    //console.log('onSubmit ', this.form.value);
+    //
     this.topicsService.editItem(this.form.value).then(
       val => {
         this.helpersService.showActionSnackbar(
@@ -106,7 +106,7 @@ export class TopicsEditComponent implements OnInit {
           { style: "failed-snackbar" }
         );
         this.progressBarService.toggle();
-        console.log("error ", reason);
+        
       }
     );
   }

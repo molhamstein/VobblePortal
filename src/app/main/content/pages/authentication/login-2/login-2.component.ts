@@ -95,7 +95,7 @@ export class FuseLogin2Component implements OnInit
       }, (reason) =>{
         this.helpersService.showActionSnackbar(null, false, '', {style: 'failed-snackbar'}, "Login failed");
         this.loadingScreen.hide();
-        console.log('error ', reason);
+        
       }
     )
   }

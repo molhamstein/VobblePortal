@@ -123,7 +123,7 @@ export class CallsService implements Resolve<any>{
         resolve(response);
       },
         error => {
-          console.log("error ", error);
+          
           if (error.error.error.code == AppConfig.authErrorCode)
             this.router.navigate(["/error-404"]);
           else
@@ -149,7 +149,7 @@ export class CallsService implements Resolve<any>{
       + "access_token=" + this.authService.getToken() + "&where=" + filter;
 
 
-    console.log(api);
+    
     return new Promise((resolve, reject) => {
       this.http.get<Calls[]>(api).subscribe(
         (response: any) => {
@@ -158,7 +158,7 @@ export class CallsService implements Resolve<any>{
           resolve(this.itemsCount);
         },
         error => {
-          console.log("error ", error);
+          
           if (error.error.error.code == AppConfig.authErrorCode)
             this.router.navigate(["/error-404"]);
           else

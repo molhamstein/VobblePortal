@@ -102,7 +102,7 @@ export class ReportsListComponent implements OnInit {
   exportAsExcelFile(): void {
     this.reportsService.export(this.filtersObject).then(res => {
       if (res) {
-        console.log(res);
+        
         window.location.href = res;
       }
     });
@@ -170,7 +170,7 @@ export class ReportsListComponent implements OnInit {
     //   reason => {
     //     this.progressBarService.toggle();
 
-    //     console.log("error ", reason);
+    //     
     //   }
     // );
   }

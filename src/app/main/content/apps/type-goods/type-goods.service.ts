@@ -27,7 +27,7 @@ export class TypeGoodsService {
           this.onItemsChanged.next(this.items);
           resolve(response);
         }, error => {
-          console.log('error ', error);
+          
           this.helpersService.showActionSnackbar(null, false, '', { style: 'failed-snackbar' }, AppConfig.technicalException);
           reject();
         })

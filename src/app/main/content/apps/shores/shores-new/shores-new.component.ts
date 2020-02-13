@@ -121,7 +121,7 @@ export class ShoresNewComponent implements OnInit {
           this.form.value.icon = val[1].file;
           this.submit();
         }, (reason) => {
-          console.log('error ', reason);
+          
         });
       } else if (typeof cover !== 'string') {
         formData.append('file', cover);
@@ -129,7 +129,7 @@ export class ShoresNewComponent implements OnInit {
           this.form.value.cover = val[0].file;
           this.submit();
         }, (reason) => {
-          console.log('error ', reason);
+          
         });
       } else if (typeof icon !== 'string') {
         formData.append('file', icon);
@@ -137,7 +137,7 @@ export class ShoresNewComponent implements OnInit {
           this.form.value.icon = val[0].file;
           this.submit();
         }, (reason) => {
-          console.log('error ', reason);
+          
         });
       } else {
         this.submit();
@@ -150,7 +150,7 @@ export class ShoresNewComponent implements OnInit {
             this.form.value.cover = val[0].file;
             this.submit();
           }, (reason) => {
-            console.log('error ', reason);
+            
           });
         }
       }else
@@ -161,7 +161,7 @@ export class ShoresNewComponent implements OnInit {
               this.form.value.icon = val[0].file;
               this.submit();
             }, (reason) => {
-              console.log('error ', reason);
+              
             });
           }
         }else   this.submit();
@@ -176,7 +176,7 @@ export class ShoresNewComponent implements OnInit {
     }, (reason) => {
       this.helpersService.showActionSnackbar(PageAction.Create, false, 'shore', {style: 'failed-snackbar'});
       this.progressBarService.toggle();
-      console.log('error ', reason);
+      
     });
   }
 

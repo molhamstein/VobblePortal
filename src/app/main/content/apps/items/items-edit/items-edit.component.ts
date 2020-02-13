@@ -131,7 +131,7 @@ export class ItemsEditComponent implements OnInit {
   onSubmit() {
     this.form.value.ownerId = this.form.value.ownerId.id;
     this.progressBarService.toggle();
-    //console.log('onSubmit ', this.form.value);
+    //
     this.itemsService.editItem(this.form.value).then((val) => {
       this.helpersService.showActionSnackbar(PageAction.Update, true, 'item');
       this.router.navigate(['/items/list']);
@@ -139,7 +139,7 @@ export class ItemsEditComponent implements OnInit {
     }, (reason) => {
       this.helpersService.showActionSnackbar(PageAction.Update, false, 'item', {style: 'failed-snackbar'});
       this.progressBarService.toggle();
-      console.log('error ', reason);
+      
     });
   }
 
