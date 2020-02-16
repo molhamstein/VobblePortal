@@ -204,13 +204,14 @@ export class BottlesEditComponent implements OnInit, OnDestroy {
   submit() {
     this.form.value.ownerId = this.form.value.ownerId.id || this.item.ownerId;
 
+    if (this.form.value.status == 'active') {
+      this.activeViewStatus();
+    }
+
+
     this.bottlesService.editItem(this.form.value).then(
       val => {
-
-        if (this.form.value.status == 'active') {
-           this.activeViewStatus();
-        }
-
+        
         this.helpersService.showActionSnackbar(
           PageAction.Update,
           true,

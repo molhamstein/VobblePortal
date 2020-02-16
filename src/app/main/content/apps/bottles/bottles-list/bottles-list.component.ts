@@ -123,10 +123,15 @@ export class BottlesListComponent implements OnInit {
   }
 
   openView(bottle: Bottle) {
-    this.dialog.open(BottlesViewModalComponent, {
+    let dialogRef = this.dialog.open(BottlesViewModalComponent, {
       width: '600px',
       data: { "bottle": bottle }
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+        this.dataSource.connect();
+    });
+    
   }
 
   openNewTab(contact) {

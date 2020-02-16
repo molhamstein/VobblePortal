@@ -43,24 +43,6 @@ export class BottlesViewComponent implements OnInit, OnDestroy {
     this.onItemChanged.unsubscribe();
   }
 
-  activeViewStatus() {
-    let data = [];
-    data.push(this.item.id);
-    this.bottlesService.updateViewStatus(data).then(
-      val => {
-        this.helpersService.showActionSnackbar(
-          PageAction.Update, true, "bottle"
-        );
-      },
-      reason => {
-        this.helpersService.showActionSnackbar(
-          PageAction.Update, false, "bottle",
-          { style: "failed-snackbar" }
-        );
-      }
-    );
-  }
-
   deleteItem() {
     this.confirmDialogRef = this.dialog.open(FuseConfirmDialogComponent, {
       disableClose: false

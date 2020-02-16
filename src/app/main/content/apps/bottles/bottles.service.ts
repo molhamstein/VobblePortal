@@ -308,7 +308,10 @@ export class BottlesService implements Resolve<any> {
     });
   }
 
-  editItem(item: Bottle): Promise<any> {
+  editItem(item: Bottle): Promise<any>  {
+
+    delete item.viewStatus ;
+
     return new Promise((resolve, reject) => {
       this.http
         .patch<Bottle>(
@@ -373,8 +376,9 @@ export class BottlesService implements Resolve<any> {
     });
   }
 
-  updateViewStatus(values: any): Promise<any> {
+  updateViewStatus(values: any): Promise<any>  {
     let data = { bottles: values };
+
     return new Promise((resolve, reject) => {
       
       this.http.put(AppConfig.apiUrl + "bottles/makeBottleViewStatus?access_token=" +

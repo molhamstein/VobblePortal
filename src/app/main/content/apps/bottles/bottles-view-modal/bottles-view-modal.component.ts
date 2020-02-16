@@ -32,8 +32,10 @@ export class BottlesViewModalComponent implements OnInit {
   ngOnInit() {
     this.status = new FormControl(this.item.status);
     this.status.valueChanges.subscribe(res => {
+
       if (res == 'active') {
-        let data = [this.item.id];
+        let data = [];
+        data.push(this.item.id);
         this.bottleService.updateViewStatus(data);
       }
 
@@ -41,6 +43,7 @@ export class BottlesViewModalComponent implements OnInit {
 
       this.bottleService.editItem(this.item).then(
         val => {
+
           this.helpersService.showActionSnackbar(PageAction.Update, true, "bottle"
           );
         },
