@@ -38,10 +38,13 @@ export class BottlesService implements Resolve<any> {
       let itemsPerPage = route.data["itemsPerPage"];
       if (resolverType === "list") {
         Promise.all([
-          this.getItemsPagingV2(page, itemsPerPage, "", ""),
-          // this.getItemsCount("")
+          this.getItemsCount("").then(res => {
+            this.getItemsPaging(page, itemsPerPage, "", "").then(res => {
+              resolve();
+            });
+          })
         ]).then(() => {
-          resolve();
+
         }, reject);
       } else if (resolverType === "view") {
         Promise.all([this.viewItem(route.params["id"])]).then(() => {
