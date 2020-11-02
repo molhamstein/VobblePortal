@@ -168,7 +168,7 @@ export class BottlesListComponent implements OnInit {
       this.paginator.pageIndex = 0
     }
     this.bottlesService
-      .getItemsPaging(
+      .getItemsPagingV2(
         this.paginator.pageIndex,
         this.paginator.pageSize,
         this.filtersObject,

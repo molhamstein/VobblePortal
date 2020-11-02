@@ -38,8 +38,8 @@ export class BottlesService implements Resolve<any> {
       let itemsPerPage = route.data["itemsPerPage"];
       if (resolverType === "list") {
         Promise.all([
-          this.getItemsPaging(page, itemsPerPage, "", ""),
-          this.getItemsCount("")
+          this.getItemsPagingV2(page, itemsPerPage, "", ""),
+          // this.getItemsCount("")
         ]).then(() => {
           resolve();
         }, reject);
@@ -83,6 +83,12 @@ export class BottlesService implements Resolve<any> {
     });
   }
 
+  getItemsPagingV2(page, itemsPerPage, filterBy, searchBy) {
+    this.getItemsCount('').then(res => {
+    });
+    return this.getItemsPaging(page, itemsPerPage, filterBy, searchBy);
+  }
+
   getItemsPaging(page, itemsPerPage, filterBy, searchBy): Promise<any> {
     let _customApi = "";
 
@@ -114,12 +120,12 @@ export class BottlesService implements Resolve<any> {
         _filtering += ',{"bottleType":"' + filterBy.bottleType + '"}';
       }
 
-      if(filterBy.status) { 
-        _filtering += ',{"status":"' + filterBy.status + '"}' ;
+      if (filterBy.status) {
+        _filtering += ',{"status":"' + filterBy.status + '"}';
       }
 
-      if(filterBy.viewStatus) { 
-        _filtering += ',{"viewStatus":"' + filterBy.viewStatus + '"}' ;
+      if (filterBy.viewStatus) {
+        _filtering += ',{"viewStatus":"' + filterBy.viewStatus + '"}';
       }
 
       if (filterBy.shoreId) {
@@ -151,7 +157,7 @@ export class BottlesService implements Resolve<any> {
       }
     }
 
-    this.getItemsCount('filter={"where":{"and":[' + _searching + "]}}&");
+    // 
     _searching = ',"where":{"and":[' + _searching + "]}";
     _customApi = "/filterBottle?";
 
@@ -308,9 +314,9 @@ export class BottlesService implements Resolve<any> {
     });
   }
 
-  editItem(item: Bottle): Promise<any>  {
+  editItem(item: Bottle): Promise<any> {
 
-    delete item.viewStatus ;
+    delete item.viewStatus;
 
     return new Promise((resolve, reject) => {
       this.http
@@ -376,11 +382,11 @@ export class BottlesService implements Resolve<any> {
     });
   }
 
-  updateViewStatus(values: any): Promise<any>  {
+  updateViewStatus(values: any): Promise<any> {
     let data = { bottles: values };
 
     return new Promise((resolve, reject) => {
-      
+
       this.http.put(AppConfig.apiUrl + "bottles/makeBottleViewStatus?access_token=" +
         this.authService.getToken(), data).subscribe(
           data => {
